@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XORYS Casino & Promos</title>
+    <title>XORYS Casino & Games</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -145,7 +145,7 @@
             font-weight: 700;
         }
 
-        /* --- ЗАГАЛЬНІ СТИЛІ ІГРОВИХ ЕКРАНІВ --- */
+        /* --- ЗАГАЛЬНІ СТИЛІ ШАПКИ --- */
         .rg-header {
             display: flex;
             justify-content: space-between;
@@ -198,109 +198,11 @@
             white-space: nowrap;
         }
 
-        /* --- ІГРОВЕ ПОЛЕ: РАКЕТА --- */
-        .rg-display {
-            height: 220px;
-            background: radial-gradient(circle at center, #1b1b2f 0%, #0b0b10 70%, #050507 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(100, 100, 255, 0.1);
-        }
-
-        .rg-display::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
-            transform: perspective(500px) rotateX(60deg);
-            bottom: -50px;
-            animation: gridMove 10s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 40px; }
-        }
-
-        .star-point {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0.6;
-            box-shadow: 0 0 4px #fff;
-        }
-
-        .multiplier-val {
-            font-size: 48px;
-            font-weight: 900;
-            color: #ffffff;
-            text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
-            z-index: 5;
-            letter-spacing: 1px;
-        }
-
-        .rocket-container {
-            position: absolute;
-            bottom: 25px;
-            left: 25px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.1s linear;
-            z-index: 6;
-        }
-
-        /* Красива ракета */
-        .custom-rocket {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #ffffff, #a1a1aa);
-            border-radius: 50% 50% 50% 15%;
-            transform: rotate(45deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
-            position: relative;
-        }
-
-        .custom-rocket::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: -10px;
-            width: 14px;
-            height: 14px;
-            background: #38bdf8;
-            border-radius: 50%;
-            filter: blur(3px);
-        }
-
-        .player-tag {
-            background: rgba(10, 10, 15, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 800;
-            color: #ffffff;
-        }
-
-        /* --- ІГРОВЕ ПОЛЕ: РУЛЕТКА (BLACK & RED) --- */
+        /* --- ІГРОВЕ ПОЛЕ: КРУГЛА РУЛЕТКА --- */
         .roulette-display {
             height: 220px;
-            background: radial-gradient(circle at center, #1c1113 0%, #0d0708 70%, #050507 100%);
-            border: 1px solid rgba(239, 68, 68, 0.2);
+            background: radial-gradient(circle at center, #1f1215 0%, #0d0708 70%, #050507 100%);
+            border: 1px solid rgba(239, 68, 68, 0.25);
             border-radius: 20px;
             position: relative;
             overflow: hidden;
@@ -308,57 +210,64 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(239, 68, 68, 0.1);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(239, 68, 68, 0.15);
         }
 
-        .roulette-wheel-container {
-            width: 100%;
-            overflow: hidden;
+        .wheel-wrapper {
             position: relative;
-            padding: 20px 0;
+            width: 140px;
+            height: 140px;
             display: flex;
-            justify-content: center;
             align-items: center;
+            justify-content: center;
         }
 
-        /* Покажчик виграшу зверху рулетки */
-        .roulette-pointer {
+        /* Вказівник зверху колеса */
+        .wheel-pointer {
             position: absolute;
-            top: 15px;
-            width: 4px;
-            height: 45px;
-            background: #ffffff;
-            box-shadow: 0 0 10px #ffffff;
-            z-index: 10;
-            border-radius: 2px;
+            top: -10px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 16px solid #ffffff;
+            filter: drop-shadow(0 0 8px #ffffff);
+            z-index: 20;
         }
 
-        .roulette-track {
-            display: flex;
-            gap: 8px;
+        .roulette-circle {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ef4444 0deg 90deg, 
+                #18181b 90deg 180deg, 
+                #ef4444 180deg 270deg, 
+                #18181b 270deg 340deg, 
+                #10b981 340deg 360deg
+            );
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(0,0,0,0.8);
+            position: relative;
             transition: transform 4s cubic-bezier(0.15, 0.85, 0.35, 1);
-            will-change: transform;
         }
 
-        .roulette-item {
-            min-width: 65px;
-            height: 80px;
-            border-radius: 12px;
+        .wheel-center-hub {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: #111116;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-radius: 50%;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            font-size: 18px;
-            font-weight: 900;
-            border: 2px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+            font-size: 12px;
+            color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
-        .r-red { background: linear-gradient(135deg, #ef4444, #991b1b); color: #fff; }
-        .r-black { background: linear-gradient(135deg, #18181b, #09090b); color: #fff; border-color: rgba(255,255,255,0.08); }
-        .r-green { background: linear-gradient(135deg, #10b981, #047857); color: #fff; }
-
-        /* Вибір кольору для ставки */
+        /* Вибір кольору ставки */
         .color-picker-grid {
             display: flex;
             gap: 8px;
@@ -387,6 +296,73 @@
         .btn-pick-red { background: #991b1b; color: #fff; }
         .btn-pick-black { background: #18181b; color: #fff; }
         .btn-pick-green { background: #065f46; color: #fff; }
+
+        /* --- ІГРОВЕ ПОЛЕ: КУБИК (DICE) --- */
+        .dice-display {
+            height: 220px;
+            background: radial-gradient(circle at center, #121929 0%, #080c14 70%, #050507 100%);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(56, 189, 248, 0.15);
+        }
+
+        .dice-box {
+            width: 75px;
+            height: 75px;
+            background: #ffffff;
+            color: #000000;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 38px;
+            font-weight: 900;
+            box-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+            transition: transform 0.6s ease;
+        }
+
+        .dice-box.rolling {
+            animation: diceSpin 0.5s ease infinite;
+        }
+
+        @keyframes diceSpin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(1.1); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+
+        .dice-options {
+            display: flex;
+            gap: 6px;
+            margin-top: 8px;
+            margin-bottom: 8px;
+        }
+
+        .dice-opt-btn {
+            flex: 1;
+            padding: 10px 0;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dice-opt-btn.active {
+            background: #38bdf8;
+            color: #000000;
+            border-color: #38bdf8;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+        }
 
         /* --- БЛОКИ УПРАВЛІННЯ СТАВКАМИ --- */
         .betting-box {
@@ -481,12 +457,6 @@
             box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
         }
 
-        .btn-style-cashout {
-            background: #38bdf8;
-            color: #000000;
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
-        }
-
         .btn-return {
             width: 100%;
             margin-top: 12px;
@@ -557,92 +527,30 @@
         <h1 class="page-title">🎰 КАЗИНО XORYS</h1>
         
         <div class="games-container">
-            <!-- Баннер гри РАКЕТА -->
-            <div class="game-banner" onclick="openRocketGame()">
-                <i class="fa-solid fa-space-shuttle" style="color: #38bdf8;"></i>
-                <div class="game-info">
-                    <div class="game-title">ПОЛІТ РАКЕТИ</div>
-                    <div class="game-desc">Злети вище разом із Stars ⭐</div>
-                </div>
-            </div>
-
             <!-- Баннер гри РУЛЕТКА -->
             <div class="game-banner" onclick="openRouletteGame()">
                 <i class="fa-solid fa-circle-notch" style="color: #ef4444;"></i>
                 <div class="game-info">
-                    <div class="game-title">BLACK & RED DUEL</div>
-                    <div class="game-desc">Стильна рулетка • Подвоюй ставки x2 / x14</div>
+                    <div class="game-title">BLACK & RED WHEEL</div>
+                    <div class="game-desc">Кругле колесо фортуни • x2 / x14</div>
+                </div>
+            </div>
+
+            <!-- Баннер гри КУБИК -->
+            <div class="game-banner" onclick="openDiceGame()">
+                <i class="fa-solid fa-dice" style="color: #38bdf8;"></i>
+                <div class="game-info">
+                    <div class="game-title">XORYS DICE</div>
+                    <div class="game-desc">Кидай кубик • Вгадай число або парне</div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- ЕКРАН ГРИ "РАКЕТА" -->
-    <div id="rocketGamePage" class="page">
-        <div class="rg-header">
-            <div class="rg-logo">РАКЕТА <span>XORYS</span></div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStars">100</span> ⭐
-            </div>
-        </div>
-
-        <div class="rg-history">
-            <div class="history-pill">4.20x</div>
-            <div class="history-pill">1.12x</div>
-            <div class="history-pill">2.85x</div>
-            <div class="history-pill">1.04x</div>
-            <div class="history-pill">7.50x</div>
-        </div>
-
-        <div class="rg-display">
-            <div class="star-point" style="top: 20%; left: 15%; width: 2px; height: 2px;"></div>
-            <div class="star-point" style="top: 70%; left: 80%; width: 3px; height: 3px;"></div>
-            <div class="star-point" style="top: 40%; left: 60%; width: 2px; height: 2px;"></div>
-            <div class="star-point" style="top: 80%; left: 30%; width: 2px; height: 2px;"></div>
-
-            <div id="multiplierText" class="multiplier-val">x1.00</div>
-
-            <div id="rocketObj" class="rocket-container">
-                <div class="custom-rocket">
-                    <i class="fa-solid fa-arrow-up" style="color: #000; font-size: 14px; transform: rotate(-45deg);"></i>
-                </div>
-                <span id="playerNickname" class="player-tag">@user</span>
-            </div>
-        </div>
-
-        <div class="betting-box">
-            <div class="betting-info">
-                <span>РОЗМІР СТАВКИ (STARS ⭐)</span>
-                <span>АВТОВИВІД x2.00</span>
-            </div>
-            
-            <div class="bet-row">
-                <div class="bet-adjuster">
-                    <button class="btn-chg" onclick="changeBet(-5, 'rocket')">-</button>
-                    <span id="betAmount" class="bet-number">10</span>
-                    <button class="btn-chg" onclick="changeBet(5, 'rocket')">+</button>
-                </div>
-                
-                <button id="gameBtn" class="btn-main-action btn-style-start" onclick="handleGameClick()">СТАВКА</button>
-            </div>
-
-            <div class="quick-chips">
-                <button class="chip" onclick="setBet(10, 'rocket')">10</button>
-                <button class="chip" onclick="setBet(25, 'rocket')">25</button>
-                <button class="chip" onclick="setBet(50, 'rocket')">50</button>
-                <button class="chip" onclick="setBet(100, 'rocket')">100</button>
-            </div>
-        </div>
-
-        <button class="btn-return" onclick="closeSubGame('casino')">
-            <i class="fa-solid fa-arrow-left"></i> НАЗАД У ЛОБІ
-        </button>
     </div>
 
     <!-- ЕКРАН ГРИ "РУЛЕТКА" -->
     <div id="roulettePage" class="page">
         <div class="rg-header">
-            <div class="rg-logo">XORYS <span>ROULETTE</span></div>
+            <div class="rg-logo">WHEEL <span>XORYS</span></div>
             <div class="rg-balance">
                 <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsRoulette">100</span> ⭐
             </div>
@@ -654,12 +562,12 @@
             <div class="history-pill" style="border-color: #ef4444;">RED</div>
         </div>
 
-        <!-- Ігрове поле рулетки -->
+        <!-- Кругле колесо рулетки -->
         <div class="roulette-display">
-            <div class="roulette-pointer"></div>
-            <div class="roulette-wheel-container">
-                <div class="roulette-track" id="rouletteTrack">
-                    <!-- Генерація секторів через JS -->
+            <div class="wheel-wrapper">
+                <div class="wheel-pointer"></div>
+                <div class="roulette-circle" id="rouletteCircle">
+                    <div class="wheel-center-hub">⭐</div>
                 </div>
             </div>
         </div>
@@ -671,10 +579,10 @@
             <button class="color-btn btn-pick-green" onclick="setRouletteColor('green', this)">XORYS ⭐ (x14)</button>
         </div>
 
-        <!-- Управління ставкою рулетки -->
+        <!-- Управління ставкою -->
         <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА НА РУЛЕТКУ (STARS)</span>
+                <span>СТАВКА (STARS)</span>
                 <span id="selectedColorLabel">ВИБІР: ЧЕРВОНИЙ</span>
             </div>
             
@@ -685,7 +593,7 @@
                     <button class="btn-chg" onclick="changeBet(5, 'roulette')">+</button>
                 </div>
                 
-                <button id="rouletteBtn" class="btn-main-action btn-style-start" onclick="spinRoulette()">КРУТИТИ</button>
+                <button id="rouletteBtn" class="btn-main-action btn-style-start" onclick="spinRouletteWheel()">КРУТИТИ</button>
             </div>
 
             <div class="quick-chips">
@@ -693,6 +601,64 @@
                 <button class="chip" onclick="setBet(25, 'roulette')">25</button>
                 <button class="chip" onclick="setBet(50, 'roulette')">50</button>
                 <button class="chip" onclick="setBet(100, 'roulette')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')">
+            <i class="fa-solid fa-arrow-left"></i> НАЗАД У ЛОБІ
+        </button>
+    </div>
+
+    <!-- ЕКРАН ГРИ "КУБИК" -->
+    <div id="dicePage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">DICE <span>XORYS</span></div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsDice">100</span> ⭐
+            </div>
+        </div>
+
+        <div class="rg-history" id="diceHistory">
+            <div class="history-pill">5</div>
+            <div class="history-pill">2</div>
+            <div class="history-pill">6</div>
+        </div>
+
+        <!-- Поле кубика -->
+        <div class="dice-display">
+            <div id="diceBox" class="dice-box">⚀</div>
+        </div>
+
+        <!-- Вибір варіанту ставки на кубик -->
+        <div class="dice-options">
+            <button class="dice-opt-btn active" onclick="setDiceMode('even', this)">ПАРНЕ (x2)</button>
+            <button class="dice-opt-btn" onclick="setDiceMode('odd', this)">НЕПАРНЕ (x2)</button>
+            <button class="dice-opt-btn" onclick="setDiceMode('high', this)">4-6 (x2)</button>
+            <button class="dice-opt-btn" onclick="setDiceMode('low', this)">1-3 (x2)</button>
+        </div>
+
+        <!-- Управління ставкою кубика -->
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА НА КУБИК (STARS)</span>
+                <span id="selectedDiceModeLabel">РЕЖИМ: ПАРНЕ</span>
+            </div>
+            
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'dice')">-</button>
+                    <span id="betAmountDice" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'dice')">+</button>
+                </div>
+                
+                <button id="diceBtn" class="btn-main-action btn-style-start" onclick="rollDice()">КИДАТИ</button>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'dice')">10</button>
+                <button class="chip" onclick="setBet(25, 'dice')">25</button>
+                <button class="chip" onclick="setBet(50, 'dice')">50</button>
+                <button class="chip" onclick="setBet(100, 'dice')">100</button>
             </div>
         </div>
 
@@ -750,29 +716,23 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
 
-        const username = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : '@player';
-        document.getElementById('playerNickname').innerText = username;
-
         let starsBalance = 100;
-        let currentBet = 10;
         let currentBetRoulette = 10;
+        let currentBetDice = 10;
         let selectedRouletteColor = 'red';
-        let isPlaying = false;
+        let selectedDiceMode = 'even';
         let isSpinning = false;
-        let currentMultiplier = 1.00;
-        let gameInterval = null;
-        let crashPoint = 0;
+        let isRolling = false;
+        let currentWheelAngle = 0;
 
-        // Синхронізація балансу між екранами
         function updateBalanceUI() {
-            document.getElementById('userStars').innerText = starsBalance;
             document.getElementById('userStarsRoulette').innerText = starsBalance;
+            document.getElementById('userStarsDice').innerText = starsBalance;
         }
 
         function switchPage(pageId, buttonElement) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
-
             document.getElementById(pageId).classList.add('active');
 
             if (buttonElement) {
@@ -782,15 +742,14 @@
             }
         }
 
-        function openRocketGame() {
-            switchPage('rocketGamePage', null);
-            tg.HapticFeedback.impactOccurred('medium');
-        }
-
         function openRouletteGame() {
             switchPage('roulettePage', null);
             tg.HapticFeedback.impactOccurred('medium');
-            initRouletteTrack();
+        }
+
+        function openDiceGame() {
+            switchPage('dicePage', null);
+            tg.HapticFeedback.impactOccurred('medium');
         }
 
         function closeSubGame(pageId) {
@@ -799,92 +758,29 @@
         }
 
         function changeBet(amount, type) {
-            if (type === 'rocket') {
-                currentBet = Math.max(5, currentBet + amount);
-                document.getElementById('betAmount').innerText = currentBet;
-            } else {
+            if (type === 'roulette') {
                 currentBetRoulette = Math.max(5, currentBetRoulette + amount);
                 document.getElementById('betAmountRoulette').innerText = currentBetRoulette;
+            } else {
+                currentBetDice = Math.max(5, currentBetDice + amount);
+                document.getElementById('betAmountDice').innerText = currentBetDice;
             }
         }
 
         function setBet(amount, type) {
-            if (type === 'rocket') {
-                currentBet = amount;
-                document.getElementById('betAmount').innerText = currentBet;
-            } else {
+            if (type === 'roulette') {
                 currentBetRoulette = amount;
                 document.getElementById('betAmountRoulette').innerText = currentBetRoulette;
-            }
-        }
-
-        // --- ЛОГІКА РАКЕТИ ---
-        function handleGameClick() {
-            const btn = document.getElementById('gameBtn');
-            tg.HapticFeedback.impactOccurred('light');
-
-            if (!isPlaying) {
-                if (starsBalance < currentBet) {
-                    alert('Недостатньо Stars!');
-                    return;
-                }
-
-                starsBalance -= currentBet;
-                updateBalanceUI();
-                isPlaying = true;
-                currentMultiplier = 1.00;
-                crashPoint = (Math.random() * 3.5 + 1.1).toFixed(2);
-
-                btn.innerText = 'ЗАБРАТИ';
-                btn.className = 'btn-main-action btn-style-cashout';
-
-                const rocket = document.getElementById('rocketObj');
-                rocket.style.bottom = '25px';
-                rocket.style.left = '25px';
-
-                gameInterval = setInterval(() => {
-                    currentMultiplier += 0.03;
-                    document.getElementById('multiplierText').innerText = 'x' + currentMultiplier.toFixed(2);
-                    btn.innerText = `ЗАБРАТИ (${Math.floor(currentBet * currentMultiplier)})`;
-
-                    let currentBottom = parseInt(rocket.style.bottom) || 25;
-                    let currentLeft = parseInt(rocket.style.left) || 25;
-                    if (currentBottom < 110) rocket.style.bottom = (currentBottom + 1.2) + 'px';
-                    if (currentLeft < 200) rocket.style.left = (currentLeft + 2.5) + 'px';
-
-                    if (currentMultiplier >= crashPoint) {
-                        endGame(false);
-                    }
-                }, 100);
-
             } else {
-                endGame(true);
+                currentBetDice = amount;
+                document.getElementById('betAmountDice').innerText = currentBetDice;
             }
         }
 
-        function endGame(isWin) {
-            clearInterval(gameInterval);
-            isPlaying = false;
-            const btn = document.getElementById('gameBtn');
-
-            if (isWin) {
-                const winAmount = Math.floor(currentBet * currentMultiplier);
-                starsBalance += winAmount;
-                updateBalanceUI();
-                tg.HapticFeedback.notificationOccurred('success');
-            } else {
-                tg.HapticFeedback.notificationOccurred('error');
-                document.getElementById('multiplierText').innerText = 'ЗЛИТО! 💥';
-            }
-
-            btn.innerText = 'СТАВКА';
-            btn.className = 'btn-main-action btn-style-start';
-        }
-
-        // --- ЛОГІКА РУЛЕТКИ ---
+        // --- ЛОГІКА КРУГЛОЇ РУЛЕТКИ ---
         function setRouletteColor(color, el) {
             selectedRouletteColor = color;
-            document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             
             const names = { red: 'ЧЕРВОНИЙ', black: 'ЧОРНИЙ', green: 'XORYS ⭐' };
@@ -892,26 +788,7 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        function initRouletteTrack() {
-            const track = document.getElementById('rouletteTrack');
-            track.innerHTML = '';
-            // Генеруємо випадкові елементи стрічки
-            for (let i = 0; i < 40; i++) {
-                const rand = Math.random();
-                let type = 'r-black';
-                let text = 'BLK';
-                if (rand > 0.55) { type = 'r-red'; text = 'RED'; }
-                if (rand > 0.92) { type = 'r-green'; text = '⭐'; }
-
-                const div = document.createElement('div');
-                div.className = `roulette-item ${type}`;
-                div.innerHTML = `<span>${text}</span>`;
-                track.appendChild(div);
-            }
-            track.style.transform = 'translateX(0px)';
-        }
-
-        function spinRoulette() {
+        function spinRouletteWheel() {
             if (isSpinning) return;
             if (starsBalance < currentBetRoulette) {
                 alert('Недостатньо Stars!');
@@ -927,40 +804,45 @@
             btn.disabled = true;
             tg.HapticFeedback.impactOccurred('medium');
 
-            const track = document.getElementById('rouletteTrack');
-            initRouletteTrack(); // оновити нові елементи
+            // Випадковий виграшний сектор (0 - червоний, 1 - чорний, 2 - червоний, 3 - чорний, 4 - зелений)
+            const outcomeRand = Math.random();
+            let winningIndex = 0; // куди зупиниться (у градусах)
+            let winningColor = 'red';
 
-            // Випадковий виграшний елемент ближче до кінця (наприклад, елемент №30)
-            const winningIndex = 30;
-            const itemWidth = 73; // ширина (65px) + gap (8px)
-            const offset = (winningIndex * itemWidth) - 130 + (Math.random() * 40 - 20);
+            if (outcomeRand < 0.45) {
+                winningIndex = 45; // Червоний
+                winningColor = 'red';
+            } else if (outcomeRand < 0.90) {
+                winningIndex = 135; // Чорний
+                winningColor = 'black';
+            } else {
+                winningIndex = 350; // Зелений XORYS
+                winningColor = 'green';
+            }
 
-            track.style.transition = 'transform 4s cubic-bezier(0.08, 0.82, 0.15, 1)';
-            track.style.transform = `translateX(-${offset}px)`;
+            // Додаємо повні оберти (5-7 повних кіл) + кут сектора
+            const extraSpins = 360 * 6;
+            currentWheelAngle += extraSpins + (winningIndex - (currentWheelAngle % 360));
+
+            const wheel = document.getElementById('rouletteCircle');
+            wheel.style.transform = `rotate(${currentWheelAngle}deg)`;
 
             setTimeout(() => {
                 isSpinning = false;
                 btn.innerText = 'КРУТИТИ';
                 btn.disabled = false;
 
-                // Визначаємо виграшний колір на основі випадкового вибору
-                const randCheck = Math.random();
-                let winningColor = 'black';
-                if (randCheck > 0.5) winningColor = 'red';
-                if (randCheck > 0.93) winningColor = 'green';
-
                 if (winningColor === selectedRouletteColor) {
-                    let multiplier = winningColor === 'green' ? 14 : 2;
-                    let winSum = currentBetRoulette * multiplier;
+                    let mult = winningColor === 'green' ? 14 : 2;
+                    let winSum = currentBetRoulette * mult;
                     starsBalance += winSum;
                     updateBalanceUI();
                     tg.HapticFeedback.notificationOccurred('success');
-                    alert(`Перемога! Виграш: +${winSum} Stars ⭐`);
                 } else {
                     tg.HapticFeedback.notificationOccurred('error');
                 }
 
-                // Додаємо в історію
+                // Історія
                 const historyContainer = document.getElementById('rouletteHistory');
                 const pill = document.createElement('div');
                 pill.className = 'history-pill';
@@ -970,6 +852,72 @@
                 if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
 
             }, 4100);
+        }
+
+        // --- ЛОГІКА КУБИКА ---
+        function setDiceMode(mode, el) {
+            selectedDiceMode = mode;
+            document.querySelectorAll('.dice-opt-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+
+            const modeNames = { even: 'ПАРНЕ', odd: 'НЕПАРНЕ', high: '4-6', low: '1-3' };
+            document.getElementById('selectedDiceModeLabel').innerText = 'РЕЖИМ: ' + modeNames[mode];
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function rollDice() {
+            if (isRolling) return;
+            if (starsBalance < currentBetDice) {
+                alert('Недостатньо Stars!');
+                return;
+            }
+
+            starsBalance -= currentBetDice;
+            updateBalanceUI();
+            isRolling = true;
+
+            const btn = document.getElementById('diceBtn');
+            const diceBox = document.getElementById('diceBox');
+            btn.innerText = 'КИДАЄМО...';
+            btn.disabled = true;
+            diceBox.classList.add('rolling');
+            tg.HapticFeedback.impactOccurred('medium');
+
+            setTimeout(() => {
+                diceBox.classList.remove('rolling');
+                isRolling = false;
+                btn.innerText = 'КИДАТИ';
+                btn.disabled = false;
+
+                const resultVal = Math.floor(Math.random() * 6) + 1;
+                const faces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+                diceBox.innerText = faces[resultVal - 1];
+
+                // Перевірка виграшу
+                let isWin = false;
+                if (selectedDiceMode === 'even' && resultVal % 2 === 0) isWin = true;
+                if (selectedDiceMode === 'odd' && resultVal % 2 !== 0) isWin = true;
+                if (selectedDiceMode === 'high' && resultVal >= 4) isWin = true;
+                if (selectedDiceMode === 'low' && resultVal <= 3) isWin = true;
+
+                if (isWin) {
+                    let winSum = currentBetDice * 2;
+                    starsBalance += winSum;
+                    updateBalanceUI();
+                    tg.HapticFeedback.notificationOccurred('success');
+                } else {
+                    tg.HapticFeedback.notificationOccurred('error');
+                }
+
+                // Історія кубика
+                const diceHist = document.getElementById('diceHistory');
+                const pill = document.createElement('div');
+                pill.className = 'history-pill';
+                pill.innerText = resultVal;
+                diceHist.prepend(pill);
+                if (diceHist.children.length > 5) diceHist.lastChild.remove();
+
+            }, 800);
         }
 
         function openCategory(name) {
