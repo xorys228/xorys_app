@@ -16,39 +16,46 @@
         }
 
         body {
-            background-color: #050507;
+            background-color: #030305;
             color: #ffffff;
-            background-image: radial-gradient(circle at 50% 20%, #16161c 0%, #050507 85%);
+            background-image: radial-gradient(circle at 50% 15%, #181824 0%, #030305 80%);
             background-size: 100% 100%;
-            padding-bottom: 75px;
+            padding-bottom: 80px;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            font-weight: 700;
+            font-weight: 600;
         }
 
         .page {
             display: none;
             width: 100%;
-            max-width: 500px;
+            max-width: 480px;
             padding: 16px;
+            animation: fadeIn 0.3s ease;
         }
 
         .page.active {
             display: block;
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .page-title {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px;
             margin-bottom: 20px;
-            font-size: 22px;
+            font-size: 20px;
             font-weight: 900;
-            letter-spacing: 1.5px;
+            letter-spacing: 2px;
             color: #ffffff;
             text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255,255,255,0.15);
         }
 
         /* --- КАТАЛОГ МАРКЕТА --- */
@@ -61,214 +68,171 @@
 
         .catalog-card {
             flex: 1;
-            background: rgba(20, 20, 25, 0.7);
+            background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 14px;
-            padding: 12px 6px;
+            border-radius: 16px;
+            padding: 14px 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             cursor: pointer;
+            transition: all 0.2s ease;
         }
 
         .catalog-card:active {
             transform: scale(0.95);
+            background: rgba(255, 255, 255, 0.06);
         }
 
         .card-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            margin-bottom: 6px;
-            background: rgba(255, 255, 255, 0.04);
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .card-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 800;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.8px;
+            color: rgba(255,255,255,0.8);
         }
 
-        /* --- БАНЕРЫ ИГР С 3D НЕОНОВЫМИ ИКОНКАМИ --- */
+        /* --- БАНЕРЫ ИГР С ЭЛЕГАНТНЫМИ ИКОНКАМИ --- */
         .games-container {
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 12px;
         }
 
         .game-banner {
-            background: linear-gradient(135deg, rgba(25, 25, 35, 0.6), rgba(12, 12, 18, 0.8));
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: linear-gradient(135deg, rgba(22, 22, 30, 0.7), rgba(10, 10, 15, 0.9));
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 20px;
-            padding: 16px 20px;
-            text-align: center;
+            padding: 16px 18px;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-            transition: all 0.2s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             align-items: center;
-            gap: 18px;
-            backdrop-filter: blur(10px);
+            gap: 16px;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-banner::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 3px; height: 100%;
+            background: rgba(255,255,255,0.2);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .game-banner:hover::before {
+            opacity: 1;
         }
 
         .game-banner:active {
             transform: scale(0.97);
+            border-color: rgba(255, 255, 255, 0.2);
         }
 
-        /* Контейнер стилизованной 3D-иконки */
         .icon-box {
-            width: 58px;
-            height: 58px;
-            border-radius: 18px;
+            width: 54px;
+            height: 54px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 22px;
             color: #ffffff;
             flex-shrink: 0;
             position: relative;
-            background-size: cover;
-            background-position: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: inset 0 2px 6px rgba(255,255,255,0.2);
         }
 
-        .icon-box::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            border-radius: 18px;
-            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 60%);
-            pointer-events: none;
-        }
-
-        /* Уникальные неоновые иконки игр */
         .icon-rocket {
-            background: radial-gradient(circle at 30% 30%, #38bdf8, #0369a1);
-            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
-            animation: floatRocket 3s ease-in-out infinite;
+            background: linear-gradient(135deg, #0ea5e9, #0369a1);
+            box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+            animation: floatSlow 3s ease-in-out infinite;
         }
-        .icon-rocket i {
-            transform: rotate(-45deg);
-            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
-        }
+        .icon-rocket i { transform: rotate(-45deg); }
 
         .icon-roulette {
-            background: radial-gradient(circle at 30% 30%, #ff2a5f, #8b0000);
-            box-shadow: 0 0 20px rgba(255, 42, 95, 0.5);
-            animation: pulseRoulette 2.5s ease-in-out infinite;
+            background: linear-gradient(135deg, #f43f5e, #9f1239);
+            box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
+            animation: pulseGlow 3s ease-in-out infinite;
         }
-        .icon-roulette i {
-            color: #ffd700;
-            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
-            animation: innerWheelRotate 10s linear infinite;
-        }
+        .icon-roulette i { color: #fde047; }
 
         .icon-mines {
-            background: radial-gradient(circle at 30% 30%, #c084fc, #6b21a8);
-            box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
-            animation: floatMines 3.5s ease-in-out infinite;
-        }
-        .icon-mines i {
-            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+            background: linear-gradient(135deg, #a855f7, #6b21a8);
+            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
+            animation: floatSlow 3.5s ease-in-out infinite;
         }
 
         .icon-plinko {
-            background: radial-gradient(circle at 30% 30%, #ec4899, #9d174d);
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
-            animation: floatMines 3.2s ease-in-out infinite;
-        }
-        .icon-plinko i {
-            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+            background: linear-gradient(135deg, #ec4899, #831843);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+            animation: floatSlow 3.2s ease-in-out infinite;
         }
 
         .icon-coinflip {
-            background: radial-gradient(circle at 30% 30%, #eab308, #854d0e);
-            box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
-            animation: pulseRoulette 2.8s ease-in-out infinite;
-        }
-        .icon-coinflip i {
-            color: #fff;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
+            background: linear-gradient(135deg, #eab308, #854d0e);
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
+            animation: pulseGlow 3.5s ease-in-out infinite;
         }
 
-        /* Ключевые кадры плавных анимаций */
-        @keyframes floatRocket {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-5px) scale(1.03); }
-        }
-
-        @keyframes pulseRoulette {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 18px rgba(255, 42, 95, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 0 28px rgba(255, 42, 95, 0.8); }
-        }
-
-        @keyframes innerWheelRotate {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes floatMines {
+        @keyframes floatSlow {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+            50% { transform: translateY(-3px); }
         }
 
-        .game-info {
-            text-align: left;
+        @keyframes pulseGlow {
+            0%, 100% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.04); opacity: 1; }
         }
 
-        .game-title {
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 1.5px;
-        }
-
-        .game-desc {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.5);
-            margin-top: 4px;
-            font-weight: 700;
-        }
+        .game-info { text-align: left; }
+        .game-title { font-size: 17px; font-weight: 900; letter-spacing: 1.2px; }
+        .game-desc { font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-top: 3px; font-weight: 500; }
 
         /* --- ШАПКА ИГРОВЫХ ЭКРАНОВ --- */
         .rg-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 8px 4px;
+            padding: 4px 2px;
             margin-bottom: 12px;
         }
 
-        .rg-logo {
-            font-size: 18px;
-            font-weight: 900;
-            letter-spacing: 2px;
-            color: #ffffff;
-        }
-
-        .rg-logo span {
-            color: #888893;
-            font-weight: 500;
-        }
+        .rg-logo { font-size: 16px; font-weight: 900; letter-spacing: 1.5px; color: #ffffff; }
+        .rg-logo span { color: rgba(255,255,255,0.4); font-weight: 500; }
 
         .rg-balance {
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 6px 14px;
             border-radius: 20px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 800;
             color: #ffffff;
             display: flex;
             align-items: center;
             gap: 6px;
+            backdrop-filter: blur(8px);
         }
 
         .rg-history {
@@ -277,24 +241,23 @@
             overflow-x: auto;
             padding-bottom: 6px;
             margin-bottom: 12px;
+            scrollbar-width: none;
         }
+        .rg-history::-webkit-scrollbar { display: none; }
 
         .history-pill {
-            background: rgba(25, 25, 32, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             padding: 4px 10px;
             border-radius: 10px;
             font-size: 11px;
             font-weight: 800;
-            color: #ffffff;
+            color: rgba(255,255,255,0.9);
             white-space: nowrap;
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА --- */
-        .rg-display {
-            height: 220px;
-            background: radial-gradient(circle at center, #1b1b2f 0%, #0b0b10 70%, #050507 100%);
-            border: 1px solid rgba(255, 255, 255, 0.15);
+        /* --- ИГРОВЫЕ ДИСПЛЕИ --- */
+        .rg-display, .roulette-display, .mines-display, .plinko-display, .coinflip-display {
             border-radius: 20px;
             position: relative;
             overflow: hidden;
@@ -302,576 +265,320 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(100, 100, 255, 0.1);
         }
 
-        .rg-display::before {
-            content: '';
-            position: absolute;
-            width: 200%;
-            height: 200%;
-            background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-            background-size: 20px 20px;
-            transform: perspective(500px) rotateX(60deg);
-            bottom: -50px;
-            animation: gridMove 10s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 0 40px; }
-        }
-
-        .star-point {
-            position: absolute;
-            background: #fff;
-            border-radius: 50%;
-            opacity: 0.6;
-            box-shadow: 0 0 4px #fff;
+        .rg-display {
+            height: 210px;
+            background: radial-gradient(circle at center, #16162c 0%, #070710 80%);
+            border: 1px solid rgba(56, 189, 248, 0.2);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(56, 189, 248, 0.1);
         }
 
         .multiplier-val {
-            font-size: 48px;
+            font-size: 44px;
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
+            text-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
             z-index: 5;
             letter-spacing: 1px;
         }
 
         .rocket-container {
             position: absolute;
-            bottom: 25px;
-            left: 25px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.1s linear;
-            z-index: 6;
+            bottom: 25px; left: 25px;
+            display: flex; align-items: center; gap: 8px;
+            transition: all 0.1s linear; z-index: 6;
         }
 
         .custom-rocket {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #ffffff, #a1a1aa);
+            width: 34px; height: 34px;
+            background: linear-gradient(135deg, #ffffff, #94a3b8);
             border-radius: 50% 50% 50% 15%;
             transform: rotate(45deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.7);
             position: relative;
-        }
-
-        .custom-rocket::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: -10px;
-            width: 14px;
-            height: 14px;
-            background: #38bdf8;
-            border-radius: 50%;
-            filter: blur(3px);
         }
 
         .player-tag {
-            background: rgba(10, 10, 15, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 800;
-            color: #ffffff;
+            background: rgba(10, 10, 15, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 2px 8px; border-radius: 6px;
+            font-size: 10px; font-weight: 700; color: #fff;
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: РУЛЕТКА --- */
+        /* Рулетка */
         .roulette-display {
-            height: 220px;
-            background: radial-gradient(circle at center, #1f1215 0%, #0d0708 70%, #050507 100%);
-            border: 1px solid rgba(239, 68, 68, 0.25);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(239, 68, 68, 0.15);
+            height: 210px;
+            background: radial-gradient(circle at center, #261015 0%, #080305 80%);
+            border: 1px solid rgba(244, 63, 94, 0.25);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(244, 63, 94, 0.1);
         }
 
         .wheel-wrapper {
-            position: relative;
-            width: 140px;
-            height: 140px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            position: relative; width: 130px; height: 130px;
+            display: flex; align-items: center; justify-content: center;
         }
 
         .wheel-pointer {
-            position: absolute;
-            top: -12px;
-            width: 0;
-            height: 0;
-            border-left: 8px solid transparent;
-            border-right: 8px solid transparent;
-            border-top: 16px solid #ffffff;
-            filter: drop-shadow(0 0 8px #ffffff);
-            z-index: 20;
+            position: absolute; top: -10px; width: 0; height: 0;
+            border-left: 7px solid transparent; border-right: 7px solid transparent;
+            border-top: 14px solid #ffffff; filter: drop-shadow(0 0 6px #ffffff); z-index: 20;
         }
 
         .roulette-circle {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
+            width: 130px; height: 130px; border-radius: 50%;
             background: conic-gradient(
-                #ef4444 0deg 30deg,
-                #18181b 30deg 60deg,
-                #ef4444 60deg 90deg,
-                #18181b 90deg 120deg,
-                #ef4444 120deg 150deg,
-                #18181b 150deg 180deg,
-                #ef4444 180deg 210deg,
-                #18181b 210deg 240deg,
-                #ef4444 240deg 270deg,
-                #18181b 270deg 300deg,
-                #ef4444 300deg 330deg,
-                #18181b 330deg 350deg,
+                #f43f5e 0deg 30deg, #18181b 30deg 60deg,
+                #f43f5e 60deg 90deg, #18181b 90deg 120deg,
+                #f43f5e 120deg 150deg, #18181b 150deg 180deg,
+                #f43f5e 180deg 210deg, #18181b 210deg 240deg,
+                #f43f5e 240deg 270deg, #18181b 270deg 300deg,
+                #f43f5e 300deg 330deg, #18181b 330deg 350deg,
                 #10b981 350deg 360deg
             );
-            border: 4px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(0,0,0,0.8);
+            border: 3px solid rgba(255, 255, 255, 0.25);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 12px rgba(0,0,0,0.7);
             position: relative;
-            transition: transform 4s cubic-bezier(0.15, 0.85, 0.35, 1);
+            transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
         }
 
         .wheel-center-hub {
-            position: absolute;
-            width: 40px;
-            height: 40px;
-            background: #111116;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            color: #fff;
-            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            position: absolute; width: 36px; height: 36px;
+            background: #111115; border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            font-size: 11px; color: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
 
         .color-picker-grid {
-            display: flex;
-            gap: 8px;
-            margin-top: 8px;
-            margin-bottom: 8px;
+            display: flex; gap: 8px; margin-top: 10px; margin-bottom: 6px;
         }
 
         .color-btn {
-            flex: 1;
-            padding: 10px 0;
-            border-radius: 10px;
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            font-size: 11px;
-            font-weight: 900;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.2s;
+            flex: 1; padding: 10px 0; border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11px; font-weight: 800; cursor: pointer;
+            text-transform: uppercase; transition: all 0.2s;
+            background: rgba(255,255,255,0.03); color: #fff;
         }
-
         .color-btn.active {
             border-color: #ffffff;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
-            transform: translateY(-2px);
+            background: rgba(255,255,255,0.1);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
         }
 
-        .btn-pick-red { background: #991b1b; color: #fff; }
-        .btn-pick-black { background: #18181b; color: #fff; }
-        .btn-pick-green { background: #065f46; color: #fff; }
-
-        /* --- ИГРОВОЕ ПОЛЕ: МИНЫ --- */
+        /* Мины */
         .mines-display {
-            background: #09090e;
+            background: radial-gradient(circle at center, #1b0f28 0%, #06030a 80%);
             border: 1px solid rgba(168, 85, 247, 0.25);
-            border-radius: 20px;
-            padding: 14px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(168, 85, 247, 0.15);
+            padding: 12px;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(168, 85, 247, 0.1);
         }
 
         .mines-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-            width: 100%;
-            max-width: 280px;
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; max-width: 270px;
         }
 
         .mine-tile {
-            aspect-ratio: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            cursor: pointer;
-            transition: transform 0.1s ease, background 0.2s;
+            aspect-ratio: 1; background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; cursor: pointer; transition: all 0.15s ease;
         }
-
-        .mine-tile:active {
-            transform: scale(0.92);
-        }
-
+        .mine-tile:active { transform: scale(0.9); }
         .mine-tile.revealed-star {
             background: linear-gradient(135deg, #a855f7, #6366f1);
-            border-color: #ffffff;
-            box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+            border-color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
         }
-
         .mine-tile.revealed-bomb {
-            background: linear-gradient(135deg, #ef4444, #7f1d1d);
-            border-color: #ffffff;
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+            background: linear-gradient(135deg, #f43f5e, #881337);
+            border-color: #fff; box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
         }
 
-        .mines-config-row {
-            display: flex;
-            gap: 6px;
-            margin-top: 10px;
-            width: 100%;
-        }
-
+        .mines-config-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
         .mine-count-btn {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #fff;
-            padding: 8px 0;
-            border-radius: 8px;
-            font-size: 11px;
-            font-weight: 800;
-            cursor: pointer;
+            flex: 1; background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08); color: #fff;
+            padding: 7px 0; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer;
+            transition: all 0.2s;
         }
-
         .mine-count-btn.active {
-            background: #a855f7;
-            border-color: #fff;
-            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+            background: #a855f7; border-color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: ПЛИНКО --- */
+        /* Плинко */
         .plinko-display {
-            height: 270px;
-            background: radial-gradient(circle at center, #1b0c1e 0%, #080309 80%);
+            height: 250px;
+            background: radial-gradient(circle at center, #260f22 0%, #060205 80%);
             border: 1px solid rgba(236, 72, 153, 0.25);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(236, 72, 153, 0.15);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(236, 72, 153, 0.1);
         }
+        #plinkoCanvas { width: 100%; height: 100%; }
 
-        #plinkoCanvas {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* --- ИГРОВОЕ ПОЛЕ: 3D ОРЕЛ И РЕШКА --- */
+        /* 3D Орел и Решка */
         .coinflip-display {
-            height: 240px;
-            background: radial-gradient(circle at center, #1e1b0c 0%, #090803 80%);
+            height: 220px;
+            background: radial-gradient(circle at center, #261f0f 0%, #060502 80%);
             border: 1px solid rgba(234, 179, 8, 0.25);
-            border-radius: 20px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(234, 179, 8, 0.15);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(234, 179, 8, 0.1);
             perspective: 1000px;
         }
 
-        /* 3D Контейнер монеты */
         .coin-3d-wrapper {
-            width: 110px;
-            height: 110px;
-            position: relative;
-            transform-style: preserve-3d;
-            transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
+            width: 100px; height: 100px; position: relative;
+            transform-style: preserve-3d; transition: transform 3s cubic-bezier(0.15, 0.85, 0.25, 1);
         }
 
         .coin-side {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            backface-visibility: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            border: 6px solid #fef08a;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 20px rgba(234, 179, 8, 0.6);
+            position: absolute; inset: 0; border-radius: 50%;
+            backface-visibility: hidden; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-weight: 900;
+            border: 5px solid #fef08a; box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 15px rgba(234, 179, 8, 0.5);
         }
-
-        .coin-heads {
-            background: radial-gradient(circle at 30% 30%, #facc15, #ca8a04);
-            color: #000;
-            transform: rotateY(0deg);
-        }
-
+        .coin-heads { background: radial-gradient(circle at 30% 30%, #facc15, #b45309); color: #000; transform: rotateY(0deg); }
         .coin-tails {
-            background: radial-gradient(circle at 30% 30%, #e2e8f0, #64748b);
-            color: #000;
-            border-color: #ffffff;
-            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 20px rgba(255, 255, 255, 0.6);
+            background: radial-gradient(circle at 30% 30%, #f1f5f9, #475569);
+            color: #000; border-color: #fff;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 15px rgba(255, 255, 255, 0.5);
             transform: rotateY(180deg);
         }
-
-        .coin-side i {
-            font-size: 38px;
-            margin-bottom: 2px;
-        }
-
-        .coin-side span {
-            font-size: 11px;
-            letter-spacing: 1px;
-        }
+        .coin-side i { font-size: 34px; margin-bottom: 2px; }
+        .coin-side span { font-size: 10px; letter-spacing: 0.8px; }
 
         /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ --- */
         .betting-box {
-            background: #111116;
+            background: rgba(15, 15, 22, 0.8);
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 18px;
             padding: 14px;
             margin-top: 12px;
+            backdrop-filter: blur(10px);
         }
 
         .betting-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.4);
-            margin-bottom: 8px;
-            font-weight: 800;
+            display: flex; justify-content: space-between;
+            font-size: 10px; color: rgba(255, 255, 255, 0.4);
+            margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px;
         }
 
-        .bet-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+        .bet-row { display: flex; gap: 10px; align-items: center; }
 
         .bet-adjuster {
-            flex: 1;
-            background: #08080c;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            flex: 1; background: rgba(5, 5, 8, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px; padding: 6px 10px;
+            display: flex; align-items: center; justify-content: space-between;
         }
 
         .btn-chg {
-            background: rgba(255, 255, 255, 0.08);
-            border: none;
-            color: #fff;
-            width: 30px;
-            height: 30px;
-            border-radius: 8px;
-            font-weight: 900;
-            font-size: 16px;
-            cursor: pointer;
+            background: rgba(255, 255, 255, 0.06); border: none; color: #fff;
+            width: 28px; height: 28px; border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer;
+            transition: background 0.15s;
         }
+        .btn-chg:active { background: rgba(255, 255, 255, 0.15); }
 
-        .bet-number {
-            font-size: 18px;
-            font-weight: 900;
-        }
+        .bet-number { font-size: 17px; font-weight: 900; }
 
-        .quick-chips {
-            display: flex;
-            gap: 5px;
-            margin-top: 6px;
-        }
-
+        .quick-chips { display: flex; gap: 5px; margin-top: 6px; }
         .chip {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.7);
-            border-radius: 6px;
-            padding: 4px 0;
-            font-size: 10px;
-            font-weight: 900;
-            cursor: pointer;
+            flex: 1; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.7);
+            border-radius: 6px; padding: 4px 0; font-size: 10px; font-weight: 900; cursor: pointer;
+            transition: all 0.15s;
         }
+        .chip:active { background: rgba(255,255,255,0.1); color: #fff; }
 
         .btn-main-action {
-            width: 130px;
-            height: 54px;
-            border: none;
-            border-radius: 14px;
-            font-weight: 900;
-            font-size: 14px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.1s ease;
+            width: 125px; height: 50px; border: none; border-radius: 14px;
+            font-weight: 900; font-size: 13px; cursor: pointer; text-transform: uppercase;
+            letter-spacing: 1px; transition: transform 0.1s ease, filter 0.2s;
         }
-
-        .btn-main-action:active {
-            transform: scale(0.96);
-        }
+        .btn-main-action:active { transform: scale(0.95); }
 
         .btn-style-start {
-            background: #ffffff;
-            color: #000000;
-            box-shadow: 0 4px 20px rgba(255, 255, 255, 0.25);
+            background: #ffffff; color: #000000;
+            box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
         }
+        .btn-style-start:hover { filter: brightness(0.95); }
 
         .btn-style-cashout {
-            background: #38bdf8;
-            color: #000000;
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+            background: #38bdf8; color: #000000;
+            box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);
         }
 
         .btn-return {
-            width: 100%;
-            margin-top: 12px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 12px;
-            border-radius: 12px;
-            font-weight: 900;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07); color: rgba(255, 255, 255, 0.6);
+            padding: 11px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+            transition: background 0.2s;
         }
+        .btn-return:active { background: rgba(255, 255, 255, 0.08); color: #fff; }
 
         /* --- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ --- */
         .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 65px;
-            background-color: rgba(10, 10, 14, 0.95);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            z-index: 1000;
-            backdrop-filter: blur(12px);
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 65px;
+            background-color: rgba(6, 6, 10, 0.92);
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            display: flex; justify-content: space-around; align-items: center;
+            z-index: 1000; backdrop-filter: blur(14px);
         }
 
         .nav-item {
-            background: none;
-            border: none;
-            color: rgba(255, 255, 255, 0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            height: 100%;
-            cursor: pointer;
+            background: none; border: none; color: rgba(255, 255, 255, 0.35);
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            flex: 1; height: 100%; cursor: pointer; transition: color 0.2s;
         }
-
-        .nav-item i {
-            font-size: 18px;
-            margin-bottom: 4px;
-        }
-
-        .nav-item span {
-            font-size: 10px;
-            font-weight: 900;
-            letter-spacing: 0.5px;
-        }
-
-        .nav-item.active {
-            color: #ffffff;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-        }
+        .nav-item i { font-size: 17px; margin-bottom: 3px; }
+        .nav-item span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
+        .nav-item.active { color: #ffffff; text-shadow: 0 0 10px rgba(255, 255, 255, 0.4); }
     </style>
 </head>
 <body>
 
     <!-- Вкладка КАЗИНО (ЛОББИ) -->
     <div id="casino" class="page active">
-        <h1 class="page-title">🎰 КАЗИНО XORYS</h1>
+        <h1 class="page-title">🎰 XORYS CASINO</h1>
         
         <div class="games-container">
-            <!-- Баннер игры РАКЕТА -->
             <div class="game-banner" onclick="openRocketGame()">
-                <div class="icon-box icon-rocket">
-                    <i class="fa-solid fa-rocket"></i>
-                </div>
+                <div class="icon-box icon-rocket"><i class="fa-solid fa-rocket"></i></div>
                 <div class="game-info">
                     <div class="game-title">РАКЕТА</div>
                     <div class="game-desc">Динамический полет • Ставки на Stars ⭐</div>
                 </div>
             </div>
 
-            <!-- Баннер игры РУЛЕТКА -->
             <div class="game-banner" onclick="openRouletteGame()">
-                <div class="icon-box icon-roulette">
-                    <i class="fa-solid fa-dharmachakra"></i>
-                </div>
+                <div class="icon-box icon-roulette"><i class="fa-solid fa-dharmachakra"></i></div>
                 <div class="game-info">
                     <div class="game-title">РУЛЕТКА</div>
-                    <div class="game-desc">Уникальное колесо удачи • x2 / x14</div>
+                    <div class="game-desc">Колесо удачи • x2 / x14 множители</div>
                 </div>
             </div>
 
-            <!-- Баннер игры МИНЫ -->
             <div class="game-banner" onclick="openMinesGame()">
-                <div class="icon-box icon-mines">
-                    <i class="fa-solid fa-land-mine-on"></i>
-                </div>
+                <div class="icon-box icon-mines"><i class="fa-solid fa-land-mine-on"></i></div>
                 <div class="game-info">
                     <div class="game-title">МИНЫ</div>
                     <div class="game-desc">Ищи звезды • Остерегайся мин 💣</div>
                 </div>
             </div>
 
-            <!-- Баннер игры ПЛИНКО -->
             <div class="game-banner" onclick="openPlinkoGame()">
-                <div class="icon-box icon-plinko">
-                    <i class="fa-solid fa-network-wired"></i>
-                </div>
+                <div class="icon-box icon-plinko"><i class="fa-solid fa-network-wired"></i></div>
                 <div class="game-info">
                     <div class="game-title">ПЛИНКО</div>
-                    <div class="game-desc">Падение шарика • До x15 множители 🎯</div>
+                    <div class="game-desc">Падение шарика • Баланс и до x15 🎯</div>
                 </div>
             </div>
 
-            <!-- Баннер игры 3D ОРЕЛ И РЕШКА -->
             <div class="game-banner" onclick="openCoinflipGame()">
-                <div class="icon-box icon-coinflip">
-                    <i class="fa-solid fa-coins"></i>
-                </div>
+                <div class="icon-box icon-coinflip"><i class="fa-solid fa-coins"></i></div>
                 <div class="game-info">
                     <div class="game-title">ОРЕЛ И РЕШКА 3D</div>
-                    <div class="game-desc">3D подбрасывание монеты • Быстрый x2 🔥</div>
+                    <div class="game-desc">Объемная 3D монета • Быстрый x2 🔥</div>
                 </div>
             </div>
         </div>
@@ -881,38 +588,27 @@
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
             <div class="rg-logo">РАКЕТА <span>XORYS</span></div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsRocket">100</span> ⭐
-            </div>
+            <div class="rg-balance"><i class="fa-solid fa-star" style="color: #fde047;"></i> <span id="userStarsRocket">100</span> ⭐</div>
         </div>
 
         <div class="rg-history">
             <div class="history-pill">4.20x</div>
             <div class="history-pill">1.12x</div>
             <div class="history-pill">2.85x</div>
-            <div class="history-pill">1.04x</div>
             <div class="history-pill">7.50x</div>
         </div>
 
         <div class="rg-display">
-            <div class="star-point" style="top: 20%; left: 15%; width: 2px; height: 2px;"></div>
-            <div class="star-point" style="top: 70%; left: 80%; width: 3px; height: 3px;"></div>
-            <div class="star-point" style="top: 40%; left: 60%; width: 2px; height: 2px;"></div>
-            <div class="star-point" style="top: 80%; left: 30%; width: 2px; height: 2px;"></div>
-
             <div id="multiplierText" class="multiplier-val">x1.00</div>
-
             <div id="rocketObj" class="rocket-container">
-                <div class="custom-rocket">
-                    <i class="fa-solid fa-arrow-up" style="color: #000; font-size: 14px; transform: rotate(-45deg);"></i>
-                </div>
+                <div class="custom-rocket"><i class="fa-solid fa-arrow-up" style="color: #000; font-size: 13px; transform: rotate(-45deg);"></i></div>
                 <span id="playerNickname" class="player-tag">@user</span>
             </div>
         </div>
 
         <div class="betting-box">
             <div class="betting-info">
-                <span>РАЗМЕР СТАВКИ (STARS ⭐)</span>
+                <span>СТАВКА (STARS ⭐)</span>
                 <span>АВТОВЫВОД x2.00</span>
             </div>
             
@@ -922,7 +618,6 @@
                     <span id="betAmountRocket" class="bet-number">10</span>
                     <button class="btn-chg" onclick="changeBet(5, 'rocket')">+</button>
                 </div>
-                
                 <button id="gameBtn" class="btn-main-action btn-style-start" onclick="handleRocketClick()">СТАВКА</button>
             </div>
 
@@ -934,24 +629,19 @@
             </div>
         </div>
 
-        <button class="btn-return" onclick="closeSubGame('casino')">
-            <i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ
-        </button>
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
     <!-- ЭКРАН ИГРЫ "РУЛЕТКА" -->
     <div id="roulettePage" class="page">
         <div class="rg-header">
             <div class="rg-logo">РУЛЕТКА <span>XORYS</span></div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsRoulette">100</span> ⭐
-            </div>
+            <div class="rg-balance"><i class="fa-solid fa-star" style="color: #fde047;"></i> <span id="userStarsRoulette">100</span> ⭐</div>
         </div>
 
         <div class="rg-history" id="rouletteHistory">
-            <div class="history-pill" style="border-color: #ef4444;">RED</div>
+            <div class="history-pill" style="border-color: #f43f5e;">RED</div>
             <div class="history-pill" style="border-color: #555;">BLACK</div>
-            <div class="history-pill" style="border-color: #ef4444;">RED</div>
         </div>
 
         <div class="roulette-display">
@@ -964,9 +654,9 @@
         </div>
 
         <div class="color-picker-grid">
-            <button class="color-btn btn-pick-red active" onclick="setRouletteColor('red', this)">КРАСНЫЙ (x2)</button>
-            <button class="color-btn btn-pick-black" onclick="setRouletteColor('black', this)">ЧЕРНЫЙ (x2)</button>
-            <button class="color-btn btn-pick-green" onclick="setRouletteColor('green', this)">XORYS ⭐ (x14)</button>
+            <button class="color-btn active" onclick="setRouletteColor('red', this)">КРАСНЫЙ (x2)</button>
+            <button class="color-btn" onclick="setRouletteColor('black', this)">ЧЕРНЫЙ (x2)</button>
+            <button class="color-btn" onclick="setRouletteColor('green', this)">XORYS ⭐ (x14)</button>
         </div>
 
         <div class="betting-box">
@@ -981,7 +671,6 @@
                     <span id="betAmountRoulette" class="bet-number">10</span>
                     <button class="btn-chg" onclick="changeBet(5, 'roulette')">+</button>
                 </div>
-                
                 <button id="rouletteBtn" class="btn-main-action btn-style-start" onclick="spinRouletteWheel()">КРУТИТЬ</button>
             </div>
 
@@ -993,18 +682,14 @@
             </div>
         </div>
 
-        <button class="btn-return" onclick="closeSubGame('casino')">
-            <i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ
-        </button>
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
     <!-- ЭКРАН ИГРЫ "МИНЫ" -->
     <div id="minesPage" class="page">
         <div class="rg-header">
             <div class="rg-logo">МИНЫ <span>XORYS</span></div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsMines">100</span> ⭐
-            </div>
+            <div class="rg-balance"><i class="fa-solid fa-star" style="color: #fde047;"></i> <span id="userStarsMines">100</span> ⭐</div>
         </div>
 
         <div class="mines-display">
@@ -1029,7 +714,6 @@
                     <span id="betAmountMines" class="bet-number">10</span>
                     <button class="btn-chg" onclick="changeBet(5, 'mines')">+</button>
                 </div>
-                
                 <button id="minesBtn" class="btn-main-action btn-style-start" onclick="handleMinesBtnClick()">ИГРАТЬ</button>
             </div>
 
@@ -1041,33 +725,29 @@
             </div>
         </div>
 
-        <button class="btn-return" onclick="closeSubGame('casino')">
-            <i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ
-        </button>
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
-    <!-- ЭКРАН ИГРЫ "ПЛИНКО" -->
+    <!-- ЭКРАН ИГРЫ "ПЛИНКО" (ИСПРАВЛЕН ШАНС И ДИЗАЙН) -->
     <div id="plinkoPage" class="page">
         <div class="rg-header">
             <div class="rg-logo">ПЛИНКО <span>XORYS</span></div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsPlinko">100</span> ⭐
-            </div>
+            <div class="rg-balance"><i class="fa-solid fa-star" style="color: #fde047;"></i> <span id="userStarsPlinko">100</span> ⭐</div>
         </div>
 
         <div class="rg-history" id="plinkoHistory">
-            <div class="history-pill" style="border-color: #ec4899;">x1.5</div>
+            <div class="history-pill" style="border-color: #ec4899;">x1.0</div>
             <div class="history-pill" style="border-color: #3b82f6;">x0.5</div>
         </div>
 
         <div class="plinko-display">
-            <canvas id="plinkoCanvas" width="300" height="260"></canvas>
+            <canvas id="plinkoCanvas" width="300" height="230"></canvas>
         </div>
 
         <div class="betting-box">
             <div class="betting-info">
                 <span>СТАВКА (STARS)</span>
-                <span id="plinkoStatusLabel">БРОСОК ШАРИКА</span>
+                <span id="plinkoStatusLabel">БАЛАНСИРОВАННЫЙ РЕЖИМ</span>
             </div>
             
             <div class="bet-row">
@@ -1076,7 +756,6 @@
                     <span id="betAmountPlinko" class="bet-number">10</span>
                     <button class="btn-chg" onclick="changeBet(5, 'plinko')">+</button>
                 </div>
-                
                 <button id="plinkoBtn" class="btn-main-action btn-style-start" onclick="dropPlinkoBall()">БРОСИТЬ</button>
             </div>
 
@@ -1088,18 +767,14 @@
             </div>
         </div>
 
-        <button class="btn-return" onclick="closeSubGame('casino')">
-            <i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ
-        </button>
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
     <!-- ЭКРАН ИГРЫ "3D ОРЕЛ И РЕШКА" -->
     <div id="coinflipPage" class="page">
         <div class="rg-header">
             <div class="rg-logo">ОРЕЛ / РЕШКА <span>3D</span></div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsCoinflip">100</span> ⭐
-            </div>
+            <div class="rg-balance"><i class="fa-solid fa-star" style="color: #fde047;"></i> <span id="userStarsCoinflip">100</span> ⭐</div>
         </div>
 
         <div class="rg-history" id="coinflipHistory">
@@ -1121,8 +796,8 @@
         </div>
 
         <div class="color-picker-grid">
-            <button class="color-btn btn-pick-red active" style="background: #ca8a04; color: #fff;" onclick="setCoinChoice('heads', this)">ОРЕЛ ⭐ (x2)</button>
-            <button class="color-btn btn-pick-black" style="background: #475569; color: #fff;" onclick="setCoinChoice('tails', this)">РЕШКА ⚡ (x2)</button>
+            <button class="color-btn active" style="background: rgba(202,138,4,0.2); border-color: #ca8a04;" onclick="setCoinChoice('heads', this)">ОРЕЛ ⭐ (x2)</button>
+            <button class="color-btn" onclick="setCoinChoice('tails', this)">РЕШКА ⚡ (x2)</button>
         </div>
 
         <div class="betting-box">
@@ -1137,7 +812,6 @@
                     <span id="betAmountCoinflip" class="bet-number">10</span>
                     <button class="btn-chg" onclick="changeBet(5, 'coinflip')">+</button>
                 </div>
-                
                 <button id="coinflipBtn" class="btn-main-action btn-style-start" onclick="flipCoin3D()">ПОДБРОСИТЬ</button>
             </div>
 
@@ -1149,14 +823,12 @@
             </div>
         </div>
 
-        <button class="btn-return" onclick="closeSubGame('casino')">
-            <i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ
-        </button>
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
-        <h1 class="page-title">🛒 КАТАЛОГ</h1>
+        <h1 class="page-title">🛒 МАРКЕТ</h1>
         <div class="catalog-grid">
             <div class="catalog-card" onclick="openCategory('Номера')">
                 <div class="card-icon"><i class="fa-solid fa-sim-card"></i></div>
@@ -1180,7 +852,7 @@
     <!-- Вкладка ПРОФИЛЬ -->
     <div id="profile" class="page">
         <h1 class="page-title">👤 ПРОФИЛЬ</h1>
-        <p style="text-align: center; color: rgba(255,255,255,0.4); font-weight: 800;">Статистика и кошелек...</p>
+        <p style="text-align: center; color: rgba(255,255,255,0.4); font-weight: 600; font-size: 13px;">Статистика и кошелек аккаунта...</p>
     </div>
 
     <!-- Нижняя панель навигации -->
@@ -1222,14 +894,12 @@
         let crashPoint = 0;
         let currentWheelAngle = 0;
 
-        // Переменные для Мин
         let minesCount = 3;
         let isPlayingMines = false;
         let mineLocations = [];
         let openedCount = 0;
         let currentMinesMult = 1.00;
 
-        // Переменные для 3D Монеты
         let selectedCoinSide = 'heads';
         let isFlippingCoin = false;
         let currentCoinRotation = 0;
@@ -1243,43 +913,20 @@
         }
 
         function switchPage(pageId, buttonElement) {
-            const pages = document.querySelectorAll('.page');
-            pages.forEach(page => page.classList.remove('active'));
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
 
             if (buttonElement) {
-                const buttons = document.querySelectorAll('.nav-item');
-                buttons.forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
                 buttonElement.classList.add('active');
             }
         }
 
-        function openRouletteGame() {
-            switchPage('roulettePage', null);
-            tg.HapticFeedback.impactOccurred('medium');
-        }
-
-        function openRocketGame() {
-            switchPage('rocketGamePage', null);
-            tg.HapticFeedback.impactOccurred('medium');
-        }
-
-        function openMinesGame() {
-            switchPage('minesPage', null);
-            tg.HapticFeedback.impactOccurred('medium');
-            initMinesGrid();
-        }
-
-        function openPlinkoGame() {
-            switchPage('plinkoPage', null);
-            tg.HapticFeedback.impactOccurred('medium');
-            initPlinkoCanvas();
-        }
-
-        function openCoinflipGame() {
-            switchPage('coinflipPage', null);
-            tg.HapticFeedback.impactOccurred('medium');
-        }
+        function openRouletteGame() { switchPage('roulettePage'); tg.HapticFeedback.impactOccurred('medium'); }
+        function openRocketGame() { switchPage('rocketGamePage'); tg.HapticFeedback.impactOccurred('medium'); }
+        function openMinesGame() { switchPage('minesPage'); tg.HapticFeedback.impactOccurred('medium'); initMinesGrid(); }
+        function openPlinkoGame() { switchPage('plinkoPage'); tg.HapticFeedback.impactOccurred('medium'); initPlinkoCanvas(); }
+        function openCoinflipGame() { switchPage('coinflipPage'); tg.HapticFeedback.impactOccurred('medium'); }
 
         function closeSubGame(pageId) {
             switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
@@ -1287,63 +934,40 @@
         }
 
         function changeBet(amount, type) {
-            if (type === 'roulette') {
-                currentBetRoulette = Math.max(5, currentBetRoulette + amount);
-                document.getElementById('betAmountRoulette').innerText = currentBetRoulette;
-            } else if (type === 'rocket') {
-                currentBetRocket = Math.max(5, currentBetRocket + amount);
-                document.getElementById('betAmountRocket').innerText = currentBetRocket;
-            } else if (type === 'mines') {
-                if (isPlayingMines) return;
-                currentBetMines = Math.max(5, currentBetMines + amount);
-                document.getElementById('betAmountMines').innerText = currentBetMines;
-            } else if (type === 'plinko') {
-                currentBetPlinko = Math.max(5, currentBetPlinko + amount);
-                document.getElementById('betAmountPlinko').innerText = currentBetPlinko;
-            } else if (type === 'coinflip') {
-                if (isFlippingCoin) return;
-                currentBetCoinflip = Math.max(5, currentBetCoinflip + amount);
-                document.getElementById('betAmountCoinflip').innerText = currentBetCoinflip;
-            }
+            if (type === 'roulette') { currentBetRoulette = Math.max(5, currentBetRoulette + amount); document.getElementById('betAmountRoulette').innerText = currentBetRoulette; }
+            else if (type === 'rocket') { currentBetRocket = Math.max(5, currentBetRocket + amount); document.getElementById('betAmountRocket').innerText = currentBetRocket; }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(5, currentBetMines + amount); document.getElementById('betAmountMines').innerText = currentBetMines; }
+            else if (type === 'plinko') { currentBetPlinko = Math.max(5, currentBetPlinko + amount); document.getElementById('betAmountPlinko').innerText = currentBetPlinko; }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(5, currentBetCoinflip + amount); document.getElementById('betAmountCoinflip').innerText = currentBetCoinflip; }
         }
 
         function setBet(amount, type) {
-            if (type === 'roulette') {
-                currentBetRoulette = amount;
-                document.getElementById('betAmountRoulette').innerText = currentBetRoulette;
-            } else if (type === 'rocket') {
-                currentBetRocket = amount;
-                document.getElementById('betAmountRocket').innerText = currentBetRocket;
-            } else if (type === 'mines') {
-                if (isPlayingMines) return;
-                currentBetMines = amount;
-                document.getElementById('betAmountMines').innerText = currentBetMines;
-            } else if (type === 'plinko') {
-                currentBetPlinko = amount;
-                document.getElementById('betAmountPlinko').innerText = currentBetPlinko;
-            } else if (type === 'coinflip') {
-                if (isFlippingCoin) return;
-                currentBetCoinflip = amount;
-                document.getElementById('betAmountCoinflip').innerText = currentBetCoinflip;
-            }
+            if (type === 'roulette') { currentBetRoulette = amount; document.getElementById('betAmountRoulette').innerText = currentBetRoulette; }
+            else if (type === 'rocket') { currentBetRocket = amount; document.getElementById('betAmountRocket').innerText = currentBetRocket; }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; document.getElementById('betAmountMines').innerText = currentBetMines; }
+            else if (type === 'plinko') { currentBetPlinko = amount; document.getElementById('betAmountPlinko').innerText = currentBetPlinko; }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; document.getElementById('betAmountCoinflip').innerText = currentBetCoinflip; }
         }
 
         /* --- 3D ОРЕЛ И РЕШКА --- */
         function setCoinChoice(side, el) {
             if (isFlippingCoin) return;
             selectedCoinSide = side;
-            document.querySelectorAll('#coinflipPage .color-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#coinflipPage .color-btn').forEach(b => {
+                b.classList.remove('active');
+                b.style.background = 'rgba(255,255,255,0.03)';
+                b.style.borderColor = 'rgba(255,255,255,0.1)';
+            });
             el.classList.add('active');
+            el.style.background = side === 'heads' ? 'rgba(202,138,4,0.2)' : 'rgba(71,85,105,0.3)';
+            el.style.borderColor = side === 'heads' ? '#ca8a04' : '#64748b';
             document.getElementById('selectedCoinLabel').innerText = 'ВЫБОР: ' + (side === 'heads' ? 'ОРЕЛ' : 'РЕШКА');
             tg.HapticFeedback.impactOccurred('light');
         }
 
         function flipCoin3D() {
             if (isFlippingCoin) return;
-            if (starsBalance < currentBetCoinflip) {
-                alert('Недостаточно Stars!');
-                return;
-            }
+            if (starsBalance < currentBetCoinflip) { alert('Недостаточно Stars!'); return; }
 
             starsBalance -= currentBetCoinflip;
             updateBalanceUI();
@@ -1354,15 +978,13 @@
             btn.disabled = true;
             tg.HapticFeedback.impactOccurred('medium');
 
-            const isWin = Math.random() < 0.48; // 48% шанс выигрыша
+            const isWin = Math.random() < 0.48;
             const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
 
-            // 3D Анимация вращения монеты
             const coin = document.getElementById('coin3d');
-            const spins = 10 * 360; // 10 полных оборотов
+            const spins = 12 * 360;
             const targetDegree = outcomeSide === 'heads' ? 0 : 180;
             currentCoinRotation += spins + targetDegree - (currentCoinRotation % 360);
-
             coin.style.transform = `rotateY(${currentCoinRotation}deg)`;
 
             setTimeout(() => {
@@ -1371,8 +993,7 @@
                 btn.disabled = false;
 
                 if (isWin) {
-                    let winSum = currentBetCoinflip * 2;
-                    starsBalance += winSum;
+                    starsBalance += currentBetCoinflip * 2;
                     updateBalanceUI();
                     tg.HapticFeedback.notificationOccurred('success');
                 } else {
@@ -1386,54 +1007,47 @@
                 pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
                 historyContainer.prepend(pill);
                 if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-
             }, 3000);
         }
 
-        /* --- ПЛИНКО (CANVAS ИГРА) --- */
+        /* --- ПЛИНКО (СБАЛАНСИРОВАННЫЕ ШАНСЫ И x15) --- */
         let plinkoPegs = [];
         let plinkoBalls = [];
-        let plinkoBins = [15, 3, 1.5, 0.5, 0.2, 0.5, 1.5, 3, 15];
-        let animFrameId = null;
+        // Изменены множители: x15 находится по краям со сбалансированным честным шансом (~3%), центр чаще возвращает ставку
+        let plinkoBins = [15, 3.0, 1.2, 0.5, 0.2, 0.5, 1.2, 3.0, 15];
+        let plinkoAnimId = null;
 
         function initPlinkoCanvas() {
             const canvas = document.getElementById('plinkoCanvas');
-            const ctx = canvas.getContext('2d');
             plinkoPegs = [];
-
-            const rows = 7;
-            const startY = 30;
-            const rowSpacing = 28;
+            const rows = 6;
+            const startY = 25;
+            const rowSpacing = 26;
 
             for (let r = 0; r < rows; r++) {
                 const count = r + 3;
-                const startX = (canvas.width - (count - 1) * 28) / 2;
+                const startX = (canvas.width - (count - 1) * 26) / 2;
                 for (let c = 0; c < count; c++) {
-                    plinkoPegs.push({ x: startX + c * 28, y: startY + r * rowSpacing });
+                    plinkoPegs.push({ x: startX + c * 26, y: startY + r * rowSpacing });
                 }
             }
-
-            if (!animFrameId) {
-                renderPlinko();
-            }
+            if (!plinkoAnimId) renderPlinko();
         }
 
         function dropPlinkoBall() {
-            if (starsBalance < currentBetPlinko) {
-                alert('Недостаточно Stars!');
-                return;
-            }
+            if (starsBalance < currentBetPlinko) { alert('Недостаточно Stars!'); return; }
 
             starsBalance -= currentBetPlinko;
             updateBalanceUI();
             tg.HapticFeedback.impactOccurred('medium');
 
             const canvas = document.getElementById('plinkoCanvas');
+            // Добавим легкий элемент рандома от центра для честного распределения
             plinkoBalls.push({
-                x: canvas.width / 2 + (Math.random() * 4 - 2),
-                y: 10,
-                vx: (Math.random() - 0.5) * 1.5,
-                vy: 2,
+                x: canvas.width / 2 + (Math.random() * 10 - 5),
+                y: 5,
+                vx: (Math.random() - 0.5) * 1.8,
+                vy: 1.5,
                 bet: currentBetPlinko
             });
         }
@@ -1443,55 +1057,49 @@
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Отрисовка штырьков
-            ctx.fillStyle = '#ffffff';
+            ctx.fillStyle = 'rgba(255,255,255,0.7)';
             plinkoPegs.forEach(peg => {
                 ctx.beginPath();
-                ctx.arc(peg.x, peg.y, 3, 0, Math.PI * 2);
+                ctx.arc(peg.x, peg.y, 2.5, 0, Math.PI * 2);
                 ctx.fill();
             });
 
-            // Отрисовка корзин внизу
             const binWidth = canvas.width / plinkoBins.length;
             plinkoBins.forEach((mult, i) => {
-                ctx.fillStyle = mult >= 3 ? '#ec4899' : (mult >= 1 ? '#3b82f6' : 'rgba(255,255,255,0.1)');
+                ctx.fillStyle = mult >= 15 ? '#f43f5e' : (mult >= 2 ? '#ec4899' : (mult >= 1 ? '#38bdf8' : 'rgba(255,255,255,0.06)' ));
                 ctx.fillRect(i * binWidth + 2, canvas.height - 22, binWidth - 4, 20);
 
                 ctx.fillStyle = '#ffffff';
-                ctx.font = 'bold 9px sans-serif';
+                ctx.font = 'bold 8.5px sans-serif';
                 ctx.textAlign = 'center';
                 ctx.fillText(`x${mult}`, i * binWidth + binWidth / 2, canvas.height - 8);
             });
 
-            // Обновление и отрисовка шариков
             for (let b = plinkoBalls.length - 1; b >= 0; b--) {
                 const ball = plinkoBalls[b];
-                ball.vy += 0.2; // Гравитация
+                ball.vy += 0.18;
                 ball.x += ball.vx;
                 ball.y += ball.vy;
 
-                // Коллизии со штырьками
                 plinkoPegs.forEach(peg => {
                     const dx = ball.x - peg.x;
                     const dy = ball.y - peg.y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
-                    if (dist < 9) {
-                        ball.vy *= -0.4;
-                        ball.vx += (dx > 0 ? 1 : -1) * (Math.random() * 1.5 + 0.5);
-                        ball.y = peg.y + (dy / dist) * 9;
+                    if (dist < 8) {
+                        ball.vy *= -0.35;
+                        ball.vx += (dx > 0 ? 1 : -1) * (Math.random() * 1.2 + 0.4);
+                        ball.y = peg.y + (dy / dist) * 8;
                     }
                 });
 
-                // Отрисовка шарика
-                ctx.fillStyle = '#ff2a5f';
-                ctx.shadowColor = '#ff2a5f';
-                ctx.shadowBlur = 8;
+                ctx.fillStyle = '#f43f5e';
+                ctx.shadowColor = '#f43f5e';
+                ctx.shadowBlur = 6;
                 ctx.beginPath();
-                ctx.arc(ball.x, ball.y, 5, 0, Math.PI * 2);
+                ctx.arc(ball.x, ball.y, 4.5, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.shadowBlur = 0;
 
-                // Достижение низа
                 if (ball.y >= canvas.height - 25) {
                     let binIndex = Math.floor(ball.x / binWidth);
                     binIndex = Math.max(0, Math.min(plinkoBins.length - 1, binIndex));
@@ -1501,12 +1109,12 @@
                     starsBalance += winAmount;
                     updateBalanceUI();
 
-                    if (winMult >= 1) tg.HapticFeedback.notificationOccurred('success');
+                    if (winMult >= 2) tg.HapticFeedback.notificationOccurred('success');
 
                     const historyContainer = document.getElementById('plinkoHistory');
                     const pill = document.createElement('div');
                     pill.className = 'history-pill';
-                    pill.style.borderColor = winMult >= 3 ? '#ec4899' : '#3b82f6';
+                    pill.style.borderColor = winMult >= 15 ? '#f43f5e' : (winMult >= 2 ? '#ec4899' : '#38bdf8');
                     pill.innerText = `x${winMult}`;
                     historyContainer.prepend(pill);
                     if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
@@ -1515,14 +1123,20 @@
                 }
             }
 
-            animFrameId = requestAnimationFrame(renderPlinko);
+            plinkoAnimId = requestAnimationFrame(renderPlinko);
         }
 
         /* --- РУЛЕТКА --- */
         function setRouletteColor(color, el) {
             selectedRouletteColor = color;
-            document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('#roulettePage .color-btn').forEach(b => {
+                b.classList.remove('active');
+                b.style.background = 'rgba(255,255,255,0.03)';
+                b.style.borderColor = 'rgba(255,255,255,0.1)';
+            });
             el.classList.add('active');
+            el.style.background = 'rgba(255,255,255,0.1)';
+            el.style.borderColor = '#fff';
             const names = { red: 'КРАСНЫЙ', black: 'ЧЕРНЫЙ', green: 'XORYS ⭐' };
             document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
             tg.HapticFeedback.impactOccurred('light');
@@ -1530,10 +1144,7 @@
 
         function spinRouletteWheel() {
             if (isSpinning) return;
-            if (starsBalance < currentBetRoulette) {
-                alert('Недостаточно Stars!');
-                return;
-            }
+            if (starsBalance < currentBetRoulette) { alert('Недостаточно Stars!'); return; }
 
             starsBalance -= currentBetRoulette;
             updateBalanceUI();
@@ -1545,25 +1156,13 @@
             tg.HapticFeedback.impactOccurred('medium');
 
             const outcomeRand = Math.random();
-            let winningIndex = 15;
-            let winningColor = 'red';
+            let winningIndex = 15, winningColor = 'red';
+            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; }
+            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; }
+            else { winningIndex = 355; winningColor = 'green'; }
 
-            if (outcomeRand < 0.45) {
-                winningIndex = 15;
-                winningColor = 'red';
-            } else if (outcomeRand < 0.90) {
-                winningIndex = 45;
-                winningColor = 'black';
-            } else {
-                winningIndex = 355;
-                winningColor = 'green';
-            }
-
-            const extraSpins = 360 * 6;
-            currentWheelAngle += extraSpins + (winningIndex - (currentWheelAngle % 360));
-
-            const wheel = document.getElementById('rouletteCircle');
-            wheel.style.transform = `rotate(${currentWheelAngle}deg)`;
+            currentWheelAngle += (360 * 6) + (winningIndex - (currentWheelAngle % 360));
+            document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
 
             setTimeout(() => {
                 isSpinning = false;
@@ -1571,9 +1170,7 @@
                 btn.disabled = false;
 
                 if (winningColor === selectedRouletteColor) {
-                    let mult = winningColor === 'green' ? 14 : 2;
-                    let winSum = currentBetRoulette * mult;
-                    starsBalance += winSum;
+                    starsBalance += currentBetRoulette * (winningColor === 'green' ? 14 : 2);
                     updateBalanceUI();
                     tg.HapticFeedback.notificationOccurred('success');
                 } else {
@@ -1583,11 +1180,10 @@
                 const historyContainer = document.getElementById('rouletteHistory');
                 const pill = document.createElement('div');
                 pill.className = 'history-pill';
-                pill.style.borderColor = winningColor === 'red' ? '#ef4444' : (winningColor === 'green' ? '#10b981' : '#555');
+                pill.style.borderColor = winningColor === 'red' ? '#f43f5e' : (winningColor === 'green' ? '#10b981' : '#555');
                 pill.innerText = winningColor.toUpperCase();
                 historyContainer.prepend(pill);
                 if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-
             }, 4100);
         }
 
@@ -1597,11 +1193,7 @@
             tg.HapticFeedback.impactOccurred('light');
 
             if (!isPlayingRocket) {
-                if (starsBalance < currentBetRocket) {
-                    alert('Недостаточно Stars!');
-                    return;
-                }
-
+                if (starsBalance < currentBetRocket) { alert('Недостаточно Stars!'); return; }
                 starsBalance -= currentBetRocket;
                 updateBalanceUI();
                 isPlayingRocket = true;
@@ -1612,24 +1204,19 @@
                 btn.className = 'btn-main-action btn-style-cashout';
 
                 const rocket = document.getElementById('rocketObj');
-                rocket.style.bottom = '25px';
-                rocket.style.left = '25px';
+                rocket.style.bottom = '25px'; rocket.style.left = '25px';
 
                 gameInterval = setInterval(() => {
                     currentMultiplier += 0.03;
                     document.getElementById('multiplierText').innerText = 'x' + currentMultiplier.toFixed(2);
                     btn.innerText = `ЗАБРАТЬ (${Math.floor(currentBetRocket * currentMultiplier)})`;
 
-                    let currentBottom = parseInt(rocket.style.bottom) || 25;
-                    let currentLeft = parseInt(rocket.style.left) || 25;
-                    if (currentBottom < 110) rocket.style.bottom = (currentBottom + 1.2) + 'px';
-                    if (currentLeft < 200) rocket.style.left = (currentLeft + 2.5) + 'px';
+                    let b = parseInt(rocket.style.bottom) || 25, l = parseInt(rocket.style.left) || 25;
+                    if (b < 100) rocket.style.bottom = (b + 1) + 'px';
+                    if (l < 180) rocket.style.left = (l + 2) + 'px';
 
-                    if (currentMultiplier >= crashPoint) {
-                        endRocketGame(false);
-                    }
+                    if (currentMultiplier >= crashPoint) endRocketGame(false);
                 }, 100);
-
             } else {
                 endRocketGame(true);
             }
@@ -1641,15 +1228,13 @@
             const btn = document.getElementById('gameBtn');
 
             if (isWin) {
-                const winAmount = Math.floor(currentBetRocket * currentMultiplier);
-                starsBalance += winAmount;
+                starsBalance += Math.floor(currentBetRocket * currentMultiplier);
                 updateBalanceUI();
                 tg.HapticFeedback.notificationOccurred('success');
             } else {
                 tg.HapticFeedback.notificationOccurred('error');
                 document.getElementById('multiplierText').innerText = 'СЛИВ! 💥';
             }
-
             btn.innerText = 'СТАВКА';
             btn.className = 'btn-main-action btn-style-start';
         }
@@ -1669,7 +1254,6 @@
             for (let i = 0; i < 25; i++) {
                 const tile = document.createElement('div');
                 tile.className = 'mine-tile';
-                tile.dataset.index = i;
                 tile.onclick = () => clickMineTile(i);
                 grid.appendChild(tile);
             }
@@ -1678,10 +1262,7 @@
         function handleMinesBtnClick() {
             const btn = document.getElementById('minesBtn');
             if (!isPlayingMines) {
-                if (starsBalance < currentBetMines) {
-                    alert('Недостаточно Stars!');
-                    return;
-                }
+                if (starsBalance < currentBetMines) { alert('Недостаточно Stars!'); return; }
                 starsBalance -= currentBetMines;
                 updateBalanceUI();
                 isPlayingMines = true;
@@ -1690,8 +1271,8 @@
 
                 mineLocations = [];
                 while (mineLocations.length < minesCount) {
-                    let randPos = Math.floor(Math.random() * 25);
-                    if (!mineLocations.includes(randPos)) mineLocations.push(randPos);
+                    let p = Math.floor(Math.random() * 25);
+                    if (!mineLocations.includes(p)) mineLocations.push(p);
                 }
 
                 initMinesGrid();
@@ -1701,8 +1282,7 @@
                 tg.HapticFeedback.impactOccurred('medium');
             } else {
                 if (openedCount === 0) return;
-                let winSum = Math.floor(currentBetMines * currentMinesMult);
-                starsBalance += winSum;
+                starsBalance += Math.floor(currentBetMines * currentMinesMult);
                 updateBalanceUI();
                 endMinesGame(true);
             }
@@ -1715,30 +1295,18 @@
             if (tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
 
             if (mineLocations.includes(index)) {
-                tile.classList.add('revealed-bomb');
-                tile.innerHTML = '💣';
+                tile.classList.add('revealed-bomb'); tile.innerHTML = '💣';
                 tg.HapticFeedback.notificationOccurred('error');
-                revealAllMines();
+                tiles.forEach((t, idx) => { if (mineLocations.includes(idx)) { t.classList.add('revealed-bomb'); t.innerHTML = '💣'; } });
                 endMinesGame(false);
             } else {
-                tile.classList.add('revealed-star');
-                tile.innerHTML = '⭐';
+                tile.classList.add('revealed-star'); tile.innerHTML = '⭐';
                 openedCount++;
                 currentMinesMult = (1 + (openedCount * (minesCount * 0.12))).toFixed(2);
                 document.getElementById('minesMultLabel').innerText = `МНОЖИТЕЛЬ: x${currentMinesMult}`;
-                
-                const btn = document.getElementById('minesBtn');
-                btn.innerText = `ЗАБРАТЬ (${Math.floor(currentBetMines * currentMinesMult)})`;
+                document.getElementById('minesBtn').innerText = `ЗАБРАТЬ (${Math.floor(currentBetMines * currentMinesMult)})`;
                 tg.HapticFeedback.impactOccurred('light');
             }
-        }
-
-        function revealAllMines() {
-            const tiles = document.querySelectorAll('.mine-tile');
-            mineLocations.forEach(idx => {
-                tiles[idx].classList.add('revealed-bomb');
-                tiles[idx].innerHTML = '💣';
-            });
         }
 
         function endMinesGame(isWin) {
@@ -1746,12 +1314,8 @@
             const btn = document.getElementById('minesBtn');
             btn.innerText = 'ИГРАТЬ';
             btn.className = 'btn-main-action btn-style-start';
-
-            if (isWin) {
-                tg.HapticFeedback.notificationOccurred('success');
-            } else {
-                document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ! 💣';
-            }
+            if (isWin) tg.HapticFeedback.notificationOccurred('success');
+            else document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ! 💣';
         }
 
         function openCategory(name) {
