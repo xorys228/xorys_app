@@ -97,77 +97,108 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- БАНЕРЫ ИГР С ГРАДИЕНТНЫМИ И АНИМИРОВАННЫМИ ИКОНКАМИ --- */
+        /* --- БАНЕРЫ ИГР С ОБНОВЛЕННЫМИ СТИЛЬНЫМИ ИКОНКАМИ --- */
         .games-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .game-banner {
-            background: linear-gradient(135deg, #121218, #0a0a0f);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: linear-gradient(135deg, rgba(25, 25, 35, 0.6), rgba(12, 12, 18, 0.8));
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 20px;
-            padding: 20px;
+            padding: 16px 20px;
             text-align: center;
             cursor: pointer;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            transition: transform 0.2s ease;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transition: all 0.2s ease;
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 18px;
+            backdrop-filter: blur(10px);
         }
 
         .game-banner:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
         }
 
-        /* Контейнер градиентной иконки с анимацией */
+        /* Контейнер стилизованной 3D-иконки */
         .icon-box {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 24px;
             color: #ffffff;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
             flex-shrink: 0;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* Уникальные градиенты и анимированные иконки */
+        .icon-box::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 18px;
+            background: linear-gradient(135deg, rgba(255,255,255,0.3) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        /* Уникальные неоновые иконки игр */
         .icon-rocket {
-            background: linear-gradient(135deg, #38bdf8, #0284c7);
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
-            animation: floatIcon 3s ease-in-out infinite;
+            background: radial-gradient(circle at 30% 30%, #38bdf8, #0369a1);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.5);
+            animation: floatRocket 3s ease-in-out infinite;
+        }
+        .icon-rocket i {
+            transform: rotate(-45deg);
+            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
         }
 
         .icon-roulette {
-            background: linear-gradient(135deg, #ef4444, #b91c1c);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4);
-            animation: spinIcon 6s linear infinite;
+            background: radial-gradient(circle at 30% 30%, #ff2a5f, #8b0000);
+            box-shadow: 0 0 20px rgba(255, 42, 95, 0.5);
+            animation: pulseRoulette 2.5s ease-in-out infinite;
+        }
+        .icon-roulette i {
+            color: #ffd700;
+            filter: drop-shadow(0 0 8px rgba(255, 215, 0, 0.9));
+            animation: innerWheelRotate 10s linear infinite;
         }
 
         .icon-mines {
-            background: linear-gradient(135deg, #a855f7, #7e22ce);
-            box-shadow: 0 0 15px rgba(168, 85, 247, 0.4);
-            animation: pulseIcon 2s ease-in-out infinite;
+            background: radial-gradient(circle at 30% 30%, #c084fc, #6b21a8);
+            box-shadow: 0 0 20px rgba(192, 132, 252, 0.5);
+            animation: floatMines 3.5s ease-in-out infinite;
+        }
+        .icon-mines i {
+            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
         }
 
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-4px); }
+        /* Ключевые кадры плавных анимаций */
+        @keyframes floatRocket {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.03); }
         }
 
-        @keyframes spinIcon {
+        @keyframes pulseRoulette {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 18px rgba(255, 42, 95, 0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 28px rgba(255, 42, 95, 0.8); }
+        }
+
+        @keyframes innerWheelRotate {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        @keyframes pulseIcon {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.08); }
+        @keyframes floatMines {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-4px); }
         }
 
         .game-info {
@@ -337,7 +368,7 @@
             color: #ffffff;
         }
 
-        /* --- УНИКАЛЬНАЯ НОВАЯ РУЛЕТКА --- */
+        /* --- ИГРОВОЕ ПОЛЕ: РУЛЕТКА --- */
         .roulette-display {
             height: 220px;
             background: radial-gradient(circle at center, #1f1215 0%, #0d0708 70%, #050507 100%);
@@ -689,7 +720,7 @@
             <!-- Баннер игры РАКЕТА -->
             <div class="game-banner" onclick="openRocketGame()">
                 <div class="icon-box icon-rocket">
-                    <i class="fa-solid fa-space-shuttle"></i>
+                    <i class="fa-solid fa-rocket"></i>
                 </div>
                 <div class="game-info">
                     <div class="game-title">РАКЕТА</div>
@@ -700,7 +731,7 @@
             <!-- Баннер игры РУЛЕТКА -->
             <div class="game-banner" onclick="openRouletteGame()">
                 <div class="icon-box icon-roulette">
-                    <i class="fa-solid fa-circle-notch"></i>
+                    <i class="fa-solid fa-dharmachakra"></i>
                 </div>
                 <div class="game-info">
                     <div class="game-title">РУЛЕТКА</div>
@@ -711,7 +742,7 @@
             <!-- Баннер игры МИНЫ -->
             <div class="game-banner" onclick="openMinesGame()">
                 <div class="icon-box icon-mines">
-                    <i class="fa-solid fa-bomb"></i>
+                    <i class="fa-solid fa-land-mine-on"></i>
                 </div>
                 <div class="game-info">
                     <div class="game-title">МИНЫ</div>
