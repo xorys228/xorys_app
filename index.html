@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XORYS Casino & Promos</title>
-    <!-- Підключаємо іконки FontAwesome -->
+    <!-- Іконки FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -49,7 +49,7 @@
 
         .page-title {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
             margin-bottom: 20px;
             font-size: 22px;
             font-weight: 700;
@@ -58,7 +58,7 @@
             text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
         }
 
-        /* --- КАТАЛОГ В ОДИН РЯД --- */
+        /* --- КАТАЛОГ МАРКЕТУ В ОДИН РЯД --- */
         .catalog-grid {
             display: flex;
             gap: 10px;
@@ -85,10 +85,8 @@
         .catalog-card:active {
             transform: scale(0.95);
             border-color: rgba(255, 255, 255, 0.3);
-            background: rgba(35, 35, 45, 0.9);
         }
 
-        /* Білі мінімалістичні іконки */
         .card-icon {
             width: 38px;
             height: 38px;
@@ -101,7 +99,6 @@
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.06);
             color: #ffffff;
-            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
         }
 
         .card-title {
@@ -109,7 +106,131 @@
             font-weight: 600;
             color: rgba(255, 255, 255, 0.9);
             letter-spacing: 0.3px;
-            white-space: nowrap;
+        }
+
+        /* --- КАЗИНО ТА LUCKY JET --- */
+        .game-banner {
+            background: rgba(25, 25, 32, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .game-banner:active {
+            transform: scale(0.98);
+        }
+
+        .game-banner i {
+            font-size: 40px;
+            color: #f6d365;
+            margin-bottom: 10px;
+        }
+
+        .game-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .game-desc {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Ігрове поле Lucky Jet */
+        .lucky-jet-container {
+            display: none;
+            background: rgba(15, 15, 20, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 15px;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        .stars-balance {
+            font-size: 14px;
+            font-weight: 600;
+            color: #f6d365;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .game-screen {
+            height: 180px;
+            background: rgba(5, 5, 10, 0.8);
+            border-radius: 12px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .multiplier {
+            font-size: 36px;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 0 0 15px rgba(246, 211, 101, 0.4);
+            z-index: 2;
+        }
+
+        .rocket-wrapper {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.1s linear;
+        }
+
+        .rocket {
+            font-size: 24px;
+            color: #f6d365;
+            transform: rotate(45deg);
+        }
+
+        .player-tag {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 3px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .game-controls {
+            margin-top: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .btn-action {
+            background: #f39c12;
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-action:active {
+            transform: scale(0.97);
         }
 
         /* --- НИЖНЯ ПАНЕЛЬ НАВІГАЦІЇ --- */
@@ -126,7 +247,6 @@
             align-items: center;
             z-index: 1000;
             backdrop-filter: blur(12px);
-            box-shadow: 0 -10px 25px rgba(0, 0, 0, 0.5);
         }
 
         .nav-item {
@@ -151,58 +271,65 @@
         .nav-item span {
             font-size: 11px;
             font-weight: 500;
-            letter-spacing: 0.5px;
         }
 
         .nav-item.active {
             color: #f39c12;
             transform: translateY(-2px);
-            text-shadow: 0 0 10px rgba(243, 156, 18, 0.5);
         }
     </style>
 </head>
 <body>
 
     <!-- Вкладка КАЗИНО -->
-    <div id="casino" class="page">
+    <div id="casino" class="page active">
         <h1 class="page-title">🎰 КАЗИНО</h1>
-        <p style="text-align: center; color: #888;">Ігровий функціонал розробляється...</p>
+        
+        <!-- Кнопка відкриття Lucky Jet -->
+        <div id="luckyJetBanner" class="game-banner" onclick="toggleLuckyJet()">
+            <i class="fa-solid fa-rocket"></i>
+            <div class="game-title">LUCKY JET</div>
+            <div class="game-desc">Грай на Telegram Stars ⭐ та вигравай!</div>
+        </div>
+
+        <!-- Поле гри Lucky Jet -->
+        <div id="luckyJetGame" class="lucky-jet-container">
+            <div class="stars-balance">
+                <i class="fa-solid fa-star"></i> Баланс: <span id="userStars">100</span> Stars
+            </div>
+
+            <div class="game-screen">
+                <div id="multiplierText" class="multiplier">x1.00</div>
+                <div id="rocketObj" class="rocket-wrapper">
+                    <i class="fa-solid fa-rocket rocket"></i>
+                    <span id="playerNickname" class="player-tag">@username</span>
+                </div>
+            </div>
+
+            <div class="game-controls">
+                <button id="gameBtn" class="btn-action" onclick="handleGameClick()">ПОЧАТИ ГРУ (10 ⭐)</button>
+            </div>
+        </div>
     </div>
 
     <!-- Вкладка МАРКЕТ (КАТАЛОГ) -->
-    <div id="market" class="page active">
+    <div id="market" class="page">
         <h1 class="page-title">🛒 КАТАЛОГ</h1>
-        
         <div class="catalog-grid">
-            <!-- Картка 1: НОМЕРИ -->
             <div class="catalog-card" onclick="openCategory('Номери')">
-                <div class="card-icon">
-                    <i class="fa-solid fa-sim-card"></i>
-                </div>
+                <div class="card-icon"><i class="fa-solid fa-sim-card"></i></div>
                 <div class="card-title">НОМЕРИ</div>
             </div>
-
-            <!-- Картка 2: ЗВЁЗДЫ -->
             <div class="catalog-card" onclick="openCategory('Звёзды')">
-                <div class="card-icon">
-                    <i class="fa-solid fa-star"></i>
-                </div>
+                <div class="card-icon"><i class="fa-solid fa-star"></i></div>
                 <div class="card-title">ЗВЁЗДЫ</div>
             </div>
-
-            <!-- Картка 3: TG Premium -->
             <div class="catalog-card" onclick="openCategory('TG Premium')">
-                <div class="card-icon">
-                    <i class="fa-solid fa-gem"></i>
-                </div>
+                <div class="card-icon"><i class="fa-solid fa-gem"></i></div>
                 <div class="card-title">TG PREM</div>
             </div>
-
-            <!-- Картка 4: USDT -->
             <div class="catalog-card" onclick="openCategory('USDT')">
-                <div class="card-icon">
-                    <i class="fa-solid fa-coins"></i>
-                </div>
+                <div class="card-icon"><i class="fa-solid fa-coins"></i></div>
                 <div class="card-title">USDT</div>
             </div>
         </div>
@@ -211,16 +338,16 @@
     <!-- Вкладка ПРОФІЛЬ -->
     <div id="profile" class="page">
         <h1 class="page-title">👤 ПРОФІЛЬ</h1>
-        <p style="text-align: center; color: #888;">Ваш баланс та історія...</p>
+        <p style="text-align: center; color: #888;">Ваш баланс та історія ігор...</p>
     </div>
 
     <!-- Нижня панель меню -->
     <nav class="bottom-nav">
-        <button class="nav-item" onclick="switchPage('casino', this)">
+        <button class="nav-item active" onclick="switchPage('casino', this)">
             <i class="fa-solid fa-dice"></i>
             <span>КАЗИНО</span>
         </button>
-        <button class="nav-item active" onclick="switchPage('market', this)">
+        <button class="nav-item" onclick="switchPage('market', this)">
             <i class="fa-solid fa-store"></i>
             <span>МАРКЕТ</span>
         </button>
@@ -234,6 +361,16 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
 
+        // Беремо нікнейм користувача з Telegram SDK
+        const username = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : 'Гравець';
+        document.getElementById('playerNickname').innerText = username;
+
+        let starsBalance = 100;
+        let isPlaying = false;
+        let currentMultiplier = 1.00;
+        let gameInterval = null;
+        let crashPoint = 0;
+
         function switchPage(pageId, buttonElement) {
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
@@ -245,11 +382,85 @@
             buttonElement.classList.add('active');
         }
 
+        function toggleLuckyJet() {
+            const game = document.getElementById('luckyJetGame');
+            game.style.display = game.style.display === 'block' ? 'none' : 'block';
+            tg.HapticFeedback.impactOccurred('medium');
+        }
+
+        function handleGameClick() {
+            const btn = document.getElementById('gameBtn');
+            tg.HapticFeedback.impactOccurred('light');
+
+            if (!isPlaying) {
+                if (starsBalance < 10) {
+                    alert('Недостатньо Зірок (⭐)!');
+                    return;
+                }
+
+                // Старт гри
+                starsBalance -= 10;
+                document.getElementById('userStars').innerText = starsBalance;
+                isPlaying = true;
+                currentMultiplier = 1.00;
+                crashPoint = (Math.random() * 3 + 1.1).toFixed(2); // Рандомний краш від x1.1 до x4.0
+
+                btn.innerText = 'ЗАБРАТИ (x1.00)';
+                btn.style.background = '#27ae60';
+                btn.style.color = '#fff';
+
+                const rocket = document.getElementById('rocketObj');
+                rocket.style.bottom = '20px';
+                rocket.style.left = '20px';
+
+                gameInterval = setInterval(() => {
+                    currentMultiplier += 0.03;
+                    document.getElementById('multiplierText').innerText = 'x' + currentMultiplier.toFixed(2);
+                    btn.innerText = `ЗАБРАТИ (⭐ ${(10 * currentMultiplier).toFixed(0)})`;
+
+                    // Анімація політу ракети
+                    let currentBottom = parseInt(rocket.style.bottom) || 20;
+                    let currentLeft = parseInt(rocket.style.left) || 20;
+                    if (currentBottom < 100) rocket.style.bottom = (currentBottom + 1.5) + 'px';
+                    if (currentLeft < 200) rocket.style.left = (currentLeft + 3) + 'px';
+
+                    // Перевірка на Краш
+                    if (currentMultiplier >= crashPoint) {
+                        endGame(false);
+                    }
+                }, 100);
+
+            } else {
+                // Гравець забрав виграш
+                endGame(true);
+            }
+        }
+
+        function endGame(isWin) {
+            clearInterval(gameInterval);
+            isPlaying = false;
+            const btn = document.getElementById('gameBtn');
+
+            if (isWin) {
+                const winAmount = Math.floor(10 * currentMultiplier);
+                starsBalance += winAmount;
+                document.getElementById('userStars').innerText = starsBalance;
+                tg.HapticFeedback.notificationOccurred('success');
+                alert(`Ви успішно забрали ⭐ ${winAmount} Stars!`);
+            } else {
+                tg.HapticFeedback.notificationOccurred('error');
+                document.getElementById('multiplierText').innerText = 'УЛЕТІВ! 💥';
+            }
+
+            btn.innerText = 'ПОЧАТИ ГРУ (10 ⭐)';
+            btn.style.background = '#f39c12';
+            btn.style.color = '#000';
+        }
+
         function openCategory(name) {
             tg.HapticFeedback.impactOccurred('light');
             alert('Ви обрали категорію: ' + name);
         }
     </script>
-
 </body>
 </html>
