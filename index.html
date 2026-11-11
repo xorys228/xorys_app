@@ -1,173 +1,140 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="uk">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XORYS Casino & Promos</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>XORYS SHOP</title>
+    <!-- Підключаємо іконки FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body {
-            background-color: #0f172a;
-            color: #f8fafc;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
-        .slot-reel {
-            background: #1e293b;
-            border: 2px solid #334155;
-            box-shadow: inset 0 4px 6px rgba(0, 0, 0, 0.4);
+
+        body {
+            background-color: #0f0f11;
+            color: #ffffff;
+            padding-bottom: 80px; /* Відступ знизу, щоб контент не перекривався меню */
+        }
+
+        /* Стилі для екранів (сторінок) */
+        .page {
+            display: none;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        h1 {
+            margin-top: 40px;
+            font-size: 24px;
+            color: #f39c12;
+        }
+
+        /* Нижня панель навігації */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 65px;
+            background-color: #1a1a1e;
+            border-top: 1px solid #2d2d35;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        /* Кнопки меню */
+        .nav-item {
+            background: none;
+            border: none;
+            color: #888893;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            height: 100%;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .nav-item i {
+            font-size: 20px;
+            margin-bottom: 4px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        /* Активна вкладка */
+        .nav-item.active {
+            color: #3498db;
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-between min-h-screen p-4">
+<body>
 
-    <!-- Шапка -->
-    <div class="w-full max-w-md text-center mt-2">
-        <h1 class="text-2xl font-black tracking-wider text-amber-400">⚡ XORYS MINI APP</h1>
-        <p class="text-xs text-slate-400 mt-1">Казино и активация бонусов</p>
+    <!-- Вкладка КАЗИНО -->
+    <div id="casino" class="page active">
+        <h1>🎰 КАЗИНО</h1>
+        <p style="margin-top: 20px; color: #aaa;">Тут буде ваш ігровий функціонал та слоти.</p>
     </div>
 
-    <!-- Баланс -->
-    <div class="w-full max-w-md bg-slate-800/80 border border-slate-700 rounded-2xl p-4 flex justify-between items-center shadow-lg my-3">
-        <div>
-            <span class="text-xs text-slate-400 block">Ваш игровой баланс</span>
-            <span id="user-balance" class="text-xl font-bold text-emerald-400">100.00 $</span>
-        </div>
-        <div class="bg-amber-500/10 border border-amber-500/30 px-3 py-1.5 rounded-xl">
-            <span class="text-xs text-amber-400 font-semibold">Ставка: 5.00 $</span>
-        </div>
+    <!-- Вкладка МАРКЕТ -->
+    <div id="market" class="page">
+        <h1>🛒 МАРКЕТ</h1>
+        <p style="margin-top: 20px; color: #aaa;">Тут товари, покупки та інвентар.</p>
     </div>
 
-    <!-- Блок активации промокода (Новинка) -->
-    <div class="w-full max-w-md bg-slate-800/50 border border-slate-700/80 rounded-2xl p-4 shadow-xl mb-3">
-        <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">🎟 Активировать промокод</h2>
-        <div class="flex gap-2">
-            <input type="text" id="promo-input" placeholder="Введите код..." class="w-full bg-slate-900 border border-slate-700 rounded-xl px-3 py-2 text-sm text-slate-100 placeholder-slate-500 focus:outline-none focus:border-amber-500 uppercase">
-            <button onclick="activatePromo()" class="bg-slate-700 hover:bg-slate-600 text-slate-100 font-semibold px-4 py-2 rounded-xl text-sm transition-colors">
-                Применить
-            </button>
-        </div>
-        <div id="promo-msg" class="text-xs mt-2 text-slate-400"></div>
+    <!-- Вкладка ПРОФІЛЬ -->
+    <div id="profile" class="page">
+        <h1>👤 ПРОФІЛЬ</h1>
+        <p style="margin-top: 20px; color: #aaa;">Ваш баланс, статистика та налаштування.</p>
     </div>
 
-    <!-- Игровой автомат (Слоты) -->
-    <div class="w-full max-w-md bg-slate-800/50 border border-slate-700/80 rounded-3xl p-5 flex flex-col items-center shadow-2xl mb-2">
-        <div class="flex gap-3 mb-4">
-            <div id="reel1" class="slot-reel w-16 h-20 rounded-2xl flex items-center justify-center text-3xl">🍒</div>
-            <div id="reel2" class="slot-reel w-16 h-20 rounded-2xl flex items-center justify-center text-3xl">🍋</div>
-            <div id="reel3" class="slot-reel w-16 h-20 rounded-2xl flex items-center justify-center text-3xl">💎</div>
-        </div>
-
-        <div id="result-message" class="h-6 text-xs font-medium text-center text-slate-300 mb-3">
-            Сделайте ставку и крутите барабан!
-        </div>
-
-        <button onclick="spinSlots()" id="spin-btn" class="w-full py-3.5 bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-slate-950 font-black text-base rounded-2xl shadow-lg transform active:scale-95 transition-all">
-            🎲 КРУТИТЬ СЛОТЫ
+    <!-- Нижня панель меню -->
+    <nav class="bottom-nav">
+        <button class="nav-item active" onclick="switchPage('casino', this)">
+            <i class="fa-solid fa-dice"></i>
+            <span>КАЗИНО</span>
         </button>
-    </div>
-
-    <!-- Кнопка закрытия -->
-    <div class="w-full max-w-md mb-1">
-        <button onclick="Telegram.WebApp.close()" class="w-full py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-semibold rounded-xl text-xs transition-colors">
-            Закрыть приложение
+        <button class="nav-item" onclick="switchPage('market', this)">
+            <i class="fa-solid fa-store"></i>
+            <span>МАРКЕТ</span>
         </button>
-    </div>
+        <button class="nav-item" onclick="switchPage('profile', this)">
+            <i class="fa-solid fa-user"></i>
+            <span>ПРОФІЛЬ</span>
+        </button>
+    </nav>
 
     <script>
-        let tg = window.Telegram.WebApp;
-        tg.expand();
+        // Функція перемикання між сторінками та підсвічування активної іконки
+        function switchPage(pageId, buttonElement) {
+            // Приховуємо всі сторінки
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
 
-        let balance = 100.00;
-        const bet = 5.00;
-        const symbols = ['🍒', '🍋', '💎', '7️⃣', '⭐', '🔔'];
+            // Показуємо потрібну сторінку
+            document.getElementById(pageId).classList.add('active');
 
-        function updateUI() {
-            document.getElementById('user-balance').innerText = balance.toFixed(2) + ' $';
-        }
-
-        // Логика промокодов
-        function activatePromo() {
-            let codeInput = document.getElementById('promo-input');
-            let msgBox = document.getElementById('promo-msg');
-            let code = codeInput.value.trim().toUpperCase();
-
-            if (!code) {
-                msgBox.innerHTML = '<span class="text-red-400">Введите промокод!</span>';
-                return;
-            }
-
-            // Тестовая логика проверки (в будущем можно связать с бэкендом бота)
-            if (code === "XORYS2026" || code === "BONUS") {
-                balance += 25.00;
-                updateUI();
-                msgBox.innerHTML = '<span class="text-emerald-400">✅ Промокод активирован! +25.00 $ на баланс</span>';
-                tg.HapticFeedback.notificationOccurred('success');
-                codeInput.value = '';
-            } else {
-                msgBox.innerHTML = '<span class="text-red-400">❌ Неверный или истекший промокод</span>';
-                tg.HapticFeedback.notificationOccurred('error');
-            }
-        }
-
-        // Логика слотов
-        function spinSlots() {
-            if (balance < bet) {
-                document.getElementById('result-message').innerHTML = '<span class="text-red-400">Недостаточно средств!</span>';
-                return;
-            }
-
-            balance -= bet;
-            updateUI();
-
-            let btn = document.getElementById('spin-btn');
-            btn.disabled = true;
-            btn.classList.add('opacity-50');
-            document.getElementById('result-message').innerText = '🔄 Барабаны крутятся...';
-
-            let counter = 0;
-            let interval = setInterval(() => {
-                document.getElementById('reel1').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                document.getElementById('reel2').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                document.getElementById('reel3').innerText = symbols[Math.floor(Math.random() * symbols.length)];
-                counter++;
-
-                if (counter > 12) {
-                    clearInterval(interval);
-                    finalizeSpin();
-                }
-            }, 80);
-        }
-
-        function finalizeSpin() {
-            let r1 = symbols[Math.floor(Math.random() * symbols.length)];
-            let r2 = symbols[Math.floor(Math.random() * symbols.length)];
-            let r3 = symbols[Math.floor(Math.random() * symbols.length)];
-
-            document.getElementById('reel1').innerText = r1;
-            document.getElementById('reel2').innerText = r2;
-            document.getElementById('reel3').innerText = r3;
-
-            let btn = document.getElementById('spin-btn');
-            btn.disabled = false;
-            btn.classList.remove('opacity-50');
-
-            if (r1 === r2 && r2 === r3) {
-                let win = bet * 10;
-                balance += win;
-                document.getElementById('result-message').innerHTML = `<span class="text-amber-400 font-bold">🎉 ДЖЕКПОТ! Вы выиграли ${win.toFixed(2)} $!</span>`;
-                tg.HapticFeedback.notificationOccurred('success');
-            } else if (r1 === r2 || r2 === r3 || r1 === r3) {
-                let win = bet * 2;
-                balance += win;
-                document.getElementById('result-message').innerHTML = `<span class="text-emerald-400 font-bold">✨ Победа! Вы выиграли ${win.toFixed(2)} $!</span>`;
-                tg.HapticFeedback.impactOccurred('medium');
-            } else {
-                document.getElementById('result-message').innerHTML = '<span class="text-slate-400">😢 Не повезло, попробуйте еще раз!</span>';
-                tg.HapticFeedback.impactOccurred('light');
-            }
-            updateUI();
+            // Знімаємо клас active з усіх кнопок і додаємо на натиснуту
+            const buttons = document.querySelectorAll('.nav-item');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            buttonElement.classList.add('active');
         }
     </script>
+
 </body>
 </html>
