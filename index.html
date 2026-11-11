@@ -295,7 +295,7 @@
             color: #ffffff;
         }
 
-        /* --- ІГРОВЕ ПОЛЕ: КРУГЛА РУЛЕТКА З БІЛЬШОЮ КІЛЬКІСТЮ СЕКТОРІВ --- */
+        /* --- ІГРОВЕ ПОЛЕ: РУЛЕТКА --- */
         .roulette-display {
             height: 220px;
             background: radial-gradient(circle at center, #1f1215 0%, #0d0708 70%, #050507 100%);
@@ -331,25 +331,24 @@
             z-index: 20;
         }
 
-        /* Багато секційне колесо (багато чорних, червоних та зелених платформ) */
         .roulette-circle {
             width: 140px;
             height: 140px;
             border-radius: 50%;
             background: conic-gradient(
-                #ef4444 0deg 30deg,    /* Red 1 */
-                #18181b 30deg 60deg,   /* Black 1 */
-                #ef4444 60deg 90deg,   /* Red 2 */
-                #18181b 90deg 120deg,  /* Black 2 */
-                #ef4444 120deg 150deg, /* Red 3 */
-                #18181b 150deg 180deg, /* Black 3 */
-                #ef4444 180deg 210deg, /* Red 4 */
-                #18181b 210deg 240deg, /* Black 4 */
-                #ef4444 240deg 270deg, /* Red 5 */
-                #18181b 270deg 300deg, /* Black 5 */
-                #ef4444 300deg 330deg, /* Red 6 */
-                #18181b 330deg 350deg, /* Black 6 */
-                #10b981 350deg 360deg  /* Green XORYS */
+                #ef4444 0deg 30deg,
+                #18181b 30deg 60deg,
+                #ef4444 60deg 90deg,
+                #18181b 90deg 120deg,
+                #ef4444 120deg 150deg,
+                #18181b 150deg 180deg,
+                #ef4444 180deg 210deg,
+                #18181b 210deg 240deg,
+                #ef4444 240deg 270deg,
+                #18181b 270deg 300deg,
+                #ef4444 300deg 330deg,
+                #18181b 330deg 350deg,
+                #10b981 350deg 360deg
             );
             border: 4px solid rgba(255, 255, 255, 0.2);
             box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 15px rgba(0,0,0,0.8);
@@ -372,7 +371,6 @@
             box-shadow: 0 0 10px rgba(0,0,0,0.5);
         }
 
-        /* Вибір кольору ставки */
         .color-picker-grid {
             display: flex;
             gap: 8px;
@@ -401,6 +399,81 @@
         .btn-pick-red { background: #991b1b; color: #fff; }
         .btn-pick-black { background: #18181b; color: #fff; }
         .btn-pick-green { background: #065f46; color: #fff; }
+
+        /* --- ІГРОВЕ ПОЛЕ: МІНИ --- */
+        .mines-display {
+            background: #09090e;
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 20px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(168, 85, 247, 0.15);
+        }
+
+        .mines-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+            width: 100%;
+            max-width: 280px;
+        }
+
+        .mine-tile {
+            aspect-ratio: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            transition: transform 0.1s ease, background 0.2s;
+        }
+
+        .mine-tile:active {
+            transform: scale(0.92);
+        }
+
+        .mine-tile.revealed-star {
+            background: linear-gradient(135deg, #a855f7, #6366f1);
+            border-color: #ffffff;
+            box-shadow: 0 0 12px rgba(168, 85, 247, 0.6);
+        }
+
+        .mine-tile.revealed-bomb {
+            background: linear-gradient(135deg, #ef4444, #7f1d1d);
+            border-color: #ffffff;
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.6);
+        }
+
+        .mines-config-row {
+            display: flex;
+            gap: 6px;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        .mine-count-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fff;
+            padding: 8px 0;
+            border-radius: 8px;
+            font-size: 11px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .mine-count-btn.active {
+            background: #a855f7;
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
+        }
 
         /* --- БЛОКИ УПРАВЛІННЯ СТАВКАМИ --- */
         .betting-box {
@@ -496,9 +569,9 @@
         }
 
         .btn-style-cashout {
-            background: #38bdf8;
-            color: #000000;
-            box-shadow: 0 4px 20px rgba(56, 189, 248, 0.4);
+            background: #a855f7;
+            color: #ffffff;
+            box-shadow: 0 4px 20px rgba(168, 85, 247, 0.4);
         }
 
         .btn-return {
@@ -571,6 +644,15 @@
         <h1 class="page-title">🎰 КАЗИНО XORYS</h1>
         
         <div class="games-container">
+            <!-- Баннер гри РАКЕТА -->
+            <div class="game-banner" onclick="openRocketGame()">
+                <i class="fa-solid fa-space-shuttle" style="color: #38bdf8;"></i>
+                <div class="game-info">
+                    <div class="game-title">ПОЛІТ РАКЕТИ</div>
+                    <div class="game-desc">Динамічний політ • Ставки на Stars ⭐</div>
+                </div>
+            </div>
+
             <!-- Баннер гри РУЛЕТКА -->
             <div class="game-banner" onclick="openRouletteGame()">
                 <i class="fa-solid fa-circle-notch" style="color: #ef4444;"></i>
@@ -580,77 +662,15 @@
                 </div>
             </div>
 
-            <!-- Баннер гри РАКЕТА (Повернута) -->
-            <div class="game-banner" onclick="openRocketGame()">
-                <i class="fa-solid fa-space-shuttle" style="color: #38bdf8;"></i>
+            <!-- Баннер гри МІНИ -->
+            <div class="game-banner" onclick="openMinesGame()">
+                <i class="fa-solid fa-bomb" style="color: #a855f7;"></i>
                 <div class="game-info">
-                    <div class="game-title">ПОЛІТ РАКЕТИ</div>
-                    <div class="game-desc">Динамічний політ • Ставки на Stars ⭐</div>
+                    <div class="game-title">XORYS MINES</div>
+                    <div class="game-desc">Шукай зірки • Остерігайся мін 💣</div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <!-- ЕКРАН ГРИ "РУЛЕТКА" -->
-    <div id="roulettePage" class="page">
-        <div class="rg-header">
-            <div class="rg-logo">WHEEL <span>XORYS</span></div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsRoulette">100</span> ⭐
-            </div>
-        </div>
-
-        <div class="rg-history" id="rouletteHistory">
-            <div class="history-pill" style="border-color: #ef4444;">RED</div>
-            <div class="history-pill" style="border-color: #555;">BLACK</div>
-            <div class="history-pill" style="border-color: #ef4444;">RED</div>
-        </div>
-
-        <!-- Кругле колесо рулетки -->
-        <div class="roulette-display">
-            <div class="wheel-wrapper">
-                <div class="wheel-pointer"></div>
-                <div class="roulette-circle" id="rouletteCircle">
-                    <div class="wheel-center-hub">⭐</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Вибір кольору ставки -->
-        <div class="color-picker-grid">
-            <button class="color-btn btn-pick-red active" onclick="setRouletteColor('red', this)">ЧЕРВОНИЙ (x2)</button>
-            <button class="color-btn btn-pick-black" onclick="setRouletteColor('black', this)">ЧОРНИЙ (x2)</button>
-            <button class="color-btn btn-pick-green" onclick="setRouletteColor('green', this)">XORYS ⭐ (x14)</button>
-        </div>
-
-        <!-- Управління ставкою -->
-        <div class="betting-box">
-            <div class="betting-info">
-                <span>СТАВКА (STARS)</span>
-                <span id="selectedColorLabel">ВИБІР: ЧЕРВОНИЙ</span>
-            </div>
-            
-            <div class="bet-row">
-                <div class="bet-adjuster">
-                    <button class="btn-chg" onclick="changeBet(-5, 'roulette')">-</button>
-                    <span id="betAmountRoulette" class="bet-number">10</span>
-                    <button class="btn-chg" onclick="changeBet(5, 'roulette')">+</button>
-                </div>
-                
-                <button id="rouletteBtn" class="btn-main-action btn-style-start" onclick="spinRouletteWheel()">КРУТИТИ</button>
-            </div>
-
-            <div class="quick-chips">
-                <button class="chip" onclick="setBet(10, 'roulette')">10</button>
-                <button class="chip" onclick="setBet(25, 'roulette')">25</button>
-                <button class="chip" onclick="setBet(50, 'roulette')">50</button>
-                <button class="chip" onclick="setBet(100, 'roulette')">100</button>
-            </div>
-        </div>
-
-        <button class="btn-return" onclick="closeSubGame('casino')">
-            <i class="fa-solid fa-arrow-left"></i> НАЗАД У ЛОБІ
-        </button>
     </div>
 
     <!-- ЕКРАН ГРИ "РАКЕТА" -->
@@ -715,6 +735,113 @@
         </button>
     </div>
 
+    <!-- ЕКРАН ГРИ "РУЛЕТКА" -->
+    <div id="roulettePage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">WHEEL <span>XORYS</span></div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsRoulette">100</span> ⭐
+            </div>
+        </div>
+
+        <div class="rg-history" id="rouletteHistory">
+            <div class="history-pill" style="border-color: #ef4444;">RED</div>
+            <div class="history-pill" style="border-color: #555;">BLACK</div>
+            <div class="history-pill" style="border-color: #ef4444;">RED</div>
+        </div>
+
+        <div class="roulette-display">
+            <div class="wheel-wrapper">
+                <div class="wheel-pointer"></div>
+                <div class="roulette-circle" id="rouletteCircle">
+                    <div class="wheel-center-hub">⭐</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="color-picker-grid">
+            <button class="color-btn btn-pick-red active" onclick="setRouletteColor('red', this)">ЧЕРВОНИЙ (x2)</button>
+            <button class="color-btn btn-pick-black" onclick="setRouletteColor('black', this)">ЧОРНИЙ (x2)</button>
+            <button class="color-btn btn-pick-green" onclick="setRouletteColor('green', this)">XORYS ⭐ (x14)</button>
+        </div>
+
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="selectedColorLabel">ВИБІР: ЧЕРВОНИЙ</span>
+            </div>
+            
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'roulette')">-</button>
+                    <span id="betAmountRoulette" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'roulette')">+</button>
+                </div>
+                
+                <button id="rouletteBtn" class="btn-main-action btn-style-start" onclick="spinRouletteWheel()">КРУТИТИ</button>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'roulette')">10</button>
+                <button class="chip" onclick="setBet(25, 'roulette')">25</button>
+                <button class="chip" onclick="setBet(50, 'roulette')">50</button>
+                <button class="chip" onclick="setBet(100, 'roulette')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')">
+            <i class="fa-solid fa-arrow-left"></i> НАЗАД У ЛОБІ
+        </button>
+    </div>
+
+    <!-- ЕКРАН ГРИ "МІНИ" -->
+    <div id="minesPage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">MINES <span>XORYS</span></div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsMines">100</span> ⭐
+            </div>
+        </div>
+
+        <div class="mines-display">
+            <div class="mines-grid" id="minesGrid"></div>
+        </div>
+
+        <div class="mines-config-row">
+            <button class="mine-count-btn active" onclick="setMinesCount(3, this)">3 МІНИ</button>
+            <button class="mine-count-btn" onclick="setMinesCount(5, this)">5 МІН</button>
+            <button class="mine-count-btn" onclick="setMinesCount(10, this)">10 МІН</button>
+        </div>
+
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="minesMultLabel">МНОЖНИК: x1.00</span>
+            </div>
+            
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'mines')">-</button>
+                    <span id="betAmountMines" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'mines')">+</button>
+                </div>
+                
+                <button id="minesBtn" class="btn-main-action btn-style-start" onclick="handleMinesBtnClick()">ГРАТИ</button>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'mines')">10</button>
+                <button class="chip" onclick="setBet(25, 'mines')">25</button>
+                <button class="chip" onclick="setBet(50, 'mines')">50</button>
+                <button class="chip" onclick="setBet(100, 'mines')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')">
+            <i class="fa-solid fa-arrow-left"></i> НАЗАД У ЛОБІ
+        </button>
+    </div>
+
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
         <h1 class="page-title">🛒 КАТАЛОГ</h1>
@@ -770,19 +897,28 @@
         let starsBalance = 100;
         let currentBetRoulette = 10;
         let currentBetRocket = 10;
+        let currentBetMines = 10;
+        
         let selectedRouletteColor = 'red';
         let isSpinning = false;
         
-        // Змінні ракети
         let isPlayingRocket = false;
         let currentMultiplier = 1.00;
         let gameInterval = null;
         let crashPoint = 0;
         let currentWheelAngle = 0;
 
+        // Змінні для Мін
+        let minesCount = 3;
+        let isPlayingMines = false;
+        let mineLocations = [];
+        let openedCount = 0;
+        let currentMinesMult = 1.00;
+
         function updateBalanceUI() {
             document.getElementById('userStarsRoulette').innerText = starsBalance;
             document.getElementById('userStarsRocket').innerText = starsBalance;
+            document.getElementById('userStarsMines').innerText = starsBalance;
         }
 
         function switchPage(pageId, buttonElement) {
@@ -807,6 +943,12 @@
             tg.HapticFeedback.impactOccurred('medium');
         }
 
+        function openMinesGame() {
+            switchPage('minesPage', null);
+            tg.HapticFeedback.impactOccurred('medium');
+            initMinesGrid();
+        }
+
         function closeSubGame(pageId) {
             switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
             tg.HapticFeedback.impactOccurred('light');
@@ -816,9 +958,13 @@
             if (type === 'roulette') {
                 currentBetRoulette = Math.max(5, currentBetRoulette + amount);
                 document.getElementById('betAmountRoulette').innerText = currentBetRoulette;
-            } else {
+            } else if (type === 'rocket') {
                 currentBetRocket = Math.max(5, currentBetRocket + amount);
                 document.getElementById('betAmountRocket').innerText = currentBetRocket;
+            } else if (type === 'mines') {
+                if (isPlayingMines) return;
+                currentBetMines = Math.max(5, currentBetMines + amount);
+                document.getElementById('betAmountMines').innerText = currentBetMines;
             }
         }
 
@@ -826,18 +972,21 @@
             if (type === 'roulette') {
                 currentBetRoulette = amount;
                 document.getElementById('betAmountRoulette').innerText = currentBetRoulette;
-            } else {
+            } else if (type === 'rocket') {
                 currentBetRocket = amount;
                 document.getElementById('betAmountRocket').innerText = currentBetRocket;
+            } else if (type === 'mines') {
+                if (isPlayingMines) return;
+                currentBetMines = amount;
+                document.getElementById('betAmountMines').innerText = currentBetMines;
             }
         }
 
-        // --- ЛОГІКА РУЛЕТКИ ---
+        /* --- РУЛЕТКА --- */
         function setRouletteColor(color, el) {
             selectedRouletteColor = color;
             document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            
             const names = { red: 'ЧЕРВОНИЙ', black: 'ЧОРНИЙ', green: 'XORYS ⭐' };
             document.getElementById('selectedColorLabel').innerText = 'ВИБІР: ' + names[color];
             tg.HapticFeedback.impactOccurred('light');
@@ -864,13 +1013,13 @@
             let winningColor = 'red';
 
             if (outcomeRand < 0.45) {
-                winningIndex = 15; // Сегмент червоного
+                winningIndex = 15;
                 winningColor = 'red';
             } else if (outcomeRand < 0.90) {
-                winningIndex = 45; // Сегмент чорного
+                winningIndex = 45;
                 winningColor = 'black';
             } else {
-                winningIndex = 355; // Зелений XORYS
+                winningIndex = 355;
                 winningColor = 'green';
             }
 
@@ -906,7 +1055,7 @@
             }, 4100);
         }
 
-        // --- ЛОГІКА РАКЕТИ ---
+        /* --- РАКЕТА --- */
         function handleRocketClick() {
             const btn = document.getElementById('gameBtn');
             tg.HapticFeedback.impactOccurred('light');
@@ -967,6 +1116,110 @@
 
             btn.innerText = 'СТАВКА';
             btn.className = 'btn-main-action btn-style-start';
+        }
+
+        /* --- МІНИ --- */
+        function setMinesCount(count, el) {
+            if (isPlayingMines) return;
+            minesCount = count;
+            document.querySelectorAll('.mine-count-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function initMinesGrid() {
+            const grid = document.getElementById('minesGrid');
+            grid.innerHTML = '';
+            for (let i = 0; i < 25; i++) {
+                const tile = document.createElement('div');
+                tile.className = 'mine-tile';
+                tile.dataset.index = i;
+                tile.onclick = () => clickMineTile(i);
+                grid.appendChild(tile);
+            }
+        }
+
+        function handleMinesBtnClick() {
+            const btn = document.getElementById('minesBtn');
+            if (!isPlayingMines) {
+                if (starsBalance < currentBetMines) {
+                    alert('Недостатньо Stars!');
+                    return;
+                }
+                starsBalance -= currentBetMines;
+                updateBalanceUI();
+                isPlayingMines = true;
+                openedCount = 0;
+                currentMinesMult = 1.00;
+
+                // Визначаємо позиції мін
+                mineLocations = [];
+                while (mineLocations.length < minesCount) {
+                    let randPos = Math.floor(Math.random() * 25);
+                    if (!mineLocations.includes(randPos)) mineLocations.push(randPos);
+                }
+
+                initMinesGrid();
+                btn.innerText = 'ЗАБРАТИ';
+                btn.className = 'btn-main-action btn-style-cashout';
+                document.getElementById('minesMultLabel').innerText = 'МНОЖНИК: x1.00';
+                tg.HapticFeedback.impactOccurred('medium');
+            } else {
+                // Забрати виграш
+                if (openedCount === 0) return;
+                let winSum = Math.floor(currentBetMines * currentMinesMult);
+                starsBalance += winSum;
+                updateBalanceUI();
+                endMinesGame(true);
+            }
+        }
+
+        function clickMineTile(index) {
+            if (!isPlayingMines) return;
+            const tiles = document.querySelectorAll('.mine-tile');
+            const tile = tiles[index];
+            if (tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
+
+            if (mineLocations.includes(index)) {
+                // Вибух!
+                tile.classList.add('revealed-bomb');
+                tile.innerHTML = '💣';
+                tg.HapticFeedback.notificationOccurred('error');
+                revealAllMines();
+                endMinesGame(false);
+            } else {
+                // Зірочка!
+                tile.classList.add('revealed-star');
+                tile.innerHTML = '⭐';
+                openedCount++;
+                currentMinesMult = (1 + (openedCount * (minesCount * 0.12))).toFixed(2);
+                document.getElementById('minesMultLabel').innerText = `МНОЖНИК: x${currentMinesMult}`;
+                
+                const btn = document.getElementById('minesBtn');
+                btn.innerText = `ЗАБРАТИ (${Math.floor(currentBetMines * currentMinesMult)})`;
+                tg.HapticFeedback.impactOccurred('light');
+            }
+        }
+
+        function revealAllMines() {
+            const tiles = document.querySelectorAll('.mine-tile');
+            mineLocations.forEach(idx => {
+                tiles[idx].classList.add('revealed-bomb');
+                tiles[idx].innerHTML = '💣';
+            });
+        }
+
+        function endMinesGame(isWin) {
+            isPlayingMines = false;
+            const btn = document.getElementById('minesBtn');
+            btn.innerText = 'ГРАТИ';
+            btn.className = 'btn-main-action btn-style-start';
+
+            if (isWin) {
+                tg.HapticFeedback.notificationOccurred('success');
+            } else {
+                document.getElementById('minesMultLabel').innerText = 'ВИБУХ! 💣';
+            }
         }
 
         function openCategory(name) {
