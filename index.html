@@ -133,7 +133,7 @@
             font-weight: 700;
         }
 
-        /* --- ІГРОВИЙ ЕКРАН "РАКЕТА" --- */
+        /* --- ІГРОВИЙ ЕКРАН --- */
         #rocketGamePage {
             background: #050507;
             min-height: 100vh;
@@ -194,7 +194,7 @@
             white-space: nowrap;
         }
 
-        /* --- НОВЕ КРУТЕ ІГРОВЕ ПОЛЕ ЗІ СТИЛЬНИМ ФОНОМ --- */
+        /* Ігрове поле зі стильним фоном */
         .rg-display {
             height: 220px;
             background: radial-gradient(circle at center, #1b1b2f 0%, #0b0b10 70%, #050507 100%);
@@ -209,7 +209,6 @@
             box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(100, 100, 255, 0.1);
         }
 
-        /* Анімовані лінії швидкості та сітка на фоні */
         .rg-display::before {
             content: '';
             position: absolute;
@@ -229,7 +228,6 @@
             100% { background-position: 0 40px; }
         }
 
-        /* Зірки на фоні */
         .star-point {
             position: absolute;
             background: #fff;
@@ -247,7 +245,7 @@
             letter-spacing: 1px;
         }
 
-        /* --- ТИПОЧОК ЗАМІСТЬ РАКЕТИ --- */
+        /* Персонаж (Дуров) */
         .rocket-container {
             position: absolute;
             bottom: 25px;
@@ -260,25 +258,33 @@
         }
 
         .custom-guy {
-            width: 36px;
-            height: 36px;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
-            border: 2px solid #ffffff;
+            border: 2px solid #38bdf8;
             position: relative;
+            background: #111;
         }
 
-        /* Шлейф за типочком */
+        /* Картинка Дурова у круглому контейнері */
+        .custom-guy img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Шлейф */
         .custom-guy::after {
             content: '';
             position: absolute;
-            left: -14px;
+            left: -16px;
             bottom: 4px;
-            width: 16px;
+            width: 18px;
             height: 8px;
             background: linear-gradient(90deg, transparent, #38bdf8);
             border-radius: 4px;
@@ -295,7 +301,7 @@
             color: #ffffff;
         }
 
-        /* Блок управління ставками */
+        /* Управління ставками */
         .betting-box {
             background: #111116;
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -411,7 +417,7 @@
             gap: 8px;
         }
 
-        /* --- НИЖНЯ ПАНЕЛЬ НАВІГАЦІЇ --- */
+        /* Навігація */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -465,7 +471,7 @@
         
         <div class="game-banner" onclick="openRocketGame()">
             <i class="fa-solid fa-user-astronaut"></i>
-            <div class="game-title">ПОЛІТ ТИПОЧКА</div>
+            <div class="game-title">ПОЛІТ ДУРОВА</div>
             <div class="game-desc">Динамічний раунд • Ставки на Stars ⭐</div>
         </div>
     </div>
@@ -473,13 +479,12 @@
     <!-- ЕКРАН ГРИ -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
-            <div class="rg-logo">ТИПОЧОК <span>XORYS</span></div>
+            <div class="rg-logo">DUROV <span>XORYS</span></div>
             <div class="rg-balance">
                 <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStars">100</span> ⭐
             </div>
         </div>
 
-        <!-- Історія коефіцієнтів -->
         <div class="rg-history">
             <div class="history-pill">4.20x</div>
             <div class="history-pill">1.12x</div>
@@ -488,9 +493,8 @@
             <div class="history-pill">7.50x</div>
         </div>
 
-        <!-- Ігрове поле з новим крутим фоном -->
+        <!-- Ігрове поле -->
         <div class="rg-display">
-            <!-- Дрібні зірочки на фоні -->
             <div class="star-point" style="top: 20%; left: 15%; width: 2px; height: 2px;"></div>
             <div class="star-point" style="top: 70%; left: 80%; width: 3px; height: 3px;"></div>
             <div class="star-point" style="top: 40%; left: 60%; width: 2px; height: 2px;"></div>
@@ -498,16 +502,16 @@
 
             <div id="multiplierText" class="multiplier-val">x1.00</div>
 
-            <!-- Персонаж (Типочок) замість ракети -->
+            <!-- Тут Павло Дуров замість ракети -->
             <div id="rocketObj" class="rocket-container">
                 <div class="custom-guy">
-                    <i class="fa-solid fa-user" style="color: #ffffff; font-size: 16px;"></i>
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/8e/Pavel_Durov_in_2011.jpg" alt="Pavel Durov">
                 </div>
                 <span id="playerNickname" class="player-tag">@user</span>
             </div>
         </div>
 
-        <!-- Панель управління ставкою -->
+        <!-- Управління ставкою -->
         <div class="betting-box">
             <div class="betting-info">
                 <span>РОЗМІР СТАВКИ (STARS ⭐)</span>
