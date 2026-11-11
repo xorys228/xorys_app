@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>XORYS Casino & Promos</title>
-    <!-- Іконки FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -12,7 +11,7 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -23,12 +22,13 @@
             background-size: 200% 200%;
             background-position: center;
             animation: backgroundMove 15s ease infinite;
-            padding-bottom: 90px;
+            padding-bottom: 75px;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
+            font-weight: 700;
         }
 
         @keyframes backgroundMove {
@@ -40,7 +40,7 @@
             display: none;
             width: 100%;
             max-width: 500px;
-            padding: 20px;
+            padding: 16px;
         }
 
         .page.active {
@@ -49,16 +49,16 @@
 
         .page-title {
             text-align: center;
-            margin-top: 15px;
+            margin-top: 10px;
             margin-bottom: 20px;
             font-size: 22px;
-            font-weight: 700;
+            font-weight: 800;
             letter-spacing: 1px;
             color: #ffffff;
-            text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
         }
 
-        /* --- КАТАЛОГ МАРКЕТУ В ОДИН РЯД --- */
+        /* --- МАРКЕТ В ОДИН РЯД --- */
         .catalog-grid {
             display: flex;
             gap: 10px;
@@ -68,8 +68,8 @@
 
         .catalog-card {
             flex: 1;
-            background: rgba(25, 25, 32, 0.6);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            background: rgba(25, 25, 32, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 14px;
             padding: 12px 6px;
             display: flex;
@@ -77,14 +77,11 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            backdrop-filter: blur(10px);
-            transition: all 0.2s ease;
             cursor: pointer;
         }
 
         .catalog-card:active {
             transform: scale(0.95);
-            border-color: rgba(255, 255, 255, 0.3);
         }
 
         .card-icon {
@@ -96,28 +93,24 @@
             justify-content: center;
             font-size: 16px;
             margin-bottom: 6px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.05);
             color: #ffffff;
         }
 
         .card-title {
-            font-size: 10px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.9);
-            letter-spacing: 0.3px;
+            font-size: 11px;
+            font-weight: 800;
         }
 
-        /* --- КАЗИНО ТА LUCKY JET --- */
+        /* --- БАНЕР КАЗИНО --- */
         .game-banner {
-            background: rgba(25, 25, 32, 0.7);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 16px;
-            padding: 20px;
+            background: linear-gradient(135deg, rgba(30, 25, 55, 0.9), rgba(15, 12, 30, 0.95));
+            border: 1px solid rgba(168, 85, 247, 0.4);
+            border-radius: 20px;
+            padding: 24px 20px;
             text-align: center;
-            backdrop-filter: blur(10px);
             cursor: pointer;
-            transition: all 0.2s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         }
 
         .game-banner:active {
@@ -125,112 +118,272 @@
         }
 
         .game-banner i {
-            font-size: 40px;
-            color: #f6d365;
-            margin-bottom: 10px;
+            font-size: 46px;
+            color: #c084fc;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 0 10px rgba(192, 132, 252, 0.6));
         }
 
         .game-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 6px;
+            font-size: 22px;
+            font-weight: 900;
+            letter-spacing: 1px;
         }
 
         .game-desc {
             font-size: 12px;
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        /* Ігрове поле Lucky Jet */
-        .lucky-jet-container {
-            display: none;
-            background: rgba(15, 15, 20, 0.9);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 18px;
-            padding: 15px;
-            margin-top: 15px;
-            position: relative;
-        }
-
-        .stars-balance {
-            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 4px;
             font-weight: 600;
+        }
+
+        /* --- ЕКРАН LUCKY JET --- */
+        #luckyJetPage {
+            background: #0b0914;
+            min-height: 100vh;
+            padding: 12px;
+            font-weight: 700;
+        }
+
+        /* Шапка гри */
+        .lj-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 4px;
+            margin-bottom: 10px;
+        }
+
+        .lj-logo {
+            font-size: 20px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .lj-logo span {
+            color: #a855f7;
+        }
+
+        .lj-balance {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 800;
             color: #f6d365;
-            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
             gap: 6px;
         }
 
-        .game-screen {
-            height: 180px;
-            background: rgba(5, 5, 10, 0.8);
+        /* Історія коефіцієнтів */
+        .lj-history {
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 10px;
+        }
+
+        .history-badge {
+            background: rgba(30, 27, 46, 0.9);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 4px 10px;
             border-radius: 12px;
+            font-size: 11px;
+            font-weight: 800;
+            white-space: nowrap;
+        }
+
+        .badge-purple { color: #c084fc; border-color: rgba(192, 132, 252, 0.3); }
+        .badge-orange { color: #f97316; border-color: rgba(249, 115, 22, 0.3); }
+        .badge-blue { color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
+
+        /* Ігрове поле з космосом і місяцем */
+        .lj-display {
+            height: 200px;
+            background: radial-gradient(circle at 20% 30%, #1c1335 0%, #080612 80%);
+            border: 1px solid rgba(168, 85, 247, 0.25);
+            border-radius: 20px;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.8);
         }
 
-        .multiplier {
-            font-size: 36px;
-            font-weight: 800;
-            color: #ffffff;
-            text-shadow: 0 0 15px rgba(246, 211, 101, 0.4);
-            z-index: 2;
-        }
-
-        .rocket-wrapper {
+        /* Місяць на фоні */
+        .moon {
             position: absolute;
-            bottom: 20px;
-            left: 20px;
+            top: 20px;
+            left: 35px;
+            width: 45px;
+            height: 45px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(226, 232, 240, 0.4);
+            opacity: 0.85;
+        }
+
+        /* Траєкторія політу */
+        .flight-path {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+
+        .multiplier-val {
+            font-size: 44px;
+            font-weight: 900;
+            color: #a855f7;
+            text-shadow: 0 0 20px rgba(168, 85, 247, 0.6);
+            z-index: 5;
+        }
+
+        .rocket-box {
+            position: absolute;
+            bottom: 25px;
+            left: 25px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
             transition: all 0.1s linear;
+            z-index: 6;
         }
 
-        .rocket {
-            font-size: 24px;
-            color: #f6d365;
+        .rocket-icon {
+            font-size: 26px;
+            color: #f97316;
             transform: rotate(45deg);
+            filter: drop-shadow(0 0 8px #f97316);
         }
 
-        .player-tag {
-            background: rgba(255, 255, 255, 0.15);
+        .player-name {
+            background: rgba(15, 12, 25, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             padding: 3px 8px;
             border-radius: 10px;
             font-size: 10px;
-            font-weight: 600;
-            backdrop-filter: blur(5px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            font-weight: 800;
+            color: #ffffff;
         }
 
-        .game-controls {
-            margin-top: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .btn-action {
-            background: #f39c12;
-            color: #000;
-            border: none;
+        /* Панелі ставок */
+        .bet-panel {
+            background: #141124;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px;
             padding: 12px;
-            border-radius: 12px;
+            margin-top: 10px;
+        }
+
+        .bet-header {
+            display: flex;
+            justify-content: space-between;
+            font-size: 11px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px;
             font-weight: 700;
+        }
+
+        .bet-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .bet-selector {
+            flex: 1;
+            background: #0a0814;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .btn-step {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: #fff;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            font-weight: 900;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .bet-val {
+            font-size: 16px;
+            font-weight: 900;
+        }
+
+        .quick-bets {
+            display: flex;
+            gap: 4px;
+            margin-top: 6px;
+        }
+
+        .q-btn {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.6);
+            border-radius: 6px;
+            padding: 3px 0;
+            font-size: 10px;
+            font-weight: 800;
+            cursor: pointer;
+        }
+
+        .btn-bet-action {
+            width: 120px;
+            height: 52px;
+            border: none;
+            border-radius: 14px;
+            font-weight: 900;
             font-size: 14px;
             cursor: pointer;
-            transition: all 0.2s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
-        .btn-action:active {
-            transform: scale(0.97);
+        .btn-purple {
+            background: linear-gradient(135deg, #a855f7, #7e22ce);
+            color: #ffffff;
+        }
+
+        .btn-orange {
+            background: linear-gradient(135deg, #f97316, #ea580c);
+            color: #ffffff;
+        }
+
+        /* Кнопка повернення в лобі */
+        .btn-back {
+            width: 100%;
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 10px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 13px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         /* --- НИЖНЯ ПАНЕЛЬ НАВІГАЦІЇ --- */
@@ -239,8 +392,8 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 68px;
-            background-color: rgba(18, 18, 24, 0.85);
+            height: 65px;
+            background-color: rgba(15, 13, 24, 0.92);
             border-top: 1px solid rgba(255, 255, 255, 0.08);
             display: flex;
             justify-content: space-around;
@@ -260,59 +413,102 @@
             flex: 1;
             height: 100%;
             cursor: pointer;
-            transition: all 0.2s ease;
         }
 
         .nav-item i {
-            font-size: 20px;
+            font-size: 18px;
             margin-bottom: 4px;
         }
 
         .nav-item span {
-            font-size: 11px;
-            font-weight: 500;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.5px;
         }
 
         .nav-item.active {
             color: #f39c12;
-            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
-    <!-- Вкладка КАЗИНО -->
+    <!-- Вкладка КАЗИНО (ГОЛОВНЕ ЛОБІ) -->
     <div id="casino" class="page active">
         <h1 class="page-title">🎰 КАЗИНО</h1>
         
-        <!-- Кнопка відкриття Lucky Jet -->
-        <div id="luckyJetBanner" class="game-banner" onclick="toggleLuckyJet()">
+        <div class="game-banner" onclick="openLuckyJet()">
             <i class="fa-solid fa-rocket"></i>
             <div class="game-title">LUCKY JET</div>
-            <div class="game-desc">Грай на Telegram Stars ⭐ та вигравай!</div>
-        </div>
-
-        <!-- Поле гри Lucky Jet -->
-        <div id="luckyJetGame" class="lucky-jet-container">
-            <div class="stars-balance">
-                <i class="fa-solid fa-star"></i> Баланс: <span id="userStars">100</span> Stars
-            </div>
-
-            <div class="game-screen">
-                <div id="multiplierText" class="multiplier">x1.00</div>
-                <div id="rocketObj" class="rocket-wrapper">
-                    <i class="fa-solid fa-rocket rocket"></i>
-                    <span id="playerNickname" class="player-tag">@username</span>
-                </div>
-            </div>
-
-            <div class="game-controls">
-                <button id="gameBtn" class="btn-action" onclick="handleGameClick()">ПОЧАТИ ГРУ (10 ⭐)</button>
-            </div>
+            <div class="game-desc">Мультиплікатор політу • Грай на Stars ⭐</div>
         </div>
     </div>
 
-    <!-- Вкладка МАРКЕТ (КАТАЛОГ) -->
+    <!-- ОКРЕМИЙ ЕКРАН ГРИ LUCKY JET -->
+    <div id="luckyJetPage" class="page">
+        <div class="lj-header">
+            <div class="lj-logo">LUCKY<span>JET</span></div>
+            <div class="lj-balance">
+                <i class="fa-solid fa-star"></i> <span id="userStars">100</span> ⭐
+            </div>
+        </div>
+
+        <!-- Коефіцієнти останніх раундів -->
+        <div class="lj-history">
+            <div class="history-badge badge-orange">10.24x</div>
+            <div class="history-badge badge-blue">1.00x</div>
+            <div class="history-badge badge-purple">2.01x</div>
+            <div class="history-badge badge-orange">18.53x</div>
+            <div class="history-badge badge-purple">3.48x</div>
+        </div>
+
+        <!-- Ігрове поле -->
+        <div class="lj-display">
+            <div class="moon"></div>
+            <svg class="flight-path">
+                <path d="M 10 180 Q 120 170 240 70" stroke="rgba(168, 85, 247, 0.5)" stroke-width="3" fill="none"/>
+            </svg>
+            
+            <div id="multiplierText" class="multiplier-val">x1.00</div>
+
+            <div id="rocketObj" class="rocket-box">
+                <i class="fa-solid fa-rocket rocket-icon"></i>
+                <span id="playerNickname" class="player-name">@user</span>
+            </div>
+        </div>
+
+        <!-- Панель ставки -->
+        <div class="bet-panel">
+            <div class="bet-header">
+                <span>СТАВКА STARS ⭐</span>
+                <span>АВТОСВЫВОД x2.00</span>
+            </div>
+            
+            <div class="bet-controls">
+                <div style="flex: 1;">
+                    <div class="bet-selector">
+                        <button class="btn-step" onclick="changeBet(-5)">-</button>
+                        <span id="betAmount" class="bet-val">10</span>
+                        <button class="btn-step" onclick="changeBet(5)">+</button>
+                    </div>
+                    <div class="quick-bets">
+                        <button class="q-btn" onclick="setBet(10)">+10</button>
+                        <button class="q-btn" onclick="setBet(20)">+20</button>
+                        <button class="q-btn" onclick="setBet(50)">+50</button>
+                        <button class="q-btn" onclick="setBet(100)">+100</button>
+                    </div>
+                </div>
+
+                <button id="gameBtn" class="btn-bet-action btn-purple" onclick="handleGameClick()">СТАВКА</button>
+            </div>
+        </div>
+
+        <button class="btn-back" onclick="closeLuckyJet()">
+            <i class="fa-solid fa-arrow-left"></i> НАЗАД У ЛОБІ
+        </button>
+    </div>
+
+    <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
         <h1 class="page-title">🛒 КАТАЛОГ</h1>
         <div class="catalog-grid">
@@ -338,7 +534,7 @@
     <!-- Вкладка ПРОФІЛЬ -->
     <div id="profile" class="page">
         <h1 class="page-title">👤 ПРОФІЛЬ</h1>
-        <p style="text-align: center; color: #888;">Ваш баланс та історія ігор...</p>
+        <p style="text-align: center; color: #888;">Ваш баланс та статистика ігор...</p>
     </div>
 
     <!-- Нижня панель меню -->
@@ -361,11 +557,11 @@
         const tg = window.Telegram.WebApp;
         tg.ready();
 
-        // Беремо нікнейм користувача з Telegram SDK
-        const username = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : 'Гравець';
+        const username = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : '@player';
         document.getElementById('playerNickname').innerText = username;
 
         let starsBalance = 100;
+        let currentBet = 10;
         let isPlaying = false;
         let currentMultiplier = 1.00;
         let gameInterval = null;
@@ -377,15 +573,31 @@
 
             document.getElementById(pageId).classList.add('active');
 
-            const buttons = document.querySelectorAll('.nav-item');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            buttonElement.classList.add('active');
+            if (buttonElement) {
+                const buttons = document.querySelectorAll('.nav-item');
+                buttons.forEach(btn => btn.classList.remove('active'));
+                buttonElement.classList.add('active');
+            }
         }
 
-        function toggleLuckyJet() {
-            const game = document.getElementById('luckyJetGame');
-            game.style.display = game.style.display === 'block' ? 'none' : 'block';
+        function openLuckyJet() {
+            switchPage('luckyJetPage', null);
             tg.HapticFeedback.impactOccurred('medium');
+        }
+
+        function closeLuckyJet() {
+            switchPage('casino', document.querySelectorAll('.nav-item')[0]);
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function changeBet(amount) {
+            currentBet = Math.max(5, currentBet + amount);
+            document.getElementById('betAmount').innerText = currentBet;
+        }
+
+        function setBet(amount) {
+            currentBet = amount;
+            document.getElementById('betAmount').innerText = currentBet;
         }
 
         function handleGameClick() {
@@ -393,45 +605,40 @@
             tg.HapticFeedback.impactOccurred('light');
 
             if (!isPlaying) {
-                if (starsBalance < 10) {
-                    alert('Недостатньо Зірок (⭐)!');
+                if (starsBalance < currentBet) {
+                    alert('Недостатньо Stars!');
                     return;
                 }
 
-                // Старт гри
-                starsBalance -= 10;
+                starsBalance -= currentBet;
                 document.getElementById('userStars').innerText = starsBalance;
                 isPlaying = true;
                 currentMultiplier = 1.00;
-                crashPoint = (Math.random() * 3 + 1.1).toFixed(2); // Рандомний краш від x1.1 до x4.0
+                crashPoint = (Math.random() * 3.5 + 1.1).toFixed(2);
 
-                btn.innerText = 'ЗАБРАТИ (x1.00)';
-                btn.style.background = '#27ae60';
-                btn.style.color = '#fff';
+                btn.innerText = 'ЗАБРАТИ';
+                btn.className = 'btn-bet-action btn-orange';
 
                 const rocket = document.getElementById('rocketObj');
-                rocket.style.bottom = '20px';
-                rocket.style.left = '20px';
+                rocket.style.bottom = '25px';
+                rocket.style.left = '25px';
 
                 gameInterval = setInterval(() => {
                     currentMultiplier += 0.03;
                     document.getElementById('multiplierText').innerText = 'x' + currentMultiplier.toFixed(2);
-                    btn.innerText = `ЗАБРАТИ (⭐ ${(10 * currentMultiplier).toFixed(0)})`;
+                    btn.innerText = `ЗАБРАТИ (${Math.floor(currentBet * currentMultiplier)} ⭐)`;
 
-                    // Анімація політу ракети
-                    let currentBottom = parseInt(rocket.style.bottom) || 20;
-                    let currentLeft = parseInt(rocket.style.left) || 20;
-                    if (currentBottom < 100) rocket.style.bottom = (currentBottom + 1.5) + 'px';
-                    if (currentLeft < 200) rocket.style.left = (currentLeft + 3) + 'px';
+                    let currentBottom = parseInt(rocket.style.bottom) || 25;
+                    let currentLeft = parseInt(rocket.style.left) || 25;
+                    if (currentBottom < 110) rocket.style.bottom = (currentBottom + 1.2) + 'px';
+                    if (currentLeft < 200) rocket.style.left = (currentLeft + 2.5) + 'px';
 
-                    // Перевірка на Краш
                     if (currentMultiplier >= crashPoint) {
                         endGame(false);
                     }
                 }, 100);
 
             } else {
-                // Гравець забрав виграш
                 endGame(true);
             }
         }
@@ -442,24 +649,22 @@
             const btn = document.getElementById('gameBtn');
 
             if (isWin) {
-                const winAmount = Math.floor(10 * currentMultiplier);
+                const winAmount = Math.floor(currentBet * currentMultiplier);
                 starsBalance += winAmount;
                 document.getElementById('userStars').innerText = starsBalance;
                 tg.HapticFeedback.notificationOccurred('success');
-                alert(`Ви успішно забрали ⭐ ${winAmount} Stars!`);
             } else {
                 tg.HapticFeedback.notificationOccurred('error');
                 document.getElementById('multiplierText').innerText = 'УЛЕТІВ! 💥';
             }
 
-            btn.innerText = 'ПОЧАТИ ГРУ (10 ⭐)';
-            btn.style.background = '#f39c12';
-            btn.style.color = '#000';
+            btn.innerText = 'СТАВКА';
+            btn.className = 'btn-bet-action btn-purple';
         }
 
         function openCategory(name) {
             tg.HapticFeedback.impactOccurred('light');
-            alert('Ви обрали категорію: ' + name);
+            alert('Обрано: ' + name);
         }
     </script>
 </body>
