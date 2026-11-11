@@ -16,7 +16,6 @@
         }
 
         body {
-            /* Чистий чорний фон із мінімалістичним чорно-білим градієнтом */
             background-color: #050507;
             color: #ffffff;
             background-image: radial-gradient(circle at 50% 20%, #16161c 0%, #050507 85%);
@@ -175,7 +174,7 @@
             gap: 6px;
         }
 
-        /* Історія раундів у чорно-білому стилі */
+        /* Історія раундів */
         .rg-history {
             display: flex;
             gap: 6px;
@@ -195,11 +194,11 @@
             white-space: nowrap;
         }
 
-        /* Унікальне ігрове поле (Чорний космос з білими зірками) */
+        /* --- НОВЕ КРУТЕ ІГРОВЕ ПОЛЕ ЗІ СТИЛЬНИМ ФОНОМ --- */
         .rg-display {
-            height: 210px;
-            background: #08080c;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            height: 220px;
+            background: radial-gradient(circle at center, #1b1b2f 0%, #0b0b10 70%, #050507 100%);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             border-radius: 20px;
             position: relative;
             overflow: hidden;
@@ -207,7 +206,27 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9);
+            box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(100, 100, 255, 0.1);
+        }
+
+        /* Анімовані лінії швидкості та сітка на фоні */
+        .rg-display::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 20px 20px;
+            transform: perspective(500px) rotateX(60deg);
+            bottom: -50px;
+            animation: gridMove 10s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 40px; }
         }
 
         /* Зірки на фоні */
@@ -215,19 +234,20 @@
             position: absolute;
             background: #fff;
             border-radius: 50%;
-            opacity: 0.5;
+            opacity: 0.6;
+            box-shadow: 0 0 4px #fff;
         }
 
         .multiplier-val {
             font-size: 48px;
             font-weight: 900;
             color: #ffffff;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.4);
             z-index: 5;
             letter-spacing: 1px;
         }
 
-        /* Унікальна інша ракета (геометрична/мінімалістична) */
+        /* --- ТИПОЧОК ЗАМІСТЬ РАКЕТИ --- */
         .rocket-container {
             position: absolute;
             bottom: 25px;
@@ -239,29 +259,29 @@
             z-index: 6;
         }
 
-        .custom-rocket {
-            width: 32px;
-            height: 32px;
-            background: #ffffff;
-            border-radius: 50% 50% 50% 10%;
-            transform: rotate(45deg);
+        .custom-guy {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.6);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.7);
+            border: 2px solid #ffffff;
             position: relative;
         }
 
-        /* Полум'я ракети */
-        .custom-rocket::after {
+        /* Шлейф за типочком */
+        .custom-guy::after {
             content: '';
             position: absolute;
-            bottom: -8px;
-            left: -8px;
-            width: 12px;
-            height: 12px;
-            background: #aaa;
-            border-radius: 50%;
+            left: -14px;
+            bottom: 4px;
+            width: 16px;
+            height: 8px;
+            background: linear-gradient(90deg, transparent, #38bdf8);
+            border-radius: 4px;
             filter: blur(2px);
         }
 
@@ -444,16 +464,16 @@
         <h1 class="page-title">🎰 КАЗИНО</h1>
         
         <div class="game-banner" onclick="openRocketGame()">
-            <i class="fa-solid fa-space-shuttle"></i>
-            <div class="game-title">РАКЕТА</div>
-            <div class="game-desc">Динамічний політ • Ставки на Stars ⭐</div>
+            <i class="fa-solid fa-user-astronaut"></i>
+            <div class="game-title">ПОЛІТ ТИПОЧКА</div>
+            <div class="game-desc">Динамічний раунд • Ставки на Stars ⭐</div>
         </div>
     </div>
 
-    <!-- ЕКРАН ГРИ "РАКЕТА" -->
+    <!-- ЕКРАН ГРИ -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
-            <div class="rg-logo">РАКЕТА <span>XORYS</span></div>
+            <div class="rg-logo">ТИПОЧОК <span>XORYS</span></div>
             <div class="rg-balance">
                 <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStars">100</span> ⭐
             </div>
@@ -468,7 +488,7 @@
             <div class="history-pill">7.50x</div>
         </div>
 
-        <!-- Ігрове поле -->
+        <!-- Ігрове поле з новим крутим фоном -->
         <div class="rg-display">
             <!-- Дрібні зірочки на фоні -->
             <div class="star-point" style="top: 20%; left: 15%; width: 2px; height: 2px;"></div>
@@ -478,10 +498,10 @@
 
             <div id="multiplierText" class="multiplier-val">x1.00</div>
 
-            <!-- Унікальна ракета -->
+            <!-- Персонаж (Типочок) замість ракети -->
             <div id="rocketObj" class="rocket-container">
-                <div class="custom-rocket">
-                    <i class="fa-solid fa-arrow-up" style="color: #000; font-size: 14px; transform: rotate(-45deg);"></i>
+                <div class="custom-guy">
+                    <i class="fa-solid fa-user" style="color: #ffffff; font-size: 16px;"></i>
                 </div>
                 <span id="playerNickname" class="player-tag">@user</span>
             </div>
@@ -489,7 +509,7 @@
 
         <!-- Панель управління ставкою -->
         <div class="betting-box">
-            <div class="beting-info">
+            <div class="betting-info">
                 <span>РОЗМІР СТАВКИ (STARS ⭐)</span>
                 <span>АВТОВИВІД x2.00</span>
             </div>
@@ -560,7 +580,9 @@
             <i class="fa-solid fa-user"></i>
             <span>ПРОФІЛЬ</span>
         </button>
-    </nav><script>
+    </nav>
+
+    <script>
         const tg = window.Telegram.WebApp;
         tg.ready();
 
@@ -662,7 +684,7 @@
                 tg.HapticFeedback.notificationOccurred('success');
             } else {
                 tg.HapticFeedback.notificationOccurred('error');
-                document.getElementById('multiplierText').innerText = 'ВІДЛІТЕЛІ! 💥';
+                document.getElementById('multiplierText').innerText = 'ЗЛИТО! 💥';
             }
 
             btn.innerText = 'СТАВКА';
