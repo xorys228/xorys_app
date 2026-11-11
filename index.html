@@ -97,7 +97,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- БАНЕРЫ ИГР С ОБНОВЛЕННЫМИ СТИЛЬНЫМИ ИКОНКАМИ --- */
+        /* --- БАНЕРЫ ИГР С 3D НЕОНОВЫМИ ИКОНКАМИ --- */
         .games-container {
             display: flex;
             flex-direction: column;
@@ -178,6 +178,25 @@
         }
         .icon-mines i {
             filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+        }
+
+        .icon-plinko {
+            background: radial-gradient(circle at 30% 30%, #ec4899, #9d174d);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.5);
+            animation: floatMines 3.2s ease-in-out infinite;
+        }
+        .icon-plinko i {
+            filter: drop-shadow(0 0 6px rgba(255,255,255,0.8));
+        }
+
+        .icon-coinflip {
+            background: radial-gradient(circle at 30% 30%, #eab308, #854d0e);
+            box-shadow: 0 0 20px rgba(234, 179, 8, 0.5);
+            animation: pulseRoulette 2.8s ease-in-out infinite;
+        }
+        .icon-coinflip i {
+            color: #fff;
+            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.9));
         }
 
         /* Ключевые кадры плавных анимаций */
@@ -548,6 +567,90 @@
             box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
         }
 
+        /* --- ИГРОВОЕ ПОЛЕ: ПЛИНКО --- */
+        .plinko-display {
+            height: 270px;
+            background: radial-gradient(circle at center, #1b0c1e 0%, #080309 80%);
+            border: 1px solid rgba(236, 72, 153, 0.25);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(236, 72, 153, 0.15);
+        }
+
+        #plinkoCanvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* --- ИГРОВОЕ ПОЛЕ: 3D ОРЕЛ И РЕШКА --- */
+        .coinflip-display {
+            height: 240px;
+            background: radial-gradient(circle at center, #1e1b0c 0%, #090803 80%);
+            border: 1px solid rgba(234, 179, 8, 0.25);
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 25px rgba(234, 179, 8, 0.15);
+            perspective: 1000px;
+        }
+
+        /* 3D Контейнер монеты */
+        .coin-3d-wrapper {
+            width: 110px;
+            height: 110px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 3s cubic-bezier(0.2, 0.8, 0.2, 1);
+        }
+
+        .coin-side {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            backface-visibility: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            border: 6px solid #fef08a;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 20px rgba(234, 179, 8, 0.6);
+        }
+
+        .coin-heads {
+            background: radial-gradient(circle at 30% 30%, #facc15, #ca8a04);
+            color: #000;
+            transform: rotateY(0deg);
+        }
+
+        .coin-tails {
+            background: radial-gradient(circle at 30% 30%, #e2e8f0, #64748b);
+            color: #000;
+            border-color: #ffffff;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.5), 0 0 20px rgba(255, 255, 255, 0.6);
+            transform: rotateY(180deg);
+        }
+
+        .coin-side i {
+            font-size: 38px;
+            margin-bottom: 2px;
+        }
+
+        .coin-side span {
+            font-size: 11px;
+            letter-spacing: 1px;
+        }
+
         /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ --- */
         .betting-box {
             background: #111116;
@@ -749,6 +852,28 @@
                     <div class="game-desc">Ищи звезды • Остерегайся мин 💣</div>
                 </div>
             </div>
+
+            <!-- Баннер игры ПЛИНКО -->
+            <div class="game-banner" onclick="openPlinkoGame()">
+                <div class="icon-box icon-plinko">
+                    <i class="fa-solid fa-network-wired"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">ПЛИНКО</div>
+                    <div class="game-desc">Падение шарика • До x15 множители 🎯</div>
+                </div>
+            </div>
+
+            <!-- Баннер игры 3D ОРЕЛ И РЕШКА -->
+            <div class="game-banner" onclick="openCoinflipGame()">
+                <div class="icon-box icon-coinflip">
+                    <i class="fa-solid fa-coins"></i>
+                </div>
+                <div class="game-info">
+                    <div class="game-title">ОРЕЛ И РЕШКА 3D</div>
+                    <div class="game-desc">3D подбрасывание монеты • Быстрый x2 🔥</div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -921,6 +1046,114 @@
         </button>
     </div>
 
+    <!-- ЭКРАН ИГРЫ "ПЛИНКО" -->
+    <div id="plinkoPage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">ПЛИНКО <span>XORYS</span></div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsPlinko">100</span> ⭐
+            </div>
+        </div>
+
+        <div class="rg-history" id="plinkoHistory">
+            <div class="history-pill" style="border-color: #ec4899;">x1.5</div>
+            <div class="history-pill" style="border-color: #3b82f6;">x0.5</div>
+        </div>
+
+        <div class="plinko-display">
+            <canvas id="plinkoCanvas" width="300" height="260"></canvas>
+        </div>
+
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="plinkoStatusLabel">БРОСОК ШАРИКА</span>
+            </div>
+            
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'plinko')">-</button>
+                    <span id="betAmountPlinko" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'plinko')">+</button>
+                </div>
+                
+                <button id="plinkoBtn" class="btn-main-action btn-style-start" onclick="dropPlinkoBall()">БРОСИТЬ</button>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'plinko')">10</button>
+                <button class="chip" onclick="setBet(25, 'plinko')">25</button>
+                <button class="chip" onclick="setBet(50, 'plinko')">50</button>
+                <button class="chip" onclick="setBet(100, 'plinko')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')">
+            <i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ
+        </button>
+    </div>
+
+    <!-- ЭКРАН ИГРЫ "3D ОРЕЛ И РЕШКА" -->
+    <div id="coinflipPage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">ОРЕЛ / РЕШКА <span>3D</span></div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star" style="color: #fff;"></i> <span id="userStarsCoinflip">100</span> ⭐
+            </div>
+        </div>
+
+        <div class="rg-history" id="coinflipHistory">
+            <div class="history-pill" style="border-color: #facc15;">ОРЕЛ</div>
+            <div class="history-pill" style="border-color: #94a3b8;">РЕШКА</div>
+        </div>
+
+        <div class="coinflip-display">
+            <div class="coin-3d-wrapper" id="coin3d">
+                <div class="coin-side coin-heads">
+                    <i class="fa-solid fa-star"></i>
+                    <span>ОРЕЛ</span>
+                </div>
+                <div class="coin-side coin-tails">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>РЕШКА</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="color-picker-grid">
+            <button class="color-btn btn-pick-red active" style="background: #ca8a04; color: #fff;" onclick="setCoinChoice('heads', this)">ОРЕЛ ⭐ (x2)</button>
+            <button class="color-btn btn-pick-black" style="background: #475569; color: #fff;" onclick="setCoinChoice('tails', this)">РЕШКА ⚡ (x2)</button>
+        </div>
+
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="selectedCoinLabel">ВЫБОР: ОРЕЛ</span>
+            </div>
+            
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'coinflip')">-</button>
+                    <span id="betAmountCoinflip" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'coinflip')">+</button>
+                </div>
+                
+                <button id="coinflipBtn" class="btn-main-action btn-style-start" onclick="flipCoin3D()">ПОДБРОСИТЬ</button>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'coinflip')">10</button>
+                <button class="chip" onclick="setBet(25, 'coinflip')">25</button>
+                <button class="chip" onclick="setBet(50, 'coinflip')">50</button>
+                <button class="chip" onclick="setBet(100, 'coinflip')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')">
+            <i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ
+        </button>
+    </div>
+
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
         <h1 class="page-title">🛒 КАТАЛОГ</h1>
@@ -977,6 +1210,8 @@
         let currentBetRoulette = 10;
         let currentBetRocket = 10;
         let currentBetMines = 10;
+        let currentBetPlinko = 10;
+        let currentBetCoinflip = 10;
         
         let selectedRouletteColor = 'red';
         let isSpinning = false;
@@ -994,10 +1229,17 @@
         let openedCount = 0;
         let currentMinesMult = 1.00;
 
+        // Переменные для 3D Монеты
+        let selectedCoinSide = 'heads';
+        let isFlippingCoin = false;
+        let currentCoinRotation = 0;
+
         function updateBalanceUI() {
             document.getElementById('userStarsRoulette').innerText = starsBalance;
             document.getElementById('userStarsRocket').innerText = starsBalance;
             document.getElementById('userStarsMines').innerText = starsBalance;
+            document.getElementById('userStarsPlinko').innerText = starsBalance;
+            document.getElementById('userStarsCoinflip').innerText = starsBalance;
         }
 
         function switchPage(pageId, buttonElement) {
@@ -1028,6 +1270,17 @@
             initMinesGrid();
         }
 
+        function openPlinkoGame() {
+            switchPage('plinkoPage', null);
+            tg.HapticFeedback.impactOccurred('medium');
+            initPlinkoCanvas();
+        }
+
+        function openCoinflipGame() {
+            switchPage('coinflipPage', null);
+            tg.HapticFeedback.impactOccurred('medium');
+        }
+
         function closeSubGame(pageId) {
             switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
             tg.HapticFeedback.impactOccurred('light');
@@ -1044,6 +1297,13 @@
                 if (isPlayingMines) return;
                 currentBetMines = Math.max(5, currentBetMines + amount);
                 document.getElementById('betAmountMines').innerText = currentBetMines;
+            } else if (type === 'plinko') {
+                currentBetPlinko = Math.max(5, currentBetPlinko + amount);
+                document.getElementById('betAmountPlinko').innerText = currentBetPlinko;
+            } else if (type === 'coinflip') {
+                if (isFlippingCoin) return;
+                currentBetCoinflip = Math.max(5, currentBetCoinflip + amount);
+                document.getElementById('betAmountCoinflip').innerText = currentBetCoinflip;
             }
         }
 
@@ -1058,7 +1318,204 @@
                 if (isPlayingMines) return;
                 currentBetMines = amount;
                 document.getElementById('betAmountMines').innerText = currentBetMines;
+            } else if (type === 'plinko') {
+                currentBetPlinko = amount;
+                document.getElementById('betAmountPlinko').innerText = currentBetPlinko;
+            } else if (type === 'coinflip') {
+                if (isFlippingCoin) return;
+                currentBetCoinflip = amount;
+                document.getElementById('betAmountCoinflip').innerText = currentBetCoinflip;
             }
+        }
+
+        /* --- 3D ОРЕЛ И РЕШКА --- */
+        function setCoinChoice(side, el) {
+            if (isFlippingCoin) return;
+            selectedCoinSide = side;
+            document.querySelectorAll('#coinflipPage .color-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('selectedCoinLabel').innerText = 'ВЫБОР: ' + (side === 'heads' ? 'ОРЕЛ' : 'РЕШКА');
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function flipCoin3D() {
+            if (isFlippingCoin) return;
+            if (starsBalance < currentBetCoinflip) {
+                alert('Недостаточно Stars!');
+                return;
+            }
+
+            starsBalance -= currentBetCoinflip;
+            updateBalanceUI();
+            isFlippingCoin = true;
+
+            const btn = document.getElementById('coinflipBtn');
+            btn.innerText = 'ПОЛЕТ...';
+            btn.disabled = true;
+            tg.HapticFeedback.impactOccurred('medium');
+
+            const isWin = Math.random() < 0.48; // 48% шанс выигрыша
+            const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
+
+            // 3D Анимация вращения монеты
+            const coin = document.getElementById('coin3d');
+            const spins = 10 * 360; // 10 полных оборотов
+            const targetDegree = outcomeSide === 'heads' ? 0 : 180;
+            currentCoinRotation += spins + targetDegree - (currentCoinRotation % 360);
+
+            coin.style.transform = `rotateY(${currentCoinRotation}deg)`;
+
+            setTimeout(() => {
+                isFlippingCoin = false;
+                btn.innerText = 'ПОДБРОСИТЬ';
+                btn.disabled = false;
+
+                if (isWin) {
+                    let winSum = currentBetCoinflip * 2;
+                    starsBalance += winSum;
+                    updateBalanceUI();
+                    tg.HapticFeedback.notificationOccurred('success');
+                } else {
+                    tg.HapticFeedback.notificationOccurred('error');
+                }
+
+                const historyContainer = document.getElementById('coinflipHistory');
+                const pill = document.createElement('div');
+                pill.className = 'history-pill';
+                pill.style.borderColor = outcomeSide === 'heads' ? '#facc15' : '#94a3b8';
+                pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
+                historyContainer.prepend(pill);
+                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+
+            }, 3000);
+        }
+
+        /* --- ПЛИНКО (CANVAS ИГРА) --- */
+        let plinkoPegs = [];
+        let plinkoBalls = [];
+        let plinkoBins = [15, 3, 1.5, 0.5, 0.2, 0.5, 1.5, 3, 15];
+        let animFrameId = null;
+
+        function initPlinkoCanvas() {
+            const canvas = document.getElementById('plinkoCanvas');
+            const ctx = canvas.getContext('2d');
+            plinkoPegs = [];
+
+            const rows = 7;
+            const startY = 30;
+            const rowSpacing = 28;
+
+            for (let r = 0; r < rows; r++) {
+                const count = r + 3;
+                const startX = (canvas.width - (count - 1) * 28) / 2;
+                for (let c = 0; c < count; c++) {
+                    plinkoPegs.push({ x: startX + c * 28, y: startY + r * rowSpacing });
+                }
+            }
+
+            if (!animFrameId) {
+                renderPlinko();
+            }
+        }
+
+        function dropPlinkoBall() {
+            if (starsBalance < currentBetPlinko) {
+                alert('Недостаточно Stars!');
+                return;
+            }
+
+            starsBalance -= currentBetPlinko;
+            updateBalanceUI();
+            tg.HapticFeedback.impactOccurred('medium');
+
+            const canvas = document.getElementById('plinkoCanvas');
+            plinkoBalls.push({
+                x: canvas.width / 2 + (Math.random() * 4 - 2),
+                y: 10,
+                vx: (Math.random() - 0.5) * 1.5,
+                vy: 2,
+                bet: currentBetPlinko
+            });
+        }
+
+        function renderPlinko() {
+            const canvas = document.getElementById('plinkoCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Отрисовка штырьков
+            ctx.fillStyle = '#ffffff';
+            plinkoPegs.forEach(peg => {
+                ctx.beginPath();
+                ctx.arc(peg.x, peg.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Отрисовка корзин внизу
+            const binWidth = canvas.width / plinkoBins.length;
+            plinkoBins.forEach((mult, i) => {
+                ctx.fillStyle = mult >= 3 ? '#ec4899' : (mult >= 1 ? '#3b82f6' : 'rgba(255,255,255,0.1)');
+                ctx.fillRect(i * binWidth + 2, canvas.height - 22, binWidth - 4, 20);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 9px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(`x${mult}`, i * binWidth + binWidth / 2, canvas.height - 8);
+            });
+
+            // Обновление и отрисовка шариков
+            for (let b = plinkoBalls.length - 1; b >= 0; b--) {
+                const ball = plinkoBalls[b];
+                ball.vy += 0.2; // Гравитация
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+
+                // Коллизии со штырьками
+                plinkoPegs.forEach(peg => {
+                    const dx = ball.x - peg.x;
+                    const dy = ball.y - peg.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 9) {
+                        ball.vy *= -0.4;
+                        ball.vx += (dx > 0 ? 1 : -1) * (Math.random() * 1.5 + 0.5);
+                        ball.y = peg.y + (dy / dist) * 9;
+                    }
+                });
+
+                // Отрисовка шарика
+                ctx.fillStyle = '#ff2a5f';
+                ctx.shadowColor = '#ff2a5f';
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y, 5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                // Достижение низа
+                if (ball.y >= canvas.height - 25) {
+                    let binIndex = Math.floor(ball.x / binWidth);
+                    binIndex = Math.max(0, Math.min(plinkoBins.length - 1, binIndex));
+                    const winMult = plinkoBins[binIndex];
+                    const winAmount = Math.floor(ball.bet * winMult);
+
+                    starsBalance += winAmount;
+                    updateBalanceUI();
+
+                    if (winMult >= 1) tg.HapticFeedback.notificationOccurred('success');
+
+                    const historyContainer = document.getElementById('plinkoHistory');
+                    const pill = document.createElement('div');
+                    pill.className = 'history-pill';
+                    pill.style.borderColor = winMult >= 3 ? '#ec4899' : '#3b82f6';
+                    pill.innerText = `x${winMult}`;
+                    historyContainer.prepend(pill);
+                    if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+
+                    plinkoBalls.splice(b, 1);
+                }
+            }
+
+            animFrameId = requestAnimationFrame(renderPlinko);
         }
 
         /* --- РУЛЕТКА --- */
