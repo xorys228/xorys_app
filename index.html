@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!DOCTYPE html>
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
@@ -51,7 +50,7 @@
         .page-title {
             text-align: center;
             margin-top: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 20px;
             font-size: 22px;
             font-weight: 700;
             letter-spacing: 1px;
@@ -59,79 +58,58 @@
             text-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
         }
 
-        /* --- СТИЛІ ДЛЯ КАТАЛОГУ (МАРКЕТ) --- */
+        /* --- КАТАЛОГ В ОДИН РЯД --- */
         .catalog-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
+            display: flex;
+            gap: 10px;
             width: 100%;
+            justify-content: space-between;
         }
 
         .catalog-card {
-            background: rgba(25. 25. 32. 0.6);
+            flex: 1;
+            background: rgba(25, 25, 32, 0.6);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 20px 15px;
+            border-radius: 14px;
+            padding: 12px 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             backdrop-filter: blur(10px);
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.2s ease;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
         }
 
         .catalog-card:active {
-            transform: scale(0.96);
-            border-color: rgba(243, 156, 18, 0.4);
-            background: rgba(35, 35, 45, 0.8);
+            transform: scale(0.95);
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(35, 35, 45, 0.9);
         }
 
-        /* Сяйво всередині картки при наведенні/натисканні */
-        .catalog-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
-        }
-
-        /* Іконка товару */
+        /* Білі мінімалістичні іконки */
         .card-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
-            margin-bottom: 12px;
+            font-size: 16px;
+            margin-bottom: 6px;
             background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: transform 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #ffffff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
         }
-
-        /* Кольорові іконки та неонові акценти */
-        .icon-numbers { color: #4facfe; box-shadow: 0 0 15px rgba(79, 172, 254, 0.15); }
-        .icon-stars { color: #f6d365; box-shadow: 0 0 15px rgba(246, 211, 101, 0.15); }
-        .icon-premium { color: #a18cd1; box-shadow: 0 0 15px rgba(161, 140, 209, 0.15); }
-        .icon-usdt { color: #26a17b; box-shadow: 0 0 15px rgba(38, 161, 123, 0.15); }
 
         .card-title {
-            font-size: 15px;
+            font-size: 10px;
             font-weight: 600;
-            color: #ffffff;
-            margin-bottom: 4px;
-        }
-
-        .card-subtitle {
-            font-size: 11px;
-            color: rgba(255, 255, 255, 0.4);
+            color: rgba(255, 255, 255, 0.9);
+            letter-spacing: 0.3px;
+            white-space: nowrap;
         }
 
         /* --- НИЖНЯ ПАНЕЛЬ НАВІГАЦІЇ --- */
@@ -198,38 +176,34 @@
         <div class="catalog-grid">
             <!-- Картка 1: НОМЕРИ -->
             <div class="catalog-card" onclick="openCategory('Номери')">
-                <div class="card-icon icon-numbers">
+                <div class="card-icon">
                     <i class="fa-solid fa-sim-card"></i>
                 </div>
                 <div class="card-title">НОМЕРИ</div>
-                <div class="card-subtitle">Анонімні & Віртуальні</div>
             </div>
 
             <!-- Картка 2: ЗВЁЗДЫ -->
             <div class="catalog-card" onclick="openCategory('Звёзды')">
-                <div class="card-icon icon-stars">
+                <div class="card-icon">
                     <i class="fa-solid fa-star"></i>
                 </div>
                 <div class="card-title">ЗВЁЗДЫ</div>
-                <div class="card-subtitle">Telegram Stars</div>
             </div>
 
             <!-- Картка 3: TG Premium -->
             <div class="catalog-card" onclick="openCategory('TG Premium')">
-                <div class="card-icon icon-premium">
+                <div class="card-icon">
                     <i class="fa-solid fa-gem"></i>
                 </div>
-                <div class="card-title">TG Premium</div>
-                <div class="card-subtitle">Підписка на 3, 6, 12 міс.</div>
+                <div class="card-title">TG PREM</div>
             </div>
 
             <!-- Картка 4: USDT -->
             <div class="catalog-card" onclick="openCategory('USDT')">
-                <div class="card-icon icon-usdt">
+                <div class="card-icon">
                     <i class="fa-solid fa-coins"></i>
                 </div>
                 <div class="card-title">USDT</div>
-                <div class="card-subtitle">Крипто-поповнення</div>
             </div>
         </div>
     </div>
@@ -272,7 +246,7 @@
         }
 
         function openCategory(name) {
-            tg.HapticFeedback.impactOccurred('light'); // Вібрація при натисканні в Telegram
+            tg.HapticFeedback.impactOccurred('light');
             alert('Ви обрали категорію: ' + name);
         }
     </script>
