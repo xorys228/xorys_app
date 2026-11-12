@@ -3138,6 +3138,193 @@ function spinRouletteWheel() {
 
         <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
+initRefRouletteState();
+
+        /* --- МАРКЕТ --- */
+        const marketCatalogData = {
+            'ЗВЁЗДЫ': {
+                sub: 'TELEGRAM STARS',
+                packages: []
+            },
+            'TG PREM': {
+                sub: 'ПОДПИСКА TELEGRAM PREMIUM',
+                packages: [
+                    { amount: '3 месяца', price: '1 150 ★' },
+                    { amount: '6 месяцев', price: '1 950 ★' },
+                    { amount: '12 месяцев', price: '3 400 ★' }
+                ]
+            }
+        };
+
+        const countriesList = [
+            { name: 'Россия', code: '+7', code2: 'ru', stars: 199, usd: '$2,50' },
+            { name: 'Казахстан', code: '+77', code2: 'kz', stars: 199, usd: '$2,50' },
+            { name: 'Украина', code: '+380', code2: 'ua', stars: 235, usd: '$4,00' },
+            { name: 'Бангладеш', code: '+880', code2: 'bd', stars: 120, usd: '$1,99' },
+            { name: 'Иран', code: '+97', code2: 'ir', stars: 75, usd: '$0,99' },
+            { name: 'США', code: '+1', code2: 'us', stars: 50, usd: '$0,99' },
+            { name: 'Колумбия', code: '+56', code2: 'co', stars: 50, usd: '$0,99' },
+            { name: 'Бразилия', code: '+55', code2: 'br', stars: 50, usd: '$0,99' },
+            { name: 'Канада', code: '+1', code2: 'ca', stars: 50, usd: '$0,99' },
+            { name: 'Индия', code: '+91', code2: 'in', stars: 50, usd: '$0,99' },
+            { name: 'Афганистан', code: '+93', code2: 'af', stars: 222, usd: '$3,80' }
+        ];
+
+        let activeMarketCategory = 'ЗВЁЗДЫ';
+        let selectedPackageIndex = 0;
+        let selectedCustomStars = 100;
+
+        function openMarketCategory(categoryName) {
+            triggerHaptic('impact', 'medium');
+            if (categoryName === 'USDT') {
+                showToast('Раздел USDT находится в разработке!');
+                return;
+            }
+            if (categoryName === 'НОМЕРА') {
+                document.getElementById('marketMainView').style.display = 'none';
+                document.getElementById('marketDetailView').style.display = 'block';
+                renderCountriesList();
+            } else {
+                openMarketModal(categoryName);
+            }
+        }
+
+        function closeMarketDetail() {
+            triggerHaptic('impact', 'light');
+            document.getElementById('marketDetailView').style.display = 'none';
+            document.getElementById('marketMainView').style.display = 'block';
+        }
+
+        function renderCountriesList() {
+            const container = document.getElementById('countriesListContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            countriesList.forEach((item) => {
+                const row = document.createElement('div');
+                row.className = 'game-card-row';
+                row.style.padding = '12px 14px';
+                row.onclick = () => buyCountryItem(item);
+                row.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px; z-index: 2;">
+                        <img src="https://flagcdn.com/w80/${item.code2}.png" alt="${item.name}" style="width: 38px; height: 26px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);" />
+                        <div style="display: flex; flex-direction: column; gap: 2px;">
+                            <span style="font-size: 15px; font-weight: 900; color: #ffffff;">${item.name} ${item.code}</span>
+                            <span style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);">В наличии • Гарантия</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; z-index: 2;">
+                        <div style="text-align: right;">
+                            <div style="font-size: 13px; font-weight: 900; color: #ffffff;">${item.stars} ★</div>
+                            <div style="font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.45);">${item.usd}</div>
+                        </div>
+                        <button class="card-action-btn" style="padding: 7px 12px; font-size: 10px;">КУПИТЬ</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function buyCountryItem(item) {
+            if (starsBalance < item.stars) {
+                showToast(`Недостаточно звезд! Нужно ${item.stars} ★`);
+                triggerHaptic('notification', 'error');
+                return;
+            }
+
+            starsBalance = Number((starsBalance - item.stars).toFixed(1));
+            updateBalanceUI();
+            addProfileActivity(`Покупка номера ${item.name} ${item.code}`, `-${item.stars} ★`, 'fa-sim-card');
+            showToast(`Успешно куплен номер (${item.name} ${item.code})!`);
+            triggerHaptic('notification', 'success');
+        }
+
+        function openMarketModal(categoryName) {
+            const data = marketCatalogData[categoryName];
+            if (!data) return;
+
+            activeMarketCategory = categoryName;
+            selectedPackageIndex = 0;
+
+            document.getElementById('modalCategorySub').innerText = data.sub;
+            document.getElementById('modalCategoryTitle').innerText = categoryName;
+
+            const starsBox = document.getElementById('starsCustomConfig');
+            const pkgGrid = document.getElementById('modalPackagesGrid');
+
+            if (categoryName === 'ЗВЁЗДЫ') {
+                starsBox.style.display = 'block';
+                pkgGrid.style.display = 'none';
+                selectedCustomStars = 100;
+                syncStarsControls(100);
+            } else {
+                starsBox.style.display = 'none';
+                pkgGrid.style.display = 'grid';
+                renderMarketPackages();
+            }
+
+            document.getElementById('marketModal').classList.add('open');
+            triggerHaptic('impact', 'medium');
+        }
+    </script>
+
+    <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
+    <div id="refRoulettePage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">РУЛЕТКА <span>FREE</span></div>
+            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRefRoulette">100</span></div>
+        </div>
+
+        <div class="roulette-display" style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="wheel-wrapper" style="position: relative; width: 210px; height: 210px;">
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ffffff; z-index: 15; filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.9));"></div>
+
+                <div id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4.2s cubic-bezier(0.12, 0.85, 0.15, 1); box-shadow: 0 0 30px rgba(56, 189, 248, 0.35), inset 0 0 15px rgba(0,0,0,0.8); border: 4px solid #38bdf8; overflow: hidden; background: #0b0c10;">
+                    <svg viewBox="0 0 200 200" style="width: 100%; height: 100%; display: block;">
+                        <path d="M100,100 L100,0 A100,100 0 0,1 170.71,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L170.71,29.29 A100,100 0 0,1 200,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L200,100 A100,100 0 0,1 170.71,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L170.71,170.71 A100,100 0 0,1 100,200 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L100,200 A100,100 0 0,1 29.29,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L29.29,170.71 A100,100 0 0,1 0,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L0,100 A100,100 0 0,1 29.29,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L29.29,29.29 A100,100 0 0,1 100,0 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+
+                        <circle cx="100" cy="100" r="95" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+
+                        <g font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">
+                            <text x="100" y="34" transform="rotate(22.5 100 100)">10★</text>
+                            <text x="100" y="34" transform="rotate(67.5 100 100)">1★</text>
+                            <text x="100" y="34" transform="rotate(112.5 100 100)">5★</text>
+                            <text x="100" y="34" transform="rotate(157.5 100 100)">2★</text>
+                            <text x="100" y="34" transform="rotate(202.5 100 100)">10★</text>
+                            <text x="100" y="34" transform="rotate(247.5 100 100)">1★</text>
+                            <text x="100" y="34" transform="rotate(292.5 100 100)">5★</text>
+                            <text x="100" y="34" transform="rotate(337.5 100 100)">2★</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; background: radial-gradient(circle, #181a20 0%, #050507 100%); border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; box-shadow: 0 0 18px rgba(0,0,0,0.95), inset 0 0 8px rgba(56,189,248,0.4); z-index: 10;">0 ⭐️</div>
+            </div>
+        </div>
+
+        <div class="betting-box" style="text-align: center;">
+            <div class="betting-info" style="justify-content: center; margin-bottom: 12px;">
+                <span id="refSpinStatusTest" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
+            </div>
+            
+            <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
+                КРУТИТЬ ЗА 0 ⭐️ (0/3)
+            </button>
+
+            <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
+                <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (0/3)
+            </button>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
+    </div>
 
 </body>
 </html>
