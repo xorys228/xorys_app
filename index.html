@@ -1929,6 +1929,30 @@
             </div>
         </div>
 
+        <!-- БЛОК ВЫВОДА ЗВЁЗД (ВСТАВИТЬ СЮДА) -->
+        <div class="profile-feature-card" style="border-color: rgba(56, 189, 248, 0.4); background: linear-gradient(145deg, rgba(14, 25, 40, 0.95) 0%, rgba(7, 12, 20, 0.98) 100%);">
+            <div class="feature-card-header">
+                <div class="feature-title-wrap">
+                    <div class="feature-icon-box" style="background: rgba(56, 189, 248, 0.2); color: #38bdf8;">
+                        <i class="fa-solid fa-star"></i>
+                    </div>
+                    <div class="feature-title-text">
+                        <h3>ВЫВОД ЗВЁЗД</h3>
+                        <p>Доступно от 100 звёзд</p>
+                    </div>
+                </div>
+                <div class="reward-pill-badge">Мин. 100 ★</div>
+            </div>
+            
+            <div style="margin: 12px 0 10px 0;">
+                <input type="number" id="profileWithdrawInput" class="stars-manual-input" style="width: 100%; font-size: 15px; padding: 10px;" min="100" placeholder="Введите от 100 звёзд" value="100">
+            </div>
+
+            <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);" onclick="requestWithdrawFromProfile()">
+                <i class="fa-solid fa-paper-plane" style="margin-right: 6px;"></i> ВЫВЕСТИ ЗВЁЗДЫ
+            </button>
+        </div>
+        
         <!-- 1. Карточка пользователя + Пополнение из своих Telegram Stars -->
         <div class="profile-hero-card">
             <div class="profile-top-row">
@@ -2980,6 +3004,44 @@
         updateBalanceUI();
         initDailyBonusState();
         renderProfileActivity();
+        // ФУНКЦИЯ ДЛЯ ВЫВОДА ЗВЁЗД ОТ 100 ШТУК
+function requestWithdrawFromProfile() {
+    const input = document.getElementById('profileWithdrawInput');
+    const amount = parseInt(input.value);
+
+    if (isNaN(amount) || amount < 100) {
+        showToast('Минимум для вывода: 100 звёзд!');
+        triggerHaptic('notification', 'error');
+        return;
+    }
+
+    if (amount > starsBalance) {
+        showToast('Недостаточно звёзд на балансе!');
+        triggerHaptic('notification', 'error');
+        return;
+    }
+
+    // Формируем данные для отправки вашему боту
+    const withdrawData = {
+        action: 'withdraw_request',
+        amount: amount,
+        user_id: userId,
+        username: username
+    };
+
+    // Если открыто в Телеграме — отправляем боту и закрываем мини-апп
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
+        window.Telegram.WebApp.sendData(JSON.stringify(withdrawData));
+    } else {
+        // Если тест на компьютере в браузере: просто списываем и показываем уведомление
+        starsBalance = Number((starsBalance - amount).toFixed(1));
+        updateBalanceUI();
+        showToast(`Заявка на вывод ${amount} ★ отправлена админу!`);
+        triggerHaptic('notification', 'success');
+    }
+    
+    input.value = '100';
+}
     </script>
 </body>
 </html>
