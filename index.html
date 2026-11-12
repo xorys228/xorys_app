@@ -94,6 +94,38 @@
             margin-top: -2px;
         }
 
+        /* --- ВКЛАДКИ В ЧЕРНО-БЕЛО-СИНЕМ СТИЛЕ --- */
+        .tabs-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 4px;
+            margin-bottom: 18px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.45);
+            padding: 9px 0;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+            letter-spacing: 0.5px;
+        }
+
+        .tab-btn.active {
+            background: #ffffff;
+            color: #030407;
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+        }
+
         .page-title {
             text-align: center;
             margin-top: 8px;
@@ -105,59 +137,104 @@
             text-transform: uppercase;
         }
 
-        /* --- КАТАЛОГ МАРКЕТА (2x2) --- */
-        .market-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+        /* --- КАТАЛОГ МАРКЕТА --- */
+        .catalog-grid {
+            display: flex;
+            gap: 10px;
             width: 100%;
+            justify-content: space-between;
         }
 
-        .market-card {
-            background: linear-gradient(145deg, rgba(16, 20, 30, 0.88) 0%, rgba(6, 8, 13, 0.96) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 20px;
-            padding: 16px 12px;
+        .catalog-card {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 14px 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
             cursor: pointer;
-            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+            transition: all 0.2s ease;
         }
 
-        .market-card:active {
-            transform: scale(0.96);
-            border-color: rgba(56, 189, 248, 0.45);
+        .catalog-card:active {
+            transform: scale(0.95);
+            background: rgba(56, 189, 248, 0.08);
+            border-color: rgba(56, 189, 248, 0.3);
         }
 
-        .market-icon-box {
-            width: 50px;
-            height: 50px;
-            border-radius: 15px;
+        .card-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 20px;
-            margin-bottom: 10px;
-            background: linear-gradient(145deg, #131a29 0%, #070a10 100%);
+            font-size: 16px;
+            margin-bottom: 8px;
+            background: rgba(255, 255, 255, 0.04);
             color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.28);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14), 0 4px 12px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(56, 189, 248, 0.2);
         }
 
-        .market-card-title {
-            font-size: 13px;
-            font-weight: 900;
-            color: #ffffff;
+        .card-title {
+            font-size: 10px;
+            font-weight: 800;
             letter-spacing: 0.8px;
+            color: rgba(255,255,255,0.85);
         }
 
-        /* --- КАРТОЧКИ ИГР --- */
+        /* Подстраницы маркета */
+        .sub-market-page { display: none; width: 100%; }
+        .sub-market-page.active { display: block; }
+
+        .market-list { display: flex; flex-direction: column; gap: 10px; }
+        .market-item-row {
+            background: linear-gradient(145deg, rgba(16, 20, 30, 0.88) 0%, rgba(6, 8, 13, 0.96) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 16px; padding: 12px 14px;
+            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+        }
+        .market-item-left { display: flex; align-items: center; gap: 12px; }
+        .country-flag { width: 36px; height: 26px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
+        .market-item-meta { display: flex; flex-direction: column; gap: 2px; }
+        .market-item-name { font-size: 14px; font-weight: 900; color: #ffffff; }
+        .market-item-sub { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 700; }
+        .market-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
+        .market-item-price { font-size: 13px; font-weight: 900; color: #38bdf8; display: flex; align-items: center; gap: 4px; }
+        .market-item-usd { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 700; }
+        .buy-btn { background: #ffffff; color: #030407; border: none; padding: 7px 14px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; margin-top: 4px; }
+        .buy-btn:active { transform: scale(0.95); }
+
+        /* Блок выбора звезд */
+        .stars-custom-box {
+            background: linear-gradient(145deg, rgba(16, 20, 30, 0.9) 0%, rgba(6, 8, 13, 0.98) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 20px; padding: 18px; text-align: center; margin-bottom: 14px;
+        }
+        .stars-input {
+            width: 100%; background: rgba(3, 5, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
+            padding: 12px; color: #ffffff; font-size: 20px; font-weight: 900; text-align: center; margin: 12px 0; outline: none;
+        }
+        .stars-input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
+        .stars-chips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
+        .stars-chip-btn {
+            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+            padding: 9px 0; color: #ffffff; font-size: 11px; font-weight: 900; cursor: pointer; transition: all 0.2s;
+        }
+        .stars-chip-btn.active { background: #38bdf8; color: #030407; border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+
+        /* Раздел USDT В разработке */
+        .dev-box {
+            text-align: center; padding: 50px 20px; background: rgba(255,255,255,0.02);
+            border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px; margin-top: 10px;
+        }
+        .dev-box i { font-size: 36px; color: #38bdf8; margin-bottom: 14px; }
+        .dev-box h3 { font-size: 16px; font-weight: 900; margin-bottom: 6px; }
+        .dev-box p { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; }
+
+        /* --- ГОРИЗОНТАЛЬНЫЕ КАРТОЧКИ ИГР (ЧЕРНЫЙ + БЕЛЫЙ + СИНИЙ) --- */
         .games-container {
             display: flex;
             flex-direction: column;
@@ -180,6 +257,17 @@
             box-shadow: 0 10px 26px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
         }
 
+        .game-card-row::before {
+            content: '';
+            position: absolute;
+            top: -25px;
+            left: -25px;
+            width: 110px;
+            height: 110px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
         .game-card-row:active {
             transform: scale(0.975);
             border-color: rgba(56, 189, 248, 0.45);
@@ -192,6 +280,7 @@
             z-index: 2;
         }
 
+        /* Контейнер уникальной SVG-иконки */
         .game-icon-box {
             width: 62px;
             height: 62px;
@@ -206,6 +295,10 @@
             box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14), 0 6px 16px rgba(0, 0, 0, 0.6);
         }
 
+        .game-icon-box svg {
+            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.35));
+        }
+
         .game-meta {
             display: flex;
             flex-direction: column;
@@ -218,6 +311,9 @@
             letter-spacing: 1px;
             text-transform: uppercase;
             color: #38bdf8;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .game-name {
@@ -242,6 +338,7 @@
             margin-top: 2px;
         }
 
+        /* Кнопка ИГРАТЬ сбоку на всех карточках */
         .card-action-btn {
             background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
             color: #030407;
@@ -256,9 +353,20 @@
             cursor: pointer;
             white-space: nowrap;
             z-index: 2;
+            transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
         }
 
-        /* --- СТАНДАРТНЫЕ ЭКРАНЫ ИГР --- */
+        .game-card-row:hover .card-action-btn {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45);
+        }
+
+        .card-action-btn:active {
+            transform: scale(0.94);
+        }
+
+        /* --- ШАПКА ИГРОВЫХ ЭКРАНОВ --- */
         .rg-header {
             display: flex;
             justify-content: space-between;
@@ -282,36 +390,83 @@
             align-items: center;
             gap: 6px;
             backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
-        .rg-balance i { color: #38bdf8; }
+
+        .rg-balance i {
+            color: #38bdf8;
+        }
 
         .rg-history {
-            display: flex; gap: 6px; overflow-x: auto; padding-bottom: 6px; margin-bottom: 12px; scrollbar-width: none;
+            display: flex;
+            gap: 6px;
+            overflow-x: auto;
+            padding-bottom: 6px;
+            margin-bottom: 12px;
+            scrollbar-width: none;
         }
         .rg-history::-webkit-scrollbar { display: none; }
 
         .history-pill {
-            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12);
-            padding: 4px 10px; border-radius: 10px; font-size: 11px; font-weight: 800; color: #ffffff; white-space: nowrap;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            padding: 4px 10px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #ffffff;
+            white-space: nowrap;
         }
 
+        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА (ЧЕРНЫЙ + БЕЛЫЙ + СИНИЙ) --- */
         .rg-display {
-            height: 235px; background: linear-gradient(180deg, #03050a 0%, #091224 55%, #0f1f3d 100%);
-            border: 1px solid rgba(56, 189, 248, 0.28); border-radius: 22px; position: relative; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            height: 235px;
+            background: linear-gradient(180deg, #03050a 0%, #091224 55%, #0f1f3d 100%);
+            border: 1px solid rgba(56, 189, 248, 0.28);
+            border-radius: 22px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(56, 189, 248, 0.1);
         }
 
         .space-stars {
-            position: absolute; inset: 0;
-            background-image: radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent), radial-gradient(2px 2px at 160px 25px, #38bdf8, transparent);
-            background-size: 350px 180px; z-index: 1;
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent),
+                radial-gradient(1px 1px at 90px 70px, rgba(255,255,255,0.85), transparent),
+                radial-gradient(2px 2px at 160px 25px, #38bdf8, transparent),
+                radial-gradient(1.5px 1.5px at 240px 85px, #ffffff, transparent),
+                radial-gradient(1px 1px at 310px 40px, #7dd3fc, transparent),
+                radial-gradient(1.5px 1.5px at 60px 130px, #ffffff, transparent),
+                radial-gradient(2px 2px at 200px 120px, #bae6fd, transparent),
+                radial-gradient(1px 1px at 280px 140px, rgba(255,255,255,0.7), transparent),
+                radial-gradient(1.5px 1.5px at 130px 160px, #ffffff, transparent);
+            background-size: 350px 180px;
+            animation: twinkleStars 4s ease-in-out infinite alternate;
+            z-index: 1;
         }
+
         .space-stars.flying { animation: warpStars 2.5s linear infinite; }
-        @keyframes warpStars { 0% { background-position: 0 0; } 100% { background-position: -140px 180px; } }
+
+        @keyframes twinkleStars {
+            0% { opacity: 0.55; }
+            100% { opacity: 1; }
+        }
+
+        @keyframes warpStars {
+            0% { background-position: 0 0; }
+            100% { background-position: -140px 180px; }
+        }
 
         .space-planet {
             position: absolute; top: 22px; right: 28px; width: 34px; height: 34px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #38bdf8 55%, #082f49 100%); z-index: 1;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #38bdf8 55%, #082f49 100%);
+            box-shadow: 0 0 22px rgba(56, 189, 248, 0.35); opacity: 0.85; z-index: 1;
         }
 
         .mountains-layer {
@@ -320,139 +475,190 @@
         }
         .mountains-layer.departed { transform: translateY(95px); opacity: 0.15; }
 
-        .multiplier-val { font-size: 46px; font-weight: 900; color: #ffffff; z-index: 5; margin-bottom: 18px; }
-        .multiplier-val.crashed { color: #38bdf8; opacity: 0.8; }
+        .multiplier-val {
+            font-size: 46px; font-weight: 900; color: #ffffff;
+            text-shadow: 0 0 25px rgba(56, 189, 248, 0.65), 0 2px 10px rgba(0,0,0,0.85);
+            z-index: 5; letter-spacing: 1px; margin-bottom: 18px;
+        }
+        .multiplier-val.crashed { color: #38bdf8; opacity: 0.8; text-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
 
         .rocket-container {
             position: absolute; bottom: 32px; left: 26px; display: flex; align-items: center; gap: 6px;
-            transition: bottom 0.12s linear, left 0.12s linear; z-index: 6;
+            transition: bottom 0.12s linear, left 0.12s linear, transform 0.3s ease; z-index: 6;
         }
         .rocket-container.idle-hover { animation: rocketIdle 2.2s ease-in-out infinite; }
-        @keyframes rocketIdle { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-5px); } }
 
-        .player-tag { background: rgba(5, 8, 15, 0.88); border: 1px solid rgba(56, 189, 248, 0.4); padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: #ffffff; }
+        @keyframes rocketIdle {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+        }
 
-        /* Дисплеи игр */
+        .svg-rocket-wrap {
+            width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
+            filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7));
+        }
+
+        .rocket-flame { transform-origin: 24px 52px; animation: flameFlicker 0.14s infinite alternate; }
+
+        @keyframes flameFlicker {
+            0% { transform: scaleY(0.85) scaleX(0.95); opacity: 0.85; }
+            100% { transform: scaleY(1.22) scaleX(1.08); opacity: 1; }
+        }
+
+        .player-tag {
+            background: rgba(5, 8, 15, 0.88); border: 1px solid rgba(56, 189, 248, 0.4);
+            padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: #ffffff; backdrop-filter: blur(4px);
+        }
+
+        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ (ЧЕРНЫЙ + БЕЛЫЙ + СИНИЙ) --- */
         .roulette-display, .mines-display, .plinko-display, .coinflip-display {
             border-radius: 22px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: radial-gradient(circle at center, #0e1628 0%, #04060b 85%);
             border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(56, 189, 248, 0.08);
         }
+
         .roulette-display { height: 210px; }
+
         .wheel-wrapper { position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; }
-        .wheel-pointer { position: absolute; top: -10px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent; border-top: 14px solid #ffffff; z-index: 20; }
+
+        .wheel-pointer {
+            position: absolute; top: -10px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent;
+            border-top: 14px solid #ffffff; filter: drop-shadow(0 0 6px #38bdf8); z-index: 20;
+        }
+
         .roulette-circle {
             width: 130px; height: 130px; border-radius: 50%;
-            background: conic-gradient(#ffffff 0deg 30deg, #0f172a 30deg 60deg, #ffffff 60deg 90deg, #0f172a 90deg 120deg, #ffffff 120deg 150deg, #0f172a 150deg 180deg, #ffffff 180deg 210deg, #0f172a 210deg 240deg, #ffffff 240deg 270deg, #0f172a 270deg 300deg, #ffffff 300deg 330deg, #0f172a 330deg 350deg, #38bdf8 350deg 360deg);
-            border: 3px solid rgba(255, 255, 255, 0.35); position: relative; transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
+            background: conic-gradient(
+                #ffffff 0deg 30deg, #0f172a 30deg 60deg, #ffffff 60deg 90deg, #0f172a 90deg 120deg,
+                #ffffff 120deg 150deg, #0f172a 150deg 180deg, #ffffff 180deg 210deg, #0f172a 210deg 240deg,
+                #ffffff 240deg 270deg, #0f172a 270deg 300deg, #ffffff 300deg 330deg, #0f172a 330deg 350deg, #38bdf8 350deg 360deg
+            );
+            border: 3px solid rgba(255, 255, 255, 0.35); box-shadow: 0 0 20px rgba(0,0,0,0.85), inset 0 0 12px rgba(0,0,0,0.7);
+            position: relative; transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
         }
-        .wheel-center-hub { position: absolute; width: 36px; height: 36px; background: #070a10; border: 2px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #ffffff; }
+
+        .wheel-center-hub {
+            position: absolute; width: 36px; height: 36px; background: #070a10; border: 2px solid #38bdf8;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #ffffff;
+        }
 
         .color-picker-grid { display: flex; gap: 8px; margin-top: 10px; margin-bottom: 6px; }
+
         .color-btn {
             flex: 1; padding: 10px 0; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.12);
-            font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; background: rgba(255,255,255,0.03); color: #fff;
+            font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: all 0.2s;
+            background: rgba(255,255,255,0.03); color: #fff;
         }
-        .color-btn.active { border-color: #38bdf8; background: rgba(56, 189, 248, 0.16); color: #ffffff; }
+        .color-btn.active {
+            border-color: #38bdf8; background: rgba(56, 189, 248, 0.16); color: #ffffff;
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); transform: translateY(-1px);
+        }
 
         .mines-display { padding: 12px; }
         .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; max-width: 270px; }
-        .mine-tile { aspect-ratio: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; }
-        .mine-tile.revealed-star { background: linear-gradient(135deg, #38bdf8, #0284c7); border-color: #ffffff; color: #ffffff; }
+
+        .mine-tile {
+            aspect-ratio: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.15s ease;
+        }
+        .mine-tile:active { transform: scale(0.9); }
+        .mine-tile.revealed-star { background: linear-gradient(135deg, #38bdf8, #0284c7); border-color: #ffffff; box-shadow: 0 0 12px rgba(56, 189, 248, 0.6); color: #ffffff; }
         .mine-tile.revealed-bomb { background: #090c14; border-color: rgba(255, 255, 255, 0.35); color: #ffffff; }
 
         .mines-config-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
-        .mine-count-btn { flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff; padding: 7px 0; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; }
-        .mine-count-btn.active { background: #ffffff; color: #030407; border-color: #ffffff; }
+        .mine-count-btn {
+            flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff;
+            padding: 7px 0; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; transition: all 0.2s;
+        }
+        .mine-count-btn.active { background: #ffffff; color: #030407; border-color: #ffffff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
 
         .plinko-display { height: 245px; }
         #plinkoCanvas { width: 100%; height: 100%; }
 
         .coinflip-display { height: 210px; perspective: 1000px; }
         .coin-3d-wrapper { width: 100px; height: 100px; position: relative; transform-style: preserve-3d; transition: transform 3s cubic-bezier(0.15, 0.85, 0.25, 1); }
-        .coin-side { position: absolute; inset: 0; border-radius: 50%; backface-visibility: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; font-weight: 900; border: 4px solid #ffffff; }
+
+        .coin-side {
+            position: absolute; inset: 0; border-radius: 50%; backface-visibility: hidden; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-weight: 900; border: 4px solid #ffffff;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 18px rgba(56, 189, 248, 0.45);
+        }
         .coin-heads { background: radial-gradient(circle at 30% 30%, #38bdf8, #0369a1); color: #ffffff; transform: rotateY(0deg); }
         .coin-tails { background: radial-gradient(circle at 30% 30%, #ffffff, #cbd5e1); color: #030407; border-color: #38bdf8; transform: rotateY(180deg); }
+        .coin-side i { font-size: 32px; margin-bottom: 2px; }
+        .coin-side span { font-size: 10px; letter-spacing: 0.8px; }
 
-        /* Управление ставками */
+        /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ + ПОЛЗУНОК --- */
         .betting-box {
             background: rgba(12, 15, 24, 0.9); border: 1px solid rgba(255, 255, 255, 0.09);
             border-radius: 18px; padding: 14px; margin-top: 12px; backdrop-filter: blur(10px);
         }
-        .betting-info { display: flex; justify-content: space-between; font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 8px; font-weight: 800; }
+
+        .betting-info {
+            display: flex; justify-content: space-between; font-size: 10px; color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px;
+        }
+
         .bet-row { display: flex; gap: 10px; align-items: center; }
-        .bet-adjuster { flex: 1; background: rgba(3, 5, 10, 0.75); border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between; }
-        .btn-chg { background: rgba(255, 255, 255, 0.07); border: none; color: #fff; width: 28px; height: 28px; border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer; }
+
+        .bet-adjuster {
+            flex: 1; background: rgba(3, 5, 10, 0.75); border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .btn-chg {
+            background: rgba(255, 255, 255, 0.07); border: none; color: #fff; width: 28px; height: 28px;
+            border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer; transition: background 0.15s;
+        }
+        .btn-chg:active { background: #38bdf8; color: #030407; }
+
         .bet-number { font-size: 17px; font-weight: 900; }
 
         .slider-container { margin-top: 10px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
         .slider-label { font-size: 10px; font-weight: 800; color: rgba(255, 255, 255, 0.4); min-width: 24px; text-align: center; }
-        .bet-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: rgba(255, 255, 255, 0.12); border-radius: 999px; outline: none; cursor: pointer; }
-        .bet-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%; background: linear-gradient(135deg, #ffffff, #38bdf8); border: 2px solid #030407; cursor: pointer; }
+
+        .bet-slider {
+            -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+            background: rgba(255, 255, 255, 0.12); border-radius: 999px; outline: none; cursor: pointer;
+        }
+        .bet-slider::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+            background: linear-gradient(135deg, #ffffff, #38bdf8); border: 2px solid #030407;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.8); cursor: pointer; transition: transform 0.15s ease;
+        }
+        .bet-slider::-webkit-slider-thumb:active { transform: scale(1.2); }
 
         .quick-chips { display: flex; gap: 5px; margin-top: 8px; }
-        .chip { flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.75); border-radius: 6px; padding: 4px 0; font-size: 10px; font-weight: 900; cursor: pointer; text-align: center; }
-        .chip:active { background: #38bdf8; color: #030407; }
-
-        .btn-main-action { width: 125px; height: 50px; border: none; border-radius: 14px; font-weight: 900; font-size: 13px; cursor: pointer; text-transform: uppercase; }
-        .btn-style-start { background: #ffffff; color: #030407; }
-        .btn-style-cashout { background: #38bdf8; color: #030407; }
-
-        .btn-return { width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); color: rgba(255, 255, 255, 0.65); padding: 11px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-        /* --- ПОДРАЗДЕЛЫ МАРКЕТА --- */
-        .sub-market-page { display: none; width: 100%; }
-        .sub-market-page.active { display: block; }
-
-        .market-list { display: flex; flex-direction: column; gap: 10px; }
-        .market-item-row {
-            background: linear-gradient(145deg, rgba(16, 20, 30, 0.88) 0%, rgba(6, 8, 13, 0.96) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 16px; padding: 12px 14px;
-            display: flex; align-items: center; justify-content: space-between; gap: 10px;
+        .chip {
+            flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.75); border-radius: 6px; padding: 4px 0; font-size: 10px; font-weight: 900; cursor: pointer;
         }
-        .market-item-left { display: flex; align-items: center; gap: 12px; }
-        .country-flag { width: 36px; height: 26px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
-        .market-item-meta { display: flex; flex-direction: column; gap: 2px; }
-        .market-item-name { font-size: 14px; font-weight: 900; color: #ffffff; }
-        .market-item-sub { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 700; }
-        .market-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-        .market-item-price { font-size: 13px; font-weight: 900; color: #38bdf8; display: flex; align-items: center; gap: 4px; }
-        .market-item-usd { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 700; }
-        .buy-btn { background: #ffffff; color: #030407; border: none; padding: 7px 14px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; margin-top: 4px; }
-        .buy-btn:active { transform: scale(0.95); }
+        .chip:active { background: #38bdf8; color: #030407; border-color: #38bdf8; }
 
-        /* Кастомный блок для Звезд */
-        .stars-custom-box {
-            background: linear-gradient(145deg, rgba(16, 20, 30, 0.9) 0%, rgba(6, 8, 13, 0.98) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 20px; padding: 18px; text-align: center; margin-bottom: 14px;
+        .btn-main-action {
+            width: 125px; height: 50px; border: none; border-radius: 14px; font-weight: 900; font-size: 13px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.1s ease, filter 0.2s;
         }
-        .stars-input {
-            width: 100%; background: rgba(3, 5, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
-            padding: 12px; color: #ffffff; font-size: 20px; font-weight: 900; text-align: center; margin: 12px 0; outline: none;
-        }
-        .stars-input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
-        .stars-chips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
-        .stars-chip-btn {
-            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
-            padding: 9px 0; color: #ffffff; font-size: 12px; font-weight: 900; cursor: pointer; transition: all 0.2s;
-        }
-        .stars-chip-btn.active { background: #38bdf8; color: #030407; border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
+        .btn-main-action:active { transform: scale(0.95); }
 
-        /* В разработке USDT */
-        .dev-box {
-            text-align: center; padding: 50px 20px; background: rgba(255,255,255,0.02);
-            border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px; margin-top: 20px;
-        }
-        .dev-box i { font-size: 36px; color: #38bdf8; margin-bottom: 14px; }
-        .dev-box h3 { font-size: 16px; font-weight: 900; margin-bottom: 6px; }
-        .dev-box p { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; }
+        .btn-style-start { background: #ffffff; color: #030407; box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2); }
+        .btn-style-cashout { background: #38bdf8; color: #030407; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.4); }
 
-        /* Нижняя панель навигации */
+        .btn-return {
+            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
+            color: rgba(255, 255, 255, 0.65); padding: 11px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-return:active { background: rgba(56, 189, 248, 0.12); color: #ffffff; border-color: rgba(56, 189, 248, 0.3); }
+
+        /* --- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ --- */
         .bottom-nav {
             position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background-color: rgba(4, 6, 11, 0.94);
             border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-around; align-items: center;
             z-index: 1000; backdrop-filter: blur(14px);
         }
+
         .nav-item {
             background: none; border: none; color: rgba(255, 255, 255, 0.38); display: flex; flex-direction: column;
             align-items: center; justify-content: center; flex: 1; height: 100%; cursor: pointer; transition: color 0.2s;
@@ -464,7 +670,7 @@
 </head>
 <body>
 
-    <!-- Вкладка ИГРЫ (ЛОББИ) -->
+    <!-- Вкладка КАЗИНО (ЛОББИ) -->
     <div id="casino" class="page active">
         <div class="lobby-header">
             <div class="brand-logo">
@@ -479,8 +685,15 @@
                 <span id="userStarsLobby">100</span>
             </div>
         </div>
+
+        <!-- Переключатель вкладок -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab(this, 'active')">Активні 5</button>
+            <button class="tab-btn" onclick="switchTab(this, 'completed')">Завершені 12</button>
+        </div>
         
         <div class="games-container">
+            <!-- РАКЕТА -->
             <div class="game-card-row" onclick="openRocketGame()">
                 <div class="game-card-left">
                     <div class="game-icon-box">
@@ -502,6 +715,7 @@
                 <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
+            <!-- РУЛЕТКА -->
             <div class="game-card-row" onclick="openRouletteGame()">
                 <div class="game-card-left">
                     <div class="game-icon-box">
@@ -522,6 +736,7 @@
                 <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
+            <!-- МИНЫ -->
             <div class="game-card-row" onclick="openMinesGame()">
                 <div class="game-card-left">
                     <div class="game-icon-box">
@@ -540,6 +755,7 @@
                 <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
+            <!-- ПЛИНКО -->
             <div class="game-card-row" onclick="openPlinkoGame()">
                 <div class="game-card-left">
                     <div class="game-icon-box">
@@ -564,6 +780,7 @@
                 <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
+            <!-- 3D ОРЕЛ И РЕШКА -->
             <div class="game-card-row" onclick="openCoinflipGame()">
                 <div class="game-card-left">
                     <div class="game-icon-box">
@@ -584,37 +801,71 @@
         </div>
     </div>
 
-    <!-- ЭКРАНЫ ИГР -->
+    <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
             <div class="rg-logo">РАКЕТА <span>XORYS</span></div>
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRocket">100</span></div>
         </div>
+
         <div class="rg-history" id="rocketHistory">
             <div class="history-pill">4.20x</div>
             <div class="history-pill">1.12x</div>
             <div class="history-pill">2.85x</div>
+            <div class="history-pill">7.50x</div>
         </div>
+
         <div class="rg-display">
             <div id="spaceStars" class="space-stars"></div>
             <div class="space-planet"></div>
+
             <svg id="mountainsLayer" class="mountains-layer" viewBox="0 0 480 90" preserveAspectRatio="none">
                 <path d="M0,90 L0,52 L55,22 L115,58 L185,18 L255,54 L330,24 L405,56 L480,28 L480,90 Z" fill="rgba(14, 165, 233, 0.22)" />
                 <path d="M0,90 L0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62 L480,90 Z" fill="#04070f" />
+                <path d="M0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62" fill="none" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.5" />
             </svg>
+
             <div id="multiplierText" class="multiplier-val">x1.00</div>
+
             <div id="rocketObj" class="rocket-container idle-hover">
                 <div class="svg-rocket-wrap">
                     <svg viewBox="0 0 64 64" width="46" height="46" style="transform: rotate(45deg);">
-                        <path d="M32,6 C22,18 20,32 21,44 L43,44 C44,32 42,18 32,6 Z" fill="#ffffff" />
+                        <defs>
+                            <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff" />
+                                <stop offset="65%" stop-color="#e2e8f0" />
+                                <stop offset="100%" stop-color="#94a3b8" />
+                            </linearGradient>
+                            <linearGradient id="finGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#38bdf8" />
+                                <stop offset="100%" stop-color="#0284c7" />
+                            </linearGradient>
+                            <linearGradient id="flameGrad" x1="50%" y1="0%" x2="50%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff" />
+                                <stop offset="45%" stop-color="#38bdf8" />
+                                <stop offset="100%" stop-color="rgba(56, 189, 248, 0)" />
+                            </linearGradient>
+                        </defs>
+                        <path class="rocket-flame" d="M26,48 Q32,64 38,48 Q32,54 26,48 Z" fill="url(#flameGrad)" />
+                        <path d="M20,34 L10,46 L21,44 Z" fill="url(#finGrad)" />
+                        <path d="M44,34 L54,46 L43,44 Z" fill="url(#finGrad)" />
+                        <rect x="26" y="44" width="12" height="5" rx="2" fill="#0f172a" />
+                        <path d="M32,6 C22,18 20,32 21,44 L43,44 C44,32 42,18 32,6 Z" fill="url(#bodyGrad)" />
+                        <path d="M32,6 C28,11 26,15 25,18 L39,18 C38,15 36,11 32,6 Z" fill="url(#finGrad)" />
                         <circle cx="32" cy="27" r="6" fill="#0284c7" stroke="#0f172a" stroke-width="2" />
+                        <circle cx="30" cy="25" r="2" fill="#ffffff" opacity="0.9" />
                     </svg>
                 </div>
                 <span id="playerNickname" class="player-tag">@user</span>
             </div>
         </div>
+
         <div class="betting-box">
-            <div class="betting-info"><span>СТАВКА (STARS)</span><span>АВТОВЫВОД x2.00</span></div>
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span>АВТОВЫВОД x2.00</span>
+            </div>
+            
             <div class="bet-row">
                 <div class="bet-adjuster">
                     <button class="btn-chg" onclick="changeBet(-5, 'rocket')">-</button>
@@ -623,11 +874,13 @@
                 </div>
                 <button id="gameBtn" class="btn-main-action btn-style-start" onclick="handleRocketClick()">СТАВКА</button>
             </div>
+
             <div class="slider-container">
                 <span class="slider-label">1</span>
                 <input type="range" id="betSliderRocket" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'rocket')">
                 <span class="slider-label" id="maxSliderRocket">100</span>
             </div>
+
             <div class="quick-chips">
                 <button class="chip" onclick="setBet(10, 'rocket')">10</button>
                 <button class="chip" onclick="setBet(25, 'rocket')">25</button>
@@ -635,14 +888,22 @@
                 <button class="chip" onclick="setBet(100, 'rocket')">100</button>
             </div>
         </div>
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ИГРЫ</button>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
+    <!-- ЭКРАН ИГРЫ "РУЛЕТКА" -->
     <div id="roulettePage" class="page">
         <div class="rg-header">
             <div class="rg-logo">РУЛЕТКА <span>XORYS</span></div>
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRoulette">100</span></div>
         </div>
+
+        <div class="rg-history" id="rouletteHistory">
+            <div class="history-pill" style="border-color: #ffffff;">WHITE</div>
+            <div class="history-pill" style="border-color: #334155;">DARK</div>
+        </div>
+
         <div class="roulette-display">
             <div class="wheel-wrapper">
                 <div class="wheel-pointer"></div>
@@ -651,13 +912,19 @@
                 </div>
             </div>
         </div>
+
         <div class="color-picker-grid">
             <button class="color-btn active" onclick="setRouletteColor('red', this)">БЕЛЫЙ (x2)</button>
             <button class="color-btn" onclick="setRouletteColor('black', this)">ЧЕРНЫЙ (x2)</button>
             <button class="color-btn" onclick="setRouletteColor('green', this)">СИНИЙ (x14)</button>
         </div>
+
         <div class="betting-box">
-            <div class="betting-info"><span>СТАВКА (STARS)</span><span id="selectedColorLabel">ВЫБОР: БЕЛЫЙ</span></div>
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="selectedColorLabel">ВЫБОР: БЕЛЫЙ</span>
+            </div>
+            
             <div class="bet-row">
                 <div class="bet-adjuster">
                     <button class="btn-chg" onclick="changeBet(-5, 'roulette')">-</button>
@@ -666,28 +933,47 @@
                 </div>
                 <button id="rouletteBtn" class="btn-main-action btn-style-start" onclick="spinRouletteWheel()">КРУТИТЬ</button>
             </div>
+
             <div class="slider-container">
                 <span class="slider-label">1</span>
                 <input type="range" id="betSliderRoulette" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'roulette')">
                 <span class="slider-label" id="maxSliderRoulette">100</span>
             </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'roulette')">10</button>
+                <button class="chip" onclick="setBet(25, 'roulette')">25</button>
+                <button class="chip" onclick="setBet(50, 'roulette')">50</button>
+                <button class="chip" onclick="setBet(100, 'roulette')">100</button>
+            </div>
         </div>
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ИГРЫ</button>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
+    <!-- ЭКРАН ИГРЫ "МИНЫ" -->
     <div id="minesPage" class="page">
         <div class="rg-header">
             <div class="rg-logo">МИНЫ <span>XORYS</span></div>
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsMines">100</span></div>
         </div>
-        <div class="mines-display"><div class="mines-grid" id="minesGrid"></div></div>
+
+        <div class="mines-display">
+            <div class="mines-grid" id="minesGrid"></div>
+        </div>
+
         <div class="mines-config-row">
             <button class="mine-count-btn active" onclick="setMinesCount(3, this)">3 МИНЫ</button>
             <button class="mine-count-btn" onclick="setMinesCount(5, this)">5 МИН</button>
             <button class="mine-count-btn" onclick="setMinesCount(10, this)">10 МИН</button>
         </div>
+
         <div class="betting-box">
-            <div class="betting-info"><span>СТАВКА (STARS)</span><span id="minesMultLabel">МНОЖИТЕЛЬ: x1.00</span></div>
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="minesMultLabel">МНОЖИТЕЛЬ: x1.00</span>
+            </div>
+            
             <div class="bet-row">
                 <div class="bet-adjuster">
                     <button class="btn-chg" onclick="changeBet(-5, 'mines')">-</button>
@@ -696,18 +982,46 @@
                 </div>
                 <button id="minesBtn" class="btn-main-action btn-style-start" onclick="handleMinesBtnClick()">ИГРАТЬ</button>
             </div>
+
+            <div class="slider-container">
+                <span class="slider-label">1</span>
+                <input type="range" id="betSliderMines" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'mines')">
+                <span class="slider-label" id="maxSliderMines">100</span>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'mines')">10</button>
+                <button class="chip" onclick="setBet(25, 'mines')">25</button>
+                <button class="chip" onclick="setBet(50, 'mines')">50</button>
+                <button class="chip" onclick="setBet(100, 'mines')">100</button>
+            </div>
         </div>
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ИГРЫ</button>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
+    <!-- ЭКРАН ИГРЫ "ПЛИНКО" -->
     <div id="plinkoPage" class="page">
         <div class="rg-header">
             <div class="rg-logo">ПЛИНКО <span>XORYS</span></div>
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsPlinko">100</span></div>
         </div>
-        <div class="plinko-display"><canvas id="plinkoCanvas" width="300" height="230"></canvas></div>
+
+        <div class="rg-history" id="plinkoHistory">
+            <div class="history-pill" style="border-color: #38bdf8;">x1.2</div>
+            <div class="history-pill">x0.5</div>
+        </div>
+
+        <div class="plinko-display">
+            <canvas id="plinkoCanvas" width="300" height="230"></canvas>
+        </div>
+
         <div class="betting-box">
-            <div class="betting-info"><span>СТАВКА (STARS)</span><span>РЕЖИМ АРКАДЫ</span></div>
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="plinkoStatusLabel">БАЛАНСИРОВАННЫЙ РЕЖИМ</span>
+            </div>
+            
             <div class="bet-row">
                 <div class="bet-adjuster">
                     <button class="btn-chg" onclick="changeBet(-5, 'plinko')">-</button>
@@ -716,27 +1030,60 @@
                 </div>
                 <button id="plinkoBtn" class="btn-main-action btn-style-start" onclick="dropPlinkoBall()">БРОСИТЬ</button>
             </div>
+
+            <div class="slider-container">
+                <span class="slider-label">1</span>
+                <input type="range" id="betSliderPlinko" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'plinko')">
+                <span class="slider-label" id="maxSliderPlinko">100</span>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'plinko')">10</button>
+                <button class="chip" onclick="setBet(25, 'plinko')">25</button>
+                <button class="chip" onclick="setBet(50, 'plinko')">50</button>
+                <button class="chip" onclick="setBet(100, 'plinko')">100</button>
+            </div>
         </div>
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ИГРЫ</button>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
+    <!-- ЭКРАН ИГРЫ "3D ОРЕЛ И РЕШКА" -->
     <div id="coinflipPage" class="page">
         <div class="rg-header">
             <div class="rg-logo">ОРЕЛ / РЕШКА <span>3D</span></div>
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsCoinflip">100</span></div>
         </div>
+
+        <div class="rg-history" id="coinflipHistory">
+            <div class="history-pill" style="border-color: #38bdf8;">ОРЕЛ</div>
+            <div class="history-pill">РЕШКА</div>
+        </div>
+
         <div class="coinflip-display">
             <div class="coin-3d-wrapper" id="coin3d">
-                <div class="coin-side coin-heads"><i class="fa-solid fa-star"></i><span>ОРЕЛ</span></div>
-                <div class="coin-side coin-tails"><i class="fa-solid fa-bolt"></i><span>РЕШКА</span></div>
+                <div class="coin-side coin-heads">
+                    <i class="fa-solid fa-star"></i>
+                    <span>ОРЕЛ</span>
+                </div>
+                <div class="coin-side coin-tails">
+                    <i class="fa-solid fa-bolt"></i>
+                    <span>РЕШКА</span>
+                </div>
             </div>
         </div>
+
         <div class="color-picker-grid">
             <button class="color-btn active" onclick="setCoinChoice('heads', this)">ОРЕЛ (x2)</button>
             <button class="color-btn" onclick="setCoinChoice('tails', this)">РЕШКА (x2)</button>
         </div>
+
         <div class="betting-box">
-            <div class="betting-info"><span>СТАВКА (STARS)</span><span id="selectedCoinLabel">ВЫБОР: ОРЕЛ</span></div>
+            <div class="betting-info">
+                <span>СТАВКА (STARS)</span>
+                <span id="selectedCoinLabel">ВЫБОР: ОРЕЛ</span>
+            </div>
+            
             <div class="bet-row">
                 <div class="bet-adjuster">
                     <button class="btn-chg" onclick="changeBet(-5, 'coinflip')">-</button>
@@ -745,12 +1092,26 @@
                 </div>
                 <button id="coinflipBtn" class="btn-main-action btn-style-start" onclick="flipCoin3D()">ПОДБРОСИТЬ</button>
             </div>
+
+            <div class="slider-container">
+                <span class="slider-label">1</span>
+                <input type="range" id="betSliderCoinflip" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'coinflip')">
+                <span class="slider-label" id="maxSliderCoinflip">100</span>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'coinflip')">10</button>
+                <button class="chip" onclick="setBet(25, 'coinflip')">25</button>
+                <button class="chip" onclick="setBet(50, 'coinflip')">50</button>
+                <button class="chip" onclick="setBet(100, 'coinflip')">100</button>
+            </div>
         </div>
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ИГРЫ</button>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
     <!-- Вкладка МАРКЕТ -->
-    <div id="market" class="page active">
+    <div id="market" class="page">
         <div class="lobby-header">
             <div class="brand-logo">
                 <div class="brand-badge">X</div>
@@ -759,24 +1120,25 @@
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsMarket">100</span></div>
         </div>
 
-        <!-- Главное меню маркета (4 кнопки) -->
+        <!-- Главное меню маркета (4 плитки) -->
         <div id="marketMainView" class="sub-market-page active">
-            <div class="market-grid">
-                <div class="market-card" onclick="openMarketSub('marketNumbers')">
-                    <div class="market-icon-box"><i class="fa-solid fa-sim-card"></i></div>
-                    <div class="market-card-title">НОМЕРА</div>
+            <h1 class="page-title" style="margin-bottom: 14px;">МАРКЕТ</h1>
+            <div class="catalog-grid">
+                <div class="catalog-card" onclick="openMarketSub('marketNumbers')">
+                    <div class="card-icon"><i class="fa-solid fa-sim-card"></i></div>
+                    <div class="card-title">НОМЕРА</div>
                 </div>
-                <div class="market-card" onclick="openMarketSub('marketStars')">
-                    <div class="market-icon-box"><i class="fa-solid fa-star"></i></div>
-                    <div class="market-card-title">ЗВЁЗДЫ</div>
+                <div class="catalog-card" onclick="openMarketSub('marketStars')">
+                    <div class="card-icon"><i class="fa-solid fa-star"></i></div>
+                    <div class="card-title">ЗВЕЗДЫ</div>
                 </div>
-                <div class="market-card" onclick="openMarketSub('marketPrem')">
-                    <div class="market-icon-box"><i class="fa-solid fa-gem"></i></div>
-                    <div class="market-card-title">ТГ ПРЕМ</div>
+                <div class="catalog-card" onclick="openMarketSub('marketPrem')">
+                    <div class="card-icon"><i class="fa-solid fa-gem"></i></div>
+                    <div class="card-title">TG PREM</div>
                 </div>
-                <div class="market-card" onclick="openMarketSub('marketUsdt')">
-                    <div class="market-icon-box"><i class="fa-solid fa-coins"></i></div>
-                    <div class="market-card-title">USDT</div>
+                <div class="catalog-card" onclick="openMarketSub('marketUsdt')">
+                    <div class="card-icon"><i class="fa-solid fa-coins"></i></div>
+                    <div class="card-title">USDT</div>
                 </div>
             </div>
         </div>
@@ -792,8 +1154,8 @@
         <div id="marketStars" class="sub-market-page">
             <h2 class="page-title" style="font-size:16px; margin-bottom:12px;">ПОКУПКА ЗВЕЗД</h2>
             <div class="stars-custom-box">
-                <div style="font-size:11px; color:rgba(255,255,255,0.5); font-weight:800;">ВЫБЕРИТЕ ИЛИ ВВЕДИТЕ КОЛИЧЕСТВО</div>
-                <input type="number" id="customStarsInput" class="stars-input" value="100" min="1" max="100000" oninput="onCustomStarsInput(this.value)">
+                <div style="font-size:10px; color:rgba(255,255,255,0.5); font-weight:800; letter-spacing: 0.5px;">КОЛИЧЕСТВО ЗВЕЗД</div>
+                <input type="number" id="customStarsInput" class="stars-input" value="100" min="1" max="10000" oninput="onCustomStarsInput(this.value)">
                 
                 <div class="stars-chips-grid">
                     <button class="stars-chip-btn" onclick="setStarsPreset(50)">50</button>
@@ -805,20 +1167,20 @@
                     <button class="stars-chip-btn" onclick="setStarsPreset(750)">750</button>
                     <button class="stars-chip-btn" onclick="setStarsPreset(1000)">1000</button>
                     <button class="stars-chip-btn" onclick="setStarsPreset(2500)">2500</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(5000)">5000</button>
+                    <button class="stars-chip-btn" onclick="setStarsPreset(5000)" style="grid-column: span 2;">5000</button>
                 </div>
 
-                <div class="slider-container" style="margin-bottom: 14px;">
+                <div class="slider-container" style="margin-bottom: 12px;">
                     <span class="slider-label">1</span>
                     <input type="range" id="starsSlider" class="bet-slider" min="1" max="5000" value="100" oninput="onStarsSlider(this.value)">
                     <span class="slider-label">5000</span>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:14px; padding:0 4px;">
-                    <span style="font-size:12px; color:rgba(255,255,255,0.6);">ИТОГО К ОПЛАТЕ:</span>
-                    <span id="starsPriceUSD" style="font-size:15px; font-weight:900; color:#38bdf8;">$1.20</span>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding:0 4px;">
+                    <span style="font-size:11px; color:rgba(255,255,255,0.6); font-weight:800;">ИТОГО К ОПЛАТЕ:</span>
+                    <span id="starsPriceUSD" style="font-size:14px; font-weight:900; color:#38bdf8;">$1.20</span>
                 </div>
-                <button class="buy-btn" style="width:100%; margin-top:14px; padding:12px; font-size:13px;" onclick="buyStarsAction()">КУПИТЬ ЗВЕЗДЫ</button>
+                <button class="buy-btn" style="width:100%; margin-top:12px; padding:11px; font-size:12px;" onclick="buyStarsAction()">КУПИТЬ ЗВЕЗДЫ</button>
             </div>
             <button class="btn-return" onclick="backToMarketMain()"><i class="fa-solid fa-arrow-left"></i> НАЗАД К КАТЕГОРИЯМ</button>
         </div>
@@ -829,42 +1191,42 @@
             <div class="market-list">
                 <div class="market-item-row">
                     <div class="market-item-left">
-                        <div class="market-icon-box" style="width:36px; height:36px; font-size:15px;"><i class="fa-solid fa-gem"></i></div>
+                        <div class="card-icon" style="width:36px; height:36px; font-size:15px; margin-bottom:0;"><i class="fa-solid fa-gem"></i></div>
                         <div class="market-item-meta">
                             <div class="market-item-name">TG Premium на 3 месяца</div>
-                            <div class="market-item-sub">Моментальная доставка • Официально</div>
+                            <div class="market-item-sub">Моментальная доставка</div>
                         </div>
                     </div>
                     <div class="market-item-right">
-                        <div class="market-item-price">450 <i class="fa-solid fa-star" style="font-size:10px;"></i></div>
+                        <div class="market-item-price">450 <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
                         <div class="market-item-usd">$5.40</div>
                         <button class="buy-btn" onclick="buyItem('TG Premium (3 мес)', 450)">КУПИТЬ</button>
                     </div>
                 </div>
                 <div class="market-item-row">
                     <div class="market-item-left">
-                        <div class="market-icon-box" style="width:36px; height:36px; font-size:15px;"><i class="fa-solid fa-gem"></i></div>
+                        <div class="card-icon" style="width:36px; height:36px; font-size:15px; margin-bottom:0;"><i class="fa-solid fa-gem"></i></div>
                         <div class="market-item-meta">
                             <div class="market-item-name">TG Premium на 6 месяцев</div>
-                            <div class="market-item-sub">Моментальная доставка • Официально</div>
+                            <div class="market-item-sub">Моментальная доставка</div>
                         </div>
                     </div>
                     <div class="market-item-right">
-                        <div class="market-item-price">850 <i class="fa-solid fa-star" style="font-size:10px;"></i></div>
+                        <div class="market-item-price">850 <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
                         <div class="market-item-usd">$10.20</div>
                         <button class="buy-btn" onclick="buyItem('TG Premium (6 мес)', 850)">КУПИТЬ</button>
                     </div>
                 </div>
                 <div class="market-item-row">
                     <div class="market-item-left">
-                        <div class="market-icon-box" style="width:36px; height:36px; font-size:15px;"><i class="fa-solid fa-gem"></i></div>
+                        <div class="card-icon" style="width:36px; height:36px; font-size:15px; margin-bottom:0;"><i class="fa-solid fa-gem"></i></div>
                         <div class="market-item-meta">
                             <div class="market-item-name">TG Premium на 12 месяцев</div>
-                            <div class="market-item-sub">Моментальная доставка • Официально</div>
+                            <div class="market-item-sub">Моментальная доставка</div>
                         </div>
                     </div>
                     <div class="market-item-right">
-                        <div class="market-item-price">1550 <i class="fa-solid fa-star" style="font-size:10px;"></i></div>
+                        <div class="market-item-price">1550 <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
                         <div class="market-item-usd">$18.60</div>
                         <button class="buy-btn" onclick="buyItem('TG Premium (12 мес)', 1550)">КУПИТЬ</button>
                     </div>
@@ -875,11 +1237,11 @@
 
         <!-- 4. USDT -->
         <div id="marketUsdt" class="sub-market-page">
-            <h2 class="page-title" style="font-size:16px; margin-bottom:12px;">USDT ОБМЕН И ПОКУПКА</h2>
+            <h2 class="page-title" style="font-size:16px; margin-bottom:12px;">USDT ОБМЕН</h2>
             <div class="dev-box">
                 <i class="fa-solid fa-person-digging"></i>
                 <h3>МОДУЛЬ В РАЗРАБОТКЕ</h3>
-                <p>Скоро здесь появится возможность быстрой покупки и обмена USDT TRC20/TON.</p>
+                <p>Скоро здесь появится возможность быстрой покупки и обмена USDT.</p>
             </div>
             <button class="btn-return" onclick="backToMarketMain()" style="margin-top:14px;"><i class="fa-solid fa-arrow-left"></i> НАЗАД К КАТЕГОРИЯМ</button>
         </div>
@@ -893,11 +1255,11 @@
 
     <!-- Нижняя панель навигации -->
     <nav class="bottom-nav">
-        <button class="nav-item" onclick="switchPage('casino', this)">
+        <button class="nav-item active" onclick="switchPage('casino', this)">
             <i class="fa-solid fa-dice"></i>
-            <span>ИГРЫ</span>
+            <span>КАЗИНО</span>
         </button>
-        <button class="nav-item active" onclick="switchPage('market', this)">
+        <button class="nav-item" onclick="switchPage('market', this)">
             <i class="fa-solid fa-store"></i>
             <span>МАРКЕТ</span>
         </button>
@@ -923,7 +1285,8 @@
         
         let selectedRouletteColor = 'red';
         let isSpinning = false;
-        let isرحمنPlayingRocket = false;
+        
+        let isPlayingRocket = false;
         let currentMultiplier = 1.00;
         let gameInterval = null;
         let crashPoint = 0;
@@ -939,7 +1302,7 @@
         let isFlippingCoin = false;
         let currentCoinRotation = 0;
 
-        // Данные по номерам со скриншота
+        // Данные по номерам
         const countryNumbersData = [
             { name: "Россия", code: "+7", flag: "ru", stars: 199, usd: "$2,50" },
             { name: "Казахстан", code: "+77", flag: "kz", stars: 199, usd: "$2,50" },
@@ -969,7 +1332,7 @@
                         </div>
                     </div>
                     <div class="market-item-right">
-                        <div class="market-item-price">${item.stars} <i class="fa-solid fa-star" style="font-size:10px;"></i></div>
+                        <div class="market-item-price">${item.stars} <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
                         <div class="market-item-usd">${item.usd}</div>
                         <button class="buy-btn" onclick="buyItem('${item.name} ${item.code}', ${item.stars})">КУПИТЬ</button>
                     </div>
@@ -987,16 +1350,55 @@
             document.getElementById('userStarsMines').innerText = starsBalance;
             document.getElementById('userStarsPlinko').innerText = starsBalance;
             document.getElementById('userStarsCoinflip').innerText = starsBalance;
+
+            const sliderMax = Math.max(10, starsBalance);
+            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip'].forEach(game => {
+                const slider = document.getElementById('betSlider' + game);
+                const maxLabel = document.getElementById('maxSlider' + game);
+                if (slider && maxLabel) {
+                    slider.max = sliderMax;
+                    maxLabel.innerText = sliderMax;
+                }
+            });
+        }
+
+        function switchTab(el, tabName) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            tg.HapticFeedback.impactOccurred('light');
+        }
+
+        function syncBetUI(type, val) {
+            const cap = type.charAt(0).toUpperCase() + type.slice(1);
+            const numEl = document.getElementById('betAmount' + cap);
+            const sliderEl = document.getElementById('betSlider' + cap);
+            if (numEl) numEl.innerText = val;
+            if (sliderEl) sliderEl.value = val;
+        }
+
+        function onSliderBet(value, type) {
+            const val = Math.max(1, parseInt(value) || 1);
+            if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
+            if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
+            if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
+
+            if (type === 'roulette') currentBetRoulette = val;
+            else if (type === 'rocket') currentBetRocket = val;
+            else if (type === 'mines') currentBetMines = val;
+            else if (type === 'plinko') currentBetPlinko = val;
+            else if (type === 'coinflip') currentBetCoinflip = val;
+
+            syncBetUI(type, val);
         }
 
         function switchPage(pageId, buttonElement) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
+
             if (buttonElement) {
                 document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
                 buttonElement.classList.add('active');
             }
-            tg.HapticFeedback.impactOccurred('light');
         }
 
         function openMarketSub(subId) {
@@ -1011,7 +1413,7 @@
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        // Логика Звезд в маркете
+        // Логика покупки звезд
         let currentStarsAmount = 100;
         function updateStarsUSD(val) {
             currentStarsAmount = Math.max(1, parseInt(val) || 1);
@@ -1047,11 +1449,10 @@
         }
 
         function buyStarsAction() {
-            const cost = Math.floor(currentStarsAmount * 0.9); // Условный внутренний курс пополнения со скидкой
             starsBalance += currentStarsAmount;
             updateBalanceUI();
             tg.HapticFeedback.notificationOccurred('success');
-            alert(`Успешно куплено ${currentStarsAmount} звёзд! Баланс пополнен.`);
+            alert(`Успешно приобретено ${currentStarsAmount} звёзд!`);
         }
 
         function buyItem(title, priceStars) {
@@ -1066,13 +1467,16 @@
             alert(`Успешная покупка: "${title}" за ${priceStars} звёзд!`);
         }
 
-        // Переходы к играм
-        function openRouletteGame() { switchPage('roulettePage'); }
-        function openRocketGame() { switchPage('rocketGamePage'); }
-        function openMinesGame() { switchPage('minesPage'); initMinesGrid(); }
-        function openPlinkoGame() { switchPage('plinkoPage'); initPlinkoCanvas(); }
-        function openCoinflipGame() { switchPage('coinflipPage'); }
-        function closeSubGame(pageId) { switchPage(pageId, document.querySelectorAll('.nav-item')[0]); }
+        function openRouletteGame() { switchPage('roulettePage'); tg.HapticFeedback.impactOccurred('medium'); }
+        function openRocketGame() { switchPage('rocketGamePage'); tg.HapticFeedback.impactOccurred('medium'); }
+        function openMinesGame() { switchPage('minesPage'); tg.HapticFeedback.impactOccurred('medium'); initMinesGrid(); }
+        function openPlinkoGame() { switchPage('plinkoPage'); tg.HapticFeedback.impactOccurred('medium'); initPlinkoCanvas(); }
+        function openCoinflipGame() { switchPage('coinflipPage'); tg.HapticFeedback.impactOccurred('medium'); }
+
+        function closeSubGame(pageId) {
+            switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
+            tg.HapticFeedback.impactOccurred('light');
+        }
 
         function changeBet(amount, type) {
             if (type === 'roulette') { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
@@ -1085,32 +1489,186 @@
 
         function setBet(amount, type) {
             if (type === 'roulette') { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket') { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'rocket') { currentBetRocket = amount; syncBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
             else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
             else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
             else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
             tg.HapticFeedback.impactOccurred('light');
         }
 
-        function syncBetUI(type, val) {
-            const cap = type.charAt(0).toUpperCase() + type.slice(1);
-            const numEl = document.getElementById('betAmount' + cap);
-            const sliderEl = document.getElementById('betSlider' + cap);
-            if (numEl) numEl.innerText = val;
-            if (sliderEl) sliderEl.value = val;
+        /* --- 3D ОРЕЛ И РЕШКА --- */
+        function setCoinChoice(side, el) {
+            if (isFlippingCoin) return;
+            selectedCoinSide = side;
+            document.querySelectorAll('#coinflipPage .color-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('selectedCoinLabel').innerText = 'ВЫБОР: ' + (side === 'heads' ? 'ОРЕЛ' : 'РЕШКА');
+            tg.HapticFeedback.impactOccurred('light');
         }
 
-        function onSliderBet(value, type) {
-            const val = Math.max(1, parseInt(value) || 1);
-            if (type === 'roulette') currentBetRoulette = val;
-            else if (type === 'rocket') currentBetRocket = val;
-            else if (type === 'mines') currentBetMines = val;
-            else if (type === 'plinko') currentBetPlinko = val;
-            else if (type === 'coinflip') currentBetCoinflip = val;
-            syncBetUI(type, val);
+        function flipCoin3D() {
+            if (isFlippingCoin) return;
+            if (starsBalance < currentBetCoinflip) { alert('Недостаточно Stars!'); return; }
+
+            starsBalance -= currentBetCoinflip;
+            updateBalanceUI();
+            isFlippingCoin = true;
+
+            const btn = document.getElementById('coinflipBtn');
+            btn.innerText = 'ПОЛЕТ...';
+            btn.disabled = true;
+            tg.HapticFeedback.impactOccurred('medium');
+
+            const isWin = Math.random() < 0.48;
+            const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
+
+            const coin = document.getElementById('coin3d');
+            const spins = 12 * 360;
+            const targetDegree = outcomeSide === 'heads' ? 0 : 180;
+            currentCoinRotation += spins + targetDegree - (currentCoinRotation % 360);
+            coin.style.transform = `rotateY(${currentCoinRotation}deg)`;
+
+            setTimeout(() => {
+                isFlippingCoin = false;
+                btn.innerText = 'ПОДБРОСИТЬ';
+                btn.disabled = false;
+
+                if (isWin) {
+                    starsBalance += currentBetCoinflip * 2;
+                    updateBalanceUI();
+                    tg.HapticFeedback.notificationOccurred('success');
+                } else {
+                    tg.HapticFeedback.notificationOccurred('error');
+                }
+
+                const historyContainer = document.getElementById('coinflipHistory');
+                const pill = document.createElement('div');
+                pill.className = 'history-pill';
+                pill.style.borderColor = outcomeSide === 'heads' ? '#38bdf8' : '#ffffff';
+                pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
+                historyContainer.prepend(pill);
+                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+            }, 3000);
         }
 
-        // Логика игр (Рулетка, Ракета, Мины, Плинко, Орел/Решка) сохранена аналогично
+        /* --- ПЛИНКО --- */
+        let plinkoPegs = [];
+        let plinkoBalls = [];
+        let plinkoBins = [15, 3.0, 1.2, 0.5, 0.2, 0.5, 1.2, 3.0, 15];
+        let plinkoAnimId = null;
+
+        function initPlinkoCanvas() {
+            const canvas = document.getElementById('plinkoCanvas');
+            plinkoPegs = [];
+            const rows = 6;
+            const startY = 25;
+            const rowSpacing = 26;
+
+            for (let r = 0; r < rows; r++) {
+                const count = r + 3;
+                const startX = (canvas.width - (count - 1) * 26) / 2;
+                for (let c = 0; c < count; c++) {
+                    plinkoPegs.push({ x: startX + c * 26, y: startY + r * rowSpacing });
+                }
+            }
+            if (!plinkoAnimId) renderPlinko();
+        }
+
+        function dropPlinkoBall() {
+            if (starsBalance < currentBetPlinko) { alert('Недостаточно Stars!'); return; }
+
+            starsBalance -= currentBetPlinko;
+            updateBalanceUI();
+            tg.HapticFeedback.impactOccurred('medium');
+
+            const canvas = document.getElementById('plinkoCanvas');
+            plinkoBalls.push({
+                x: canvas.width / 2 + (Math.random() * 8 - 4),
+                y: 5,
+                vx: (Math.random() - 0.5) * 1.4,
+                vy: 1.5,
+                bet: currentBetPlinko
+            });
+        }
+
+        function renderPlinko() {
+            const canvas = document.getElementById('plinkoCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = 'rgba(255,255,255,0.8)';
+            plinkoPegs.forEach(peg => {
+                ctx.beginPath();
+                ctx.arc(peg.x, peg.y, 2.5, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            const binWidth = canvas.width / plinkoBins.length;
+            plinkoBins.forEach((mult, i) => {
+                ctx.fillStyle = mult >= 15 ? '#0284c7' : (mult >= 2 ? '#38bdf8' : (mult >= 1 ? 'rgba(56, 189, 248, 0.35)' : 'rgba(255,255,255,0.08)'));
+                ctx.fillRect(i * binWidth + 2, canvas.height - 22, binWidth - 4, 20);
+
+                ctx.fillStyle = '#ffffff';
+                ctx.font = 'bold 8.5px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(`x${mult}`, i * binWidth + binWidth / 2, canvas.height - 8);
+            });
+
+            for (let b = plinkoBalls.length - 1; b >= 0; b--) {
+                const ball = plinkoBalls[b];
+                ball.vy += 0.18;
+                ball.x += ball.vx;
+                ball.y += ball.vy;
+
+                const centerPull = (canvas.width / 2 - ball.x) * 0.0025;
+                ball.vx += centerPull;
+
+                plinkoPegs.forEach(peg => {
+                    const dx = ball.x - peg.x;
+                    const dy = ball.y - peg.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 8) {
+                        ball.vy *= -0.35;
+                        ball.vx += (dx > 0 ? 1 : -1) * (Math.random() * 1.1 + 0.35);
+                        ball.y = peg.y + (dy / dist) * 8;
+                    }
+                });
+
+                ctx.fillStyle = '#38bdf8';
+                ctx.shadowColor = '#38bdf8';
+                ctx.shadowBlur = 8;
+                ctx.beginPath();
+                ctx.arc(ball.x, ball.y, 4.5, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (ball.y >= canvas.height - 25) {
+                    let binIndex = Math.floor(ball.x / binWidth);
+                    binIndex = Math.max(0, Math.min(plinkoBins.length - 1, binIndex));
+                    const winMult = plinkoBins[binIndex];
+                    const winAmount = Math.floor(ball.bet * winMult);
+
+                    starsBalance += winAmount;
+                    updateBalanceUI();
+
+                    if (winMult >= 2) tg.HapticFeedback.notificationOccurred('success');
+
+                    const historyContainer = document.getElementById('plinkoHistory');
+                    const pill = document.createElement('div');
+                    pill.className = 'history-pill';
+                    pill.style.borderColor = winMult >= 2 ? '#38bdf8' : 'rgba(255,255,255,0.2)';
+                    pill.innerText = `x${winMult}`;
+                    historyContainer.prepend(pill);
+                    if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+
+                    plinkoBalls.splice(b, 1);
+                }
+            }
+
+            plinkoAnimId = requestAnimationFrame(renderPlinko);
+        }
+
+        /* --- РУЛЕТКА --- */
         function setRouletteColor(color, el) {
             selectedRouletteColor = color;
             document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
@@ -1123,18 +1681,21 @@
         function spinRouletteWheel() {
             if (isSpinning) return;
             if (starsBalance < currentBetRoulette) { alert('Недостаточно Stars!'); return; }
+
             starsBalance -= currentBetRoulette;
             updateBalanceUI();
             isSpinning = true;
+
             const btn = document.getElementById('rouletteBtn');
             btn.innerText = 'КРУТИТСЯ...';
             btn.disabled = true;
+            tg.HapticFeedback.impactOccurred('medium');
 
             const outcomeRand = Math.random();
-            let winningIndex = 15, winningColor = 'red';
-            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; }
-            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; }
-            else { winningIndex = 355; winningColor = 'green'; }
+            let winningIndex = 15, winningColor = 'red', labelText = 'WHITE';
+            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; labelText = 'WHITE'; }
+            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; labelText = 'DARK'; }
+            else { winningIndex = 355; winningColor = 'green'; labelText = 'BLUE'; }
 
             currentWheelAngle += (360 * 6) + (winningIndex - (currentWheelAngle % 360));
             document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
@@ -1143,6 +1704,7 @@
                 isSpinning = false;
                 btn.innerText = 'КРУТИТЬ';
                 btn.disabled = false;
+
                 if (winningColor === selectedRouletteColor) {
                     starsBalance += currentBetRoulette * (winningColor === 'green' ? 14 : 2);
                     updateBalanceUI();
@@ -1150,9 +1712,18 @@
                 } else {
                     tg.HapticFeedback.notificationOccurred('error');
                 }
+
+                const historyContainer = document.getElementById('rouletteHistory');
+                const pill = document.createElement('div');
+                pill.className = 'history-pill';
+                pill.style.borderColor = winningColor === 'green' ? '#38bdf8' : (winningColor === 'red' ? '#ffffff' : '#334155');
+                pill.innerText = labelText;
+                historyContainer.prepend(pill);
+                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
             }, 4100);
         }
 
+        /* --- РАКЕТА --- */
         function handleRocketClick() {
             const btn = document.getElementById('gameBtn');
             const rocket = document.getElementById('rocketObj');
@@ -1161,16 +1732,23 @@
             const mountains = document.getElementById('mountainsLayer');
             tg.HapticFeedback.impactOccurred('light');
 
-            if (!isرحمنPlayingRocket) {
+            if (!isPlayingRocket) {
                 if (starsBalance < currentBetRocket) { alert('Недостаточно Stars!'); return; }
                 starsBalance -= currentBetRocket;
                 updateBalanceUI();
-                isرحمنPlayingRocket = true;
+                isPlayingRocket = true;
                 currentMultiplier = 1.00;
                 crashPoint = parseFloat((Math.random() * 3.5 + 1.1).toFixed(2));
+
+                multText.classList.remove('crashed');
                 multText.innerText = 'x1.00';
                 btn.innerText = 'ЗАБРАТЬ';
                 btn.className = 'btn-main-action btn-style-cashout';
+
+                rocket.style.opacity = '1';
+                rocket.style.bottom = '32px';
+                rocket.style.left = '26px';
+                rocket.classList.remove('idle-hover');
                 starsBg.classList.add('flying');
                 mountains.classList.add('departed');
 
@@ -1178,7 +1756,15 @@
                     currentMultiplier += 0.03;
                     multText.innerText = 'x' + currentMultiplier.toFixed(2);
                     btn.innerText = `ЗАБРАТЬ (${Math.floor(currentBetRocket * currentMultiplier)})`;
-                    if (currentMultiplier >= crashPoint) endRocketGame(false);
+
+                    let b = parseFloat(rocket.style.bottom) || 32;
+                    let l = parseFloat(rocket.style.left) || 26;
+                    if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
+                    if (l < 235) rocket.style.left = (l + 2.2) + 'px';
+
+                    if (currentMultiplier >= crashPoint) {
+                        endRocketGame(false);
+                    }
                 }, 100);
             } else {
                 endRocketGame(true);
@@ -1187,29 +1773,59 @@
 
         function endRocketGame(isWin) {
             clearInterval(gameInterval);
-            isرحمنPlayingRocket = false;
+            isPlayingRocket = false;
             const btn = document.getElementById('gameBtn');
+            const rocket = document.getElementById('rocketObj');
+            const multText = document.getElementById('multiplierText');
             const starsBg = document.getElementById('spaceStars');
             const mountains = document.getElementById('mountainsLayer');
+
             starsBg.classList.remove('flying');
 
+            const historyContainer = document.getElementById('rocketHistory');
+            const pill = document.createElement('div');
+            pill.className = 'history-pill';
+
             if (isWin) {
-                starsBalance += Math.floor(currentBetRocket * currentMultiplier);
+                const winSum = Math.floor(currentBetRocket * currentMultiplier);
+                starsBalance += winSum;
                 updateBalanceUI();
+                pill.style.borderColor = '#38bdf8';
+                pill.innerText = 'x' + currentMultiplier.toFixed(2);
                 tg.HapticFeedback.notificationOccurred('success');
             } else {
                 tg.HapticFeedback.notificationOccurred('error');
+                multText.classList.add('crashed');
+                multText.innerText = 'СЛИВ!';
+                rocket.style.opacity = '0';
+                pill.style.borderColor = 'rgba(255,255,255,0.2)';
+                pill.innerText = 'x' + crashPoint.toFixed(2);
             }
+
+            historyContainer.prepend(pill);
+            if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+
             btn.innerText = 'СТАВКА';
             btn.className = 'btn-main-action btn-style-start';
-            mountains.classList.remove('departed');
+
+            setTimeout(() => {
+                if (!isPlayingRocket) {
+                    mountains.classList.remove('departed');
+                    rocket.style.bottom = '32px';
+                    rocket.style.left = '26px';
+                    rocket.style.opacity = '1';
+                    rocket.classList.add('idle-hover');
+                }
+            }, 900);
         }
 
+        /* --- МИНЫ --- */
         function setMinesCount(count, el) {
             if (isPlayingMines) return;
             minesCount = count;
             document.querySelectorAll('.mine-count-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
+            tg.HapticFeedback.impactOccurred('light');
         }
 
         function initMinesGrid() {
@@ -1232,22 +1848,23 @@
                 isPlayingMines = true;
                 openedCount = 0;
                 currentMinesMult = 1.00;
+
                 mineLocations = [];
                 while (mineLocations.length < minesCount) {
                     let p = Math.floor(Math.random() * 25);
                     if (!mineLocations.includes(p)) mineLocations.push(p);
                 }
+
                 initMinesGrid();
                 btn.innerText = 'ЗАБРАТЬ';
                 btn.className = 'btn-main-action btn-style-cashout';
+                document.getElementById('minesMultLabel').innerText = 'МНОЖИТЕЛЬ: x1.00';
+                tg.HapticFeedback.impactOccurred('medium');
             } else {
                 if (openedCount === 0) return;
                 starsBalance += Math.floor(currentBetMines * currentMinesMult);
                 updateBalanceUI();
-                isPlayingMines = false;
-                btn.innerText = 'ИГРАТЬ';
-                btn.className = 'btn-main-action btn-style-start';
-                tg.HapticFeedback.notificationOccurred('success');
+                endMinesGame(true);
             }
         }
 
@@ -1259,67 +1876,26 @@
 
             if (mineLocations.includes(index)) {
                 tile.classList.add('revealed-bomb'); tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
-                isPlayingMines = false;
-                document.getElementById('minesBtn').innerText = 'ИГРАТЬ';
-                document.getElementById('minesBtn').className = 'btn-main-action btn-style-start';
                 tg.HapticFeedback.notificationOccurred('error');
+                tiles.forEach((t, idx) => { if (mineLocations.includes(idx)) { t.classList.add('revealed-bomb'); t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; } });
+                endMinesGame(false);
             } else {
                 tile.classList.add('revealed-star'); tile.innerHTML = '<i class="fa-solid fa-star"></i>';
                 openedCount++;
                 currentMinesMult = (1 + (openedCount * (minesCount * 0.12))).toFixed(2);
                 document.getElementById('minesMultLabel').innerText = `МНОЖИТЕЛЬ: x${currentMinesMult}`;
+                document.getElementById('minesBtn').innerText = `ЗАБРАТЬ (${Math.floor(currentBetMines * currentMinesMult)})`;
                 tg.HapticFeedback.impactOccurred('light');
             }
         }
 
-        function initPlinkoCanvas() {}
-        function dropPlinkoBall() {
-            if (starsBalance < currentBetPlinko) { alert('Недостаточно Stars!'); return; }
-            starsBalance -= currentBetPlinko;
-            updateBalanceUI();
-            if (Math.random() > 0.5) {
-                starsBalance += Math.floor(currentBetPlinko * 1.5);
-                updateBalanceUI();
-                tg.HapticFeedback.notificationOccurred('success');
-            } else {
-                tg.HapticFeedback.notificationOccurred('error');
-            }
-        }
-
-        function setCoinChoice(side, el) {
-            if (isFlippingCoin) return;
-            selectedCoinSide = side;
-            document.querySelectorAll('#coinflipPage .color-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            document.getElementById('selectedCoinLabel').innerText = 'ВЫБОР: ' + (side === 'heads' ? 'ОРЕЛ' : 'РЕШКА');
-        }
-
-        function flipCoin3D() {
-            if (isFlippingCoin) return;
-            if (starsBalance < currentBetCoinflip) { alert('Недостаточно Stars!'); return; }
-            starsBalance -= currentBetCoinflip;
-            updateBalanceUI();
-            isFlippingCoin = true;
-            const btn = document.getElementById('coinflipBtn');
-            btn.disabled = true;
-
-            const isWin = Math.random() < 0.48;
-            const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
-            const coin = document.getElementById('coin3d');
-            currentCoinRotation += (12 * 360) + (outcomeSide === 'heads' ? 0 : 180);
-            coin.style.transform = `rotateY(${currentCoinRotation}deg)`;
-
-            setTimeout(() => {
-                isFlippingCoin = false;
-                btn.disabled = false;
-                if (isWin) {
-                    starsBalance += currentBetCoinflip * 2;
-                    updateBalanceUI();
-                    tg.HapticFeedback.notificationOccurred('success');
-                } else {
-                    tg.HapticFeedback.notificationOccurred('error');
-                }
-            }, 3000);
+        function endMinesGame(isWin) {
+            isPlayingMines = false;
+            const btn = document.getElementById('minesBtn');
+            btn.innerText = 'ИГРАТЬ';
+            btn.className = 'btn-main-action btn-style-start';
+            if (isWin) tg.HapticFeedback.notificationOccurred('success');
+            else document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ!';
         }
 
         updateBalanceUI();
