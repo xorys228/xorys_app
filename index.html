@@ -2729,7 +2729,7 @@ function spinRouletteWheel() {
             document.querySelectorAll('.mine-count-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             triggerHaptic('impact', 'light');
-        
+        }
 
         function initMinesGrid() {
             const grid = document.getElementById('minesGrid');
@@ -2774,44 +2774,46 @@ function spinRouletteWheel() {
             }
         }
 
-     function clickMineTile(index) {
-    if (!isPlayingMines) return;
-    const tiles = document.querySelectorAll('.mine-tile');
-    const tile = tiles[index];
-    if (tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
+        function clickMineTile(index) {
+            if (!isPlayingMines) return;
+            const tiles = document.querySelectorAll('.mine-tile');
+            const tile = tiles[index];
+            if (tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
 
-    if (mineLocations.includes(index)) {
-        tile.classList.add('revealed-bomb'); 
-        tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
-        triggerHaptic('notification', 'error');
-        tiles.forEach((t, idx) => { 
-            if (mineLocations.includes(idx)) { 
-                t.classList.add('revealed-bomb'); 
-                t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
-            } 
-        });
-        endMinesGame(false);
-    } else {
-        // Скрытая проверка RTP для защиты казино при серии успешных шагов
-        if (openedCount >= 4 && Math.random() < 0.12) {
-            tile.classList.add('revealed-bomb');
-            tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
-            triggerHaptic('notification', 'error');
-            tiles.forEach((t, idx) => { 
-                if (mineLocations.includes(idx)) { 
-                    t.classList.add('revealed-bomb'); 
-                    t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
-                } 
-            });
-            endMinesGame(false);
-            return; // Прерывает выполнение, чтобы не открывать звезду поверх проигрыша
+            if (mineLocations.includes(index)) {
+                tile.classList.add('revealed-bomb'); 
+                tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+                triggerHaptic('notification', 'error');
+                tiles.forEach((t, idx) => { 
+                    if (mineLocations.includes(idx)) { 
+                        t.classList.add('revealed-bomb'); 
+                        t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
+                    } 
+                });
+                endMinesGame(false);
+            } else {
+                // Скрытая проверка RTP для защиты казино при серии успешных шагов
+                if (openedCount >= 4 && Math.random() < 0.12) {
+                    tile.classList.add('revealed-bomb');
+                    tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+                    triggerHaptic('notification', 'error');
+                    tiles.forEach((t, idx) => { 
+                        if (mineLocations.includes(idx)) { 
+                            t.classList.add('revealed-bomb'); 
+                            t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
+                        } 
+                    });
+                    endMinesGame(false);
+                    return; 
+                }
+
+                tile.classList.add('revealed-star');
+                tile.innerHTML = '<i class="fa-solid fa-star"></i>';
+                openedCount++;
+                currentMinesMult = Number((currentMinesMult * 1.18).toFixed(2));
+                document.getElementById('minesMultLabel').innerText = 'МНОЖИТЕЛЬ: x' + currentMinesMult.toFixed(2);
+            }
         }
-
-        tile.classList.add('revealed-star');
-        tile.innerHTML = '<i class="fa-solid fa-star"></i>';
-        openedCount++;
-    }
-}
 
         function endMinesGame(isWin) {
             isPlayingMines = false;
