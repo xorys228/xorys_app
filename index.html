@@ -2563,31 +2563,31 @@
             plinkoAnimId = requestAnimationFrame(renderPlinko);
         }
 
-        /* --- РУЛЕТКА --- */
-        function setRouletteColor(color, el) {
-            selectedRouletteColor = color;
-            document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СИНИЙ' };
-            document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
-            triggerHaptic('impact', 'light');
-        }
+       // --- РУЛЕТКА ---
+function setRouletteColor(color, el) {
+    selectedRouletteColor = color;
+    document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+    const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СИНИЙ' };
+    document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
+    triggerHaptic('impact', 'light');
+}
 
-        function spinRouletteWheel() {
-            if (isSpinning) return;
-            if (starsBalance < currentBetRoulette) { showToast('Недостаточно звезд!'); return; }
+function spinRouletteWheel() {
+    if (isSpinning) return;
+    if (starsBalance < currentBetRoulette) { showToast('Недостаточно звезд!'); return; }
+    
+    starsBalance = Number((starsBalance - currentBetRoulette).toFixed(1));
+    totalGamesPlayed += 1;
+    updateBalanceUI();
+    isSpinning = true;
 
-            starsBalance = Number((starsBalance - currentBetRoulette).toFixed(1));
-            totalGamesPlayed += 1;
-            updateBalanceUI();
-            isSpinning = true;
+    const btn = document.getElementById('rouletteBtn');
+    btn.innerText = 'КРУТИТСЯ...';
+    btn.disabled = true;
+    triggerHaptic('impact', 'medium');
 
-            const btn = document.getElementById('rouletteBtn');
-            btn.innerText = 'КРУТИТСЯ...';
-            btn.disabled = true;
-            triggerHaptic('impact', 'medium');
-
-            const outcomeRand = Math.random();
+    const outcomeRand = Math.random();
     let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ';
     
     if (outcomeRand < 0.48) { 
@@ -2607,7 +2607,6 @@
         btn.disabled = false;
 
         if (winningColor === selectedRouletteColor) {
-            // Коэффициент x14 для синего (джекпот), или x1.95 для остальных (учитывает маржу казино)
             const winSum = Math.floor(currentBetRoulette * (winningColor === 'green' ? 14 : 1.95));
             starsBalance = Number((starsBalance + winSum).toFixed(1));
             totalStarsWon += winSum;
@@ -2617,22 +2616,7 @@
             triggerHaptic('notification', 'error');
         }
     }, 4100);
-                    totalStarsWon += winSum;
-                    updateBalanceUI();
-                    triggerHaptic('notification', 'success');
-                } else {
-                    triggerHaptic('notification', 'error');
-                }
-
-                const historyContainer = document.getElementById('rouletteHistory');
-                const pill = document.createElement('div');
-                pill.className = 'history-pill';
-                pill.style.borderColor = winningColor === 'green' ? '#2563eb' : (winningColor === 'red' ? '#ffffff' : '#334155');
-                pill.innerText = labelText;
-                historyContainer.prepend(pill);
-                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-            }, 4100);
-        }
+}
 
         /* --- РАКЕТА --- */
         function handleRocketClick() {
