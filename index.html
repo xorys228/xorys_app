@@ -19,9 +19,9 @@
             background-color: #040407;
             color: #ffffff;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
-                radial-gradient(circle at 80% 40%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
-                radial-gradient(circle at 50% 20%, #13131d 0%, #040407 85%);
+                radial-gradient(circle at 50% 10%, rgba(217, 70, 239, 0.07) 0%, transparent 45%),
+                radial-gradient(circle at 20% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, #12101a 0%, #040407 85%);
             background-size: 100% 100%;
             padding-bottom: 85px;
             overflow-x: hidden;
@@ -49,13 +49,13 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* --- ВЕРХНЯ ШАПКА ЛОБІ --- */
+        /* --- ШАПКА ЛОББИ --- */
         .lobby-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-top: 4px;
-            margin-bottom: 20px;
+            margin-bottom: 16px;
             padding: 0 2px;
         }
 
@@ -66,23 +66,23 @@
         }
 
         .brand-badge {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            width: 36px;
+            height: 36px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #ec4899, #8b5cf6);
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 15px;
-            color: #040407;
+            font-size: 16px;
+            color: #ffffff;
             font-weight: 900;
-            box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+            box-shadow: 0 0 18px rgba(236, 72, 153, 0.45);
         }
 
         .brand-text {
-            font-size: 19px;
+            font-size: 18px;
             font-weight: 900;
-            letter-spacing: 1.8px;
+            letter-spacing: 1.5px;
             color: #ffffff;
         }
 
@@ -90,9 +90,40 @@
             display: block;
             font-size: 9px;
             font-weight: 700;
-            letter-spacing: 2px;
+            letter-spacing: 1.8px;
             color: rgba(255, 255, 255, 0.45);
             margin-top: -2px;
+        }
+
+        /* --- ВКЛАДКИ В СТИЛЕ ПРИМЕРА --- */
+        .tabs-container {
+            display: flex;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            padding: 4px;
+            margin-bottom: 18px;
+            gap: 4px;
+        }
+
+        .tab-btn {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.45);
+            padding: 10px 0;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            text-align: center;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #ec4899 0%, #d946ef 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 16px rgba(217, 70, 239, 0.4);
         }
 
         .page-title {
@@ -155,247 +186,129 @@
             color: rgba(255,255,255,0.8);
         }
 
-        /* --- ПРЕМІУМ КАРТКИ ІГР (НОВИЙ ДИЗАЙН) --- */
+        /* --- ГОРИЗОНТАЛЬНЫЕ КАРТОЧКИ ИГР (КАК НА ПРИМЕРЕ) --- */
         .games-container {
             display: flex;
             flex-direction: column;
-            gap: 13px;
+            gap: 12px;
         }
 
-        .game-banner {
-            position: relative;
-            border-radius: 22px;
-            padding: 14px 16px;
-            cursor: pointer;
+        .game-card-row {
+            background: linear-gradient(145deg, rgba(22, 20, 32, 0.75) 0%, rgba(10, 9, 16, 0.9) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 12px 14px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 14px;
-            background: linear-gradient(145deg, rgba(24, 25, 36, 0.85) 0%, rgba(11, 12, 18, 0.95) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            box-shadow: 
-                0 12px 28px -6px rgba(0, 0, 0, 0.75),
-                inset 0 1px 0 rgba(255, 255, 255, 0.12);
-            backdrop-filter: blur(16px);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
             overflow: hidden;
-            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
         }
 
-        /* Внутрішнє неонове підсвічування фону картки */
-        .game-banner::before {
-            content: '';
-            position: absolute;
-            top: -30px;
-            left: -20px;
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            filter: blur(32px);
-            opacity: 0.28;
-            pointer-events: none;
-            transition: opacity 0.3s ease, transform 0.3s ease;
+        .game-card-row:active {
+            transform: scale(0.97);
+            border-color: rgba(236, 72, 153, 0.3);
         }
 
-        /* Діагональний скляний відблиск */
-        .game-banner::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 60%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
-            transform: skewX(-20deg);
-            transition: left 0.55s ease;
-            pointer-events: none;
-        }
-
-        .game-banner:hover::after {
-            left: 140%;
-        }
-
-        .game-banner:active {
-            transform: scale(0.975);
-        }
-
-        /* Індивідуальні теми карток */
-        .banner-rocket::before { background: #0ea5e9; }
-        .banner-rocket:hover { border-color: rgba(56, 189, 248, 0.35); box-shadow: 0 12px 30px -4px rgba(14, 165, 233, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
-
-        .banner-roulette::before { background: #f43f5e; }
-        .banner-roulette:hover { border-color: rgba(244, 63, 94, 0.35); box-shadow: 0 12px 30px -4px rgba(244, 63, 94, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
-
-        .banner-mines::before { background: #a855f7; }
-        .banner-mines:hover { border-color: rgba(168, 85, 247, 0.35); box-shadow: 0 12px 30px -4px rgba(168, 85, 247, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
-
-        .banner-plinko::before { background: #ec4899; }
-        .banner-plinko:hover { border-color: rgba(236, 72, 153, 0.35); box-shadow: 0 12px 30px -4px rgba(236, 72, 153, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
-
-        .banner-coinflip::before { background: #eab308; }
-        .banner-coinflip:hover { border-color: rgba(234, 179, 8, 0.35); box-shadow: 0 12px 30px -4px rgba(234, 179, 8, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
-
-        .banner-left {
+        .game-card-left {
             display: flex;
             align-items: center;
             gap: 14px;
-            z-index: 2;
         }
 
-        /* Стильний 3D-контейнер іконки (скляна капсула з подвійною рамкою) */
-        .icon-orb {
-            width: 56px;
-            height: 56px;
-            border-radius: 17px;
+        /* Иконка-квадрат слева со скруглением */
+        .game-icon-box {
+            width: 62px;
+            height: 62px;
+            border-radius: 16px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 22px;
+            font-size: 24px;
             color: #ffffff;
             flex-shrink: 0;
             position: relative;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 8px 16px rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: inset 0 2px 6px rgba(255,255,255,0.15);
         }
 
-        .icon-orb::after {
-            content: '';
-            position: absolute;
-            inset: 3px;
-            border-radius: 13px;
-            opacity: 0.92;
-            z-index: 1;
-        }
+        .icon-rocket-bg { background: linear-gradient(135deg, #0ea5e9, #0369a1); box-shadow: 0 0 15px rgba(14, 165, 233, 0.3); }
+        .icon-roulette-bg { background: linear-gradient(135deg, #f43f5e, #9f1239); box-shadow: 0 0 15px rgba(244, 63, 94, 0.3); }
+        .icon-mines-bg { background: linear-gradient(135deg, #a855f7, #6b21a8); box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
+        .icon-plinko-bg { background: linear-gradient(135deg, #ec4899, #831843); box-shadow: 0 0 15px rgba(236, 72, 153, 0.3); }
+        .icon-coin-bg { background: linear-gradient(135deg, #eab308, #854d0e); box-shadow: 0 0 15px rgba(234, 179, 8, 0.3); }
 
-        .icon-orb i, .icon-orb svg {
-            position: relative;
-            z-index: 2;
-            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
-        }
-
-        .orb-rocket::after {
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 60%, #0369a1 100%);
-            box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
-        }
-        .orb-rocket i {
-            transform: rotate(-45deg);
-            animation: floatSlow 3s ease-in-out infinite;
-        }
-
-        .orb-roulette::after {
-            background: linear-gradient(135deg, #fb7185 0%, #e11d48 60%, #881337 100%);
-            box-shadow: 0 0 16px rgba(244, 63, 94, 0.5);
-        }
-        .orb-roulette i {
-            color: #fef08a;
-            animation: slowSpin 14s linear infinite;
-        }
-
-        .orb-mines::after {
-            background: linear-gradient(135deg, #c084fc 0%, #9333ea 60%, #581c87 100%);
-            box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
-        }
-        .orb-mines i {
-            animation: pulseGlow 2.8s ease-in-out infinite;
-        }
-
-        .orb-plinko::after {
-            background: linear-gradient(135deg, #f472b6 0%, #db2777 60%, #831843 100%);
-            box-shadow: 0 0 16px rgba(236, 72, 153, 0.5);
-        }
-        .orb-plinko i {
-            animation: floatSlow 3.2s ease-in-out infinite;
-        }
-
-        .orb-coinflip::after {
-            background: linear-gradient(135deg, #fde047 0%, #eab308 55%, #a16207 100%);
-            box-shadow: 0 0 16px rgba(234, 179, 8, 0.5);
-        }
-        .orb-coinflip i {
-            color: #1e1b04;
-            animation: coinWobble 3.4s ease-in-out infinite;
-        }
-
-        @keyframes floatSlow {
-            0%, 100% { transform: translateY(0) rotate(-45deg); }
-            50% { transform: translateY(-3px) rotate(-45deg); }
-        }
-
-        @keyframes slowSpin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.09); }
-        }
-
-        @keyframes coinWobble {
-            0%, 100% { transform: rotateY(0deg); }
-            50% { transform: rotateY(28deg); }
-        }
-
-        .game-info {
-            text-align: left;
-        }
-
-        .game-title-row {
+        .game-meta {
             display: flex;
-            align-items: center;
-            gap: 7px;
+            flex-direction: column;
+            gap: 3px;
         }
 
-        .game-title {
-            font-size: 16px;
+        .game-category-tag {
+            font-size: 9.5px;
             font-weight: 900;
-            letter-spacing: 0.8px;
-            color: #ffffff;
-        }
-
-        .game-tag {
-            font-size: 9px;
-            font-weight: 900;
-            padding: 2px 6px;
-            border-radius: 6px;
-            letter-spacing: 0.6px;
+            letter-spacing: 1px;
             text-transform: uppercase;
-        }
-
-        .tag-blue { background: rgba(56, 189, 248, 0.16); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
-        .tag-red { background: rgba(244, 63, 94, 0.16); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.3); }
-        .tag-purple { background: rgba(168, 85, 247, 0.16); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
-        .tag-pink { background: rgba(236, 72, 153, 0.16); color: #f9a8d4; border: 1px solid rgba(236, 72, 153, 0.3); }
-        .tag-gold { background: rgba(250, 204, 21, 0.16); color: #fde047; border: 1px solid rgba(250, 204, 21, 0.3); }
-
-        .game-desc {
-            font-size: 11.5px;
-            color: rgba(255, 255, 255, 0.48);
-            margin-top: 3px;
-            font-weight: 500;
-        }
-
-        /* Права кнопка переходу на картці */
-        .banner-arrow {
-            width: 32px;
-            height: 32px;
-            border-radius: 11px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: #ec4899;
             display: flex;
             align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, 0.55);
-            font-size: 12px;
-            flex-shrink: 0;
-            z-index: 2;
-            transition: all 0.2s ease;
+            gap: 4px;
         }
 
-        .game-banner:hover .banner-arrow {
-            background: rgba(255, 255, 255, 0.12);
+        .game-name {
+            font-size: 15px;
+            font-weight: 900;
             color: #ffffff;
-            transform: translateX(2px);
+            letter-spacing: 0.5px;
+        }
+
+        .game-stats-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 10px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.6);
+            width: fit-content;
+            margin-top: 2px;
+        }
+
+        /* Кнопка действия справа (как на вашем скриншоте) */
+        .card-action-btn {
+            background: linear-gradient(135deg, #ec4899 0%, #db2777 100%);
+            color: #ffffff;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 14px;
+            font-size: 12px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(236, 72, 153, 0.35);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: transform 0.15s ease, filter 0.2s;
+        }
+
+        .card-action-btn:active {
+            transform: scale(0.95);
+        }
+
+        .card-action-btn.btn-free {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+        }
+
+        .card-action-btn.btn-stars {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
         }
 
         /* --- ШАПКА ИГРОВЫХ ЭКРАНОВ --- */
@@ -446,7 +359,7 @@
             white-space: nowrap;
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА (ЗВЕЗДЫ, НЕБО, ГОРЫ) --- */
+        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА --- */
         .rg-display {
             height: 235px;
             background: linear-gradient(180deg, #060919 0%, #0f1738 45%, #1d1b4b 80%, #2a194d 100%);
@@ -479,9 +392,7 @@
             z-index: 1;
         }
 
-        .space-stars.flying {
-            animation: warpStars 2.5s linear infinite;
-        }
+        .space-stars.flying { animation: warpStars 2.5s linear infinite; }
 
         @keyframes twinkleStars {
             0% { opacity: 0.55; }
@@ -494,63 +405,29 @@
         }
 
         .space-planet {
-            position: absolute;
-            top: 22px;
-            right: 28px;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
+            position: absolute; top: 22px; right: 28px; width: 34px; height: 34px; border-radius: 50%;
             background: radial-gradient(circle at 30% 30%, #fef08a 0%, #f59e0b 65%, #78350f 100%);
-            box-shadow: 0 0 22px rgba(251, 191, 36, 0.35);
-            opacity: 0.85;
-            z-index: 1;
+            box-shadow: 0 0 22px rgba(251, 191, 36, 0.35); opacity: 0.85; z-index: 1;
         }
 
         .mountains-layer {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 85px;
-            z-index: 2;
-            pointer-events: none;
+            position: absolute; bottom: 0; left: 0; width: 100%; height: 85px; z-index: 2; pointer-events: none;
             transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 1s ease;
         }
-
-        .mountains-layer.departed {
-            transform: translateY(95px);
-            opacity: 0.15;
-        }
+        .mountains-layer.departed { transform: translateY(95px); opacity: 0.15; }
 
         .multiplier-val {
-            font-size: 46px;
-            font-weight: 900;
-            color: #ffffff;
+            font-size: 46px; font-weight: 900; color: #ffffff;
             text-shadow: 0 0 25px rgba(56, 189, 248, 0.65), 0 2px 10px rgba(0,0,0,0.8);
-            z-index: 5;
-            letter-spacing: 1px;
-            margin-bottom: 18px;
+            z-index: 5; letter-spacing: 1px; margin-bottom: 18px;
         }
-
-        .multiplier-val.crashed {
-            color: #fb7185;
-            text-shadow: 0 0 25px rgba(244, 63, 94, 0.8);
-        }
+        .multiplier-val.crashed { color: #fb7185; text-shadow: 0 0 25px rgba(244, 63, 94, 0.8); }
 
         .rocket-container {
-            position: absolute;
-            bottom: 32px;
-            left: 26px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            transition: bottom 0.12s linear, left 0.12s linear, transform 0.3s ease;
-            z-index: 6;
+            position: absolute; bottom: 32px; left: 26px; display: flex; align-items: center; gap: 6px;
+            transition: bottom 0.12s linear, left 0.12s linear, transform 0.3s ease; z-index: 6;
         }
-
-        .rocket-container.idle-hover {
-            animation: rocketIdle 2.2s ease-in-out infinite;
-        }
+        .rocket-container.idle-hover { animation: rocketIdle 2.2s ease-in-out infinite; }
 
         @keyframes rocketIdle {
             0%, 100% { transform: translateY(0px); }
@@ -558,18 +435,11 @@
         }
 
         .svg-rocket-wrap {
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
             filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.65));
         }
 
-        .rocket-flame {
-            transform-origin: 24px 52px;
-            animation: flameFlicker 0.14s infinite alternate;
-        }
+        .rocket-flame { transform-origin: 24px 52px; animation: flameFlicker 0.14s infinite alternate; }
 
         @keyframes flameFlicker {
             0% { transform: scaleY(0.85) scaleX(0.95); opacity: 0.85; }
@@ -577,303 +447,177 @@
         }
 
         .player-tag {
-            background: rgba(8, 12, 24, 0.85);
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            padding: 3px 8px;
-            border-radius: 8px;
-            font-size: 10px;
-            font-weight: 800;
-            color: #e0f2fe;
-            backdrop-filter: blur(4px);
+            background: rgba(8, 12, 24, 0.85); border: 1px solid rgba(56, 189, 248, 0.35);
+            padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: #e0f2fe; backdrop-filter: blur(4px);
         }
 
-        /* --- ИНШИ ИГРОВЫЕ ДИСПЛЕИ --- */
+        /* --- ИГРОВЫЕ ДИСПЛЕИ (РУЛЕТКА, МИНЫ, ПЛИНКО, МОНЕТА) --- */
         .roulette-display, .mines-display, .plinko-display, .coinflip-display {
-            border-radius: 22px;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            border-radius: 22px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
 
         .roulette-display {
-            height: 210px;
-            background: radial-gradient(circle at center, #261015 0%, #080305 80%);
-            border: 1px solid rgba(244, 63, 94, 0.25);
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(244, 63, 94, 0.1);
+            height: 210px; background: radial-gradient(circle at center, #261015 0%, #080305 80%);
+            border: 1px solid rgba(244, 63, 94, 0.25); box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(244, 63, 94, 0.1);
         }
 
-        .wheel-wrapper {
-            position: relative; width: 130px; height: 130px;
-            display: flex; align-items: center; justify-content: center;
-        }
+        .wheel-wrapper { position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; }
 
         .wheel-pointer {
-            position: absolute; top: -10px; width: 0; height: 0;
-            border-left: 7px solid transparent; border-right: 7px solid transparent;
+            position: absolute; top: -10px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent;
             border-top: 14px solid #ffffff; filter: drop-shadow(0 0 6px #ffffff); z-index: 20;
         }
 
         .roulette-circle {
             width: 130px; height: 130px; border-radius: 50%;
             background: conic-gradient(
-                #f43f5e 0deg 30deg, #18181b 30deg 60deg,
-                #f43f5e 60deg 90deg, #18181b 90deg 120deg,
-                #f43f5e 120deg 150deg, #18181b 150deg 180deg,
-                #f43f5e 180deg 210deg, #18181b 210deg 240deg,
-                #f43f5e 240deg 270deg, #18181b 270deg 300deg,
-                #f43f5e 300deg 330deg, #18181b 330deg 350deg,
-                #10b981 350deg 360deg
+                #f43f5e 0deg 30deg, #18181b 30deg 60deg, #f43f5e 60deg 90deg, #18181b 90deg 120deg,
+                #f43f5e 120deg 150deg, #18181b 150deg 180deg, #f43f5e 180deg 210deg, #18181b 210deg 240deg,
+                #f43f5e 240deg 270deg, #18181b 270deg 300deg, #f43f5e 300deg 330deg, #18181b 330deg 350deg, #10b981 350deg 360deg
             );
-            border: 3px solid rgba(255, 255, 255, 0.25);
-            box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 12px rgba(0,0,0,0.7);
-            position: relative;
-            transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
+            border: 3px solid rgba(255, 255, 255, 0.25); box-shadow: 0 0 20px rgba(0,0,0,0.8), inset 0 0 12px rgba(0,0,0,0.7);
+            position: relative; transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
         }
 
         .wheel-center-hub {
-            position: absolute; width: 36px; height: 36px;
-            background: #111115; border: 2px solid rgba(255,255,255,0.3);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 11px; color: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.5);
+            position: absolute; width: 36px; height: 36px; background: #111115; border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #fff; box-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
 
-        .color-picker-grid {
-            display: flex; gap: 8px; margin-top: 10px; margin-bottom: 6px;
-        }
+        .color-picker-grid { display: flex; gap: 8px; margin-top: 10px; margin-bottom: 6px; }
 
         .color-btn {
-            flex: 1; padding: 10px 0; border-radius: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 11px; font-weight: 800; cursor: pointer;
-            text-transform: uppercase; transition: all 0.2s;
+            flex: 1; padding: 10px 0; border-radius: 12px; border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: all 0.2s;
             background: rgba(255,255,255,0.03); color: #fff;
         }
         .color-btn.active {
-            border-color: #ffffff;
-            background: rgba(255,255,255,0.1);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.15);
-            transform: translateY(-1px);
+            border-color: #ffffff; background: rgba(255,255,255,0.1); box-shadow: 0 0 15px rgba(255, 255, 255, 0.15); transform: translateY(-1px);
         }
 
-        /* Мины */
         .mines-display {
             background: radial-gradient(circle at center, #1b0f28 0%, #06030a 80%);
-            border: 1px solid rgba(168, 85, 247, 0.25);
-            padding: 12px;
+            border: 1px solid rgba(168, 85, 247, 0.25); padding: 12px;
             box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(168, 85, 247, 0.1);
         }
 
-        .mines-grid {
-            display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; max-width: 270px;
-        }
+        .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; max-width: 270px; }
 
         .mine-tile {
-            aspect-ratio: 1; background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 18px; cursor: pointer; transition: all 0.15s ease;
+            aspect-ratio: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.15s ease;
         }
         .mine-tile:active { transform: scale(0.9); }
-        .mine-tile.revealed-star {
-            background: linear-gradient(135deg, #a855f7, #6366f1);
-            border-color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
-        }
-        .mine-tile.revealed-bomb {
-            background: linear-gradient(135deg, #f43f5e, #881337);
-            border-color: #fff; box-shadow: 0 0 10px rgba(244, 63, 94, 0.5);
-        }
+        .mine-tile.revealed-star { background: linear-gradient(135deg, #a855f7, #6366f1); border-color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.5); }
+        .mine-tile.revealed-bomb { background: linear-gradient(135deg, #f43f5e, #881337); border-color: #fff; box-shadow: 0 0 10px rgba(244, 63, 94, 0.5); }
 
         .mines-config-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
         .mine-count-btn {
-            flex: 1; background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08); color: #fff;
-            padding: 7px 0; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer;
-            transition: all 0.2s;
+            flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08); color: #fff;
+            padding: 7px 0; border-radius: 8px; font-size: 11px; font-weight: 800; cursor: pointer; transition: all 0.2s;
         }
-        .mine-count-btn.active {
-            background: #a855f7; border-color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.4);
-        }
+        .mine-count-btn.active { background: #a855f7; border-color: #fff; box-shadow: 0 0 10px rgba(168, 85, 247, 0.4); }
 
-        /* Плинко */
         .plinko-display {
-            height: 245px;
-            background: radial-gradient(circle at center, #260f22 0%, #060205 80%);
-            border: 1px solid rgba(236, 72, 153, 0.25);
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(236, 72, 153, 0.1);
+            height: 245px; background: radial-gradient(circle at center, #260f22 0%, #060205 80%);
+            border: 1px solid rgba(236, 72, 153, 0.25); box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(236, 72, 153, 0.1);
         }
         #plinkoCanvas { width: 100%; height: 100%; }
 
-        /* 3D Орел и Решка */
         .coinflip-display {
-            height: 210px;
-            background: radial-gradient(circle at center, #261f0f 0%, #060502 80%);
-            border: 1px solid rgba(234, 179, 8, 0.25);
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(234, 179, 8, 0.1);
+            height: 210px; background: radial-gradient(circle at center, #261f0f 0%, #060502 80%);
+            border: 1px solid rgba(234, 179, 8, 0.25); box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(234, 179, 8, 0.1);
             perspective: 1000px;
         }
 
-        .coin-3d-wrapper {
-            width: 100px; height: 100px; position: relative;
-            transform-style: preserve-3d; transition: transform 3s cubic-bezier(0.15, 0.85, 0.25, 1);
-        }
+        .coin-3d-wrapper { width: 100px; height: 100px; position: relative; transform-style: preserve-3d; transition: transform 3s cubic-bezier(0.15, 0.85, 0.25, 1); }
 
         .coin-side {
-            position: absolute; inset: 0; border-radius: 50%;
-            backface-visibility: hidden; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; font-weight: 900;
-            border: 5px solid #fef08a; box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 15px rgba(234, 179, 8, 0.5);
+            position: absolute; inset: 0; border-radius: 50%; backface-visibility: hidden; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; font-weight: 900; border: 5px solid #fef08a;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 15px rgba(234, 179, 8, 0.5);
         }
         .coin-heads { background: radial-gradient(circle at 30% 30%, #facc15, #b45309); color: #000; transform: rotateY(0deg); }
         .coin-tails {
-            background: radial-gradient(circle at 30% 30%, #f1f5f9, #475569);
-            color: #000; border-color: #fff;
-            box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 15px rgba(255, 255, 255, 0.5);
-            transform: rotateY(180deg);
+            background: radial-gradient(circle at 30% 30%, #f1f5f9, #475569); color: #000; border-color: #fff;
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 15px rgba(255, 255, 255, 0.5); transform: rotateY(180deg);
         }
         .coin-side i { font-size: 34px; margin-bottom: 2px; }
         .coin-side span { font-size: 10px; letter-spacing: 0.8px; }
 
-        /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ + ПОЛЗУНОК ЗВЕЗД --- */
+        /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ + ПОЛЗУНОК --- */
         .betting-box {
-            background: rgba(15, 15, 22, 0.85);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 18px;
-            padding: 14px;
-            margin-top: 12px;
-            backdrop-filter: blur(10px);
+            background: rgba(15, 15, 22, 0.85); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 18px; padding: 14px; margin-top: 12px; backdrop-filter: blur(10px);
         }
 
         .betting-info {
-            display: flex; justify-content: space-between;
-            font-size: 10px; color: rgba(255, 255, 255, 0.45);
+            display: flex; justify-content: space-between; font-size: 10px; color: rgba(255, 255, 255, 0.45);
             margin-bottom: 8px; font-weight: 800; letter-spacing: 0.5px;
         }
 
         .bet-row { display: flex; gap: 10px; align-items: center; }
 
         .bet-adjuster {
-            flex: 1; background: rgba(5, 5, 8, 0.65);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px; padding: 6px 10px;
-            display: flex; align-items: center; justify-content: space-between;
+            flex: 1; background: rgba(5, 5, 8, 0.65); border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between;
         }
 
         .btn-chg {
-            background: rgba(255, 255, 255, 0.06); border: none; color: #fff;
-            width: 28px; height: 28px; border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer;
-            transition: background 0.15s;
+            background: rgba(255, 255, 255, 0.06); border: none; color: #fff; width: 28px; height: 28px;
+            border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer; transition: background 0.15s;
         }
         .btn-chg:active { background: rgba(255, 255, 255, 0.15); }
 
         .bet-number { font-size: 17px; font-weight: 900; }
 
-        /* Стилизация ползунка ставки */
-        .slider-container {
-            margin-top: 10px;
-            margin-bottom: 4px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .slider-label {
-            font-size: 10px;
-            font-weight: 800;
-            color: rgba(255, 255, 255, 0.35);
-            min-width: 24px;
-            text-align: center;
-        }
+        .slider-container { margin-top: 10px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .slider-label { font-size: 10px; font-weight: 800; color: rgba(255, 255, 255, 0.35); min-width: 24px; text-align: center; }
 
         .bet-slider {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 100%;
-            height: 6px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 999px;
-            outline: none;
-            cursor: pointer;
+            -webkit-appearance: none; appearance: none; width: 100%; height: 6px;
+            background: rgba(255, 255, 255, 0.1); border-radius: 999px; outline: none; cursor: pointer;
         }
-
         .bet-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #fde047, #f59e0b);
-            border: 2px solid #ffffff;
-            box-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
-            cursor: pointer;
-            transition: transform 0.15s ease;
+            -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
+            background: linear-gradient(135deg, #fde047, #f59e0b); border: 2px solid #ffffff;
+            box-shadow: 0 0 10px rgba(250, 204, 21, 0.7); cursor: pointer; transition: transform 0.15s ease;
         }
-
-        .bet-slider::-webkit-slider-thumb:active {
-            transform: scale(1.2);
-        }
-
-        .bet-slider::-moz-range-thumb {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #fde047, #f59e0b);
-            border: 2px solid #ffffff;
-            box-shadow: 0 0 10px rgba(250, 204, 21, 0.7);
-            cursor: pointer;
-        }
+        .bet-slider::-webkit-slider-thumb:active { transform: scale(1.2); }
 
         .quick-chips { display: flex; gap: 5px; margin-top: 8px; }
         .chip {
-            flex: 1; background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.06); color: rgba(255, 255, 255, 0.7);
-            border-radius: 6px; padding: 4px 0; font-size: 10px; font-weight: 900; cursor: pointer;
-            transition: all 0.15s;
+            flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.7); border-radius: 6px; padding: 4px 0; font-size: 10px; font-weight: 900; cursor: pointer;
         }
         .chip:active { background: rgba(255,255,255,0.1); color: #fff; }
 
         .btn-main-action {
-            width: 125px; height: 50px; border: none; border-radius: 14px;
-            font-weight: 900; font-size: 13px; cursor: pointer; text-transform: uppercase;
-            letter-spacing: 1px; transition: transform 0.1s ease, filter 0.2s;
+            width: 125px; height: 50px; border: none; border-radius: 14px; font-weight: 900; font-size: 13px;
+            cursor: pointer; text-transform: uppercase; letter-spacing: 1px; transition: transform 0.1s ease, filter 0.2s;
         }
         .btn-main-action:active { transform: scale(0.95); }
 
-        .btn-style-start {
-            background: #ffffff; color: #000000;
-            box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2);
-        }
-        .btn-style-start:hover { filter: brightness(0.95); }
-
-        .btn-style-cashout {
-            background: #38bdf8; color: #000000;
-            box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35);
-        }
+        .btn-style-start { background: #ffffff; color: #000000; box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2); }
+        .btn-style-cashout { background: #38bdf8; color: #000000; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.35); }
 
         .btn-return {
-            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.07); color: rgba(255, 255, 255, 0.6);
-            padding: 11px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer;
+            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.07);
+            color: rgba(255, 255, 255, 0.6); padding: 11px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
-            transition: background 0.2s;
         }
         .btn-return:active { background: rgba(255, 255, 255, 0.08); color: #fff; }
 
         /* --- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ --- */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 65px;
-            background-color: rgba(6, 6, 10, 0.92);
-            border-top: 1px solid rgba(255, 255, 255, 0.06);
-            display: flex; justify-content: space-around; align-items: center;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background-color: rgba(6, 6, 10, 0.92);
+            border-top: 1px solid rgba(255, 255, 255, 0.06); display: flex; justify-content: space-around; align-items: center;
             z-index: 1000; backdrop-filter: blur(14px);
         }
 
         .nav-item {
-            background: none; border: none; color: rgba(255, 255, 255, 0.35);
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
-            flex: 1; height: 100%; cursor: pointer; transition: color 0.2s;
+            background: none; border: none; color: rgba(255, 255, 255, 0.35); display: flex; flex-direction: column;
+            align-items: center; justify-content: center; flex: 1; height: 100%; cursor: pointer; transition: color 0.2s;
         }
         .nav-item i { font-size: 17px; margin-bottom: 3px; }
         .nav-item span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
@@ -882,7 +626,7 @@
 </head>
 <body>
 
-    <!-- Вкладка КАЗИНО (ЛОББИ С НОВЫМИ КАРТОЧКАМИ) -->
+    <!-- Вкладка КАЗИНО (ЛОББИ В СТИЛЕ ПРИМЕРА) -->
     <div id="casino" class="page active">
         <div class="lobby-header">
             <div class="brand-logo">
@@ -897,101 +641,87 @@
                 <span id="userStarsLobby">100</span> ⭐
             </div>
         </div>
+
+        <!-- Переключатель вкладок -->
+        <div class="tabs-container">
+            <button class="tab-btn active" onclick="switchTab(this, 'active')">Активні 5</button>
+            <button class="tab-btn" onclick="switchTab(this, 'completed')">Завершені 12</button>
+        </div>
         
         <div class="games-container">
             <!-- РАКЕТА -->
-            <div class="game-banner banner-rocket" onclick="openRocketGame()">
-                <div class="banner-left">
-                    <div class="icon-orb orb-rocket">
-                        <i class="fa-solid fa-rocket"></i>
+            <div class="game-card-row" onclick="openRocketGame()">
+                <div class="game-card-left">
+                    <div class="game-icon-box icon-rocket-bg">
+                        <i class="fa-solid fa-rocket" style="transform: rotate(-45deg);"></i>
                     </div>
-                    <div class="game-info">
-                        <div class="game-title-row">
-                            <span class="game-title">РАКЕТА</span>
-                            <span class="game-tag tag-blue">HOT</span>
-                        </div>
-                        <div class="game-desc">Космический полет • Ставки на Stars</div>
+                    <div class="game-meta">
+                        <span class="game-category-tag"><i class="fa-solid fa-fire"></i> КРАШ ИГРА</span>
+                        <span class="game-name">РАКЕТА</span>
+                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 340 игроков</div>
                     </div>
                 </div>
-                <div class="banner-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
+                <button class="card-action-btn">Грати</button>
             </div>
 
             <!-- РУЛЕТКА -->
-            <div class="game-banner banner-roulette" onclick="openRouletteGame()">
-                <div class="banner-left">
-                    <div class="icon-orb orb-roulette">
+            <div class="game-card-row" onclick="openRouletteGame()">
+                <div class="game-card-left">
+                    <div class="game-icon-box icon-roulette-bg">
                         <i class="fa-solid fa-dharmachakra"></i>
                     </div>
-                    <div class="game-info">
-                        <div class="game-title-row">
-                            <span class="game-title">РУЛЕТКА</span>
-                            <span class="game-tag tag-red">x14</span>
-                        </div>
-                        <div class="game-desc">Колесо удачи • Множители x2 / x14</div>
+                    <div class="game-meta">
+                        <span class="game-category-tag"><i class="fa-solid fa-rotate"></i> КОЛЕСО УДАЧИ</span>
+                        <span class="game-name">РУЛЕТКА x14</span>
+                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 612 игроков</div>
                     </div>
                 </div>
-                <div class="banner-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
+                <button class="card-action-btn btn-stars">Крутити за 9 ⭐</button>
             </div>
 
             <!-- МИНЫ -->
-            <div class="game-banner banner-mines" onclick="openMinesGame()">
-                <div class="banner-left">
-                    <div class="icon-orb orb-mines">
+            <div class="game-card-row" onclick="openMinesGame()">
+                <div class="game-card-left">
+                    <div class="game-icon-box icon-mines-bg">
                         <i class="fa-solid fa-land-mine-on"></i>
                     </div>
-                    <div class="game-info">
-                        <div class="game-title-row">
-                            <span class="game-title">МИНЫ</span>
-                            <span class="game-tag tag-purple">TOP</span>
-                        </div>
-                        <div class="game-desc">Ищи звезды • Остерегайся мин</div>
+                    <div class="game-meta">
+                        <span class="game-category-tag"><i class="fa-solid fa-gem"></i> САПЕР</span>
+                        <span class="game-name">МИНЫ СТАРС</span>
+                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 489 игроков</div>
                     </div>
                 </div>
-                <div class="banner-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
+                <button class="card-action-btn">Грати</button>
             </div>
 
             <!-- ПЛИНКО -->
-            <div class="game-banner banner-plinko" onclick="openPlinkoGame()">
-                <div class="banner-left">
-                    <div class="icon-orb orb-plinko">
+            <div class="game-card-row" onclick="openPlinkoGame()">
+                <div class="game-card-left">
+                    <div class="game-icon-box icon-plinko-bg">
                         <i class="fa-solid fa-network-wired"></i>
                     </div>
-                    <div class="game-info">
-                        <div class="game-title-row">
-                            <span class="game-title">ПЛИНКО</span>
-                            <span class="game-tag tag-pink">x15</span>
-                        </div>
-                        <div class="game-desc">Падение шарика • Баланс и бонусы</div>
+                    <div class="game-meta">
+                        <span class="game-category-tag"><i class="fa-solid fa-bullseye"></i> АРКАДА</span>
+                        <span class="game-name">ПЛИНКО x15</span>
+                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 820 игроков</div>
                     </div>
                 </div>
-                <div class="banner-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
+                <button class="card-action-btn">Грати</button>
             </div>
 
             <!-- 3D ОРЕЛ И РЕШКА -->
-            <div class="game-banner banner-coinflip" onclick="openCoinflipGame()">
-                <div class="banner-left">
-                    <div class="icon-orb orb-coinflip">
+            <div class="game-card-row" onclick="openCoinflipGame()">
+                <div class="game-card-left">
+                    <div class="game-icon-box icon-coin-bg">
                         <i class="fa-solid fa-coins"></i>
                     </div>
-                    <div class="game-info">
-                        <div class="game-title-row">
-                            <span class="game-title">ОРЕЛ И РЕШКА</span>
-                            <span class="game-tag tag-gold">3D</span>
-                        </div>
-                        <div class="game-desc">Объемная 3D монета • Быстрый x2</div>
+                    <div class="game-meta">
+                        <span class="game-category-tag"><i class="fa-solid fa-bolt"></i> 50 / 50 ШАНС</span>
+                        <span class="game-name">ОРЕЛ И РЕШКА 3D</span>
+                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 254 игрока</div>
                     </div>
                 </div>
-                <div class="banner-arrow">
-                    <i class="fa-solid fa-chevron-right"></i>
-                </div>
+                <button class="card-action-btn btn-free">Безкоштовно ⭐</button>
             </div>
         </div>
     </div>
@@ -1401,6 +1131,12 @@
                     maxLabel.innerText = sliderMax;
                 }
             });
+        }
+
+        function switchTab(el, tabName) {
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            tg.HapticFeedback.impactOccurred('light');
         }
 
         function syncBetUI(type, val) {
