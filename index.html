@@ -3326,5 +3326,204 @@ function spinRouletteWheel() {
         <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
+   <!-- ЭКРАН ТАБЛИЦЫ ЛИДЕРОВ (LEADERBOARD) -->
+    <div id="leaderboard" class="page">
+        <div class="lobby-header">
+            <div class="brand-logo">
+                <div class="brand-badge"><i class="fa-solid fa-trophy" style="font-size: 14px; color: #050507;"></i></div>
+                <div class="brand-text">
+                    XORYS
+                    <span>РЕЙТИНГ ТОП-10</span>
+                </div>
+            </div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star"></i>
+                <span id="userStarsLeaderboard">100</span>
+            </div>
+        </div>
+
+        <h1 class="page-title">ТОП ИГРОКОВ</h1>
+
+        <div style="text-align: right; margin-bottom: 10px;">
+            <button onclick="openAdminPanel()" style="background: none; border: none; color: rgba(255,255,255,0.25); font-size: 10px; cursor: pointer; font-weight: 800;">⚙️ АДМИН-ПАНЕЛЬ</button>
+        </div>
+
+        <div class="profile-feature-card" style="padding: 12px;">
+            <div id="leaderboardList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+    </div>
+
+    <!-- СКРЫТЫЙ ЭКРАН АДМИН-ПАНЕЛИ -->
+    <div id="adminPanelPage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">АДМИН <span>ПАНЕЛЬ</span></div>
+            <button class="btn-return" style="width: auto; padding: 6px 12px; margin: 0;" onclick="switchPage('leaderboard', document.querySelectorAll('.nav-item')[2])">НАЗАД</button>
+        </div>
+
+        <div class="profile-feature-card" style="border-color: #ef4444;">
+            <div class="feature-card-header">
+                <div class="feature-title-wrap">
+                    <div class="feature-icon-box" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="feature-title-text">
+                        <h3>ЗАЯВКИ НА ВЫВОД</h3>
+                        <p>Ожидающие выплаты звёзд (от 100 ★)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminWithdrawList" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                <div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- ЗВУКОВЫЕ ЭФФЕКТЫ (WEB AUDIO API) --- */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            try {
+                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now); osc.stop(now + 0.05);
+                } else if (type === 'win') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now); osc.stop(now + 0.35);
+                } else if (type === 'error') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.setValueAtTime(120, now + 0.1);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.start(now); osc.stop(now + 0.2);
+                }
+            } catch (e) {}
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                playSound('click');
+            }
+        });
+
+        /* --- ТАБЛИЦА ЛИДЕРОВ --- */
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const mockLeaders = [
+                { rank: 1, name: 'crypto_king', stars: 4850, avatar: '👑' },
+                { rank: 2, name: 'xorys_god', stars: 3200, avatar: '🔥' },
+                { rank: 3, name: 'telegram_star', stars: 2150, avatar: '⭐' },
+                { rank: 4, name: 'lucky_spin', stars: 1420, avatar: '🍀' },
+                { rank: 5, name: 'bonus_hunter', stars: 980, avatar: '🎯' },
+                { rank: 6, name: typeof fullName !== 'undefined' ? fullName : 'Игрок', stars: typeof totalStarsWon !== 'undefined' ? Math.floor(totalStarsWon + 100) : 100, avatar: '👤' }
+            ];
+
+            mockLeaders.sort((a, b) => b.stars - a.stars);
+
+            mockLeaders.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'activity-row';
+                row.innerHTML = `
+                    <div class="activity-left">
+                        <span style="font-weight: 900; width: 22px; color: ${index === 0 ? '#fbbf24' : '#ffffff'}">#${index + 1}</span>
+                        <span>${item.avatar} ${item.name}</span>
+                    </div>
+                    <span class="activity-amount">${item.stars} ★</span>
+                `;
+                container.appendChild(row);
+            });
+
+            const lbBal = document.getElementById('userStarsLeaderboard');
+            if (lbBal && typeof starsBalance !== 'undefined') lbBal.innerText = formatStars(starsBalance);
+        }
+
+        // Интеграция в стандартную функцию switchPage без её перезаписи
+        const baseSwitchPage = window.switchPage;
+        window.switchPage = function(pageId, buttonElement) {
+            if (baseSwitchPage) baseSwitchPage(pageId, buttonElement);
+            if (pageId === 'leaderboard') {
+                renderLeaderboard();
+            }
+        };
+
+        /* --- АДМИН-ПАНЕЛЬ --- */
+        let adminWithdrawRequests = [];
+
+        function openAdminPanel() {
+            if (typeof switchPage === 'function') switchPage('adminPanelPage');
+            renderAdminRequests();
+        }
+
+        function renderAdminRequests() {
+            const container = document.getElementById('adminWithdrawList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (adminWithdrawRequests.length === 0) {
+                container.innerHTML = `<div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок на вывод</div>`;
+                return;
+            }
+
+            adminWithdrawRequests.forEach((req, idx) => {
+                const item = document.createElement('div');
+                item.className = 'activity-row';
+                item.style.flexDirection = 'column';
+                item.style.alignItems = 'flex-start';
+                item.style.gap = '6px';
+                item.innerHTML = `
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <span style="font-weight: 900; color: #38bdf8;">👤 ${req.username} (ID: ${req.user_id})</span>
+                        <span style="font-weight: 900; color: #ffffff;">${req.amount} ★</span>
+                    </div>
+                    <div style="display: flex; gap: 6px; width: 100%; margin-top: 4px;">
+                        <button class="card-action-btn" style="flex: 1; background: #22c55e;" onclick="approveWithdraw(${idx})">ОДОБРИТЬ</button>
+                        <button class="card-action-btn" style="flex: 1; background: #ef4444;" onclick="rejectWithdraw(${idx})">ОТМЕНИТЬ</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function approveWithdraw(idx) {
+            adminWithdrawRequests.splice(idx, 1);
+            renderAdminRequests();
+            if (typeof showToast === 'function') showToast('Заявка одобрена, выплачено!');
+            playSound('win');
+        }
+
+        function rejectWithdraw(idx) {
+            const req = adminWithdrawRequests[idx];
+            if (typeof starsBalance !== 'undefined') {
+                starsBalance = Number((starsBalance + req.amount).toFixed(1));
+                if (typeof updateBalanceUI === 'function') updateBalanceUI();
+            }
+            adminWithdrawRequests.splice(idx, 1);
+            renderAdminRequests();
+            if (typeof showToast === 'function') showToast('Заявка отклонена, звезды возвращены.');
+            playSound('error');
+        }
+    </script>
+                
 </body>
 </html>
