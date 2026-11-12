@@ -2972,109 +2972,66 @@
                 showToast(`Зачислено +${selectedCustomStars} звёзд!`);
                 triggerHaptic('notification', 'success');
             } else {
-                const data = marketCatalogData[activeMarketCategory];
-                const pkg = data.packages[selectedPackageIndex];
-                addProfileActivity(`Заявка TG Prem (${pkg.amount})`, pkg.price, 'fa-crown');
-                showToast(`Заявка на «TG Prem ${pkg.amount}» оформлена!`);
-                triggerHaptic('notification', 'success');
-            }
-
-            document.getElementById('marketModal').classList.remove('open');
-        }
-document.getElementById('marketModal').classList.remove('open');
+        const data = marketCatalogData[activeMarketCategory];
+        const pkg = data.packages[selectedPackageIndex];
+        addProfileActivity(`Заявка TG Prem (${pkg.amount})`, pkg.price, 'fa-crown');
+        showToast(`Заявка на «TG Prem ${pkg.amount}» оформлена!`);
+        triggerHaptic('notification', 'success');
     }
 
-    updateBalanceUI();
-    initDailyBonusState();
-    renderProfileActivity();
+    document.getElementById('marketModal').classList.remove('open');
+}
 
-    // === ВСТАВ СВОЙ КОД ВИВЕДЕННЯ ТУТ ===
-    const MIN_WITHDRAW = 100;
+updateBalanceUI();
+initDailyBonusState();
+renderProfileActivity();
 
-    function openWithdrawModal() {
-        if (typeof triggerHaptic === 'function') triggerHaptic('impact', 'medium');
-        document.getElementById('withdrawModal').classList.add('open');
+// --- КОД ВИВЕДЕННЯ ЗІРОК ---
+const MIN_WITHDRAW = 500;
+
+function openWithdrawModal() {
+    if (typeof triggerHaptic === 'function') triggerHaptic('impact', 'medium');
+    document.getElementById('withdrawModal').classList.add('open');
+}
+
+function closeWithdrawModal(event) {
+    if (event && event.target !== document.getElementById('withdrawModal')) return;
+    document.getElementById('withdrawModal').classList.remove('open');
+    if (typeof triggerHaptic === 'function') triggerHaptic('impact', 'light');
+}
+
+function confirmWithdraw() {
+    const input = document.getElementById('withdrawInput');
+    const amount = parseInt(input.value);
+
+    if (isNaN(amount) || amount < MIN_WITHDRAW) {
+        showToast(`Мінімум для виведення: ${MIN_WITHDRAW} ★`);
+        if (typeof triggerHaptic === 'function') triggerHaptic('notification', 'error');
+        return;
     }
 
-    function closeWithdrawModal(event) {
-        if (event && event.target !== document.getElementById('withdrawModal')) return;
-        document.getElementById('withdrawModal').classList.remove('open');
-        if (typeof triggerHaptic === 'function') triggerHaptic('impact', 'light');
+    if (typeof starsBalance !== 'undefined' && amount > starsBalance) {
+        showToast('Недостатньо зірок на балансі!');
+        if (typeof triggerHaptic === 'function') triggerHaptic('notification', 'error');
+        return;
     }
 
-    function confirmWithdraw() {
-        const input = document.getElementById('withdrawInput');
-        const amount = parseInt(input.value);
-
-        if (isNaN(amount) || amount < MIN_WITHDRAW) {
-            showToast(`Мінімум для виведення: ${MIN_WITHDRAW} ★`);
-            if (typeof triggerHaptic === 'function') triggerHaptic('notification', 'error');
-            return;
-        }
-
-        if (typeof starsBalance !== 'undefined' && amount > starsBalance) {
-            showToast('Недостатньо зірок на балансі!');
-            if (typeof triggerHaptic === 'function') triggerHaptic('notification', 'error');
-            return;
-        }
-
-        if (typeof starsBalance !== 'undefined') {
-            starsBalance = Number((starsBalance - amount).toFixed(1));
-            updateBalanceUI();
-        }
-        if (typeof addProfileActivity === 'function') {
-            addProfileActivity('Заявка на виведення', `-${amount} ★`, 'fa-arrow-up-from-bracket');
-        }
-        
-        document.getElementById('withdrawModal').classList.remove('open');
-        showToast(`Заявка на виведення ${amount} ★ надіслана!`);
-        if (typeof triggerHaptic === 'function') triggerHaptic('notification', 'success');
-
-        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
-            const data = JSON.stringify({ action: 'withdraw', amount: amount });
-            window.Telegram.WebApp.sendData(data);
-        }
-    }
-</script>
-
-<!-- HTML самого модального вікна виведення -->
-<div id="withdrawModal" class="market-modal-backdrop" onclick="closeWithdrawModal(event)">
-    <div class="market-modal-card" onclick="event.stopPropagation()">
-        <div class="modal-top-row">
-            <div class="modal-title-group">
-                <span>ВИПЛАТА ЗАСОБІВ</span>
-                <h2>ВИВЕСТИ ЗІРКИ</h2>
-            </div>
-            <button class="modal-close-btn" onclick="closeWithdrawModal()">
-                <i class="fa-solid fa-xmark"></i>
-            </button>
-        </div>
-
-        <p style="font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.45; margin-bottom: 12px; font-weight: 600;">
-            Мінімальна сума для виведення: <b style="color: #38bdf8;">500 ★</b>. Заявка буде надіслана адміністратору.
-        </p>
-
-        <div class="stars-custom-box">
-            <div class="stars-input-row">
-                <div>
-                    <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 800;">СУМА ДЛЯ ВИВЕДЕННЯ:</div>
-                    <div style="font-size: 12px; font-weight: 900; color: #ef4444; margin-top: 2px;">Ліміт від 500 ★</div>
-                </div>
-                <input type="number" id="withdrawInput" class="stars-manual-input" min="500" max="100000" value="500">
-            </div>
-        </div>
-
-        <button class="modal-buy-btn" onclick="confirmWithdraw()" style="background: #ef4444; color: #ffffff; box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);">
-            <i class="fa-solid fa-paper-plane" style="margin-right: 6px;"></i> НАДІСЛАТИ ЗАЯВКУ
-        </button>
-    </div>
-</div>
-
-</body>
-</html>
+    if (typeof starsBalance !== 'undefined') {
+        starsBalance = Number((starsBalance - amount).toFixed(1));
         updateBalanceUI();
-        initDailyBonusState();
-        renderProfileActivity();
-    </script>
-</body>
-</html>
+    }
+    if (typeof addProfileActivity === 'function') {
+        addProfileActivity('Заявка на виведення', `-${amount} ★`, 'fa-arrow-up-from-bracket');
+    }
+    
+    document.getElementById('withdrawModal').classList.remove('open');
+    showToast(`Заявка на виведення ${amount} ★ надіслана!`);
+    if (typeof triggerHaptic === 'function') triggerHaptic('notification', 'success');
+
+    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
+        const data = JSON.stringify({ action: 'withdraw', amount: amount });
+        window.Telegram.WebApp.sendData(data);
+    }
+}
+```[cite: 9]
+
