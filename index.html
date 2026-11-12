@@ -3067,31 +3067,58 @@ function spinRouletteWheel() {
         initRefRouletteState();
     </script>
 
-   <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
+  <!-- ЭКРАН РУЛЕТКИ FREE (8 СЕКТОРОВ + SVG ДИЗАЙН) -->
     <div id="refRoulettePage" class="page">
         <div class="rg-header">
             <div class="rg-logo">РУЛЕТКА <span>FREE</span></div>
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRefRoulette">100</span></div>
         </div>
 
-        <!-- Полноценное казино-колесо со секторами под призы (1, 2, 5, 10 звезд) -->
-        <div class="roulette-display" style="height: 240px; display: flex; align-items: center; justify-content: center; position: relative;">
-            <div class="wheel-wrapper" style="position: relative; width: 190px; height: 190px;">
-                <!-- Указатель сверху -->
-                <div class="wheel-pointer" style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 9px solid transparent; border-right: 9px solid transparent; border-bottom: 18px solid #38bdf8; z-index: 10; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.8));"></div>
-                
-                <!-- Колесо с секторами разных призов (1★, 2★, 5★, 10★) -->
-                <div class="roulette-circle" id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4s cubic-bezier(0.15, 0.85, 0.15, 1); box-shadow: 0 0 25px rgba(56, 189, 248, 0.4), inset 0 0 20px rgba(0,0,0,0.9); background: conic-gradient(#ef4444 0deg 90deg, #111216 90deg 180deg, #dc2626 180deg 270deg, #1f2937 270deg 360deg); border: 4px solid #38bdf8;">
-                    
-                    <!-- Значения секторов по кругу -->
-                    <span style="position: absolute; top: 15px; left: 50%; transform: translateX(-50%); font-size: 13px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000;">10★</span>
-                    <span style="position: absolute; right: 15px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000;">1★</span>
-                    <span style="position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); font-size: 13px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000;">5★</span>
-                    <span style="position: absolute; left: 15px; top: 50%; transform: translateY(-50%); font-size: 13px; font-weight: 900; color: #fff; text-shadow: 0 1px 2px #000;">2★</span>
+        <div class="roulette-display" style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="wheel-wrapper" style="position: relative; width: 210px; height: 210px;">
+                <!-- Единый аккуратный указатель сверху -->
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ffffff; z-index: 15; filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.9));"></div>
 
-                    <!-- Центральный хаб -->
-                    <div class="wheel-center-hub" id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: #050507; border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 900; color: #ffffff; box-shadow: 0 0 12px rgba(0,0,0,0.9);">0 ⭐️</div>
+                <!-- Вращающееся колесо на 8 секторов -->
+                <div id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4.2s cubic-bezier(0.12, 0.85, 0.15, 1); box-shadow: 0 0 30px rgba(56, 189, 248, 0.35), inset 0 0 15px rgba(0,0,0,0.8); border: 4px solid #38bdf8; overflow: hidden; background: #0b0c10;">
+                    <svg viewBox="0 0 200 200" style="width: 100%; height: 100%; display: block;">
+                        <!-- 8 секторов по 45 градусов (чередование красного и черного) -->
+                        <!-- Сектор 1: 10★ (0° - 45°) -->
+                        <path d="M100,100 L100,0 A100,100 0 0,1 170.71,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <!-- Сектор 2: 1★ (45° - 90°) -->
+                        <path d="M100,100 L170.71,29.29 A100,100 0 0,1 200,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <!-- Сектор 3: 5★ (90° - 135°) -->
+                        <path d="M100,100 L200,100 A100,100 0 0,1 170.71,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <!-- Сектор 4: 2★ (135° - 180°) -->
+                        <path d="M100,100 L170.71,170.71 A100,100 0 0,1 100,200 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <!-- Сектор 5: 10★ (180° - 225°) -->
+                        <path d="M100,100 L100,200 A100,100 0 0,1 29.29,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <!-- Сектор 6: 1★ (225° - 270°) -->
+                        <path d="M100,100 L29.29,170.71 A100,100 0 0,1 0,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <!-- Сектор 7: 5★ (270° - 315°) -->
+                        <path d="M100,100 L0,100 A100,100 0 0,1 29.29,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <!-- Сектор 8: 2★ (315° - 360°) -->
+                        <path d="M100,100 L29.29,29.29 A100,100 0 0,1 100,0 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+
+                        <!-- Внутреннее декоративное кольцо -->
+                        <circle cx="100" cy="100" r="95" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+
+                        <!-- Текст строго по центру каждого сектора (повернут под угол сектора) -->
+                        <g font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">
+                            <text x="100" y="34" transform="rotate(22.5 100 100)">10★</text>
+                            <text x="100" y="34" transform="rotate(67.5 100 100)">1★</text>
+                            <text x="100" y="34" transform="rotate(112.5 100 100)">5★</text>
+                            <text x="100" y="34" transform="rotate(157.5 100 100)">2★</text>
+                            <text x="100" y="34" transform="rotate(202.5 100 100)">10★</text>
+                            <text x="100" y="34" transform="rotate(247.5 100 100)">1★</text>
+                            <text x="100" y="34" transform="rotate(292.5 100 100)">5★</text>
+                            <text x="100" y="34" transform="rotate(337.5 100 100)">2★</text>
+                        </g>
+                    </svg>
                 </div>
+
+                <!-- Неподвижный центральный хаб -->
+                <div id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; background: radial-gradient(circle, #181a20 0%, #050507 100%); border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; box-shadow: 0 0 18px rgba(0,0,0,0.95), inset 0 0 8px rgba(56,189,248,0.4); z-index: 10;">0 ⭐️</div>
             </div>
         </div>
 
@@ -3101,7 +3128,7 @@ function spinRouletteWheel() {
             </div>
             
             <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
-                КРУТИТЬ ЗА 0 ⭐️
+                КРУТИТЬ ЗА 0 ⭐️ (0/3)
             </button>
 
             <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
