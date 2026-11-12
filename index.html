@@ -2102,6 +2102,134 @@
         const tg = window.Telegram?.WebApp;
         if (tg && tg.ready) tg.ready();
 
+
+
+         /* --- МАРКЕТ --- */
+        const marketCatalogData = {
+            'ЗВЁЗДЫ': {
+                sub: 'TELEGRAM STARS',
+                packages: []
+            },
+            'TG PREM': {
+                sub: 'ПОДПИСКА TELEGRAM PREMIUM',
+                packages: [
+                    { amount: '3 месяца', price: '1 150 ★' },
+                    { amount: '6 месяцев', price: '1 950 ★' },
+                    { amount: '12 месяцев', price: '3 400 ★' }
+                ]
+            }
+        };
+
+        const countriesList = [
+            { name: 'Россия', code: '+7', code2: 'ru', stars: 199, usd: '$2,50' },
+            { name: 'Казахстан', code: '+77', code2: 'kz', stars: 199, usd: '$2,50' },
+            { name: 'Украина', code: '+380', code2: 'ua', stars: 235, usd: '$4,00' },
+            { name: 'Бангладеш', code: '+880', code2: 'bd', stars: 120, usd: '$1,99' },
+            { name: 'Иран', code: '+97', code2: 'ir', stars: 75, usd: '$0,99' },
+            { name: 'США', code: '+1', code2: 'us', stars: 50, usd: '$0,99' },
+            { name: 'Колумбия', code: '+56', code2: 'co', stars: 50, usd: '$0,99' },
+            { name: 'Бразилия', code: '+55', code2: 'br', stars: 50, usd: '$0,99' },
+            { name: 'Канада', code: '+1', code2: 'ca', stars: 50, usd: '$0,99' },
+            { name: 'Индия', code: '+91', code2: 'in', stars: 50, usd: '$0,99' },
+            { name: 'Афганистан', code: '+93', code2: 'af', stars: 222, usd: '$3,80' }
+        ];
+
+        let activeMarketCategory = 'ЗВЁЗДЫ';
+        let selectedPackageIndex = 0;
+        let selectedCustomStars = 100;
+
+        function openMarketCategory(categoryName) {
+            triggerHaptic('impact', 'medium');
+            if (categoryName === 'USDT') {
+                showToast('Раздел USDT находится в разработке!');
+                return;
+            }
+            if (categoryName === 'НОМЕРА') {
+                document.getElementById('marketMainView').style.display = 'none';
+                document.getElementById('marketDetailView').style.display = 'block';
+                renderCountriesList();
+            } else {
+                openMarketModal(categoryName);
+            }
+        }
+
+        function closeMarketDetail() {
+            triggerHaptic('impact', 'light');
+            document.getElementById('marketDetailView').style.display = 'none';
+            document.getElementById('marketMainView').style.display = 'block';
+        }
+
+        function renderCountriesList() {
+            const container = document.getElementById('countriesListContainer');
+            if (!container) return;
+            container.innerHTML = '';
+
+            countriesList.forEach((item) => {
+                const row = document.createElement('div');
+                row.className = 'game-card-row';
+                row.style.padding = '12px 14px';
+                row.onclick = () => buyCountryItem(item);
+                row.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px; z-index: 2;">
+                        <img src="https://flagcdn.com/w80/${item.code2}.png" alt="${item.name}" style="width: 38px; height: 26px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);" />
+                        <div style="display: flex; flex-direction: column; gap: 2px;">
+                            <span style="font-size: 15px; font-weight: 900; color: #ffffff;">${item.name} ${item.code}</span>
+                            <span style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);">В наличии • Гарантия</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; z-index: 2;">
+                        <div style="text-align: right;">
+                            <div style="font-size: 13px; font-weight: 900; color: #ffffff;">${item.stars} ★</div>
+                            <div style="font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.45);">${item.usd}</div>
+                        </div>
+                        <button class="card-action-btn" style="padding: 7px 12px; font-size: 10px;">КУПИТЬ</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function buyCountryItem(item) {
+            if (starsBalance < item.stars) {
+                showToast(`Недостаточно звезд! Нужно ${item.stars} ★`);
+                triggerHaptic('notification', 'error');
+                return;
+            }
+
+            starsBalance = Number((starsBalance - item.stars).toFixed(1));
+            updateBalanceUI();
+            addProfileActivity(`Покупка номера ${item.name} ${item.code}`, `-${item.stars} ★`, 'fa-sim-card');
+            showToast(`Успешно куплен номер (${item.name} ${item.code})!`);
+            triggerHaptic('notification', 'success');
+        }
+
+        function openMarketModal(categoryName) {
+            const data = marketCatalogData[categoryName];
+            if (!data) return;
+
+            activeMarketCategory = categoryName;
+            selectedPackageIndex = 0;
+
+            document.getElementById('modalCategorySub').innerText = data.sub;
+            document.getElementById('modalCategoryTitle').innerText = categoryName;
+
+            const starsBox = document.getElementById('starsCustomConfig');
+            const pkgGrid = document.getElementById('modalPackagesGrid');
+
+            if (categoryName === 'ЗВЁЗДЫ') {
+                starsBox.style.display = 'block';
+                pkgGrid.style.display = 'none';
+                selectedCustomStars = 100;
+                syncStarsControls(100);
+            } else {
+                starsBox.style.display = 'none';
+                pkgGrid.style.display = 'grid';
+                renderMarketPackages();
+            }
+
+            document.getElementById('marketModal').classList.add('open');
+            triggerHaptic('impact', 'medium');
+        }
         function triggerHaptic(type, style) {
             try {
                 if (!tg || !tg.HapticFeedback) return;
