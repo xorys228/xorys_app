@@ -2774,16 +2774,22 @@ function spinRouletteWheel() {
             }
         }
 
-       function clickMineTile(index) {
+     function clickMineTile(index) {
     if (!isPlayingMines) return;
     const tiles = document.querySelectorAll('.mine-tile');
     const tile = tiles[index];
     if (tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
 
     if (mineLocations.includes(index)) {
-        tile.classList.add('revealed-bomb'); tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+        tile.classList.add('revealed-bomb'); 
+        tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
         triggerHaptic('notification', 'error');
-        tiles.forEach((t, idx) => { if (mineLocations.includes(idx)) { t.classList.add('revealed-bomb'); t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; } });
+        tiles.forEach((t, idx) => { 
+            if (mineLocations.includes(idx)) { 
+                t.classList.add('revealed-bomb'); 
+                t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
+            } 
+        });
         endMinesGame(false);
     } else {
         // Скрытая проверка RTP для защиты казино при серии успешных шагов
@@ -2791,14 +2797,21 @@ function spinRouletteWheel() {
             tile.classList.add('revealed-bomb');
             tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
             triggerHaptic('notification', 'error');
-            tiles.forEach((t, idx) => { if (mineLocations.includes(idx)) { t.classList.add('revealed-bomb'); t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; } });
+            tiles.forEach((t, idx) => { 
+                if (mineLocations.includes(idx)) { 
+                    t.classList.add('revealed-bomb'); 
+                    t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
+                } 
+            });
             endMinesGame(false);
-        } else {
-            tile.classList.add('revealed-star');
-            tile.innerHTML = '<i class="fa-solid fa-star"></i>';
-            openedCount++;
+            return; // Прерывает выполнение, чтобы не открывать звезду поверх проигрыша
         }
+
+        tile.classList.add('revealed-star');
+        tile.innerHTML = '<i class="fa-solid fa-star"></i>';
+        openedCount++;
     }
+}
 
         function endMinesGame(isWin) {
             isPlayingMines = false;
