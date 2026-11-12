@@ -2774,7 +2774,7 @@ function spinRouletteWheel() {
             }
         }
 
-        function clickMineTile(index) {
+       function clickMineTile(index) {
     if (!isPlayingMines) return;
     const tiles = document.querySelectorAll('.mine-tile');
     const tile = tiles[index];
@@ -2793,12 +2793,11 @@ function spinRouletteWheel() {
             triggerHaptic('notification', 'error');
             tiles.forEach((t, idx) => { if (mineLocations.includes(idx)) { t.classList.add('revealed-bomb'); t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; } });
             endMinesGame(false);
-            return;
+        } else {
+            tile.classList.add('revealed-star');
+            tile.innerHTML = '<i class="fa-solid fa-star"></i>';
+            openedCount++;
         }
-
-        tile.classList.add('revealed-star');
-        tile.innerHTML = '<i class="fa-solid fa-star"></i>';
-        openedCount++;
     }
 
         function endMinesGame(isWin) {
