@@ -2103,8 +2103,264 @@
     </nav>
 
 
+  
+    <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
+    <div id="refRoulettePage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">РУЛЕТКА <span>FREE</span></div>
+            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRefRoulette">100</span></div>
+        </div>
 
-         /* --- МАРКЕТ --- */
+        <div class="roulette-display" style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="wheel-wrapper" style="position: relative; width: 210px; height: 210px;">
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ffffff; z-index: 15; filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.9));"></div>
+
+                <div id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4.2s cubic-bezier(0.12, 0.85, 0.15, 1); box-shadow: 0 0 30px rgba(56, 189, 248, 0.35), inset 0 0 15px rgba(0,0,0,0.8); border: 4px solid #38bdf8; overflow: hidden; background: #0b0c10;">
+                    <svg viewBox="0 0 200 200" style="width: 100%; height: 100%; display: block;">
+                        <path d="M100,100 L100,0 A100,100 0 0,1 170.71,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L170.71,29.29 A100,100 0 0,1 200,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L200,100 A100,100 0 0,1 170.71,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L170.71,170.71 A100,100 0 0,1 100,200 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L100,200 A100,100 0 0,1 29.29,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L29.29,170.71 A100,100 0 0,1 0,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L0,100 A100,100 0 0,1 29.29,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L29.29,29.29 A100,100 0 0,1 100,0 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
+
+                        <circle cx="100" cy="100" r="95" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+
+                        <g font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">
+                            <text x="100" y="34" transform="rotate(22.5 100 100)">10★</text>
+                            <text x="100" y="34" transform="rotate(67.5 100 100)">1★</text>
+                            <text x="100" y="34" transform="rotate(112.5 100 100)">5★</text>
+                            <text x="100" y="34" transform="rotate(157.5 100 100)">2★</text>
+                            <text x="100" y="34" transform="rotate(202.5 100 100)">10★</text>
+                            <text x="100" y="34" transform="rotate(247.5 100 100)">1★</text>
+                            <text x="100" y="34" transform="rotate(292.5 100 100)">5★</text>
+                            <text x="100" y="34" transform="rotate(337.5 100 100)">2★</text>
+                        </g>
+                    </svg>
+                </div>
+
+                <div id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; background: radial-gradient(circle, #181a20 0%, #050507 100%); border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; box-shadow: 0 0 18px rgba(0,0,0,0.95), inset 0 0 8px rgba(56,189,248,0.4); z-index: 10;">0 ⭐️</div>
+            </div>
+        </div>
+
+        <div class="betting-box" style="text-align: center;">
+            <div class="betting-info" style="justify-content: center; margin-bottom: 12px;">
+                <span id="refSpinStatusTest" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
+            </div>
+            
+            <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
+                КРУТИТЬ ЗА 0 ⭐️ (0/3)
+            </button>
+
+            <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
+                <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (0/3)
+            </button>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
+    </div>
+
+   <!-- ЭКРАН ТАБЛИЦЫ ЛИДЕРОВ (LEADERBOARD) -->
+    <div id="leaderboard" class="page">
+        <div class="lobby-header">
+            <div class="brand-logo">
+                <div class="brand-badge"><i class="fa-solid fa-trophy" style="font-size: 14px; color: #050507;"></i></div>
+                <div class="brand-text">
+                    XORYS
+                    <span>РЕЙТИНГ ТОП-10</span>
+                </div>
+            </div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star"></i>
+                <span id="userStarsLeaderboard">100</span>
+            </div>
+        </div>
+
+        <h1 class="page-title">ТОП ИГРОКОВ</h1>
+
+        <div style="text-align: right; margin-bottom: 10px;">
+            <button onclick="openAdminPanel()" style="background: none; border: none; color: rgba(255,255,255,0.25); font-size: 10px; cursor: pointer; font-weight: 800;">⚙️ АДМИН-ПАНЕЛЬ</button>
+        </div>
+
+        <div class="profile-feature-card" style="padding: 12px;">
+            <div id="leaderboardList" style="display: flex; flex-direction: column; gap: 8px;"></div>
+        </div>
+    </div>
+
+    <!-- СКРЫТЫЙ ЭКРАН АДМИН-ПАНЕЛИ -->
+    <div id="adminPanelPage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">АДМИН <span>ПАНЕЛЬ</span></div>
+            <button class="btn-return" style="width: auto; padding: 6px 12px; margin: 0;" onclick="switchPage('leaderboard', document.querySelectorAll('.nav-item')[2])">НАЗАД</button>
+        </div>
+
+        <div class="profile-feature-card" style="border-color: #ef4444;">
+            <div class="feature-card-header">
+                <div class="feature-title-wrap">
+                    <div class="feature-icon-box" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <div class="feature-title-text">
+                        <h3>ЗАЯВКИ НА ВЫВОД</h3>
+                        <p>Ожидающие выплаты звёзд (от 100 ★)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="adminWithdrawList" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
+                <div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* --- ЗВУКОВЫЕ ЭФФЕКТЫ (WEB AUDIO API) --- */
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+
+        function playSound(type) {
+            try {
+                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                const now = audioCtx.currentTime;
+
+                if (type === 'click') {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(400, now);
+                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
+                    gain.gain.setValueAtTime(0.08, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+                    osc.start(now); osc.stop(now + 0.05);
+                } else if (type === 'win') {
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.08);
+                    osc.frequency.setValueAtTime(783.99, now + 0.16);
+                    gain.gain.setValueAtTime(0.12, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+                    osc.start(now); osc.stop(now + 0.35);
+                } else if (type === 'error') {
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(180, now);
+                    osc.frequency.setValueAtTime(120, now + 0.1);
+                    gain.gain.setValueAtTime(0.1, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                    osc.start(now); osc.stop(now + 0.2);
+                }
+            } catch (e) {}
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
+                playSound('click');
+            }
+        });
+
+        /* --- ТАБЛИЦА ЛИДЕРОВ --- */
+        function renderLeaderboard() {
+            const container = document.getElementById('leaderboardList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            const mockLeaders = [
+                { rank: 1, name: 'crypto_king', stars: 4850, avatar: '👑' },
+                { rank: 2, name: 'xorys_god', stars: 3200, avatar: '🔥' },
+                { rank: 3, name: 'telegram_star', stars: 2150, avatar: '⭐' },
+                { rank: 4, name: 'lucky_spin', stars: 1420, avatar: '🍀' },
+                { rank: 5, name: 'bonus_hunter', stars: 980, avatar: '🎯' },
+                { rank: 6, name: typeof fullName !== 'undefined' ? fullName : 'Игрок', stars: typeof totalStarsWon !== 'undefined' ? Math.floor(totalStarsWon + 100) : 100, avatar: '👤' }
+            ];
+
+            mockLeaders.sort((a, b) => b.stars - a.stars);
+
+            mockLeaders.forEach((item, index) => {
+                const row = document.createElement('div');
+                row.className = 'activity-row';
+                row.innerHTML = `
+                    <div class="activity-left">
+                        <span style="font-weight: 900; width: 22px; color: ${index === 0 ? '#fbbf24' : '#ffffff'}">#${index + 1}</span>
+                        <span>${item.avatar} ${item.name}</span>
+                    </div>
+                    <span class="activity-amount">${item.stars} ★</span>
+                `;
+                container.appendChild(row);
+            });
+
+            const lbBal = document.getElementById('userStarsLeaderboard');
+            if (lbBal && typeof starsBalance !== 'undefined') lbBal.innerText = formatStars(starsBalance);
+        }
+
+        // Интеграция в стандартную функцию switchPage без её перезаписи
+        const baseSwitchPage = window.switchPage;
+        window.switchPage = function(pageId, buttonElement) {
+            if (baseSwitchPage) baseSwitchPage(pageId, buttonElement);
+            if (pageId === 'leaderboard') {
+                renderLeaderboard();
+            }
+        };
+
+        /* --- АДМИН-ПАНЕЛЬ --- */
+        let adminWithdrawRequests = [];
+
+        function openAdminPanel() {
+            if (typeof switchPage === 'function') switchPage('adminPanelPage');
+            renderAdminRequests();
+        }
+
+        function renderAdminRequests() {
+            const container = document.getElementById('adminWithdrawList');
+            if (!container) return;
+            container.innerHTML = '';
+
+            if (adminWithdrawRequests.length === 0) {
+                container.innerHTML = `<div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок на вывод</div>`;
+                return;
+            }
+
+            adminWithdrawRequests.forEach((req, idx) => {
+                const item = document.createElement('div');
+                item.className = 'activity-row';
+                item.style.flexDirection = 'column';
+                item.style.alignItems = 'flex-start';
+                item.style.gap = '6px';
+                item.innerHTML = `
+                    <div style="display: flex; width: 100%; justify-content: space-between;">
+                        <span style="font-weight: 900; color: #38bdf8;">👤 ${req.username} (ID: ${req.user_id})</span>
+                        <span style="font-weight: 900; color: #ffffff;">${req.amount} ★</span>
+                    </div>
+                    <div style="display: flex; gap: 6px; width: 100%; margin-top: 4px;">
+                        <button class="card-action-btn" style="flex: 1; background: #22c55e;" onclick="approveWithdraw(${idx})">ОДОБРИТЬ</button>
+                        <button class="card-action-btn" style="flex: 1; background: #ef4444;" onclick="rejectWithdraw(${idx})">ОТМЕНИТЬ</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        function approveWithdraw(idx) {
+            adminWithdrawRequests.splice(idx, 1);
+            renderAdminRequests();
+            if (typeof showToast === 'function') showToast('Заявка одобрена, выплачено!');
+            playSound('win');
+        }
+
+        function rejectWithdraw(idx) {
+            const req = adminWithdrawRequests[idx];
+            if (typeof starsBalance !== 'undefined') {
+                starsBalance = Number((starsBalance + req.amount).toFixed(1));
+                if (typeof updateBalanceUI === 'function') updateBalanceUI();
+            }
+            adminWithdrawRequests.splice(idx, 1);
+            renderAdminRequests();
+            if (typeof showToast === 'function') showToast('Заявка отклонена, звезды возвращены.');
+            playSound('error');
+        }
+
+     /* --- МАРКЕТ --- */
         const marketCatalogData = {
             'ЗВЁЗДЫ': {
                 sub: 'TELEGRAM STARS',
@@ -3193,337 +3449,9 @@ function spinRouletteWheel() {
         }
 
         initRefRouletteState();
+        
     </script>
-
-  <!-- ЭКРАН РУЛЕТКИ FREE (8 СЕКТОРОВ + SVG ДИЗАЙН) -->
-    <div id="refRoulettePage" class="page">
-        <div class="rg-header">
-            <div class="rg-logo">РУЛЕТКА <span>FREE</span></div>
-            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRefRoulette">100</span></div>
-        </div>
-
-        <div class="roulette-display" style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
-            <div class="wheel-wrapper" style="position: relative; width: 210px; height: 210px;">
-                <!-- Единый аккуратный указатель сверху -->
-                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ffffff; z-index: 15; filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.9));"></div>
-
-                <!-- Вращающееся колесо на 8 секторов -->
-                <div id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4.2s cubic-bezier(0.12, 0.85, 0.15, 1); box-shadow: 0 0 30px rgba(56, 189, 248, 0.35), inset 0 0 15px rgba(0,0,0,0.8); border: 4px solid #38bdf8; overflow: hidden; background: #0b0c10;">
-                    <svg viewBox="0 0 200 200" style="width: 100%; height: 100%; display: block;">
-                        <!-- 8 секторов по 45 градусов (чередование красного и черного) -->
-                        <!-- Сектор 1: 10★ (0° - 45°) -->
-                        <path d="M100,100 L100,0 A100,100 0 0,1 170.71,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <!-- Сектор 2: 1★ (45° - 90°) -->
-                        <path d="M100,100 L170.71,29.29 A100,100 0 0,1 200,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <!-- Сектор 3: 5★ (90° - 135°) -->
-                        <path d="M100,100 L200,100 A100,100 0 0,1 170.71,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <!-- Сектор 4: 2★ (135° - 180°) -->
-                        <path d="M100,100 L170.71,170.71 A100,100 0 0,1 100,200 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <!-- Сектор 5: 10★ (180° - 225°) -->
-                        <path d="M100,100 L100,200 A100,100 0 0,1 29.29,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <!-- Сектор 6: 1★ (225° - 270°) -->
-                        <path d="M100,100 L29.29,170.71 A100,100 0 0,1 0,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <!-- Сектор 7: 5★ (270° - 315°) -->
-                        <path d="M100,100 L0,100 A100,100 0 0,1 29.29,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <!-- Сектор 8: 2★ (315° - 360°) -->
-                        <path d="M100,100 L29.29,29.29 A100,100 0 0,1 100,0 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-
-                        <!-- Внутреннее декоративное кольцо -->
-                        <circle cx="100" cy="100" r="95" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
-
-                        <!-- Текст строго по центру каждого сектора (повернут под угол сектора) -->
-                        <g font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">
-                            <text x="100" y="34" transform="rotate(22.5 100 100)">10★</text>
-                            <text x="100" y="34" transform="rotate(67.5 100 100)">1★</text>
-                            <text x="100" y="34" transform="rotate(112.5 100 100)">5★</text>
-                            <text x="100" y="34" transform="rotate(157.5 100 100)">2★</text>
-                            <text x="100" y="34" transform="rotate(202.5 100 100)">10★</text>
-                            <text x="100" y="34" transform="rotate(247.5 100 100)">1★</text>
-                            <text x="100" y="34" transform="rotate(292.5 100 100)">5★</text>
-                            <text x="100" y="34" transform="rotate(337.5 100 100)">2★</text>
-                        </g>
-                    </svg>
-                </div>
-
-                <!-- Неподвижный центральный хаб -->
-                <div id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; background: radial-gradient(circle, #181a20 0%, #050507 100%); border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; box-shadow: 0 0 18px rgba(0,0,0,0.95), inset 0 0 8px rgba(56,189,248,0.4); z-index: 10;">0 ⭐️</div>
-            </div>
-        </div>
-
-        <div class="betting-box" style="text-align: center;">
-            <div class="betting-info" style="justify-content: center; margin-bottom: 12px;">
-                <span id="refSpinStatusText" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
-            </div>
-            
-            <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
-                КРУТИТЬ ЗА 0 ⭐️ (0/3)
-            </button>
-
-            <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
-                <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (0/3)
-            </button>
-        </div>
-
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
-    </div>
-
-
-    <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
-    <div id="refRoulettePage" class="page">
-        <div class="rg-header">
-            <div class="rg-logo">РУЛЕТКА <span>FREE</span></div>
-            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRefRoulette">100</span></div>
-        </div>
-
-        <div class="roulette-display" style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
-            <div class="wheel-wrapper" style="position: relative; width: 210px; height: 210px;">
-                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ffffff; z-index: 15; filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.9));"></div>
-
-                <div id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4.2s cubic-bezier(0.12, 0.85, 0.15, 1); box-shadow: 0 0 30px rgba(56, 189, 248, 0.35), inset 0 0 15px rgba(0,0,0,0.8); border: 4px solid #38bdf8; overflow: hidden; background: #0b0c10;">
-                    <svg viewBox="0 0 200 200" style="width: 100%; height: 100%; display: block;">
-                        <path d="M100,100 L100,0 A100,100 0 0,1 170.71,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L170.71,29.29 A100,100 0 0,1 200,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L200,100 A100,100 0 0,1 170.71,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L170.71,170.71 A100,100 0 0,1 100,200 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L100,200 A100,100 0 0,1 29.29,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L29.29,170.71 A100,100 0 0,1 0,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L0,100 A100,100 0 0,1 29.29,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L29.29,29.29 A100,100 0 0,1 100,0 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-
-                        <circle cx="100" cy="100" r="95" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
-
-                        <g font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">
-                            <text x="100" y="34" transform="rotate(22.5 100 100)">10★</text>
-                            <text x="100" y="34" transform="rotate(67.5 100 100)">1★</text>
-                            <text x="100" y="34" transform="rotate(112.5 100 100)">5★</text>
-                            <text x="100" y="34" transform="rotate(157.5 100 100)">2★</text>
-                            <text x="100" y="34" transform="rotate(202.5 100 100)">10★</text>
-                            <text x="100" y="34" transform="rotate(247.5 100 100)">1★</text>
-                            <text x="100" y="34" transform="rotate(292.5 100 100)">5★</text>
-                            <text x="100" y="34" transform="rotate(337.5 100 100)">2★</text>
-                        </g>
-                    </svg>
-                </div>
-
-                <div id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; background: radial-gradient(circle, #181a20 0%, #050507 100%); border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; box-shadow: 0 0 18px rgba(0,0,0,0.95), inset 0 0 8px rgba(56,189,248,0.4); z-index: 10;">0 ⭐️</div>
-            </div>
-        </div>
-
-        <div class="betting-box" style="text-align: center;">
-            <div class="betting-info" style="justify-content: center; margin-bottom: 12px;">
-                <span id="refSpinStatusTest" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
-            </div>
-            
-            <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
-                КРУТИТЬ ЗА 0 ⭐️ (0/3)
-            </button>
-
-            <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
-                <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (0/3)
-            </button>
-        </div>
-
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
-    </div>
-
-   <!-- ЭКРАН ТАБЛИЦЫ ЛИДЕРОВ (LEADERBOARD) -->
-    <div id="leaderboard" class="page">
-        <div class="lobby-header">
-            <div class="brand-logo">
-                <div class="brand-badge"><i class="fa-solid fa-trophy" style="font-size: 14px; color: #050507;"></i></div>
-                <div class="brand-text">
-                    XORYS
-                    <span>РЕЙТИНГ ТОП-10</span>
-                </div>
-            </div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star"></i>
-                <span id="userStarsLeaderboard">100</span>
-            </div>
-        </div>
-
-        <h1 class="page-title">ТОП ИГРОКОВ</h1>
-
-        <div style="text-align: right; margin-bottom: 10px;">
-            <button onclick="openAdminPanel()" style="background: none; border: none; color: rgba(255,255,255,0.25); font-size: 10px; cursor: pointer; font-weight: 800;">⚙️ АДМИН-ПАНЕЛЬ</button>
-        </div>
-
-        <div class="profile-feature-card" style="padding: 12px;">
-            <div id="leaderboardList" style="display: flex; flex-direction: column; gap: 8px;"></div>
-        </div>
-    </div>
-
-    <!-- СКРЫТЫЙ ЭКРАН АДМИН-ПАНЕЛИ -->
-    <div id="adminPanelPage" class="page">
-        <div class="rg-header">
-            <div class="rg-logo">АДМИН <span>ПАНЕЛЬ</span></div>
-            <button class="btn-return" style="width: auto; padding: 6px 12px; margin: 0;" onclick="switchPage('leaderboard', document.querySelectorAll('.nav-item')[2])">НАЗАД</button>
-        </div>
-
-        <div class="profile-feature-card" style="border-color: #ef4444;">
-            <div class="feature-card-header">
-                <div class="feature-title-wrap">
-                    <div class="feature-icon-box" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
-                        <i class="fa-solid fa-shield-halved"></i>
-                    </div>
-                    <div class="feature-title-text">
-                        <h3>ЗАЯВКИ НА ВЫВОД</h3>
-                        <p>Ожидающие выплаты звёзд (от 100 ★)</p>
-                    </div>
-                </div>
-            </div>
-
-            <div id="adminWithdrawList" style="display: flex; flex-direction: column; gap: 8px; margin-top: 10px;">
-                <div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок</div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        /* --- ЗВУКОВЫЕ ЭФФЕКТЫ (WEB AUDIO API) --- */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-        function playSound(type) {
-            try {
-                if (audioCtx.state === 'suspended') { audioCtx.resume(); }
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                const now = audioCtx.currentTime;
-
-                if (type === 'click') {
-                    osc.type = 'sine';
-                    osc.frequency.setValueAtTime(400, now);
-                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
-                    gain.gain.setValueAtTime(0.08, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
-                    osc.start(now); osc.stop(now + 0.05);
-                } else if (type === 'win') {
-                    osc.type = 'triangle';
-                    osc.frequency.setValueAtTime(523.25, now);
-                    osc.frequency.setValueAtTime(659.25, now + 0.08);
-                    osc.frequency.setValueAtTime(783.99, now + 0.16);
-                    gain.gain.setValueAtTime(0.12, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
-                    osc.start(now); osc.stop(now + 0.35);
-                } else if (type === 'error') {
-                    osc.type = 'sawtooth';
-                    osc.frequency.setValueAtTime(180, now);
-                    osc.frequency.setValueAtTime(120, now + 0.1);
-                    gain.gain.setValueAtTime(0.1, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
-                    osc.start(now); osc.stop(now + 0.2);
-                }
-            } catch (e) {}
-        }
-
-        document.addEventListener('click', (e) => {
-            if (e.target.tagName === 'BUTTON' || e.target.closest('button')) {
-                playSound('click');
-            }
-        });
-
-        /* --- ТАБЛИЦА ЛИДЕРОВ --- */
-        function renderLeaderboard() {
-            const container = document.getElementById('leaderboardList');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const mockLeaders = [
-                { rank: 1, name: 'crypto_king', stars: 4850, avatar: '👑' },
-                { rank: 2, name: 'xorys_god', stars: 3200, avatar: '🔥' },
-                { rank: 3, name: 'telegram_star', stars: 2150, avatar: '⭐' },
-                { rank: 4, name: 'lucky_spin', stars: 1420, avatar: '🍀' },
-                { rank: 5, name: 'bonus_hunter', stars: 980, avatar: '🎯' },
-                { rank: 6, name: typeof fullName !== 'undefined' ? fullName : 'Игрок', stars: typeof totalStarsWon !== 'undefined' ? Math.floor(totalStarsWon + 100) : 100, avatar: '👤' }
-            ];
-
-            mockLeaders.sort((a, b) => b.stars - a.stars);
-
-            mockLeaders.forEach((item, index) => {
-                const row = document.createElement('div');
-                row.className = 'activity-row';
-                row.innerHTML = `
-                    <div class="activity-left">
-                        <span style="font-weight: 900; width: 22px; color: ${index === 0 ? '#fbbf24' : '#ffffff'}">#${index + 1}</span>
-                        <span>${item.avatar} ${item.name}</span>
-                    </div>
-                    <span class="activity-amount">${item.stars} ★</span>
-                `;
-                container.appendChild(row);
-            });
-
-            const lbBal = document.getElementById('userStarsLeaderboard');
-            if (lbBal && typeof starsBalance !== 'undefined') lbBal.innerText = formatStars(starsBalance);
-        }
-
-        // Интеграция в стандартную функцию switchPage без её перезаписи
-        const baseSwitchPage = window.switchPage;
-        window.switchPage = function(pageId, buttonElement) {
-            if (baseSwitchPage) baseSwitchPage(pageId, buttonElement);
-            if (pageId === 'leaderboard') {
-                renderLeaderboard();
-            }
-        };
-
-        /* --- АДМИН-ПАНЕЛЬ --- */
-        let adminWithdrawRequests = [];
-
-        function openAdminPanel() {
-            if (typeof switchPage === 'function') switchPage('adminPanelPage');
-            renderAdminRequests();
-        }
-
-        function renderAdminRequests() {
-            const container = document.getElementById('adminWithdrawList');
-            if (!container) return;
-            container.innerHTML = '';
-
-            if (adminWithdrawRequests.length === 0) {
-                container.innerHTML = `<div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок на вывод</div>`;
-                return;
-            }
-
-            adminWithdrawRequests.forEach((req, idx) => {
-                const item = document.createElement('div');
-                item.className = 'activity-row';
-                item.style.flexDirection = 'column';
-                item.style.alignItems = 'flex-start';
-                item.style.gap = '6px';
-                item.innerHTML = `
-                    <div style="display: flex; width: 100%; justify-content: space-between;">
-                        <span style="font-weight: 900; color: #38bdf8;">👤 ${req.username} (ID: ${req.user_id})</span>
-                        <span style="font-weight: 900; color: #ffffff;">${req.amount} ★</span>
-                    </div>
-                    <div style="display: flex; gap: 6px; width: 100%; margin-top: 4px;">
-                        <button class="card-action-btn" style="flex: 1; background: #22c55e;" onclick="approveWithdraw(${idx})">ОДОБРИТЬ</button>
-                        <button class="card-action-btn" style="flex: 1; background: #ef4444;" onclick="rejectWithdraw(${idx})">ОТМЕНИТЬ</button>
-                    </div>
-                `;
-                container.appendChild(item);
-            });
-        }
-
-        function approveWithdraw(idx) {
-            adminWithdrawRequests.splice(idx, 1);
-            renderAdminRequests();
-            if (typeof showToast === 'function') showToast('Заявка одобрена, выплачено!');
-            playSound('win');
-        }
-
-        function rejectWithdraw(idx) {
-            const req = adminWithdrawRequests[idx];
-            if (typeof starsBalance !== 'undefined') {
-                starsBalance = Number((starsBalance + req.amount).toFixed(1));
-                if (typeof updateBalanceUI === 'function') updateBalanceUI();
-            }
-            adminWithdrawRequests.splice(idx, 1);
-            renderAdminRequests();
-            if (typeof showToast === 'function') showToast('Заявка отклонена, звезды возвращены.');
-            playSound('error');
-        }
-    </script>
+                
                 
 </body>
 </html>
