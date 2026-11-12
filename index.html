@@ -2396,6 +2396,7 @@
             triggerHaptic('impact', 'light');
         }
 
+        /* --- 3D ОРЕЛ И РЕШКА (С УЧЕТОМ RTP КАЗИНО 93-94%) --- */
         function flipCoin3D() {
             if (isFlippingCoin) return;
             if (starsBalance < currentBetCoinflip) { showToast('Недостаточно звезд!'); return; }
@@ -2410,7 +2411,8 @@
             btn.disabled = true;
             triggerHaptic('impact', 'medium');
 
-            const isWin = Math.random() < 0.48;
+            // Защита RTP казино: шанс выигрыша ~46.5% вместо 50%
+            const isWin = Math.random() < 0.465;
             const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
 
             const coin = document.getElementById('coin3d');
@@ -2425,7 +2427,7 @@
                 btn.disabled = false;
 
                 if (isWin) {
-                    const winSum = currentBetCoinflip * 2;
+                    const winSum = Math.floor(currentBetCoinflip * 2.0); // Множитель x2.0 при победе
                     starsBalance = Number((starsBalance + winSum).toFixed(1));
                     totalStarsWon += winSum;
                     updateBalanceUI();
