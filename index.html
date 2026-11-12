@@ -2588,22 +2588,35 @@
             triggerHaptic('impact', 'medium');
 
             const outcomeRand = Math.random();
-            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ';
-            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; }
-            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; }
-            else { winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; }
+    let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ';
+    
+    if (outcomeRand < 0.48) { 
+        winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; 
+    } else if (outcomeRand < 0.93) { 
+        winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; 
+    } else { 
+        winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; 
+    }
 
-            currentWheelAngle += (360 * 6) + (winningIndex - (currentWheelAngle % 360));
-            document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
+    currentWheelAngle += (360 * 6) + (winningIndex - (currentWheelAngle % 360));
+    document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
 
-            setTimeout(() => {
-                isSpinning = false;
-                btn.innerText = 'КРУТИТЬ';
-                btn.disabled = false;
+    setTimeout(() => {
+        isSpinning = false;
+        btn.innerText = 'КРУТИТЬ';
+        btn.disabled = false;
 
-                if (winningColor === selectedRouletteColor) {
-                    const winSum = currentBetRoulette * (winningColor === 'green' ? 14 : 2);
-                    starsBalance = Number((starsBalance + winSum).toFixed(1));
+        if (winningColor === selectedRouletteColor) {
+            // Коэффициент x14 для синего (джекпот), или x1.95 для остальных (учитывает маржу казино)
+            const winSum = Math.floor(currentBetRoulette * (winningColor === 'green' ? 14 : 1.95));
+            starsBalance = Number((starsBalance + winSum).toFixed(1));
+            totalStarsWon += winSum;
+            updateBalanceUI();
+            triggerHaptic('notification', 'success');
+        } else {
+            triggerHaptic('notification', 'error');
+        }
+    }, 4100);
                     totalStarsWon += winSum;
                     updateBalanceUI();
                     triggerHaptic('notification', 'success');
@@ -2637,7 +2650,13 @@
                 updateBalanceUI();
                 isPlayingRocket = true;
                 currentMultiplier = 1.00;
-                crashPoint = parseFloat((Math.random() * 3.5 + 1.1).toFixed(2));
+                crashPoint = (function() {
+    if (Math.random() < 0.10) return 1.00;
+    let r = Math.random();
+    let cp = 0.99 / (1.0 - r);
+    if (cp > 50.0) cp = 50.0;
+    return Math.max(1.01, parseFloat(cp.toFixed(2)));
+})();
 
                 multText.classList.remove('crashed');
                 multText.innerText = 'x1.00';
