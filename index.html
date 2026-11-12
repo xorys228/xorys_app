@@ -2846,133 +2846,7 @@ function spinRouletteWheel() {
             else document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ!';
         }
 
-        /* --- МАРКЕТ --- */
-        const marketCatalogData = {
-            'ЗВЁЗДЫ': {
-                sub: 'TELEGRAM STARS',
-                packages: []
-            },
-            'TG PREM': {
-                sub: 'ПОДПИСКА TELEGRAM PREMIUM',
-                packages: [
-                    { amount: '3 месяца', price: '1 150 ★' },
-                    { amount: '6 месяцев', price: '1 950 ★' },
-                    { amount: '12 месяцев', price: '3 400 ★' }
-                ]
-            }
-        };
-
-        const countriesList = [
-            { name: 'Россия', code: '+7', code2: 'ru', stars: 199, usd: '$2,50' },
-            { name: 'Казахстан', code: '+77', code2: 'kz', stars: 199, usd: '$2,50' },
-            { name: 'Украина', code: '+380', code2: 'ua', stars: 235, usd: '$4,00' },
-            { name: 'Бангладеш', code: '+880', code2: 'bd', stars: 120, usd: '$1,99' },
-            { name: 'Иран', code: '+97', code2: 'ir', stars: 75, usd: '$0,99' },
-            { name: 'США', code: '+1', code2: 'us', stars: 50, usd: '$0,99' },
-            { name: 'Колумбия', code: '+56', code2: 'co', stars: 50, usd: '$0,99' },
-            { name: 'Бразилия', code: '+55', code2: 'br', stars: 50, usd: '$0,99' },
-            { name: 'Канада', code: '+1', code2: 'ca', stars: 50, usd: '$0,99' },
-            { name: 'Индия', code: '+91', code2: 'in', stars: 50, usd: '$0,99' },
-            { name: 'Афганистан', code: '+93', code2: 'af', stars: 222, usd: '$3,80' }
-        ];
-
-        let activeMarketCategory = 'ЗВЁЗДЫ';
-        let selectedPackageIndex = 0;
-        let selectedCustomStars = 100;
-
-        function openMarketCategory(categoryName) {
-            triggerHaptic('impact', 'medium');
-            if (categoryName === 'USDT') {
-                showToast('Раздел USDT находится в разработке!');
-                return;
-            }
-            if (categoryName === 'НОМЕРА') {
-                document.getElementById('marketMainView').style.display = 'none';
-                document.getElementById('marketDetailView').style.display = 'block';
-                renderCountriesList();
-            } else {
-                openMarketModal(categoryName);
-            }
-        }
-
-        function closeMarketDetail() {
-            triggerHaptic('impact', 'light');
-            document.getElementById('marketDetailView').style.display = 'none';
-            document.getElementById('marketMainView').style.display = 'block';
-        }
-
-        function renderCountriesList() {
-            const container = document.getElementById('countriesListContainer');
-            container.innerHTML = '';
-
-            countriesList.forEach((item) => {
-                const row = document.createElement('div');
-                row.className = 'game-card-row';
-                row.style.padding = '12px 14px';
-                row.onclick = () => buyCountryItem(item);
-                row.innerHTML = `
-                    <div style="display: flex; align-items: center; gap: 12px; z-index: 2;">
-                        <img src="https://flagcdn.com/w80/${item.code2}.png" alt="${item.name}" style="width: 38px; height: 26px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);" />
-                        <div style="display: flex; flex-direction: column; gap: 2px;">
-                            <span style="font-size: 15px; font-weight: 900; color: #ffffff;">${item.name} ${item.code}</span>
-                            <span style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);">В наличии • Гарантия</span>
-                        </div>
-                    </div>
-                    <div style="display: flex; align-items: center; gap: 10px; z-index: 2;">
-                        <div style="text-align: right;">
-                            <div style="font-size: 13px; font-weight: 900; color: #ffffff;">${item.stars} ★</div>
-                            <div style="font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.45);">${item.usd}</div>
-                        </div>
-                        <button class="card-action-btn" style="padding: 7px 12px; font-size: 10px;">КУПИТЬ</button>
-                    </div>
-                `;
-                container.appendChild(row);
-            });
-        }
-
-        function buyCountryItem(item) {
-            if (starsBalance < item.stars) {
-                showToast(`Недостаточно звезд! Нужно ${item.stars} ★`);
-                triggerHaptic('notification', 'error');
-                return;
-            }
-
-            starsBalance = Number((starsBalance - item.stars).toFixed(1));
-            updateBalanceUI();
-            addProfileActivity(`Покупка номера ${item.name} ${item.code}`, `-${item.stars} ★`, 'fa-sim-card');
-            showToast(`Успешно куплен номер (${item.name} ${item.code})!`);
-            triggerHaptic('notification', 'success');
-        }
-
-        function openMarketModal(categoryName) {
-            const data = marketCatalogData[categoryName];
-            if (!data) return;
-
-            activeMarketCategory = categoryName;
-            selectedPackageIndex = 0;
-
-            document.getElementById('modalCategorySub').innerText = data.sub;
-            document.getElementById('modalCategoryTitle').innerText = categoryName;
-
-            const starsBox = document.getElementById('starsCustomConfig');
-            const pkgGrid = document.getElementById('modalPackagesGrid');
-
-            if (categoryName === 'ЗВЁЗДЫ') {
-                starsBox.style.display = 'block';
-                pkgGrid.style.display = 'none';
-                selectedCustomStars = 100;
-                syncStarsControls(100);
-            } else {
-                starsBox.style.display = 'none';
-                pkgGrid.style.display = 'grid';
-                renderMarketPackages();
-            }
-
-            document.getElementById('marketModal').classList.add('open');
-            triggerHaptic('impact', 'medium');
-        }
-
-       function syncStarsControls(amount) {
+      function syncStarsControls(amount) {
             selectedCustomStars = Math.max(1, parseInt(amount) || 50);
             document.getElementById('starsManualInput').value = selectedCustomStars;
             document.getElementById('starsSlider').value = Math.min(5000, Math.max(50, selectedCustomStars));
@@ -3086,7 +2960,7 @@ function spinRouletteWheel() {
             input.value = '100';
         }
 
-        // --- БЕЗКОШТОВНА РУЛЕТКА ЗА ДРУЗІВ ---
+        // --- БЕСПЛАТНАЯ РУЛЕТКА ЗА ДРУЗЕЙ (@xorysbot) ---
         let refInvitedCount = 0; 
         let canSpinRefWheel = false; 
         let isRefSpinning = false;
@@ -3114,13 +2988,13 @@ function spinRouletteWheel() {
             const btn = document.getElementById('refSpinMainBtn');
             
             if (refInvitedCount >= 3) {
-                statusText.innerText = 'СТАТУС: ГОТОВО ДО ОБЕРТАННЯ!';
-                btn.innerText = 'КРУТИТИ БЕЗКОШТОВНО!';
+                statusText.innerText = 'СТАТУС: ГОТОВО К ВРАЩЕНИЮ!';
+                btn.innerText = 'КРУТИТЬ БЕСПЛАТНО!';
                 btn.style.background = '#38bdf8';
                 btn.style.color = '#050507';
             } else {
                 statusText.innerText = `ПРИГЛАШЕНО ДРУЗЕЙ: ${refInvitedCount} / 3`;
-                btn.innerText = `ПОТРІБНО 3 ДРУЗІВ (${refInvitedCount}/3)`;
+                btn.innerText = `КРУТИТЬ ЗА 0 ⭐️ (${refInvitedCount}/3)`;
                 btn.style.background = '#ffffff';
                 btn.style.color = '#050507';
             }
@@ -3130,18 +3004,22 @@ function spinRouletteWheel() {
         function inviteFriendForRefRoulette() {
             triggerHaptic('impact', 'medium');
             if (refInvitedCount >= 3) {
-                showToast('Ви вже запросили 3 друзів! Можна крутити.');
+                showToast('Вы уже пригласили 3 друзей! Можно крутить.');
                 return;
             }
 
-            const link = document.getElementById('refLinkDisplay').innerText;
-            const text = encodeURIComponent('Залітай в XORYS Casino та вигравай безкоштовні зірки ⭐!');
-            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${text}`;
+            // Реферальная ссылка на вашего бота @xorysbot
+            const currentUserId = typeof userId !== 'undefined' ? userId : 'user';
+            const refLink = `https://t.me/xorysbot?start=ref_${currentUserId}`;
+            
+            const text = encodeURIComponent('Залетай в XORYS Casino и выигрывай бесплатные звезды ⭐!');
+            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${text}`;
 
             if (tg && tg.openTelegramLink) {
                 tg.openTelegramLink(shareUrl);
             } else {
-                copyReferralLink();
+                navigator.clipboard.writeText(refLink);
+                showToast('Реферальная ссылка скопирована!');
             }
         }
 
@@ -3149,7 +3027,7 @@ function spinRouletteWheel() {
             if (isRefSpinning) return;
 
             if (refInvitedCount < 3) {
-                showToast(`Необхідно запросити 3 друзів! Зараз: ${refInvitedCount}/3`);
+                showToast(`Необходимо пригласить 3 друзей! Сейчас: ${refInvitedCount}/3`);
                 triggerHaptic('notification', 'error');
                 inviteFriendForRefRoulette();
                 return;
@@ -3157,7 +3035,7 @@ function spinRouletteWheel() {
 
             isRefSpinning = true;
             const btn = document.getElementById('refSpinMainBtn');
-            btn.innerText = 'КРУТИТЬСЯ...';
+            btn.innerText = 'КРУТИТСЯ...';
             btn.disabled = true;
             triggerHaptic('impact', 'medium');
 
@@ -3178,29 +3056,31 @@ function spinRouletteWheel() {
                     localStorage.setItem('xorys_ref_roulette_spun', 'true');
                 } catch(e){}
 
-                showToast(`Виграш! Нараховано +${wonPrize} ★!`);
+                showToast(`Выигрыш! Начислено +${wonPrize} ★!`);
                 triggerHaptic('notification', 'success');
                 
-                btn.innerText = `ВИ ВИГРАЛИ ${wonPrize} ★`;
-                document.getElementById('refHubText').innerText = `${wonPrize}★`;
+                btn.innerText = `ВЫ ВЫИГРАЛИ ${wonPrize} ⭐️`;
+                document.getElementById('refHubText').innerText = `${wonPrize}⭐️`;
             }, 4100);
         }
 
         initRefRouletteState();
     </script>
 
-    <!-- ЕКРАН БЕЗКОШТОВНОЇ РУЛЕТКИ ЗА ДРУЗІВ (ПОЗА СКРИПТОМ) -->
+    <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
     <div id="refRoulettePage" class="page">
         <div class="rg-header">
-            <div class="rg-logo">РУЛЕТКА <span>ЗА ДРУЗІВ</span></div>
+            <div class="rg-logo">РУЛЕТКА <span>FREE</span></div>
             <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRefRoulette">100</span></div>
         </div>
 
-        <div class="roulette-display" style="height: 220px;">
-            <div class="wheel-wrapper">
-                <div class="wheel-pointer"></div>
-                <div class="roulette-circle" id="refRouletteCircle">
-                    <div class="wheel-center-hub" id="refHubText">0★</div>
+        <div class="roulette-display" style="height: 240px; display: flex; align-items: center; justify-content: center; position: relative;">
+            <div class="wheel-wrapper" style="position: relative; width: 180px; height: 180px;">
+                <div class="wheel-pointer" style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 8px solid transparent; border-right: 8px solid transparent; border-bottom: 16px solid #38bdf8; z-index: 10;"></div>
+                
+                <div class="roulette-circle" id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4s cubic-bezier(0.15, 0.85, 0.15, 1); box-shadow: 0 0 25px rgba(56, 189, 248, 0.3), inset 0 0 15px rgba(0,0,0,0.8); background: conic-gradient(#ef4444 0deg 90deg, #111216 90deg 180deg, #ef4444 180deg 270deg, #111216 270deg 360deg); border: 4px solid #38bdf8;">
+                    
+                    <div class="wheel-center-hub" id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 55px; height: 55px; background: #050507; border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; box-shadow: 0 0 10px rgba(0,0,0,0.9);">0 ⭐️</div>
                 </div>
             </div>
         </div>
@@ -3211,15 +3091,15 @@ function spinRouletteWheel() {
             </div>
             
             <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
-                КРУТИТИ РУЛЕТКУ (0/3)
+                КРУТИТЬ ЗА 0 ⭐️
             </button>
 
             <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
-                <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ЗАПРОСИТИ ДРУЗЕЙ (0/3)
+                <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (0/3)
             </button>
         </div>
 
-        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББІ</button>
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
 </body>
