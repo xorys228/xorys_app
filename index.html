@@ -2082,7 +2082,7 @@
         </div>
     </div>
 
-    <!-- Нижняя панель навигации -->
+    <!-- Нижняя панель навигации (4 вкладки) -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchPage('casino', this)">
             <i class="fa-solid fa-gamepad"></i>
@@ -2092,15 +2092,15 @@
             <i class="fa-solid fa-store"></i>
             <span>МАРКЕТ</span>
         </button>
+        <button class="nav-item" onclick="switchPage('leaderboard', this)">
+            <i class="fa-solid fa-trophy"></i>
+            <span>ТОП</span>
+        </button>
         <button class="nav-item" onclick="switchPage('profile', this)">
             <i class="fa-solid fa-user"></i>
             <span>ПРОФИЛЬ</span>
         </button>
     </nav>
-
-    <script>
-        const tg = window.Telegram?.WebApp;
-        if (tg && tg.ready) tg.ready();
 
 
 
