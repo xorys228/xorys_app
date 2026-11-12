@@ -16,11 +16,11 @@
         }
 
         body {
-            background-color: #030407;
+            background-color: #050507;
             color: #ffffff;
             background-image: 
-                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 50% 25%, #0b0f19 0%, #030407 85%);
+                radial-gradient(circle at 50% 0%, rgba(255, 255, 255, 0.04) 0%, transparent 50%),
+                radial-gradient(circle at 50% 25%, #0d0e12 0%, #050507 85%);
             background-size: 100% 100%;
             padding-bottom: 85px;
             overflow-x: hidden;
@@ -54,7 +54,7 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 4px;
-            margin-bottom: 16px;
+            margin-bottom: 18px;
             padding: 0 2px;
         }
 
@@ -68,14 +68,14 @@
             width: 36px;
             height: 36px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #ffffff 0%, #38bdf8 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            color: #030407;
+            color: #050507;
             font-weight: 900;
-            box-shadow: 0 0 18px rgba(56, 189, 248, 0.35);
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.14);
         }
 
         .brand-text {
@@ -94,38 +94,6 @@
             margin-top: -2px;
         }
 
-        /* --- ВКЛАДКИ В ЧЕРНО-БЕЛО-СИНЕМ СТИЛЕ --- */
-        .tabs-container {
-            display: flex;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 24px;
-            padding: 4px;
-            margin-bottom: 18px;
-            gap: 4px;
-        }
-
-        .tab-btn {
-            flex: 1;
-            background: transparent;
-            border: none;
-            color: rgba(255, 255, 255, 0.45);
-            padding: 9px 0;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-align: center;
-            letter-spacing: 0.5px;
-        }
-
-        .tab-btn.active {
-            background: #ffffff;
-            color: #030407;
-            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
-        }
-
         .page-title {
             text-align: center;
             margin-top: 8px;
@@ -137,229 +105,157 @@
             text-transform: uppercase;
         }
 
-        /* --- КАТАЛОГ МАРКЕТА --- */
-        .catalog-grid {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            justify-content: space-between;
-        }
-
-        .catalog-card {
-            flex: 1;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 16px;
-            padding: 14px 6px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-
-        .catalog-card:active {
-            transform: scale(0.95);
-            background: rgba(56, 189, 248, 0.08);
-            border-color: rgba(56, 189, 248, 0.3);
-        }
-
-        .card-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 16px;
-            margin-bottom: 8px;
-            background: rgba(255, 255, 255, 0.04);
-            color: #38bdf8;
-            border: 1px solid rgba(56, 189, 248, 0.2);
-        }
-
-        .card-title {
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.8px;
-            color: rgba(255,255,255,0.85);
-        }
-
-        /* Подстраницы маркета */
-        .sub-market-page { display: none; width: 100%; }
-        .sub-market-page.active { display: block; }
-
-        .market-list { display: flex; flex-direction: column; gap: 10px; }
-        .market-item-row {
-            background: linear-gradient(145deg, rgba(16, 20, 30, 0.88) 0%, rgba(6, 8, 13, 0.96) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.09); border-radius: 16px; padding: 12px 14px;
-            display: flex; align-items: center; justify-content: space-between; gap: 10px;
-        }
-        .market-item-left { display: flex; align-items: center; gap: 12px; }
-        .country-flag { width: 36px; height: 26px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255,255,255,0.15); flex-shrink: 0; }
-        .market-item-meta { display: flex; flex-direction: column; gap: 2px; }
-        .market-item-name { font-size: 14px; font-weight: 900; color: #ffffff; }
-        .market-item-sub { font-size: 10px; color: rgba(255,255,255,0.45); font-weight: 700; }
-        .market-item-right { display: flex; flex-direction: column; align-items: flex-end; gap: 2px; }
-        .market-item-price { font-size: 13px; font-weight: 900; color: #38bdf8; display: flex; align-items: center; gap: 4px; }
-        .market-item-usd { font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 700; }
-        .buy-btn { background: #ffffff; color: #030407; border: none; padding: 7px 14px; border-radius: 10px; font-size: 11px; font-weight: 900; cursor: pointer; margin-top: 4px; }
-        .buy-btn:active { transform: scale(0.95); }
-
-        /* Блок выбора звезд */
-        .stars-custom-box {
-            background: linear-gradient(145deg, rgba(16, 20, 30, 0.9) 0%, rgba(6, 8, 13, 0.98) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 20px; padding: 18px; text-align: center; margin-bottom: 14px;
-        }
-        .stars-input {
-            width: 100%; background: rgba(3, 5, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.15); border-radius: 12px;
-            padding: 12px; color: #ffffff; font-size: 20px; font-weight: 900; text-align: center; margin: 12px 0; outline: none;
-        }
-        .stars-input:focus { border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.3); }
-        .stars-chips-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-bottom: 14px; }
-        .stars-chip-btn {
-            background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px;
-            padding: 9px 0; color: #ffffff; font-size: 11px; font-weight: 900; cursor: pointer; transition: all 0.2s;
-        }
-        .stars-chip-btn.active { background: #38bdf8; color: #030407; border-color: #38bdf8; box-shadow: 0 0 12px rgba(56, 189, 248, 0.4); }
-
-        /* Раздел USDT В разработке */
-        .dev-box {
-            text-align: center; padding: 50px 20px; background: rgba(255,255,255,0.02);
-            border: 1px dashed rgba(255,255,255,0.1); border-radius: 20px; margin-top: 10px;
-        }
-        .dev-box i { font-size: 36px; color: #38bdf8; margin-bottom: 14px; }
-        .dev-box h3 { font-size: 16px; font-weight: 900; margin-bottom: 6px; }
-        .dev-box p { font-size: 12px; color: rgba(255,255,255,0.5); font-weight: 700; }
-
-        /* --- ГОРИЗОНТАЛЬНЫЕ КАРТОЧКИ ИГР (ЧЕРНЫЙ + БЕЛЫЙ + СИНИЙ) --- */
+        /* --- КАРТОЧКИ ИГР В СТИЛЕ РЕФЕРЕНСА (ЧЕРНЫЙ + БЕЛЫЙ + ГОЛУБОЙ) --- */
         .games-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 14px;
         }
 
         .game-card-row {
-            background: linear-gradient(145deg, rgba(16, 20, 30, 0.88) 0%, rgba(6, 8, 13, 0.96) 100%);
-            border: 1px solid rgba(255, 255, 255, 0.09);
-            border-radius: 22px;
-            padding: 12px 14px;
+            background: linear-gradient(145deg, rgba(16, 22, 36, 0.92) 0%, rgba(6, 9, 16, 0.98) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.16);
+            border-radius: 24px;
+            padding: 12px 14px 12px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            gap: 12px;
             cursor: pointer;
             transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
-            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            min-height: 112px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.72), inset 0 1px 0 rgba(255, 255, 255, 0.09);
         }
 
         .game-card-row::before {
             content: '';
             position: absolute;
-            top: -25px;
-            left: -25px;
-            width: 110px;
-            height: 110px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.16) 0%, transparent 70%);
+            top: -15px;
+            left: -20px;
+            width: 145px;
+            height: 145px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.22) 0%, transparent 70%);
             pointer-events: none;
+            z-index: 1;
         }
 
         .game-card-row:active {
-            transform: scale(0.975);
-            border-color: rgba(56, 189, 248, 0.45);
+            transform: scale(0.98);
+            border-color: rgba(56, 189, 248, 0.5);
         }
 
-        .game-card-left {
+        /* Левая колонка с крупной обрезанной SVG-иллюстрацией */
+        .game-visual-left {
+            width: 105px;
+            height: 96px;
             display: flex;
             align-items: center;
-            gap: 13px;
+            justify-content: flex-start;
+            flex-shrink: 0;
+            position: relative;
             z-index: 2;
         }
 
-        /* Контейнер уникальной SVG-иконки */
-        .game-icon-box {
-            width: 62px;
-            height: 62px;
-            border-radius: 17px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .game-visual-left svg {
+            width: 115px;
+            height: 115px;
+            margin-left: -18px;
             flex-shrink: 0;
-            position: relative;
-            background: linear-gradient(145deg, #131a29 0%, #070a10 100%);
-            border: 1px solid rgba(56, 189, 248, 0.28);
-            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.14), 0 6px 16px rgba(0, 0, 0, 0.6);
+            filter: drop-shadow(0 6px 16px rgba(0, 0, 0, 0.75));
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .game-icon-box svg {
-            filter: drop-shadow(0 0 8px rgba(56, 189, 248, 0.35));
+        .game-card-row:hover .game-visual-left svg {
+            transform: scale(1.04) translateX(2px);
         }
 
-        .game-meta {
+        /* Правая колонка с информацией и кнопкой */
+        .game-info-right {
+            flex: 1;
             display: flex;
             flex-direction: column;
-            gap: 3px;
+            justify-content: space-between;
+            gap: 6px;
+            z-index: 2;
+            min-width: 0;
         }
 
         .game-category-tag {
-            font-size: 9px;
+            font-size: 10px;
             font-weight: 900;
-            letter-spacing: 1px;
+            letter-spacing: 0.9px;
             text-transform: uppercase;
-            color: #38bdf8;
+            color: #a1a1aa;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 5px;
+        }
+
+        .game-category-tag i {
+            font-size: 10px;
+            color: #ffffff;
         }
 
         .game-name {
-            font-size: 15px;
+            font-size: 17px;
             font-weight: 900;
             color: #ffffff;
-            letter-spacing: 0.5px;
+            letter-spacing: 0.4px;
+            line-height: 1.15;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .game-bottom-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-top: 4px;
         }
 
         .game-stats-badge {
             display: inline-flex;
             align-items: center;
-            gap: 5px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 700;
-            color: rgba(255, 255, 255, 0.55);
-            width: fit-content;
-            margin-top: 2px;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 11px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: 800;
+            color: rgba(255, 255, 255, 0.75);
+            white-space: nowrap;
         }
 
-        /* Кнопка ИГРАТЬ сбоку на всех карточках */
+        .game-stats-badge i {
+            color: #ffffff;
+            font-size: 10px;
+        }
+
         .card-action-btn {
-            background: linear-gradient(135deg, #ffffff 0%, #e2e8f0 100%);
-            color: #030407;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
             border: none;
-            padding: 9px 15px;
+            padding: 8px 18px;
             border-radius: 13px;
             font-size: 11px;
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 0.8px;
-            box-shadow: 0 4px 14px rgba(56, 189, 248, 0.22);
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
             cursor: pointer;
             white-space: nowrap;
-            z-index: 2;
-            transition: transform 0.15s ease, background 0.2s ease, color 0.2s ease;
+            transition: transform 0.15s ease, filter 0.2s ease, background 0.2s ease;
         }
 
         .game-card-row:hover .card-action-btn {
-            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-            color: #ffffff;
-            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.45);
+            background: linear-gradient(135deg, #ffffff 0%, #e0f2fe 100%);
+            color: #030407;
+            box-shadow: 0 4px 18px rgba(56, 189, 248, 0.5);
         }
 
         .card-action-btn:active {
@@ -418,11 +314,11 @@
             white-space: nowrap;
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА (ЧЕРНЫЙ + БЕЛЫЙ + СИНИЙ) --- */
+        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА (ГЛУБОКИЙ ТЕМНО-СИНИЙ АКЦЕНТ) --- */
         .rg-display {
             height: 235px;
-            background: linear-gradient(180deg, #03050a 0%, #091224 55%, #0f1f3d 100%);
-            border: 1px solid rgba(56, 189, 248, 0.28);
+            background: linear-gradient(180deg, #030408 0%, #070e20 55%, #0c1a3a 100%);
+            border: 1px solid rgba(37, 99, 235, 0.35);
             border-radius: 22px;
             position: relative;
             overflow: hidden;
@@ -430,7 +326,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.9), 0 0 25px rgba(56, 189, 248, 0.1);
+            box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.92), 0 0 25px rgba(29, 78, 216, 0.14);
         }
 
         .space-stars {
@@ -439,11 +335,11 @@
             background-image:
                 radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent),
                 radial-gradient(1px 1px at 90px 70px, rgba(255,255,255,0.85), transparent),
-                radial-gradient(2px 2px at 160px 25px, #38bdf8, transparent),
+                radial-gradient(2px 2px at 160px 25px, #2563eb, transparent),
                 radial-gradient(1.5px 1.5px at 240px 85px, #ffffff, transparent),
-                radial-gradient(1px 1px at 310px 40px, #7dd3fc, transparent),
+                radial-gradient(1px 1px at 310px 40px, #3b82f6, transparent),
                 radial-gradient(1.5px 1.5px at 60px 130px, #ffffff, transparent),
-                radial-gradient(2px 2px at 200px 120px, #bae6fd, transparent),
+                radial-gradient(2px 2px at 200px 120px, #60a5fa, transparent),
                 radial-gradient(1px 1px at 280px 140px, rgba(255,255,255,0.7), transparent),
                 radial-gradient(1.5px 1.5px at 130px 160px, #ffffff, transparent);
             background-size: 350px 180px;
@@ -465,8 +361,8 @@
 
         .space-planet {
             position: absolute; top: 22px; right: 28px; width: 34px; height: 34px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #38bdf8 55%, #082f49 100%);
-            box-shadow: 0 0 22px rgba(56, 189, 248, 0.35); opacity: 0.85; z-index: 1;
+            background: radial-gradient(circle at 30% 30%, #93c5fd 0%, #1d4ed8 55%, #071330 100%);
+            box-shadow: 0 0 22px rgba(29, 78, 216, 0.45); opacity: 0.85; z-index: 1;
         }
 
         .mountains-layer {
@@ -477,10 +373,10 @@
 
         .multiplier-val {
             font-size: 46px; font-weight: 900; color: #ffffff;
-            text-shadow: 0 0 25px rgba(56, 189, 248, 0.65), 0 2px 10px rgba(0,0,0,0.85);
+            text-shadow: 0 0 25px rgba(37, 99, 235, 0.75), 0 2px 10px rgba(0,0,0,0.9);
             z-index: 5; letter-spacing: 1px; margin-bottom: 18px;
         }
-        .multiplier-val.crashed { color: #38bdf8; opacity: 0.8; text-shadow: 0 0 20px rgba(56, 189, 248, 0.5); }
+        .multiplier-val.crashed { color: #3b82f6; opacity: 0.85; text-shadow: 0 0 20px rgba(29, 78, 216, 0.6); }
 
         .rocket-container {
             position: absolute; bottom: 32px; left: 26px; display: flex; align-items: center; gap: 6px;
@@ -495,7 +391,7 @@
 
         .svg-rocket-wrap {
             width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
-            filter: drop-shadow(0 0 12px rgba(56, 189, 248, 0.7));
+            filter: drop-shadow(0 0 12px rgba(37, 99, 235, 0.8));
         }
 
         .rocket-flame { transform-origin: 24px 52px; animation: flameFlicker 0.14s infinite alternate; }
@@ -506,16 +402,16 @@
         }
 
         .player-tag {
-            background: rgba(5, 8, 15, 0.88); border: 1px solid rgba(56, 189, 248, 0.4);
+            background: rgba(5, 8, 15, 0.9); border: 1px solid rgba(37, 99, 235, 0.55);
             padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: #ffffff; backdrop-filter: blur(4px);
         }
 
-        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ (ЧЕРНЫЙ + БЕЛЫЙ + СИНИЙ) --- */
+        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ (ГЛУБОКИЙ ТЕМНО-СИНИЙ) --- */
         .roulette-display, .mines-display, .plinko-display, .coinflip-display {
             border-radius: 22px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #0e1628 0%, #04060b 85%);
-            border: 1px solid rgba(56, 189, 248, 0.25);
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.85), 0 0 20px rgba(56, 189, 248, 0.08);
+            background: radial-gradient(circle at center, #0a142d 0%, #03050a 85%);
+            border: 1px solid rgba(37, 99, 235, 0.32);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(29, 78, 216, 0.12);
         }
 
         .roulette-display { height: 210px; }
@@ -524,22 +420,22 @@
 
         .wheel-pointer {
             position: absolute; top: -10px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent;
-            border-top: 14px solid #ffffff; filter: drop-shadow(0 0 6px #38bdf8); z-index: 20;
+            border-top: 14px solid #ffffff; filter: drop-shadow(0 0 6px #2563eb); z-index: 20;
         }
 
         .roulette-circle {
             width: 130px; height: 130px; border-radius: 50%;
             background: conic-gradient(
-                #ffffff 0deg 30deg, #0f172a 30deg 60deg, #ffffff 60deg 90deg, #0f172a 90deg 120deg,
-                #ffffff 120deg 150deg, #0f172a 150deg 180deg, #ffffff 180deg 210deg, #0f172a 210deg 240deg,
-                #ffffff 240deg 270deg, #0f172a 270deg 300deg, #ffffff 300deg 330deg, #0f172a 330deg 350deg, #38bdf8 350deg 360deg
+                #ffffff 0deg 30deg, #0b1120 30deg 60deg, #ffffff 60deg 90deg, #0b1120 90deg 120deg,
+                #ffffff 120deg 150deg, #0b1120 150deg 180deg, #ffffff 180deg 210deg, #0b1120 210deg 240deg,
+                #ffffff 240deg 270deg, #0b1120 270deg 300deg, #ffffff 300deg 330deg, #0b1120 330deg 350deg, #1d4ed8 350deg 360deg
             );
             border: 3px solid rgba(255, 255, 255, 0.35); box-shadow: 0 0 20px rgba(0,0,0,0.85), inset 0 0 12px rgba(0,0,0,0.7);
             position: relative; transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
         }
 
         .wheel-center-hub {
-            position: absolute; width: 36px; height: 36px; background: #070a10; border: 2px solid #38bdf8;
+            position: absolute; width: 36px; height: 36px; background: #050811; border: 2px solid #2563eb;
             border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #ffffff;
         }
 
@@ -551,8 +447,8 @@
             background: rgba(255,255,255,0.03); color: #fff;
         }
         .color-btn.active {
-            border-color: #38bdf8; background: rgba(56, 189, 248, 0.16); color: #ffffff;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25); transform: translateY(-1px);
+            border-color: #2563eb; background: rgba(29, 78, 216, 0.28); color: #ffffff;
+            box-shadow: 0 0 15px rgba(29, 78, 216, 0.35); transform: translateY(-1px);
         }
 
         .mines-display { padding: 12px; }
@@ -563,8 +459,8 @@
             display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.15s ease;
         }
         .mine-tile:active { transform: scale(0.9); }
-        .mine-tile.revealed-star { background: linear-gradient(135deg, #38bdf8, #0284c7); border-color: #ffffff; box-shadow: 0 0 12px rgba(56, 189, 248, 0.6); color: #ffffff; }
-        .mine-tile.revealed-bomb { background: #090c14; border-color: rgba(255, 255, 255, 0.35); color: #ffffff; }
+        .mine-tile.revealed-star { background: linear-gradient(135deg, #2563eb, #1e3a8a); border-color: #ffffff; box-shadow: 0 0 12px rgba(37, 99, 235, 0.7); color: #ffffff; }
+        .mine-tile.revealed-bomb { background: #070a12; border-color: rgba(255, 255, 255, 0.35); color: #ffffff; }
 
         .mines-config-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
         .mine-count-btn {
@@ -582,16 +478,16 @@
         .coin-side {
             position: absolute; inset: 0; border-radius: 50%; backface-visibility: hidden; display: flex; flex-direction: column;
             align-items: center; justify-content: center; font-weight: 900; border: 4px solid #ffffff;
-            box-shadow: inset 0 0 12px rgba(0,0,0,0.6), 0 0 18px rgba(56, 189, 248, 0.45);
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.7), 0 0 18px rgba(29, 78, 216, 0.55);
         }
-        .coin-heads { background: radial-gradient(circle at 30% 30%, #38bdf8, #0369a1); color: #ffffff; transform: rotateY(0deg); }
-        .coin-tails { background: radial-gradient(circle at 30% 30%, #ffffff, #cbd5e1); color: #030407; border-color: #38bdf8; transform: rotateY(180deg); }
+        .coin-heads { background: radial-gradient(circle at 30% 30%, #2563eb, #172554); color: #ffffff; transform: rotateY(0deg); }
+        .coin-tails { background: radial-gradient(circle at 30% 30%, #ffffff, #cbd5e1); color: #050507; border-color: #2563eb; transform: rotateY(180deg); }
         .coin-side i { font-size: 32px; margin-bottom: 2px; }
         .coin-side span { font-size: 10px; letter-spacing: 0.8px; }
 
         /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ + ПОЛЗУНОК --- */
         .betting-box {
-            background: rgba(12, 15, 24, 0.9); border: 1px solid rgba(255, 255, 255, 0.09);
+            background: rgba(11, 13, 20, 0.94); border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 18px; padding: 14px; margin-top: 12px; backdrop-filter: blur(10px);
         }
 
@@ -603,7 +499,7 @@
         .bet-row { display: flex; gap: 10px; align-items: center; }
 
         .bet-adjuster {
-            flex: 1; background: rgba(3, 5, 10, 0.75); border: 1px solid rgba(255, 255, 255, 0.09);
+            flex: 1; background: rgba(3, 5, 10, 0.8); border: 1px solid rgba(255, 255, 255, 0.09);
             border-radius: 12px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between;
         }
 
@@ -611,7 +507,7 @@
             background: rgba(255, 255, 255, 0.07); border: none; color: #fff; width: 28px; height: 28px;
             border-radius: 8px; font-weight: 900; font-size: 15px; cursor: pointer; transition: background 0.15s;
         }
-        .btn-chg:active { background: #38bdf8; color: #030407; }
+        .btn-chg:active { background: #1d4ed8; color: #ffffff; }
 
         .bet-number { font-size: 17px; font-weight: 900; }
 
@@ -624,8 +520,8 @@
         }
         .bet-slider::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none; width: 18px; height: 18px; border-radius: 50%;
-            background: linear-gradient(135deg, #ffffff, #38bdf8); border: 2px solid #030407;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.8); cursor: pointer; transition: transform 0.15s ease;
+            background: linear-gradient(135deg, #ffffff, #2563eb); border: 2px solid #050507;
+            box-shadow: 0 0 10px rgba(37, 99, 235, 0.85); cursor: pointer; transition: transform 0.15s ease;
         }
         .bet-slider::-webkit-slider-thumb:active { transform: scale(1.2); }
 
@@ -634,7 +530,7 @@
             flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.08);
             color: rgba(255, 255, 255, 0.75); border-radius: 6px; padding: 4px 0; font-size: 10px; font-weight: 900; cursor: pointer;
         }
-        .chip:active { background: #38bdf8; color: #030407; border-color: #38bdf8; }
+        .chip:active { background: #1d4ed8; color: #ffffff; border-color: #2563eb; }
 
         .btn-main-action {
             width: 125px; height: 50px; border: none; border-radius: 14px; font-weight: 900; font-size: 13px;
@@ -642,20 +538,173 @@
         }
         .btn-main-action:active { transform: scale(0.95); }
 
-        .btn-style-start { background: #ffffff; color: #030407; box-shadow: 0 4px 18px rgba(255, 255, 255, 0.2); }
-        .btn-style-cashout { background: #38bdf8; color: #030407; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.4); }
+        .btn-style-start { background: #ffffff; color: #050507; box-shadow: 0 4px 18px rgba(255, 255, 255, 0.18); }
+        .btn-style-cashout { background: #1d4ed8; color: #ffffff; box-shadow: 0 4px 18px rgba(29, 78, 216, 0.5); }
 
         .btn-return {
-            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.65); padding: 11px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer;
+            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.09);
+            color: rgba(255, 255, 255, 0.7); padding: 11px; border-radius: 12px; font-weight: 900; font-size: 12px; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-return:active { background: rgba(56, 189, 248, 0.12); color: #ffffff; border-color: rgba(56, 189, 248, 0.3); }
+        .btn-return:active { background: rgba(29, 78, 216, 0.2); color: #ffffff; border-color: rgba(37, 99, 235, 0.45); }
+
+        /* --- УВЕДОМЛЕНИЕ --- */
+        .toast-overlay {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(13, 14, 18, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        .toast-overlay.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* --- МОДАЛЬНОЕ ОКНО --- */
+        .market-modal-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.84);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1500;
+            padding: 16px;
+        }
+
+        .market-modal-backdrop.open {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
+
+        .market-modal-card {
+            width: 100%;
+            max-width: 448px;
+            background: linear-gradient(160deg, #13141a 0%, #07080a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 26px;
+            padding: 20px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 62px;
+        }
+
+        .modal-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .modal-title-group span {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #a1a1aa;
+            text-transform: uppercase;
+        }
+
+        .modal-title-group h2 {
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
+
+        .modal-close-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .modal-packages-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .package-option {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 12px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            text-align: left;
+        }
+
+        .package-option.selected {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: #ffffff;
+            box-shadow: 0 0 16px rgba(255, 255, 255, 0.12);
+        }
+
+        .pkg-amount {
+            font-size: 14px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 3px;
+        }
+
+        .pkg-price {
+            font-size: 11px;
+            font-weight: 700;
+            color: #a1a1aa;
+        }
+
+        .package-option.selected .pkg-price {
+            color: #ffffff;
+        }
+
+        .modal-buy-btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 15px;
+            border: none;
+            background: #ffffff;
+            color: #050507;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.18);
+            transition: transform 0.15s ease;
+        }
+
+        .modal-buy-btn:active {
+            transform: scale(0.97);
+        }
 
         /* --- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ --- */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background-color: rgba(4, 6, 11, 0.94);
-            border-top: 1px solid rgba(255, 255, 255, 0.08); display: flex; justify-content: space-around; align-items: center;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 65px; background-color: rgba(5, 5, 7, 0.96);
+            border-top: 1px solid rgba(255, 255, 255, 0.1); display: flex; justify-content: space-around; align-items: center;
             z-index: 1000; backdrop-filter: blur(14px);
         }
 
@@ -665,19 +714,24 @@
         }
         .nav-item i { font-size: 17px; margin-bottom: 3px; }
         .nav-item span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
-        .nav-item.active { color: #38bdf8; text-shadow: 0 0 12px rgba(56, 189, 248, 0.45); }
+        .nav-item.active { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.35); }
     </style>
 </head>
 <body>
 
-    <!-- Вкладка КАЗИНО (ЛОББИ) -->
+    <div id="customToast" class="toast-overlay">
+        <i class="fa-solid fa-circle-info"></i>
+        <span id="toastText">Уведомление</span>
+    </div>
+
+    <!-- Вкладка ИГРЫ (ЛОББИ) -->
     <div id="casino" class="page active">
         <div class="lobby-header">
             <div class="brand-logo">
                 <div class="brand-badge">X</div>
                 <div class="brand-text">
                     XORYS
-                    <span>MINI GAMES</span>
+                    <span>МИНИ-ИГРЫ</span>
                 </div>
             </div>
             <div class="rg-balance">
@@ -685,118 +739,207 @@
                 <span id="userStarsLobby">100</span>
             </div>
         </div>
-
-        <!-- Переключатель вкладок -->
-        <div class="tabs-container">
-            <button class="tab-btn active" onclick="switchTab(this, 'active')">Активні 5</button>
-            <button class="tab-btn" onclick="switchTab(this, 'completed')">Завершені 12</button>
-        </div>
         
         <div class="games-container">
-            <!-- РАКЕТА -->
+            <!-- 1. РАКЕТА -->
             <div class="game-card-row" onclick="openRocketGame()">
-                <div class="game-card-left">
-                    <div class="game-icon-box">
-                        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
-                            <path d="M29 6C21 9 15 16 13 25L23 35C32 33 39 27 42 19C43 14 43 9 42 6C39 5 34 5 29 6Z" fill="#FFFFFF"/>
-                            <path d="M29 6C34 5 39 5 42 6C43 9 43 14 42 19L35 12L29 6Z" fill="#38BDF8"/>
-                            <path d="M13 25L7 27L11 33L16 31" fill="#38BDF8"/>
-                            <path d="M23 35L21 41L15 37L17 32" fill="#38BDF8"/>
-                            <circle cx="29" cy="19" r="4.5" fill="#060913" stroke="#38BDF8" stroke-width="2"/>
-                            <path d="M11 35C8 38 7 42 7 42C7 42 11 41 14 38" stroke="#38BDF8" stroke-width="2.5" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div class="game-meta">
-                        <span class="game-category-tag">КРАШ ИГРА</span>
-                        <span class="game-name">РАКЕТА</span>
-                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 340</div>
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <defs>
+                            <radialGradient id="radarBgMono" cx="35%" cy="50%" r="65%">
+                                <stop offset="0%" stop-color="#27272a"/>
+                                <stop offset="70%" stop-color="#111216"/>
+                                <stop offset="100%" stop-color="#050507"/>
+                            </radialGradient>
+                            <linearGradient id="sectorGlowMono" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" stop-color="#ffffff" stop-opacity="0.75"/>
+                                <stop offset="100%" stop-color="#a1a1aa" stop-opacity="0.08"/>
+                            </linearGradient>
+                            <linearGradient id="rocketTrailMono" x1="0%" y1="100%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="#ffffff" stop-opacity="0"/>
+                                <stop offset="100%" stop-color="#ffffff" stop-opacity="0.75"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="46" cy="62" r="48" fill="url(#radarBgMono)" stroke="rgba(255,255,255,0.16)" stroke-width="2"/>
+                        <circle cx="46" cy="62" r="34" stroke="rgba(255,255,255,0.2)" stroke-width="1.5" stroke-dasharray="4 4"/>
+                        <circle cx="46" cy="62" r="20" fill="#090a0d" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
+                        <path d="M46 62 L24 19 A48 48 0 0 1 68 19 Z" fill="url(#sectorGlowMono)"/>
+                        <path d="M24 19 A48 48 0 0 1 68 19" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
+                        <circle cx="78" cy="44" r="1.5" fill="#ffffff" opacity="0.85"/>
+                        <circle cx="88" cy="68" r="2" fill="#d4d4d8" opacity="0.9"/>
+                        <circle cx="68" cy="84" r="1.5" fill="#ffffff" opacity="0.7"/>
+                        <circle cx="84" cy="28" r="1.2" fill="#ffffff" opacity="0.6"/>
+                        <path d="M36 74 Q54 56 72 36" stroke="url(#rocketTrailMono)" stroke-width="6" stroke-linecap="round"/>
+                        <g transform="translate(52, 18) rotate(12)">
+                            <path d="M20 4C12 8 7 15 5 24L15 34C24 32 31 27 34 19C35 14 35 9 34 4C31 3 26 3 20 4Z" fill="#ffffff"/>
+                            <path d="M20 4C26 3 31 3 34 4C35 9 35 14 34 19L27 11L20 4Z" fill="#a1a1aa"/>
+                            <path d="M5 24L0 27L4 33L9 30" fill="#d4d4d8"/>
+                            <path d="M15 34L12 39L6 35L9 30" fill="#d4d4d8"/>
+                            <circle cx="20" cy="18" r="4.5" fill="#090a0d" stroke="#ffffff" stroke-width="2"/>
+                        </g>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-arrow-trend-up"></i> КРАШ ИГРА</span>
+                    <span class="game-name">РАКЕТА</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 340</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
                     </div>
                 </div>
-                <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
-            <!-- РУЛЕТКА -->
+            <!-- 2. РУЛЕТКА -->
             <div class="game-card-row" onclick="openRouletteGame()">
-                <div class="game-card-left">
-                    <div class="game-icon-box">
-                        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="25" r="17" fill="#0B1120" stroke="#FFFFFF" stroke-width="2.5"/>
-                            <circle cx="24" cy="25" r="11" stroke="#38BDF8" stroke-width="2" stroke-dasharray="4 3"/>
-                            <path d="M24 8V14M24 36V42M7 25H13M35 25H41M12 13L16 17M32 33L36 37M36 13L32 17M16 33L12 37" stroke="#FFFFFF" stroke-width="2" stroke-linecap="round"/>
-                            <circle cx="24" cy="25" r="4" fill="#38BDF8"/>
-                            <path d="M24 4L28 11H20L24 4Z" fill="#38BDF8"/>
-                        </svg>
-                    </div>
-                    <div class="game-meta">
-                        <span class="game-category-tag">КОЛЕСО УДАЧИ</span>
-                        <span class="game-name">РУЛЕТКА x14</span>
-                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 612</div>
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <defs>
+                            <radialGradient id="wheelHubMono" cx="35%" cy="35%" r="65%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="50%" stop-color="#a1a1aa"/>
+                                <stop offset="100%" stop-color="#3f3f46"/>
+                            </radialGradient>
+                        </defs>
+                        <circle cx="46" cy="62" r="50" fill="#050507" stroke="#ffffff" stroke-width="4"/>
+                        <circle cx="46" cy="62" r="45" fill="#111216" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.35"/>
+                        <path d="M46 62 L46 17 A45 45 0 0 1 85 39 Z" fill="#ffffff"/>
+                        <path d="M46 62 L85 39 A45 45 0 0 1 85 85 Z" fill="#18181b"/>
+                        <path d="M46 62 L85 85 A45 45 0 0 1 46 107 Z" fill="#ffffff"/>
+                        <path d="M46 62 L46 107 A45 45 0 0 1 7 85 Z" fill="#18181b"/>
+                        <path d="M46 62 L7 85 A45 45 0 0 1 7 39 Z" fill="#ffffff"/>
+                        <path d="M46 62 L7 39 A45 45 0 0 1 46 17 Z" fill="#a1a1aa"/>
+                        <line x1="46" y1="17" x2="46" y2="107" stroke="#050507" stroke-width="2"/>
+                        <line x1="7" y1="39" x2="85" y2="85" stroke="#050507" stroke-width="2"/>
+                        <line x1="85" y1="39" x2="7" y2="85" stroke="#050507" stroke-width="2"/>
+                        <circle cx="46" cy="12" r="2" fill="#ffffff"/>
+                        <circle cx="71" cy="19" r="2" fill="#71717a"/>
+                        <circle cx="89" cy="37" r="2" fill="#ffffff"/>
+                        <circle cx="96" cy="62" r="2" fill="#71717a"/>
+                        <circle cx="89" cy="87" r="2" fill="#ffffff"/>
+                        <circle cx="71" cy="105" r="2" fill="#71717a"/>
+                        <circle cx="46" cy="112" r="2" fill="#ffffff"/>
+                        <text x="27" y="37" fill="#050507" font-size="11" font-weight="900" transform="rotate(-30 27 37)">14</text>
+                        <text x="61" y="36" fill="#050507" font-size="11" font-weight="900" transform="rotate(30 61 36)">2</text>
+                        <text x="72" y="66" fill="#ffffff" font-size="11" font-weight="900">2</text>
+                        <text x="58" y="93" fill="#050507" font-size="11" font-weight="900" transform="rotate(-30 58 93)">5</text>
+                        <circle cx="46" cy="62" r="14" fill="#050507" stroke="#ffffff" stroke-width="2.5"/>
+                        <circle cx="46" cy="62" r="9" fill="url(#wheelHubMono)"/>
+                        <path d="M64 11 C70 11 74 15 74 21 C74 28 64 38 64 38 C64 38 54 28 54 21 C54 15 58 11 64 11 Z" fill="#ffffff" stroke="#050507" stroke-width="2"/>
+                        <circle cx="64" cy="21" r="3.5" fill="#050507"/>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-dharmachakra"></i> КОЛЕСО УДАЧИ</span>
+                    <span class="game-name">РУЛЕТКА x14</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 612</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
                     </div>
                 </div>
-                <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
-            <!-- МИНЫ -->
+            <!-- 3. МИНЫ СТАРС -->
             <div class="game-card-row" onclick="openMinesGame()">
-                <div class="game-card-left">
-                    <div class="game-icon-box">
-                        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="24" r="12" fill="#FFFFFF"/>
-                            <circle cx="24" cy="24" r="5" fill="#060913" stroke="#38BDF8" stroke-width="2.5"/>
-                            <path d="M24 6V11M24 37V42M6 24H11M37 24H42M11.5 11.5L15 15M33 33L36.5 36.5M36.5 11.5L33 15M15 33L11.5 36.5" stroke="#38BDF8" stroke-width="3" stroke-linecap="round"/>
-                        </svg>
-                    </div>
-                    <div class="game-meta">
-                        <span class="game-category-tag">САПЕР</span>
-                        <span class="game-name">МИНЫ СТАРС</span>
-                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 489</div>
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <rect x="6" y="16" width="26" height="26" rx="7" fill="#18181b" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+                        <rect x="36" y="16" width="26" height="26" rx="7" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+                        <rect x="66" y="16" width="26" height="26" rx="7" fill="#18181b" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+                        <rect x="6" y="46" width="26" height="26" rx="7" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+                        <rect x="36" y="46" width="26" height="26" rx="7" fill="#090a0d" stroke="#ffffff" stroke-width="2"/>
+                        <rect x="66" y="46" width="26" height="26" rx="7" fill="#18181b" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+                        <rect x="6" y="76" width="26" height="26" rx="7" fill="#18181b" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+                        <rect x="36" y="76" width="26" height="26" rx="7" fill="#18181b" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
+                        <rect x="66" y="76" width="26" height="26" rx="7" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
+                        <path d="M49 22L51 26.5L56 27L52.2 30.3L53.3 35L49 32.5L44.7 35L45.8 30.3L42 27L47 26.5L49 22Z" fill="#050507"/>
+                        <path d="M19 52L21 56.5L26 57L22.2 60.3L23.3 65L19 62.5L14.7 65L15.8 60.3L12 57L17 56.5L19 52Z" fill="#050507"/>
+                        <path d="M79 82L81 86.5L86 87L82.2 90.3L83.3 95L79 92.5L74.7 95L75.8 90.3L72 87L77 86.5L79 82Z" fill="#050507"/>
+                        <circle cx="49" cy="59" r="9" fill="#ffffff"/>
+                        <circle cx="49" cy="59" r="3.5" fill="#050507" stroke="#a1a1aa" stroke-width="2"/>
+                        <path d="M49 46V49M49 69V72M36 59H39M59 59H62M40 50L42 52M56 66L58 68M58 50L56 52M42 66L40 68" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-bomb"></i> САПЕР</span>
+                    <span class="game-name">МИНЫ СТАРС</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 489</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
                     </div>
                 </div>
-                <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
-            <!-- ПЛИНКО -->
+            <!-- 4. ПЛИНКО x15 -->
             <div class="game-card-row" onclick="openPlinkoGame()">
-                <div class="game-card-left">
-                    <div class="game-icon-box">
-                        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
-                            <circle cx="24" cy="10" r="4" fill="#38BDF8"/>
-                            <circle cx="18" cy="20" r="2.2" fill="#FFFFFF"/>
-                            <circle cx="30" cy="20" r="2.2" fill="#FFFFFF"/>
-                            <circle cx="12" cy="29" r="2.2" fill="#FFFFFF"/>
-                            <circle cx="24" cy="29" r="2.2" fill="#FFFFFF"/>
-                            <circle cx="36" cy="29" r="2.2" fill="#FFFFFF"/>
-                            <rect x="8" y="36" width="8" height="5" rx="2" fill="#38BDF8"/>
-                            <rect x="20" y="36" width="8" height="5" rx="2" fill="rgba(255,255,255,0.25)"/>
-                            <rect x="32" y="36" width="8" height="5" rx="2" fill="#38BDF8"/>
-                        </svg>
-                    </div>
-                    <div class="game-meta">
-                        <span class="game-category-tag">АРКАДА</span>
-                        <span class="game-name">ПЛИНКО x15</span>
-                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 820</div>
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <circle cx="48" cy="24" r="3" fill="#ffffff"/>
+                        <circle cx="38" cy="38" r="3" fill="#ffffff"/>
+                        <circle cx="58" cy="38" r="3" fill="#ffffff"/>
+                        <circle cx="28" cy="52" r="3" fill="#ffffff"/>
+                        <circle cx="48" cy="52" r="3" fill="#a1a1aa"/>
+                        <circle cx="68" cy="52" r="3" fill="#ffffff"/>
+                        <circle cx="18" cy="66" r="3" fill="#ffffff"/>
+                        <circle cx="38" cy="66" r="3" fill="#ffffff"/>
+                        <circle cx="58" cy="66" r="3" fill="#a1a1aa"/>
+                        <circle cx="78" cy="66" r="3" fill="#ffffff"/>
+                        <circle cx="8" cy="80" r="3" fill="#ffffff"/>
+                        <circle cx="28" cy="80" r="3" fill="#ffffff"/>
+                        <circle cx="48" cy="80" r="3" fill="#ffffff"/>
+                        <circle cx="68" cy="80" r="3" fill="#ffffff"/>
+                        <circle cx="88" cy="80" r="3" fill="#ffffff"/>
+                        <path d="M48 12 L58 38 L58 66 L74 88" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="3 3"/>
+                        <circle cx="74" cy="85" r="7.5" fill="#ffffff" stroke="#050507" stroke-width="2"/>
+                        <rect x="6" y="96" width="22" height="14" rx="4" fill="#ffffff"/>
+                        <text x="17" y="106" fill="#050507" font-size="8" font-weight="900" text-anchor="middle">x15</text>
+                        <rect x="32" y="96" width="22" height="14" rx="4" fill="#18181b" stroke="#ffffff" stroke-width="1"/>
+                        <text x="43" y="106" fill="#ffffff" font-size="8" font-weight="900" text-anchor="middle">x1.2</text>
+                        <rect x="58" y="96" width="22" height="14" rx="4" fill="#ffffff"/>
+                        <text x="69" y="106" fill="#050507" font-size="8" font-weight="900" text-anchor="middle">x15</text>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-circle-dot"></i> АРКАДА</span>
+                    <span class="game-name">ПЛИНКО x15</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 820</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
                     </div>
                 </div>
-                <button class="card-action-btn">ИГРАТЬ</button>
             </div>
 
-            <!-- 3D ОРЕЛ И РЕШКА -->
+            <!-- 5. ОРЕЛ И РЕШКА 3D -->
             <div class="game-card-row" onclick="openCoinflipGame()">
-                <div class="game-card-left">
-                    <div class="game-icon-box">
-                        <svg width="36" height="36" viewBox="0 0 48 48" fill="none">
-                            <ellipse cx="22" cy="24" rx="13" ry="16" fill="#0B1120" stroke="#38BDF8" stroke-width="2.5"/>
-                            <ellipse cx="26" cy="24" rx="13" ry="16" fill="#FFFFFF" stroke="#38BDF8" stroke-width="2"/>
-                            <path d="M26 15L28.5 20.5L34 21.2L30 25L31 30.5L26 27.8L21 30.5L22 25L18 21.2L23.5 20.5L26 15Z" fill="#030407"/>
-                        </svg>
-                    </div>
-                    <div class="game-meta">
-                        <span class="game-category-tag">50 / 50 ШАНС</span>
-                        <span class="game-name">ОРЕЛ И РЕШКА 3D</span>
-                        <div class="game-stats-badge"><i class="fa-solid fa-users" style="font-size:9px;"></i> 254</div>
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <defs>
+                            <radialGradient id="darkCoinMono" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#52525b"/>
+                                <stop offset="55%" stop-color="#27272a"/>
+                                <stop offset="100%" stop-color="#09090b"/>
+                            </radialGradient>
+                            <radialGradient id="whiteCoinMono" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="70%" stop-color="#e4e4e7"/>
+                                <stop offset="100%" stop-color="#a1a1aa"/>
+                            </radialGradient>
+                        </defs>
+                        <circle cx="34" cy="48" r="28" fill="#050507" stroke="#a1a1aa" stroke-width="3.5"/>
+                        <circle cx="34" cy="48" r="22" fill="url(#darkCoinMono)"/>
+                        <path d="M36 35L27 49H34L32 61L41 47H34L36 35Z" fill="#ffffff"/>
+                        <circle cx="62" cy="72" r="30" fill="#050507" stroke="#ffffff" stroke-width="3.5"/>
+                        <circle cx="62" cy="72" r="24" fill="url(#whiteCoinMono)" stroke="#52525b" stroke-width="2"/>
+                        <path d="M62 56L66.2 65.2L76 66.5L68.8 73.3L70.6 83L62 78.2L53.4 83L55.2 73.3L48 66.5L57.8 65.2L62 56Z" fill="#050507"/>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-coins"></i> 50 / 50 ШАНС</span>
+                    <span class="game-name">ОРЕЛ И РЕШКА 3D</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 254</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
                     </div>
                 </div>
-                <button class="card-action-btn">ИГРАТЬ</button>
             </div>
         </div>
     </div>
@@ -820,9 +963,9 @@
             <div class="space-planet"></div>
 
             <svg id="mountainsLayer" class="mountains-layer" viewBox="0 0 480 90" preserveAspectRatio="none">
-                <path d="M0,90 L0,52 L55,22 L115,58 L185,18 L255,54 L330,24 L405,56 L480,28 L480,90 Z" fill="rgba(14, 165, 233, 0.22)" />
-                <path d="M0,90 L0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62 L480,90 Z" fill="#04070f" />
-                <path d="M0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62" fill="none" stroke="rgba(56, 189, 248, 0.45)" stroke-width="1.5" />
+                <path d="M0,90 L0,52 L55,22 L115,58 L185,18 L255,54 L330,24 L405,56 L480,28 L480,90 Z" fill="rgba(29, 78, 216, 0.25)" />
+                <path d="M0,90 L0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62 L480,90 Z" fill="#03050a" />
+                <path d="M0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62" fill="none" stroke="rgba(37, 99, 235, 0.5)" stroke-width="1.5" />
             </svg>
 
             <div id="multiplierText" class="multiplier-val">x1.00</div>
@@ -837,13 +980,13 @@
                                 <stop offset="100%" stop-color="#94a3b8" />
                             </linearGradient>
                             <linearGradient id="finGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#38bdf8" />
-                                <stop offset="100%" stop-color="#0284c7" />
+                                <stop offset="0%" stop-color="#2563eb" />
+                                <stop offset="100%" stop-color="#1e3a8a" />
                             </linearGradient>
                             <linearGradient id="flameGrad" x1="50%" y1="0%" x2="50%" y2="100%">
                                 <stop offset="0%" stop-color="#ffffff" />
-                                <stop offset="45%" stop-color="#38bdf8" />
-                                <stop offset="100%" stop-color="rgba(56, 189, 248, 0)" />
+                                <stop offset="45%" stop-color="#2563eb" />
+                                <stop offset="100%" stop-color="rgba(29, 78, 216, 0)" />
                             </linearGradient>
                         </defs>
                         <path class="rocket-flame" d="M26,48 Q32,64 38,48 Q32,54 26,48 Z" fill="url(#flameGrad)" />
@@ -852,17 +995,17 @@
                         <rect x="26" y="44" width="12" height="5" rx="2" fill="#0f172a" />
                         <path d="M32,6 C22,18 20,32 21,44 L43,44 C44,32 42,18 32,6 Z" fill="url(#bodyGrad)" />
                         <path d="M32,6 C28,11 26,15 25,18 L39,18 C38,15 36,11 32,6 Z" fill="url(#finGrad)" />
-                        <circle cx="32" cy="27" r="6" fill="#0284c7" stroke="#0f172a" stroke-width="2" />
+                        <circle cx="32" cy="27" r="6" fill="#1d4ed8" stroke="#0f172a" stroke-width="2" />
                         <circle cx="30" cy="25" r="2" fill="#ffffff" opacity="0.9" />
                     </svg>
                 </div>
-                <span id="playerNickname" class="player-tag">@user</span>
+                <span id="playerNickname" class="player-tag">@игрок</span>
             </div>
         </div>
 
         <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА (STARS)</span>
+                <span>СТАВКА (ЗВЕЗДЫ)</span>
                 <span>АВТОВЫВОД x2.00</span>
             </div>
             
@@ -900,8 +1043,8 @@
         </div>
 
         <div class="rg-history" id="rouletteHistory">
-            <div class="history-pill" style="border-color: #ffffff;">WHITE</div>
-            <div class="history-pill" style="border-color: #334155;">DARK</div>
+            <div class="history-pill" style="border-color: #ffffff;">БЕЛЫЙ</div>
+            <div class="history-pill" style="border-color: #334155;">ЧЕРНЫЙ</div>
         </div>
 
         <div class="roulette-display">
@@ -921,7 +1064,7 @@
 
         <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА (STARS)</span>
+                <span>СТАВКА (ЗВЕЗДЫ)</span>
                 <span id="selectedColorLabel">ВЫБОР: БЕЛЫЙ</span>
             </div>
             
@@ -970,7 +1113,7 @@
 
         <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА (STARS)</span>
+                <span>СТАВКА (ЗВЕЗДЫ)</span>
                 <span id="minesMultLabel">МНОЖИТЕЛЬ: x1.00</span>
             </div>
             
@@ -1008,7 +1151,7 @@
         </div>
 
         <div class="rg-history" id="plinkoHistory">
-            <div class="history-pill" style="border-color: #38bdf8;">x1.2</div>
+            <div class="history-pill" style="border-color: #2563eb;">x1.2</div>
             <div class="history-pill">x0.5</div>
         </div>
 
@@ -1018,8 +1161,8 @@
 
         <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА (STARS)</span>
-                <span id="plinkoStatusLabel">БАЛАНСИРОВАННЫЙ РЕЖИМ</span>
+                <span>СТАВКА (ЗВЕЗДЫ)</span>
+                <span id="plinkoStatusLabel">СБАЛАНСИРОВАННЫЙ РЕЖИМ</span>
             </div>
             
             <div class="bet-row">
@@ -1056,7 +1199,7 @@
         </div>
 
         <div class="rg-history" id="coinflipHistory">
-            <div class="history-pill" style="border-color: #38bdf8;">ОРЕЛ</div>
+            <div class="history-pill" style="border-color: #2563eb;">ОРЕЛ</div>
             <div class="history-pill">РЕШКА</div>
         </div>
 
@@ -1080,7 +1223,7 @@
 
         <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА (STARS)</span>
+                <span>СТАВКА (ЗВЕЗДЫ)</span>
                 <span id="selectedCoinLabel">ВЫБОР: ОРЕЛ</span>
             </div>
             
@@ -1115,135 +1258,168 @@
         <div class="lobby-header">
             <div class="brand-logo">
                 <div class="brand-badge">X</div>
-                <div class="brand-text">XORYS <span>MARKET</span></div>
+                <div class="brand-text">
+                    XORYS
+                    <span>МАРКЕТ</span>
+                </div>
             </div>
-            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsMarket">100</span></div>
-        </div>
-
-        <!-- Главное меню маркета (4 плитки) -->
-        <div id="marketMainView" class="sub-market-page active">
-            <h1 class="page-title" style="margin-bottom: 14px;">МАРКЕТ</h1>
-            <div class="catalog-grid">
-                <div class="catalog-card" onclick="openMarketSub('marketNumbers')">
-                    <div class="card-icon"><i class="fa-solid fa-sim-card"></i></div>
-                    <div class="card-title">НОМЕРА</div>
-                </div>
-                <div class="catalog-card" onclick="openMarketSub('marketStars')">
-                    <div class="card-icon"><i class="fa-solid fa-star"></i></div>
-                    <div class="card-title">ЗВЕЗДЫ</div>
-                </div>
-                <div class="catalog-card" onclick="openMarketSub('marketPrem')">
-                    <div class="card-icon"><i class="fa-solid fa-gem"></i></div>
-                    <div class="card-title">TG PREM</div>
-                </div>
-                <div class="catalog-card" onclick="openMarketSub('marketUsdt')">
-                    <div class="card-icon"><i class="fa-solid fa-coins"></i></div>
-                    <div class="card-title">USDT</div>
-                </div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star"></i>
+                <span id="userStarsMarket">100</span>
             </div>
         </div>
 
-        <!-- 1. НОМЕРА -->
-        <div id="marketNumbers" class="sub-market-page">
-            <h2 class="page-title" style="font-size:16px; margin-bottom:12px;">ТЕЛЕГРАММ АККАУНТЫ</h2>
-            <div class="market-list" id="countryListContainer"></div>
-            <button class="btn-return" onclick="backToMarketMain()"><i class="fa-solid fa-arrow-left"></i> НАЗАД К КАТЕГОРИЯМ</button>
-        </div>
-
-        <!-- 2. ЗВЁЗДЫ -->
-        <div id="marketStars" class="sub-market-page">
-            <h2 class="page-title" style="font-size:16px; margin-bottom:12px;">ПОКУПКА ЗВЕЗД</h2>
-            <div class="stars-custom-box">
-                <div style="font-size:10px; color:rgba(255,255,255,0.5); font-weight:800; letter-spacing: 0.5px;">КОЛИЧЕСТВО ЗВЕЗД</div>
-                <input type="number" id="customStarsInput" class="stars-input" value="100" min="1" max="10000" oninput="onCustomStarsInput(this.value)">
-                
-                <div class="stars-chips-grid">
-                    <button class="stars-chip-btn" onclick="setStarsPreset(50)">50</button>
-                    <button class="stars-chip-btn active" onclick="setStarsPreset(100)">100</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(150)">150</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(250)">250</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(350)">350</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(500)">500</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(750)">750</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(1000)">1000</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(2500)">2500</button>
-                    <button class="stars-chip-btn" onclick="setStarsPreset(5000)" style="grid-column: span 2;">5000</button>
-                </div>
-
-                <div class="slider-container" style="margin-bottom: 12px;">
-                    <span class="slider-label">1</span>
-                    <input type="range" id="starsSlider" class="bet-slider" min="1" max="5000" value="100" oninput="onStarsSlider(this.value)">
-                    <span class="slider-label">5000</span>
-                </div>
-
-                <div style="display:flex; justify-content:space-between; align-items:center; margin-top:12px; padding:0 4px;">
-                    <span style="font-size:11px; color:rgba(255,255,255,0.6); font-weight:800;">ИТОГО К ОПЛАТЕ:</span>
-                    <span id="starsPriceUSD" style="font-size:14px; font-weight:900; color:#38bdf8;">$1.20</span>
-                </div>
-                <button class="buy-btn" style="width:100%; margin-top:12px; padding:11px; font-size:12px;" onclick="buyStarsAction()">КУПИТЬ ЗВЕЗДЫ</button>
-            </div>
-            <button class="btn-return" onclick="backToMarketMain()"><i class="fa-solid fa-arrow-left"></i> НАЗАД К КАТЕГОРИЯМ</button>
-        </div>
-
-        <!-- 3. ТГ ПРЕМ -->
-        <div id="marketPrem" class="sub-market-page">
-            <h2 class="page-title" style="font-size:16px; margin-bottom:12px;">TELEGRAM PREMIUM</h2>
-            <div class="market-list">
-                <div class="market-item-row">
-                    <div class="market-item-left">
-                        <div class="card-icon" style="width:36px; height:36px; font-size:15px; margin-bottom:0;"><i class="fa-solid fa-gem"></i></div>
-                        <div class="market-item-meta">
-                            <div class="market-item-name">TG Premium на 3 месяца</div>
-                            <div class="market-item-sub">Моментальная доставка</div>
+        <div id="marketMainView">
+            <h1 class="page-title">МАРКЕТ</h1>
+            <div class="games-container">
+                <!-- 1. НОМЕРА -->
+                <div class="game-card-row" onclick="openMarketCategory('НОМЕРА')">
+                    <div class="game-visual-left">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <defs>
+                                <linearGradient id="simBodyMono" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="65%" stop-color="#d4d4d8"/>
+                                    <stop offset="100%" stop-color="#71717a"/>
+                                </linearGradient>
+                            </defs>
+                            <path d="M22 20 C22 15 26 11 31 11 H64 L86 33 V98 C86 103 82 107 77 107 H31 C26 107 22 103 22 98 Z" fill="url(#simBodyMono)" stroke="#050507" stroke-width="2.5"/>
+                            <rect x="33" y="45" width="42" height="48" rx="7" fill="#090a0d" stroke="#52525b" stroke-width="2"/>
+                            <line x1="47" y1="45" x2="47" y2="93" stroke="#52525b" stroke-width="1.5"/>
+                            <line x1="61" y1="45" x2="61" y2="93" stroke="#52525b" stroke-width="1.5"/>
+                            <line x1="33" y1="61" x2="75" y2="61" stroke="#52525b" stroke-width="1.5"/>
+                            <line x1="33" y1="77" x2="75" y2="77" stroke="#52525b" stroke-width="1.5"/>
+                            <rect x="28" y="22" width="46" height="16" rx="5" fill="#050507"/>
+                            <text x="51" y="33" fill="#ffffff" font-size="9.5" font-weight="900" text-anchor="middle" letter-spacing="0.5">+888</text>
+                        </svg>
+                    </div>
+                    <div class="game-info-right">
+                        <span class="game-category-tag"><i class="fa-solid fa-sim-card"></i> ВИРТУАЛЬНЫЕ +888 / SIM</span>
+                        <span class="game-name">НОМЕРА</span>
+                        <div class="game-bottom-bar">
+                            <div class="game-stats-badge"><i class="fa-solid fa-check-circle"></i> 11 стран мира</div>
+                            <button class="card-action-btn">ОТКРЫТЬ</button>
                         </div>
                     </div>
-                    <div class="market-item-right">
-                        <div class="market-item-price">450 <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
-                        <div class="market-item-usd">$5.40</div>
-                        <button class="buy-btn" onclick="buyItem('TG Premium (3 мес)', 450)">КУПИТЬ</button>
-                    </div>
                 </div>
-                <div class="market-item-row">
-                    <div class="market-item-left">
-                        <div class="card-icon" style="width:36px; height:36px; font-size:15px; margin-bottom:0;"><i class="fa-solid fa-gem"></i></div>
-                        <div class="market-item-meta">
-                            <div class="market-item-name">TG Premium на 6 месяцев</div>
-                            <div class="market-item-sub">Моментальная доставка</div>
+
+                <!-- 2. ЗВЁЗДЫ -->
+                <div class="game-card-row" onclick="openMarketCategory('ЗВЁЗДЫ')">
+                    <div class="game-visual-left">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <defs>
+                                <linearGradient id="starGradMono" x1="20%" y1="10%" x2="80%" y2="90%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="55%" stop-color="#e4e4e7"/>
+                                    <stop offset="100%" stop-color="#71717a"/>
+                                </linearGradient>
+                            </defs>
+                            <ellipse cx="48" cy="64" rx="46" ry="22" transform="rotate(-24 48 64)" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-dasharray="5 4"/>
+                            <path d="M50 16 L60.5 39.5 L86 42.5 L66.8 59.5 L72.2 84.5 L50 71.5 L27.8 84.5 L33.2 59.5 L14 42.5 L39.5 39.5 Z" fill="url(#starGradMono)" stroke="#050507" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M50 16 L50 71.5 L27.8 84.5 L33.2 59.5 L14 42.5 L39.5 39.5 Z" fill="rgba(255,255,255,0.35)"/>
+                            <circle cx="84" cy="24" r="2.5" fill="#ffffff"/>
+                            <circle cx="88" cy="76" r="2" fill="#a1a1aa"/>
+                            <circle cx="20" cy="84" r="2" fill="#ffffff"/>
+                        </svg>
+                    </div>
+                    <div class="game-info-right">
+                        <span class="game-category-tag"><i class="fa-solid fa-star"></i> TELEGRAM STARS</span>
+                        <span class="game-name">ЗВЁЗДЫ</span>
+                        <div class="game-bottom-bar">
+                            <div class="game-stats-badge"><i class="fa-solid fa-bolt"></i> Мгновенно • без KYC</div>
+                            <button class="card-action-btn">КУПИТЬ</button>
                         </div>
                     </div>
-                    <div class="market-item-right">
-                        <div class="market-item-price">850 <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
-                        <div class="market-item-usd">$10.20</div>
-                        <button class="buy-btn" onclick="buyItem('TG Premium (6 мес)', 850)">КУПИТЬ</button>
-                    </div>
                 </div>
-                <div class="market-item-row">
-                    <div class="market-item-left">
-                        <div class="card-icon" style="width:36px; height:36px; font-size:15px; margin-bottom:0;"><i class="fa-solid fa-gem"></i></div>
-                        <div class="market-item-meta">
-                            <div class="market-item-name">TG Premium на 12 месяцев</div>
-                            <div class="market-item-sub">Моментальная доставка</div>
+
+                <!-- 3. ИН ПРЕМ -->
+                <div class="game-card-row" onclick="openMarketCategory('ИН ПРЕМ')">
+                    <div class="game-visual-left">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <defs>
+                                <linearGradient id="premCrystalMono" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="50%" stop-color="#d4d4d8"/>
+                                    <stop offset="100%" stop-color="#52525b"/>
+                                </linearGradient>
+                            </defs>
+                            <circle cx="48" cy="64" r="44" fill="#0d0e12" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
+                            <path d="M31 32 L37 22 L48 29 L59 22 L65 32 H31 Z" fill="#ffffff"/>
+                            <path d="M48 37 L69 52 L61 82 H35 L27 52 Z" fill="url(#premCrystalMono)" stroke="#050507" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M48 37 L56 56 L48 82 L40 56 Z" fill="#090a0d" opacity="0.85"/>
+                            <path d="M27 52 H69" stroke="#050507" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <div class="game-info-right">
+                        <span class="game-category-tag"><i class="fa-solid fa-crown"></i> ПОДПИСКА 3 / 6 / 12 МЕС</span>
+                        <span class="game-name">TG PREM</span>
+                        <div class="game-bottom-bar">
+                            <div class="game-stats-badge"><i class="fa-solid fa-clock"></i> Активация 1 мин</div>
+                            <button class="card-action-btn">КУПИТЬ</button>
                         </div>
                     </div>
-                    <div class="market-item-right">
-                        <div class="market-item-price">1550 <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
-                        <div class="market-item-usd">$18.60</div>
-                        <button class="buy-btn" onclick="buyItem('TG Premium (12 мес)', 1550)">КУПИТЬ</button>
+                </div>
+
+                <!-- 4. USDT -->
+                <div class="game-card-row" onclick="openMarketCategory('USDT')">
+                    <div class="game-visual-left">
+                        <svg viewBox="0 0 120 120" fill="none">
+                            <defs>
+                                <radialGradient id="usdtCoinMono" cx="30%" cy="30%" r="70%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="65%" stop-color="#d4d4d8"/>
+                                    <stop offset="100%" stop-color="#71717a"/>
+                                </radialGradient>
+                            </defs>
+                            <circle cx="44" cy="62" r="44" fill="#050507" stroke="#ffffff" stroke-width="3"/>
+                            <circle cx="48" cy="62" r="40" fill="url(#usdtCoinMono)" stroke="#27272a" stroke-width="2"/>
+                            <circle cx="48" cy="62" r="32" stroke="#050507" stroke-width="1.5" stroke-dasharray="3 3"/>
+                            <rect x="33" y="43" width="30" height="6.5" rx="2" fill="#050507"/>
+                            <rect x="44.5" y="46" width="7" height="33" rx="2" fill="#050507"/>
+                            <ellipse cx="48" cy="58" rx="17" ry="4.5" stroke="#050507" stroke-width="3"/>
+                        </svg>
+                    </div>
+                    <div class="game-info-right">
+                        <span class="game-category-tag"><i class="fa-solid fa-coins"></i> КРИПТОВАЛЮТА TON / TRC20</span>
+                        <span class="game-name">USDT</span>
+                        <div class="game-bottom-bar">
+                            <div class="game-stats-badge"><i class="fa-solid fa-chart-line"></i> Курс актуальный</div>
+                            <button class="card-action-btn">КУПИТЬ</button>
+                        </div>
                     </div>
                 </div>
             </div>
-            <button class="btn-return" onclick="backToMarketMain()" style="margin-top:14px;"><i class="fa-solid fa-arrow-left"></i> НАЗАД К КАТЕГОРИЯМ</button>
         </div>
 
-        <!-- 4. USDT -->
-        <div id="marketUsdt" class="sub-market-page">
-            <h2 class="page-title" style="font-size:16px; margin-bottom:12px;">USDT ОБМЕН</h2>
-            <div class="dev-box">
-                <i class="fa-solid fa-person-digging"></i>
-                <h3>МОДУЛЬ В РАЗРАБОТКЕ</h3>
-                <p>Скоро здесь появится возможность быстрой покупки и обмена USDT.</p>
+        <!-- Подкаталог стран (для Номеров) -->
+        <div id="marketDetailView" style="display: none;">
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
+                <button class="btn-return" style="width: auto; margin-top: 0; padding: 8px 14px;" onclick="closeMarketDetail()"><i class="fa-solid fa-arrow-left"></i> НАЗАД</button>
+                <h2 style="font-size: 15px; font-weight: 900; letter-spacing: 0.8px;" id="marketDetailTitle">ТЕЛЕГРАММ АККАУНТЫ</h2>
+                <div style="width: 60px;"></div>
             </div>
-            <button class="btn-return" onclick="backToMarketMain()" style="margin-top:14px;"><i class="fa-solid fa-arrow-left"></i> НАЗАД К КАТЕГОРИЯМ</button>
+            <div class="games-container" id="countriesListContainer"></div>
+        </div>
+    </div>
+
+    <!-- Модальное окно оформления покупки в маркете -->
+    <div id="marketModal" class="market-modal-backdrop" onclick="closeMarketModal(event)">
+        <div class="market-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-top-row">
+                <div class="modal-title-group">
+                    <span id="modalCategorySub">КАТЕГОРИЯ МАРКЕТА</span>
+                    <h2 id="modalCategoryTitle">ЗВЁЗДЫ</h2>
+                </div>
+                <button class="modal-close-btn" onclick="closeMarketModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div class="modal-packages-grid" id="modalPackagesGrid"></div>
+
+            <button class="modal-buy-btn" id="modalConfirmBtn" onclick="confirmMarketPurchase()">
+                ОПЛАТИТЬ И ПОЛУЧИТЬ
+            </button>
         </div>
     </div>
 
@@ -1256,8 +1432,8 @@
     <!-- Нижняя панель навигации -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchPage('casino', this)">
-            <i class="fa-solid fa-dice"></i>
-            <span>КАЗИНО</span>
+            <i class="fa-solid fa-gamepad"></i>
+            <span>ИГРЫ</span>
         </button>
         <button class="nav-item" onclick="switchPage('market', this)">
             <i class="fa-solid fa-store"></i>
@@ -1270,10 +1446,30 @@
     </nav>
 
     <script>
-        const tg = window.Telegram.WebApp;
-        tg.ready();
+        const tg = window.Telegram?.WebApp;
+        if (tg && tg.ready) tg.ready();
 
-        const username = tg.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : '@player';
+        function triggerHaptic(type, style) {
+            try {
+                if (!tg || !tg.HapticFeedback) return;
+                if (type === 'impact') tg.HapticFeedback.impactOccurred(style || 'light');
+                if (type === 'notification') tg.HapticFeedback.notificationOccurred(style || 'success');
+            } catch (e) {}
+        }
+
+        let toastTimer = null;
+        function showToast(message) {
+            const toast = document.getElementById('customToast');
+            const text = document.getElementById('toastText');
+            text.innerText = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2200);
+        }
+
+        const username = tg?.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : '@игрок';
         document.getElementById('playerNickname').innerText = username;
 
         let starsBalance = 100;
@@ -1302,49 +1498,10 @@
         let isFlippingCoin = false;
         let currentCoinRotation = 0;
 
-        // Данные по номерам
-        const countryNumbersData = [
-            { name: "Россия", code: "+7", flag: "ru", stars: 199, usd: "$2,50" },
-            { name: "Казахстан", code: "+77", flag: "kz", stars: 199, usd: "$2,50" },
-            { name: "Украина", code: "+380", flag: "ua", stars: 235, usd: "$4,00" },
-            { name: "Бангладеш", code: "+880", flag: "bd", stars: 120, usd: "$1,99" },
-            { name: "Иран", code: "+97", flag: "ir", stars: 75, usd: "$0,99" },
-            { name: "США", code: "+1", flag: "us", stars: 50, usd: "$0,99" },
-            { name: "Колумбия", code: "+56", flag: "co", stars: 50, usd: "$0,99" },
-            { name: "Бразилия", code: "+55", flag: "br", stars: 50, usd: "$0,99" },
-            { name: "Канада", code: "+1", flag: "ca", stars: 50, usd: "$0,99" },
-            { name: "Индия", code: "+91", flag: "in", stars: 50, usd: "$0,99" },
-            { name: "Афганистан", code: "+93", flag: "af", stars: 222, usd: "$3,80" }
-        ];
-
-        function renderCountryList() {
-            const container = document.getElementById('countryListContainer');
-            container.innerHTML = '';
-            countryNumbersData.forEach(item => {
-                const row = document.createElement('div');
-                row.className = 'market-item-row';
-                row.innerHTML = `
-                    <div class="market-item-left">
-                        <img src="https://flagcdn.com/w80/${item.flag}.png" class="country-flag" alt="${item.name}">
-                        <div class="market-item-meta">
-                            <div class="market-item-name">${item.name} ${item.code}</div>
-                            <div class="market-item-sub">В наличии • Гарантия</div>
-                        </div>
-                    </div>
-                    <div class="market-item-right">
-                        <div class="market-item-price">${item.stars} <i class="fa-solid fa-star" style="font-size:9px;"></i></div>
-                        <div class="market-item-usd">${item.usd}</div>
-                        <button class="buy-btn" onclick="buyItem('${item.name} ${item.code}', ${item.stars})">КУПИТЬ</button>
-                    </div>
-                `;
-                container.appendChild(row);
-            });
-        }
-        renderCountryList();
-
         function updateBalanceUI() {
             document.getElementById('userStarsLobby').innerText = starsBalance;
-            document.getElementById('userStarsMarket').innerText = starsBalance;
+            const marketStarsEl = document.getElementById('userStarsMarket');
+            if (marketStarsEl) marketStarsEl.innerText = starsBalance;
             document.getElementById('userStarsRoulette').innerText = starsBalance;
             document.getElementById('userStarsRocket').innerText = starsBalance;
             document.getElementById('userStarsMines').innerText = starsBalance;
@@ -1360,12 +1517,6 @@
                     maxLabel.innerText = sliderMax;
                 }
             });
-        }
-
-        function switchTab(el, tabName) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            el.classList.add('active');
-            tg.HapticFeedback.impactOccurred('light');
         }
 
         function syncBetUI(type, val) {
@@ -1401,81 +1552,15 @@
             }
         }
 
-        function openMarketSub(subId) {
-            document.querySelectorAll('.sub-market-page').forEach(p => p.classList.remove('active'));
-            document.getElementById(subId).classList.add('active');
-            tg.HapticFeedback.impactOccurred('light');
-        }
-
-        function backToMarketMain() {
-            document.querySelectorAll('.sub-market-page').forEach(p => p.classList.remove('active'));
-            document.getElementById('marketMainView').classList.add('active');
-            tg.HapticFeedback.impactOccurred('light');
-        }
-
-        // Логика покупки звезд
-        let currentStarsAmount = 100;
-        function updateStarsUSD(val) {
-            currentStarsAmount = Math.max(1, parseInt(val) || 1);
-            const usd = (currentStarsAmount * 0.012).toFixed(2);
-            document.getElementById('starsPriceUSD').innerText = '$' + usd;
-        }
-
-        function onCustomStarsInput(val) {
-            updateStarsUSD(val);
-            const slider = document.getElementById('starsSlider');
-            if (val <= 5000) slider.value = val;
-            document.querySelectorAll('.stars-chip-btn').forEach(b => b.classList.remove('active'));
-        }
-
-        function onStarsSlider(val) {
-            document.getElementById('customStarsInput').value = val;
-            updateStarsUSD(val);
-            document.querySelectorAll('.stars-chip-btn').forEach(b => {
-                if (parseInt(b.innerText) === parseInt(val)) b.classList.add('active');
-                else b.classList.remove('active');
-            });
-        }
-
-        function setStarsPreset(amount) {
-            document.getElementById('customStarsInput').value = amount;
-            document.getElementById('starsSlider').value = Math.min(amount, 5000);
-            updateStarsUSD(amount);
-            document.querySelectorAll('.stars-chip-btn').forEach(b => {
-                if (parseInt(b.innerText) === amount) b.classList.add('active');
-                else b.classList.remove('active');
-            });
-            tg.HapticFeedback.impactOccurred('light');
-        }
-
-        function buyStarsAction() {
-            starsBalance += currentStarsAmount;
-            updateBalanceUI();
-            tg.HapticFeedback.notificationOccurred('success');
-            alert(`Успешно приобретено ${currentStarsAmount} звёзд!`);
-        }
-
-        function buyItem(title, priceStars) {
-            if (starsBalance < priceStars) {
-                alert('Недостаточно Stars на балансе!');
-                tg.HapticFeedback.notificationOccurred('error');
-                return;
-            }
-            starsBalance -= priceStars;
-            updateBalanceUI();
-            tg.HapticFeedback.notificationOccurred('success');
-            alert(`Успешная покупка: "${title}" за ${priceStars} звёзд!`);
-        }
-
-        function openRouletteGame() { switchPage('roulettePage'); tg.HapticFeedback.impactOccurred('medium'); }
-        function openRocketGame() { switchPage('rocketGamePage'); tg.HapticFeedback.impactOccurred('medium'); }
-        function openMinesGame() { switchPage('minesPage'); tg.HapticFeedback.impactOccurred('medium'); initMinesGrid(); }
-        function openPlinkoGame() { switchPage('plinkoPage'); tg.HapticFeedback.impactOccurred('medium'); initPlinkoCanvas(); }
-        function openCoinflipGame() { switchPage('coinflipPage'); tg.HapticFeedback.impactOccurred('medium'); }
+        function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
+        function openRocketGame() { switchPage('rocketGamePage'); triggerHaptic('impact', 'medium'); }
+        function openMinesGame() { switchPage('minesPage'); triggerHaptic('impact', 'medium'); initMinesGrid(); }
+        function openPlinkoGame() { switchPage('plinkoPage'); triggerHaptic('impact', 'medium'); initPlinkoCanvas(); }
+        function openCoinflipGame() { switchPage('coinflipPage'); triggerHaptic('impact', 'medium'); }
 
         function closeSubGame(pageId) {
             switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
-            tg.HapticFeedback.impactOccurred('light');
+            triggerHaptic('impact', 'light');
         }
 
         function changeBet(amount, type) {
@@ -1484,16 +1569,16 @@
             else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
             else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
             else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
-            tg.HapticFeedback.impactOccurred('light');
+            triggerHaptic('impact', 'light');
         }
 
         function setBet(amount, type) {
             if (type === 'roulette') { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket') { currentBetRocket = amount; syncBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'rocket') { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
             else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
             else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
             else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
-            tg.HapticFeedback.impactOccurred('light');
+            triggerHaptic('impact', 'light');
         }
 
         /* --- 3D ОРЕЛ И РЕШКА --- */
@@ -1503,12 +1588,12 @@
             document.querySelectorAll('#coinflipPage .color-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             document.getElementById('selectedCoinLabel').innerText = 'ВЫБОР: ' + (side === 'heads' ? 'ОРЕЛ' : 'РЕШКА');
-            tg.HapticFeedback.impactOccurred('light');
+            triggerHaptic('impact', 'light');
         }
 
         function flipCoin3D() {
             if (isFlippingCoin) return;
-            if (starsBalance < currentBetCoinflip) { alert('Недостаточно Stars!'); return; }
+            if (starsBalance < currentBetCoinflip) { showToast('Недостаточно звезд!'); return; }
 
             starsBalance -= currentBetCoinflip;
             updateBalanceUI();
@@ -1517,7 +1602,7 @@
             const btn = document.getElementById('coinflipBtn');
             btn.innerText = 'ПОЛЕТ...';
             btn.disabled = true;
-            tg.HapticFeedback.impactOccurred('medium');
+            triggerHaptic('impact', 'medium');
 
             const isWin = Math.random() < 0.48;
             const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
@@ -1536,15 +1621,15 @@
                 if (isWin) {
                     starsBalance += currentBetCoinflip * 2;
                     updateBalanceUI();
-                    tg.HapticFeedback.notificationOccurred('success');
+                    triggerHaptic('notification', 'success');
                 } else {
-                    tg.HapticFeedback.notificationOccurred('error');
+                    triggerHaptic('notification', 'error');
                 }
 
                 const historyContainer = document.getElementById('coinflipHistory');
                 const pill = document.createElement('div');
                 pill.className = 'history-pill';
-                pill.style.borderColor = outcomeSide === 'heads' ? '#38bdf8' : '#ffffff';
+                pill.style.borderColor = outcomeSide === 'heads' ? '#2563eb' : '#ffffff';
                 pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
                 historyContainer.prepend(pill);
                 if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
@@ -1575,11 +1660,11 @@
         }
 
         function dropPlinkoBall() {
-            if (starsBalance < currentBetPlinko) { alert('Недостаточно Stars!'); return; }
+            if (starsBalance < currentBetPlinko) { showToast('Недостаточно звезд!'); return; }
 
             starsBalance -= currentBetPlinko;
             updateBalanceUI();
-            tg.HapticFeedback.impactOccurred('medium');
+            triggerHaptic('impact', 'medium');
 
             const canvas = document.getElementById('plinkoCanvas');
             plinkoBalls.push({
@@ -1605,7 +1690,7 @@
 
             const binWidth = canvas.width / plinkoBins.length;
             plinkoBins.forEach((mult, i) => {
-                ctx.fillStyle = mult >= 15 ? '#0284c7' : (mult >= 2 ? '#38bdf8' : (mult >= 1 ? 'rgba(56, 189, 248, 0.35)' : 'rgba(255,255,255,0.08)'));
+                ctx.fillStyle = mult >= 15 ? '#1e3a8a' : (mult >= 2 ? '#1d4ed8' : (mult >= 1 ? 'rgba(37, 99, 235, 0.35)' : 'rgba(255,255,255,0.08)'));
                 ctx.fillRect(i * binWidth + 2, canvas.height - 22, binWidth - 4, 20);
 
                 ctx.fillStyle = '#ffffff';
@@ -1634,8 +1719,8 @@
                     }
                 });
 
-                ctx.fillStyle = '#38bdf8';
-                ctx.shadowColor = '#38bdf8';
+                ctx.fillStyle = '#3b82f6';
+                ctx.shadowColor = '#1d4ed8';
                 ctx.shadowBlur = 8;
                 ctx.beginPath();
                 ctx.arc(ball.x, ball.y, 4.5, 0, Math.PI * 2);
@@ -1651,12 +1736,12 @@
                     starsBalance += winAmount;
                     updateBalanceUI();
 
-                    if (winMult >= 2) tg.HapticFeedback.notificationOccurred('success');
+                    if (winMult >= 2) triggerHaptic('notification', 'success');
 
                     const historyContainer = document.getElementById('plinkoHistory');
                     const pill = document.createElement('div');
                     pill.className = 'history-pill';
-                    pill.style.borderColor = winMult >= 2 ? '#38bdf8' : 'rgba(255,255,255,0.2)';
+                    pill.style.borderColor = winMult >= 2 ? '#2563eb' : 'rgba(255,255,255,0.2)';
                     pill.innerText = `x${winMult}`;
                     historyContainer.prepend(pill);
                     if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
@@ -1675,12 +1760,12 @@
             el.classList.add('active');
             const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СИНИЙ' };
             document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
-            tg.HapticFeedback.impactOccurred('light');
+            triggerHaptic('impact', 'light');
         }
 
         function spinRouletteWheel() {
             if (isSpinning) return;
-            if (starsBalance < currentBetRoulette) { alert('Недостаточно Stars!'); return; }
+            if (starsBalance < currentBetRoulette) { showToast('Недостаточно звезд!'); return; }
 
             starsBalance -= currentBetRoulette;
             updateBalanceUI();
@@ -1689,13 +1774,13 @@
             const btn = document.getElementById('rouletteBtn');
             btn.innerText = 'КРУТИТСЯ...';
             btn.disabled = true;
-            tg.HapticFeedback.impactOccurred('medium');
+            triggerHaptic('impact', 'medium');
 
             const outcomeRand = Math.random();
-            let winningIndex = 15, winningColor = 'red', labelText = 'WHITE';
-            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; labelText = 'WHITE'; }
-            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; labelText = 'DARK'; }
-            else { winningIndex = 355; winningColor = 'green'; labelText = 'BLUE'; }
+            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ';
+            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; }
+            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; }
+            else { winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; }
 
             currentWheelAngle += (360 * 6) + (winningIndex - (currentWheelAngle % 360));
             document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
@@ -1708,15 +1793,15 @@
                 if (winningColor === selectedRouletteColor) {
                     starsBalance += currentBetRoulette * (winningColor === 'green' ? 14 : 2);
                     updateBalanceUI();
-                    tg.HapticFeedback.notificationOccurred('success');
+                    triggerHaptic('notification', 'success');
                 } else {
-                    tg.HapticFeedback.notificationOccurred('error');
+                    triggerHaptic('notification', 'error');
                 }
 
                 const historyContainer = document.getElementById('rouletteHistory');
                 const pill = document.createElement('div');
                 pill.className = 'history-pill';
-                pill.style.borderColor = winningColor === 'green' ? '#38bdf8' : (winningColor === 'red' ? '#ffffff' : '#334155');
+                pill.style.borderColor = winningColor === 'green' ? '#2563eb' : (winningColor === 'red' ? '#ffffff' : '#334155');
                 pill.innerText = labelText;
                 historyContainer.prepend(pill);
                 if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
@@ -1730,10 +1815,10 @@
             const multText = document.getElementById('multiplierText');
             const starsBg = document.getElementById('spaceStars');
             const mountains = document.getElementById('mountainsLayer');
-            tg.HapticFeedback.impactOccurred('light');
+            triggerHaptic('impact', 'light');
 
             if (!isPlayingRocket) {
-                if (starsBalance < currentBetRocket) { alert('Недостаточно Stars!'); return; }
+                if (starsBalance < currentBetRocket) { showToast('Недостаточно звезд!'); return; }
                 starsBalance -= currentBetRocket;
                 updateBalanceUI();
                 isPlayingRocket = true;
@@ -1790,11 +1875,11 @@
                 const winSum = Math.floor(currentBetRocket * currentMultiplier);
                 starsBalance += winSum;
                 updateBalanceUI();
-                pill.style.borderColor = '#38bdf8';
+                pill.style.borderColor = '#2563eb';
                 pill.innerText = 'x' + currentMultiplier.toFixed(2);
-                tg.HapticFeedback.notificationOccurred('success');
+                triggerHaptic('notification', 'success');
             } else {
-                tg.HapticFeedback.notificationOccurred('error');
+                triggerHaptic('notification', 'error');
                 multText.classList.add('crashed');
                 multText.innerText = 'СЛИВ!';
                 rocket.style.opacity = '0';
@@ -1825,7 +1910,7 @@
             minesCount = count;
             document.querySelectorAll('.mine-count-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            tg.HapticFeedback.impactOccurred('light');
+            triggerHaptic('impact', 'light');
         }
 
         function initMinesGrid() {
@@ -1842,7 +1927,7 @@
         function handleMinesBtnClick() {
             const btn = document.getElementById('minesBtn');
             if (!isPlayingMines) {
-                if (starsBalance < currentBetMines) { alert('Недостаточно Stars!'); return; }
+                if (starsBalance < currentBetMines) { showToast('Недостаточно звезд!'); return; }
                 starsBalance -= currentBetMines;
                 updateBalanceUI();
                 isPlayingMines = true;
@@ -1859,7 +1944,7 @@
                 btn.innerText = 'ЗАБРАТЬ';
                 btn.className = 'btn-main-action btn-style-cashout';
                 document.getElementById('minesMultLabel').innerText = 'МНОЖИТЕЛЬ: x1.00';
-                tg.HapticFeedback.impactOccurred('medium');
+                triggerHaptic('impact', 'medium');
             } else {
                 if (openedCount === 0) return;
                 starsBalance += Math.floor(currentBetMines * currentMinesMult);
@@ -1876,7 +1961,7 @@
 
             if (mineLocations.includes(index)) {
                 tile.classList.add('revealed-bomb'); tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
-                tg.HapticFeedback.notificationOccurred('error');
+                triggerHaptic('notification', 'error');
                 tiles.forEach((t, idx) => { if (mineLocations.includes(idx)) { t.classList.add('revealed-bomb'); t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; } });
                 endMinesGame(false);
             } else {
@@ -1885,7 +1970,7 @@
                 currentMinesMult = (1 + (openedCount * (minesCount * 0.12))).toFixed(2);
                 document.getElementById('minesMultLabel').innerText = `МНОЖИТЕЛЬ: x${currentMinesMult}`;
                 document.getElementById('minesBtn').innerText = `ЗАБРАТЬ (${Math.floor(currentBetMines * currentMinesMult)})`;
-                tg.HapticFeedback.impactOccurred('light');
+                triggerHaptic('impact', 'light');
             }
         }
 
@@ -1894,8 +1979,182 @@
             const btn = document.getElementById('minesBtn');
             btn.innerText = 'ИГРАТЬ';
             btn.className = 'btn-main-action btn-style-start';
-            if (isWin) tg.HapticFeedback.notificationOccurred('success');
+            if (isWin) triggerHaptic('notification', 'success');
             else document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ!';
+        }
+
+        const marketCatalogData = {
+            'НОМЕРА': {
+                sub: 'ВИРТУАЛЬНЫЕ +888 / SIM',
+                packages: [
+                    { amount: 'SIM РФ / СНГ', price: '150 ★', starsReward: 0 },
+                    { amount: 'Виртуальный +888', price: '490 ★', starsReward: 0 },
+                    { amount: 'Анонимный номер TG', price: '1 200 ★', starsReward: 0 },
+                    { amount: 'Красивый номер VIP', price: '2 500 ★', starsReward: 0 }
+                ]
+            },
+            'ЗВЁЗДЫ': {
+                sub: 'TELEGRAM STARS',
+                packages: [
+                    { amount: '100 Звёзд', price: '1.80 USDT', starsReward: 100 },
+                    { amount: '250 Звёзд', price: '4.40 USDT', starsReward: 250 },
+                    { amount: '500 Звёзд', price: '8.70 USDT', starsReward: 500 },
+                    { amount: '1 000 Звёзд', price: '17.20 USDT', starsReward: 1000 }
+                ]
+            },
+            'ИН ПРЕМ': {
+                sub: 'ПОДПИСКА TELEGRAM PREMIUM',
+                packages: [
+                    { amount: 'Подписка 3 мес.', price: '1 150 ★', starsReward: 0 },
+                    { amount: 'Подписка 6 мес.', price: '1 950 ★', starsReward: 0 },
+                    { amount: 'Подписка 12 мес.', price: '3 400 ★', starsReward: 0 },
+                    { amount: 'Подарок другу 3 мес.', price: '1 200 ★', starsReward: 0 }
+                ]
+            },
+            'USDT': {
+                sub: 'КРИПТОВАЛЮТА TON / TRC20',
+                packages: [
+                    { amount: '5 USDT', price: '280 ★', starsReward: 0 },
+                    { amount: '10 USDT', price: '550 ★', starsReward: 0 },
+                    { amount: '25 USDT', price: '1 360 ★', starsReward: 0 },
+                    { amount: '50 USDT', price: '2 700 ★', starsReward: 0 }
+                ]
+            }
+        };
+
+        const countriesList = [
+            { name: 'Россия', code: '+7', code2: 'ru', stars: 199, usd: '$2,50' },
+            { name: 'Казахстан', code: '+77', code2: 'kz', stars: 199, usd: '$2,50' },
+            { name: 'Украина', code: '+380', code2: 'ua', stars: 235, usd: '$4,00' },
+            { name: 'Бангладеш', code: '+880', code2: 'bd', stars: 120, usd: '$1,99' },
+            { name: 'Иран', code: '+97', code2: 'ir', stars: 75, usd: '$0,99' },
+            { name: 'США', code: '+1', code2: 'us', stars: 50, usd: '$0,99' },
+            { name: 'Колумбия', code: '+56', code2: 'co', stars: 50, usd: '$0,99' },
+            { name: 'Бразилия', code: '+55', code2: 'br', stars: 50, usd: '$0,99' },
+            { name: 'Канада', code: '+1', code2: 'ca', stars: 50, usd: '$0,99' },
+            { name: 'Индия', code: '+91', code2: 'in', stars: 50, usd: '$0,99' },
+            { name: 'Афганистан', code: '+93', code2: 'af', stars: 222, usd: '$3,80' }
+        ];
+
+        let activeMarketCategory = 'ЗВЁЗДЫ';
+        let selectedPackageIndex = 0;
+
+        function openMarketCategory(categoryName) {
+            triggerHaptic('impact', 'medium');
+            if (categoryName === 'НОМЕРА') {
+                document.getElementById('marketMainView').style.display = 'none';
+                document.getElementById('marketDetailView').style.display = 'block';
+                renderCountriesList();
+            } else {
+                openMarketModal(categoryName);
+            }
+        }
+
+        function closeMarketDetail() {
+            triggerHaptic('impact', 'light');
+            document.getElementById('marketDetailView').style.display = 'none';
+            document.getElementById('marketMainView').style.display = 'block';
+        }
+
+        function renderCountriesList() {
+            const container = document.getElementById('countriesListContainer');
+            container.innerHTML = '';
+
+            countriesList.forEach((item, idx) => {
+                const row = document.createElement('div');
+                row.className = 'game-card-row';
+                row.style.padding = '12px 14px';
+                row.onclick = () => buyCountryItem(item);
+                row.innerHTML = `
+                    <div style="display: flex; align-items: center; gap: 12px; z-index: 2;">
+                        <img src="https://flagcdn.com/w80/${item.code2}.png" alt="${item.name}" style="width: 38px; height: 26px; border-radius: 6px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);" />
+                        <div style="display: flex; flex-direction: column; gap: 2px;">
+                            <span style="font-size: 15px; font-weight: 900; color: #ffffff;">${item.name} ${item.code}</span>
+                            <span style="font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5);">В наличии • Гарантия</span>
+                        </div>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 10px; z-index: 2;">
+                        <div style="text-align: right;">
+                            <div style="font-size: 13px; font-weight: 900; color: #ffffff;">${item.stars} ★</div>
+                            <div style="font-size: 10px; font-weight: 700; color: rgba(255,255,255,0.45);">${item.usd}</div>
+                        </div>
+                        <button class="card-action-btn" style="padding: 7px 12px; font-size: 10px;">КУПИТЬ</button>
+                    </div>
+                `;
+                container.appendChild(row);
+            });
+        }
+
+        function buyCountryItem(item) {
+            if (starsBalance < item.stars) {
+                showToast(`Недостаточно звезд! Нужно ${item.stars} ★`);
+                triggerHaptic('notification', 'error');
+                return;
+            }
+
+            starsBalance -= item.stars;
+            updateBalanceUI();
+            showToast(`Успешно куплен номер (${item.name} ${item.code})!`);
+            triggerHaptic('notification', 'success');
+        }
+
+        function openMarketModal(categoryName) {
+            const data = marketCatalogData[categoryName];
+            if (!data) return;
+
+            activeMarketCategory = categoryName;
+            selectedPackageIndex = 0;
+
+            document.getElementById('modalCategorySub').innerText = data.sub;
+            document.getElementById('modalCategoryTitle').innerText = categoryName;
+
+            renderMarketPackages();
+            document.getElementById('marketModal').classList.add('open');
+            triggerHaptic('impact', 'medium');
+        }
+
+        function renderMarketPackages() {
+            const data = marketCatalogData[activeMarketCategory];
+            const grid = document.getElementById('modalPackagesGrid');
+            grid.innerHTML = '';
+
+            data.packages.forEach((pkg, idx) => {
+                const item = document.createElement('div');
+                item.className = 'package-option' + (idx === selectedPackageIndex ? ' selected' : '');
+                item.onclick = () => {
+                    selectedPackageIndex = idx;
+                    renderMarketPackages();
+                    triggerHaptic('impact', 'light');
+                };
+                item.innerHTML = `
+                    <div class="pkg-amount">${pkg.amount}</div>
+                    <div class="pkg-price">${pkg.price}</div>
+                `;
+                grid.appendChild(item);
+            });
+        }
+
+        function closeMarketModal(event) {
+            if (event && event.target !== document.getElementById('marketModal')) return;
+            document.getElementById('marketModal').classList.remove('open');
+            triggerHaptic('impact', 'light');
+        }
+
+        function confirmMarketPurchase() {
+            const data = marketCatalogData[activeMarketCategory];
+            const pkg = data.packages[selectedPackageIndex];
+
+            if (pkg.starsReward > 0) {
+                starsBalance += pkg.starsReward;
+                updateBalanceUI();
+                showToast(`Зачислено +${pkg.starsReward} звёзд!`);
+                triggerHaptic('notification', 'success');
+            } else {
+                showToast(`Заявка на «${pkg.amount}» оформлена!`);
+                triggerHaptic('notification', 'success');
+            }
+
+            document.getElementById('marketModal').classList.remove('open');
         }
 
         updateBalanceUI();
