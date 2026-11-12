@@ -1,14 +1,4 @@
-# Let's write the complete and valid HTML file (with all games, market, and the added profile page) using python so it's fully generated and downloadable properly as a code/html file.
-# Wait, let's look at the actual code the user provided earlier in gemini-code-1794499283251_2.html.
-# In that file, the profile page was just a placeholder:
-# <div id="profile" class="page">
-#     <h1 class="page-title">ПРОФИЛЬ</h1>
-#     <p style="text-align: center; color: rgba(255,255,255,0.4); font-weight: 600; font-size: 13px;">Статистика и кошелек аккаунта...</p>
-# </div>
-# The user wants us to integrate the full profile (with daily bonus, stats, telegram sync, referral system) into THEIR exact 2300+ line file (or the full code file they uploaded as gemini-code-1794499283251_2.html which has all the games: rocket, roulette, mines, plinko, coinflip, market with countries/stars/prem, etc.).
-# Let's read the exact code of gemini-code-1794499283251_2.html from the conversation history and fully integrate the profile page and its JS properly, then save it as xorys_casino_full_with_profile.html.
-
-html_content = '''<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -156,6 +146,7 @@ html_content = '''<!DOCTYPE html>
             border-color: rgba(56, 189, 248, 0.5);
         }
 
+        /* Левая колонка с крупной обрезанной SVG-иллюстрацией */
         .game-visual-left {
             width: 105px;
             height: 96px;
@@ -180,6 +171,7 @@ html_content = '''<!DOCTYPE html>
             transform: scale(1.04) translateX(2px);
         }
 
+        /* Правая колонка с информацией и кнопкой */
         .game-info-right {
             flex: 1;
             display: flex;
@@ -304,7 +296,9 @@ html_content = '''<!DOCTYPE html>
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         }
 
-        .rg-balance i { color: #38bdf8; }
+        .rg-balance i {
+            color: #38bdf8;
+        }
 
         .rg-history {
             display: flex;
@@ -327,7 +321,7 @@ html_content = '''<!DOCTYPE html>
             white-space: nowrap;
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА --- */
+        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА (ГЛУБОКИЙ ТЕМНО-СИНИЙ АКЦЕНТ) --- */
         .rg-display {
             height: 235px;
             background: linear-gradient(180deg, #030408 0%, #070e20 55%, #0c1a3a 100%);
@@ -419,7 +413,7 @@ html_content = '''<!DOCTYPE html>
             padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: #ffffff; backdrop-filter: blur(4px);
         }
 
-        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ --- */
+        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ (ГЛУБОКИЙ ТЕМНО-СИНИЙ) --- */
         .roulette-display, .mines-display, .plinko-display, .coinflip-display {
             border-radius: 22px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: radial-gradient(circle at center, #0a142d 0%, #03050a 85%);
@@ -428,6 +422,7 @@ html_content = '''<!DOCTYPE html>
         }
 
         .roulette-display { height: 210px; }
+
         .wheel-wrapper { position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; }
 
         .wheel-pointer {
@@ -497,7 +492,7 @@ html_content = '''<!DOCTYPE html>
         .coin-side i { font-size: 32px; margin-bottom: 2px; }
         .coin-side span { font-size: 10px; letter-spacing: 0.8px; }
 
-        /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ --- */
+        /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ + ПОЛЗУНОК --- */
         .betting-box {
             background: rgba(11, 13, 20, 0.94); border: 1px solid rgba(255, 255, 255, 0.1);
             border-radius: 18px; padding: 14px; margin-top: 12px; backdrop-filter: blur(10px);
@@ -562,108 +557,568 @@ html_content = '''<!DOCTYPE html>
 
         /* --- УВЕДОМЛЕНИЕ --- */
         .toast-overlay {
-            position: fixed; top: 16px; left: 50%; transform: translateX(-50%) translateY(-100px);
-            background: rgba(13, 14, 18, 0.96); border: 1px solid rgba(255, 255, 255, 0.28); color: #ffffff;
-            padding: 10px 18px; border-radius: 16px; font-size: 12px; font-weight: 800; display: flex; align-items: center; gap: 8px;
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.85); z-index: 2000; transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1); pointer-events: none; white-space: nowrap;
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: rgba(13, 14, 18, 0.96);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
+            padding: 10px 18px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.85);
+            z-index: 2000;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            pointer-events: none;
+            white-space: nowrap;
         }
-        .toast-overlay.show { transform: translateX(-50%) translateY(0); }
+
+        .toast-overlay.show {
+            transform: translateX(-50%) translateY(0);
+        }
 
         /* --- МОДАЛЬНОЕ ОКНО --- */
         .market-modal-backdrop {
-            position: fixed; inset: 0; background: rgba(0, 0, 0, 0.84); backdrop-filter: blur(8px);
-            display: none; align-items: flex-end; justify-content: center; z-index: 1500; padding: 16px;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.84);
+            backdrop-filter: blur(8px);
+            display: none;
+            align-items: flex-end;
+            justify-content: center;
+            z-index: 1500;
+            padding: 16px;
         }
-        .market-modal-backdrop.open { display: flex; animation: fadeIn 0.2s ease; }
+
+        .market-modal-backdrop.open {
+            display: flex;
+            animation: fadeIn 0.2s ease;
+        }
 
         .market-modal-card {
-            width: 100%; max-width: 448px; background: linear-gradient(160deg, #13141a 0%, #07080a 100%);
-            border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 26px; padding: 20px;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1); margin-bottom: 62px;
+            width: 100%;
+            max-width: 448px;
+            background: linear-gradient(160deg, #13141a 0%, #07080a 100%);
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            border-radius: 26px;
+            padding: 20px;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            margin-bottom: 62px;
         }
 
-        .modal-top-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-        .modal-title-group span { display: block; font-size: 10px; font-weight: 800; letter-spacing: 1px; color: #a1a1aa; text-transform: uppercase; }
-        .modal-title-group h2 { font-size: 20px; font-weight: 900; color: #ffffff; letter-spacing: 0.5px; }
+        .modal-top-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+        }
+
+        .modal-title-group span {
+            display: block;
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #a1a1aa;
+            text-transform: uppercase;
+        }
+
+        .modal-title-group h2 {
+            font-size: 20px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+        }
 
         .modal-close-btn {
-            width: 34px; height: 34px; border-radius: 12px; background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(255, 255, 255, 0.12); color: #ffffff; display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 14px;
+            width: 34px;
+            height: 34px;
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 14px;
         }
 
-        .modal-packages-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 16px; }
+        .modal-packages-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
         .package-option {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px;
-            padding: 12px 10px; cursor: pointer; transition: all 0.18s ease; text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            padding: 12px 10px;
+            cursor: pointer;
+            transition: all 0.18s ease;
+            text-align: center;
         }
-        .package-option.selected { background: rgba(56, 189, 248, 0.16); border-color: #38bdf8; box-shadow: 0 0 16px rgba(56, 189, 248, 0.22); }
-        .pkg-amount { font-size: 14px; font-weight: 900; color: #ffffff; margin-bottom: 4px; }
-        .pkg-price { font-size: 11px; font-weight: 700; color: #a1a1aa; }
-        .package-option.selected .pkg-price { color: #38bdf8; }
 
-        .stars-custom-box { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 12px; margin-bottom: 14px; }
-        .stars-input-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; }
-        .stars-manual-input {
-            width: 130px; background: #050507; border: 1px solid rgba(56, 189, 248, 0.45); border-radius: 10px;
-            color: #ffffff; font-size: 16px; font-weight: 900; padding: 6px 10px; text-align: center; outline: none;
+        .package-option.selected {
+            background: rgba(56, 189, 248, 0.16);
+            border-color: #38bdf8;
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.22);
         }
-        .stars-presets-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-top: 10px; }
+
+        .pkg-amount {
+            font-size: 14px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+
+        .pkg-price {
+            font-size: 11px;
+            font-weight: 700;
+            color: #a1a1aa;
+        }
+
+        .package-option.selected .pkg-price {
+            color: #38bdf8;
+        }
+
+        /* Блок выбора количества звёзд */
+        .stars-custom-box {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+
+        .stars-input-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .stars-manual-input {
+            width: 130px;
+            background: #050507;
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            border-radius: 10px;
+            color: #ffffff;
+            font-size: 16px;
+            font-weight: 900;
+            padding: 6px 10px;
+            text-align: center;
+            outline: none;
+        }
+
+        .stars-presets-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 6px;
+            margin-top: 10px;
+        }
 
         .modal-buy-btn {
-            width: 100%; padding: 14px; border-radius: 15px; border: none; background: #ffffff; color: #050507;
-            font-size: 13px; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; cursor: pointer;
-            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.18); transition: transform 0.15s ease;
+            width: 100%;
+            padding: 14px;
+            border-radius: 15px;
+            border: none;
+            background: #ffffff;
+            color: #050507;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(255, 255, 255, 0.18);
+            transition: transform 0.15s ease;
         }
-        .modal-buy-btn:active { transform: scale(0.97); }
 
-        /* --- СТИЛИ ПОЛНОЦЕННОГО ПРОФИЛЯ --- */
-        .profile-card {
-            background: linear-gradient(145deg, rgba(16, 22, 36, 0.92) 0%, rgba(6, 9, 16, 0.98) 100%);
-            border: 1px solid rgba(56, 189, 248, 0.2);
-            border-radius: 20px;
-            padding: 16px;
+        .modal-buy-btn:active {
+            transform: scale(0.97);
+        }
+
+        /* --- СТИЛИ ВКЛАДКИ ПРОФИЛЬ --- */
+        .profile-hero-card {
+            background: linear-gradient(145deg, rgba(16, 22, 36, 0.95) 0%, rgba(6, 9, 16, 0.99) 100%);
+            border: 1px solid rgba(56, 189, 248, 0.24);
+            border-radius: 24px;
+            padding: 18px;
             margin-bottom: 14px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
 
-        .profile-user-row {
+        .profile-hero-card::before {
+            content: '';
+            position: absolute;
+            top: -40px;
+            right: -40px;
+            width: 160px;
+            height: 160px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.25) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .profile-top-row {
             display: flex;
             align-items: center;
             gap: 14px;
-            margin-bottom: 14px;
+            margin-bottom: 16px;
         }
 
         .profile-avatar {
-            width: 52px; height: 52px; border-radius: 16px;
-            background: linear-gradient(135deg, #38bdf8, #1d4ed8);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 22px; font-weight: 900; color: #ffffff;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+            width: 60px;
+            height: 60px;
+            border-radius: 18px;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            border: 2px solid #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            font-weight: 900;
+            color: #ffffff;
+            flex-shrink: 0;
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+            overflow: hidden;
         }
 
-        .profile-user-info h3 { font-size: 16px; font-weight: 900; color: #ffffff; margin-bottom: 3px; }
-        .profile-user-info span { font-size: 11px; font-weight: 700; color: rgba(255,255,255,0.5); }
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-user-meta {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .profile-display-name {
+            font-size: 18px;
+            font-weight: 900;
+            color: #ffffff;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .profile-handle-row {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 4px;
+            font-size: 11px;
+            font-weight: 800;
+            color: #38bdf8;
+        }
+
+        .profile-id-badge {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.65);
+            padding: 2px 8px;
+            border-radius: 8px;
+            font-size: 10px;
+        }
+
+        .profile-wallet-panel {
+            background: rgba(3, 5, 10, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 18px;
+            padding: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .wallet-balance-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.8px;
+            color: rgba(255, 255, 255, 0.5);
+            text-transform: uppercase;
+        }
+
+        .wallet-balance-value {
+            font-size: 26px;
+            font-weight: 900;
+            color: #ffffff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 2px;
+        }
+
+        .wallet-balance-value i {
+            color: #38bdf8;
+            font-size: 20px;
+        }
+
+        .btn-deposit-tg {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            padding: 11px 14px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+            transition: transform 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn-deposit-tg:active {
+            transform: scale(0.95);
+        }
 
         .profile-stats-grid {
-            display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-top: 10px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-bottom: 14px;
         }
 
-        .stat-box {
-            background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px; padding: 10px; text-align: center;
+        .stat-mini-card {
+            background: rgba(11, 13, 20, 0.94);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            border-radius: 16px;
+            padding: 12px 8px;
+            text-align: center;
         }
 
-        .stat-box .stat-val { font-size: 15px; font-weight: 900; color: #38bdf8; margin-bottom: 2px; }
-        .stat-box .stat-lbl { font-size: 10px; font-weight: 800; color: rgba(255, 255, 255, 0.5); text-transform: uppercase; }
-
-        .profile-action-btn {
-            width: 100%; background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
-            color: #ffffff; border: none; padding: 12px; border-radius: 14px;
-            font-size: 12px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.8px;
-            cursor: pointer; box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
-            display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 10px;
+        .stat-mini-val {
+            font-size: 16px;
+            font-weight: 900;
+            color: #ffffff;
+            margin-bottom: 3px;
         }
-        .profile-action-btn.secondary { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.12); box-shadow: none; }
+
+        .stat-mini-lbl {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            color: rgba(255, 255, 255, 0.45);
+            text-transform: uppercase;
+        }
+
+        .profile-feature-card {
+            background: linear-gradient(145deg, rgba(14, 18, 28, 0.95) 0%, rgba(7, 9, 15, 0.98) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 16px;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+        }
+
+        .feature-card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .feature-title-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-icon-box {
+            width: 38px;
+            height: 38px;
+            border-radius: 12px;
+            background: rgba(56, 189, 248, 0.14);
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            color: #38bdf8;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .feature-title-text h3 {
+            font-size: 14px;
+            font-weight: 900;
+            color: #ffffff;
+            letter-spacing: 0.4px;
+        }
+
+        .feature-title-text p {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            margin-top: 2px;
+        }
+
+        .reward-pill-badge {
+            background: rgba(56, 189, 248, 0.18);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            color: #38bdf8;
+            font-size: 11px;
+            font-weight: 900;
+            padding: 5px 10px;
+            border-radius: 10px;
+            white-space: nowrap;
+        }
+
+        .btn-claim-daily {
+            width: 100%;
+            padding: 12px;
+            border-radius: 13px;
+            border: none;
+            background: #ffffff;
+            color: #050507;
+            font-size: 12px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2);
+            transition: all 0.2s ease;
+        }
+
+        .btn-claim-daily:active {
+            transform: scale(0.97);
+        }
+
+        .btn-claim-daily.claimed {
+            background: rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: none;
+            cursor: default;
+        }
+
+        .ref-link-box {
+            background: #040508;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 9px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .ref-link-text {
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.7);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .btn-copy-ref {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border-radius: 8px;
+            padding: 5px 10px;
+            font-size: 10px;
+            font-weight: 900;
+            cursor: pointer;
+            flex-shrink: 0;
+        }
+
+        .ref-actions-row {
+            display: flex;
+            gap: 8px;
+        }
+
+        .btn-invite-friend {
+            flex: 1;
+            padding: 12px;
+            border-radius: 13px;
+            border: none;
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%);
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 4px 16px rgba(56, 189, 248, 0.35);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .btn-invite-friend:active {
+            transform: scale(0.97);
+        }
+
+        .btn-sim-ref {
+            padding: 12px 12px;
+            border-radius: 13px;
+            border: 1px solid rgba(56, 189, 248, 0.35);
+            background: rgba(56, 189, 248, 0.1);
+            color: #38bdf8;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+
+        .btn-sim-ref:active {
+            transform: scale(0.96);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .activity-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            border-radius: 12px;
+            padding: 9px 12px;
+            font-size: 11px;
+        }
+
+        .activity-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, 0.85);
+            font-weight: 700;
+        }
+
+        .activity-left i {
+            color: #38bdf8;
+        }
+
+        .activity-amount {
+            font-weight: 900;
+            color: #38bdf8;
+        }
 
         /* --- НИЖНЯЯ ПАНЕЛЬ НАВИГАЦИИ --- */
         .bottom-nav {
@@ -1236,6 +1691,7 @@ html_content = '''<!DOCTYPE html>
         <div id="marketMainView">
             <h1 class="page-title">МАРКЕТ</h1>
             <div class="games-container">
+                <!-- 1. НОМЕРА -->
                 <div class="game-card-row" onclick="openMarketCategory('НОМЕРА')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -1266,6 +1722,7 @@ html_content = '''<!DOCTYPE html>
                     </div>
                 </div>
 
+                <!-- 2. ЗВЁЗДЫ -->
                 <div class="game-card-row" onclick="openMarketCategory('ЗВЁЗДЫ')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -1278,7 +1735,10 @@ html_content = '''<!DOCTYPE html>
                             </defs>
                             <ellipse cx="48" cy="64" rx="46" ry="22" transform="rotate(-24 48 64)" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-dasharray="5 4"/>
                             <path d="M50 16 L60.5 39.5 L86 42.5 L66.8 59.5 L72.2 84.5 L50 71.5 L27.8 84.5 L33.2 59.5 L14 42.5 L39.5 39.5 Z" fill="url(#starGradMono)" stroke="#050507" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M50 16 L50 71.5 L27.8 84.5 L33.2 59.5 L14 42.5 L39.5 39.5 Z" fill="rgba(255,255,255,0.35)"/>
                             <circle cx="84" cy="24" r="2.5" fill="#ffffff"/>
+                            <circle cx="88" cy="76" r="2" fill="#a1a1aa"/>
+                            <circle cx="20" cy="84" r="2" fill="#ffffff"/>
                         </svg>
                     </div>
                     <div class="game-info-right">
@@ -1291,6 +1751,7 @@ html_content = '''<!DOCTYPE html>
                     </div>
                 </div>
 
+                <!-- 3. TG PREM (3 / 6 / 12 МЕС) -->
                 <div class="game-card-row" onclick="openMarketCategory('TG PREM')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -1304,6 +1765,8 @@ html_content = '''<!DOCTYPE html>
                             <circle cx="48" cy="64" r="44" fill="#0d0e12" stroke="rgba(255,255,255,0.18)" stroke-width="2"/>
                             <path d="M31 32 L37 22 L48 29 L59 22 L65 32 H31 Z" fill="#ffffff"/>
                             <path d="M48 37 L69 52 L61 82 H35 L27 52 Z" fill="url(#premCrystalMono)" stroke="#050507" stroke-width="2.5" stroke-linejoin="round"/>
+                            <path d="M48 37 L56 56 L48 82 L40 56 Z" fill="#090a0d" opacity="0.85"/>
+                            <path d="M27 52 H69" stroke="#050507" stroke-width="2"/>
                         </svg>
                     </div>
                     <div class="game-info-right">
@@ -1316,10 +1779,23 @@ html_content = '''<!DOCTYPE html>
                     </div>
                 </div>
 
+                <!-- 4. USDT (В РАЗРАБОТКЕ) -->
                 <div class="game-card-row" onclick="openMarketCategory('USDT')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
+                            <defs>
+                                <radialGradient id="usdtCoinMono" cx="30%" cy="30%" r="70%">
+                                    <stop offset="0%" stop-color="#ffffff"/>
+                                    <stop offset="65%" stop-color="#d4d4d8"/>
+                                    <stop offset="100%" stop-color="#71717a"/>
+                                </radialGradient>
+                            </defs>
                             <circle cx="44" cy="62" r="44" fill="#050507" stroke="#ffffff" stroke-width="3"/>
+                            <circle cx="48" cy="62" r="40" fill="url(#usdtCoinMono)" stroke="#27272a" stroke-width="2"/>
+                            <circle cx="48" cy="62" r="32" stroke="#050507" stroke-width="1.5" stroke-dasharray="3 3"/>
+                            <rect x="33" y="43" width="30" height="6.5" rx="2" fill="#050507"/>
+                            <rect x="44.5" y="46" width="7" height="33" rx="2" fill="#050507"/>
+                            <ellipse cx="48" cy="58" rx="17" ry="4.5" stroke="#050507" stroke-width="3"/>
                         </svg>
                     </div>
                     <div class="game-info-right">
@@ -1334,6 +1810,7 @@ html_content = '''<!DOCTYPE html>
             </div>
         </div>
 
+        <!-- Подкаталог стран (для Номеров) -->
         <div id="marketDetailView" style="display: none;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
                 <button class="btn-return" style="width: auto; margin-top: 0; padding: 8px 14px;" onclick="closeMarketDetail()"><i class="fa-solid fa-arrow-left"></i> НАЗАД</button>
@@ -1344,7 +1821,7 @@ html_content = '''<!DOCTYPE html>
         </div>
     </div>
 
-    <!-- Модальное окно маркета -->
+    <!-- Модальное окно оформления покупки в маркете -->
     <div id="marketModal" class="market-modal-backdrop" onclick="closeMarketModal(event)">
         <div class="market-modal-card" onclick="event.stopPropagation()">
             <div class="modal-top-row">
@@ -1357,6 +1834,7 @@ html_content = '''<!DOCTYPE html>
                 </button>
             </div>
 
+            <!-- Блок выбора количества звёзд (Слайдер + Ручной ввод + 10 пресетов) -->
             <div id="starsCustomConfig" class="stars-custom-box" style="display: none;">
                 <div class="stars-input-row">
                     <div>
@@ -1394,45 +1872,169 @@ html_content = '''<!DOCTYPE html>
         </div>
     </div>
 
-    <!-- Вкладка ПРОФИЛЬ (ПОЛНОЦЕННАЯ) -->
-    <div id="profile" class="page">
-        <h1 class="page-title">ПРОФИЛЬ</h1>
-        
-        <div class="profile-card">
-            <div class="profile-user-row">
-                <div class="profile-avatar"><i class="fa-solid fa-user-astronaut"></i></div>
-                <div class="profile-user-info">
-                    <h3 id="profileUsername">@игрок</h3>
-                    <span id="profileStatus">VIP Игрок XORYS</span>
+    <!-- Модальное окно импорта существующих звёзд из Telegram -->
+    <div id="tgImportModal" class="market-modal-backdrop" onclick="closeTgImportModal(event)">
+        <div class="market-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-top-row">
+                <div class="modal-title-group">
+                    <span>ПОПОЛНЕНИЕ ИЗ TELEGRAM</span>
+                    <h2>ДОБАВИТЬ СВОИ ЗВЁЗДЫ</h2>
+                </div>
+                <button class="modal-close-btn" onclick="closeTgImportModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <p style="font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.45; margin-bottom: 12px; font-weight: 600;">
+                Переведите уже имеющиеся у вас в аккаунте Telegram Stars на игровой баланс XORYS без комиссии.
+            </p>
+
+            <div class="stars-custom-box">
+                <div class="stars-input-row">
+                    <div>
+                        <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 800;">СУММА ПЕРЕВОДА:</div>
+                        <div style="font-size: 12px; font-weight: 900; color: #38bdf8; margin-top: 2px;">Курс 1:1 из баланса TG</div>
+                    </div>
+                    <input type="number" id="tgImportInput" class="stars-manual-input" min="1" max="100000" value="50">
+                </div>
+
+                <div class="stars-presets-grid" style="grid-template-columns: repeat(5, 1fr);">
+                    <button class="chip" onclick="setTgImportPreset(10)">+10</button>
+                    <button class="chip" onclick="setTgImportPreset(25)">+25</button>
+                    <button class="chip" onclick="setTgImportPreset(50)">+50</button>
+                    <button class="chip" onclick="setTgImportPreset(100)">+100</button>
+                    <button class="chip" onclick="setTgImportPreset(250)">+250</button>
                 </div>
             </div>
-            <button class="profile-action-btn" onclick="syncTelegramStars()">
-                <i class="fa-solid fa-rotate"></i> Синхронизировать звезды с TG
+
+            <button class="modal-buy-btn" onclick="confirmTgStarsImport()">
+                <i class="fa-solid fa-star" style="margin-right: 6px;"></i> ПЕРЕВЕСТИ НА БАЛАНС
+            </button>
+        </div>
+    </div>
+
+    <!-- Вкладка ПРОФИЛЬ -->
+    <div id="profile" class="page">
+        <div class="lobby-header">
+            <div class="brand-logo">
+                <div class="brand-badge">X</div>
+                <div class="brand-text">
+                    XORYS
+                    <span>ПРОФИЛЬ</span>
+                </div>
+            </div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star"></i>
+                <span id="userStarsProfile">100</span>
+            </div>
+        </div>
+
+        <!-- 1. Карточка пользователя + Пополнение из своих Telegram Stars -->
+        <div class="profile-hero-card">
+            <div class="profile-top-row">
+                <div class="profile-avatar" id="profileAvatarBox">И</div>
+                <div class="profile-user-meta">
+                    <div class="profile-display-name" id="profileFullName">Игрок XORYS</div>
+                    <div class="profile-handle-row">
+                        <span id="profileUsernameText">@игрок</span>
+                        <span class="profile-id-badge" id="profileUserIdText">ID: 7749201</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="profile-wallet-panel">
+                <div>
+                    <div class="wallet-balance-label">ИГРОВОЙ БАЛАНС</div>
+                    <div class="wallet-balance-value">
+                        <i class="fa-solid fa-star"></i>
+                        <span id="profileWalletBalance">100</span>
+                    </div>
+                </div>
+                <button class="btn-deposit-tg" onclick="openTgImportModal()">
+                    <i class="fa-brands fa-telegram"></i> ДОБАВИТЬ ИЗ TG
+                </button>
+            </div>
+        </div>
+
+        <!-- 2. Статистика игрока -->
+        <div class="profile-stats-grid">
+            <div class="stat-mini-card">
+                <div class="stat-mini-val" id="statGamesPlayed">0</div>
+                <div class="stat-mini-lbl">ИГР СЫГРАНО</div>
+            </div>
+            <div class="stat-mini-card">
+                <div class="stat-mini-val" id="statTotalWon" style="color: #38bdf8;">0 ★</div>
+                <div class="stat-mini-lbl">ВЫИГРАНО</div>
+            </div>
+            <div class="stat-mini-card">
+                <div class="stat-mini-val" id="statReferralsCount">0</div>
+                <div class="stat-mini-lbl">ДРУЗЕЙ</div>
+            </div>
+        </div>
+
+        <!-- 3. Ежедневный бонус (+1 звезда за вход) -->
+        <div class="profile-feature-card">
+            <div class="feature-card-header">
+                <div class="feature-title-wrap">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <div class="feature-title-text">
+                        <h3>ЕЖЕДНЕВНЫЙ ВХОД</h3>
+                        <p id="dailyStreakSubtitle">Заходите каждый день за наградой</p>
+                    </div>
+                </div>
+                <div class="reward-pill-badge">+1 ★ / ДЕНЬ</div>
+            </div>
+            <button id="claimDailyBtn" class="btn-claim-daily" onclick="claimDailyLoginBonus()">
+                ЗАБРАТЬ +1 ЗВЕЗДУ ЗА ВХОД
             </button>
         </div>
 
-        <div class="profile-card" style="border-color: rgba(56, 189, 248, 0.4);">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                <div style="font-size: 13px; font-weight: 900;"><i class="fa-solid fa-gift" style="color: #38bdf8;"></i> ЕЖЕДНЕВНЫЙ БОНУС</div>
-                <span id="dailyBonusStatus" style="font-size: 11px; font-weight: 800; color: #38bdf8;">Доступно (+1 ★)</span>
+        <!-- 4. Пригласить друзей (+1.5 звезды за каждого друга) -->
+        <div class="profile-feature-card">
+            <div class="feature-card-header">
+                <div class="feature-title-wrap">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-user-plus"></i>
+                    </div>
+                    <div class="feature-title-text">
+                        <h3>ПРИГЛАСИТЬ ДРУЗЕЙ</h3>
+                        <p>Награда за каждого приглашённого друга</p>
+                    </div>
+                </div>
+                <div class="reward-pill-badge">+1.5 ★</div>
             </div>
-            <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 700;">Забирайте по 1 звезде каждый день за вход в приложение!</p>
-            <button class="profile-action-btn secondary" id="claimDailyBtn" onclick="claimDailyBonus()">ЗАБРАТЬ +1 ★</button>
+
+            <div class="ref-link-box">
+                <span class="ref-link-text" id="refLinkDisplay">https://t.me/xorys_bot?start=ref_7749201</span>
+                <button class="btn-copy-ref" onclick="copyReferralLink()">КОПИРОВАТЬ</button>
+            </div>
+
+            <div class="ref-actions-row">
+                <button class="btn-invite-friend" onclick="inviteFriendTelegram()">
+                    <i class="fa-solid fa-paper-plane"></i> ПРИГЛАСИТЬ ДРУГА
+                </button>
+                <button class="btn-sim-ref" onclick="claimReferralBonus()" title="Начислить награду за приглашённого друга">
+                    +1.5 ★
+                </button>
+            </div>
         </div>
 
-        <div class="profile-card">
-            <div style="font-size: 13px; font-weight: 900; margin-bottom: 6px;"><i class="fa-solid fa-user-plus" style="color: #38bdf8;"></i> ПРИГЛАСИ ДРУЗЕЙ</div>
-            <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 12px; font-weight: 700;">Получайте <b style="color: #ffffff;">+1.5 звезды</b> на баланс за каждого приглашенного друга!</p>
-            <div style="background: rgba(0,0,0,0.5); padding: 8px 12px; border-radius: 10px; font-size: 11px; color: #38bdf8; font-family: monospace; margin-bottom: 10px; word-break: break-all;" id="refLinkText">t.me/XorysBot?start=ref_99214</div>
-            <button class="profile-action-btn" onclick="shareRefLink()">ПОДЕЛИТЬСЯ ССЫЛКОЙ</button>
-        </div>
-
-        <div class="profile-card">
-            <div style="font-size: 13px; font-weight: 900; margin-bottom: 10px;"><i class="fa-solid fa-chart-line" style="color: #38bdf8;"></i> СТАТИСТИКА ИГР</div>
-            <div class="profile-stats-grid">
-                <div class="stat-box"><div class="stat-val" id="statGamesPlayed">0</div><div class="stat-lbl">Всего игр</div></div>
-                <div class="stat-box"><div class="stat-val" id="statMaxWin">x1.00</div><div class="stat-lbl">Макс. множитель</div></div>
+        <!-- 5. Последние операции -->
+        <div class="profile-feature-card" style="margin-bottom: 6px;">
+            <div class="feature-card-header" style="margin-bottom: 6px;">
+                <div class="feature-title-wrap">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <div class="feature-title-text">
+                        <h3>ИСТОРИЯ ОПЕРАЦИЙ</h3>
+                        <p>Пополнения, бонусы и награды</p>
+                    </div>
+                </div>
             </div>
+            <div class="activity-list" id="profileActivityList"></div>
         </div>
     </div>
 
@@ -1476,18 +2078,36 @@ html_content = '''<!DOCTYPE html>
             }, 2200);
         }
 
-        const username = tg?.initDataUnsafe?.user?.username ? '@' + tg.initDataUnsafe.user.username : '@игрок';
-        const nickEl = document.getElementById('playerNickname');
-        if (nickEl) nickEl.innerText = username;
-        const profNameEl = document.getElementById('profileUsername');
-        if (profNameEl) profNameEl.innerText = username;
-        const refTextEl = document.getElementById('refLinkText');
-        if (refTextEl) refTextEl.innerText = `t.me/XorysBot?start=ref_${Math.floor(Math.random()*89999+10000)}`;
+        const tgUser = tg?.initDataUnsafe?.user;
+        const username = tgUser?.username ? '@' + tgUser.username : '@игрок';
+        const fullName = [tgUser?.first_name, tgUser?.last_name].filter(Boolean).join(' ') || 'Игрок XORYS';
+        const userId = tgUser?.id || 7749201;
+
+        document.getElementById('playerNickname').innerText = username;
+        document.getElementById('profileFullName').innerText = fullName;
+        document.getElementById('profileUsernameText').innerText = username;
+        document.getElementById('profileUserIdText').innerText = 'ID: ' + userId;
+        document.getElementById('refLinkDisplay').innerText = `https://t.me/xorys_bot?start=ref_${userId}`;
+
+        const avatarBox = document.getElementById('profileAvatarBox');
+        if (tgUser?.photo_url) {
+            avatarBox.innerHTML = `<img src="${tgUser.photo_url}" alt="Avatar">`;
+        } else {
+            avatarBox.innerText = fullName.charAt(0).toUpperCase();
+        }
 
         let starsBalance = 100;
-        let totalGamesCount = 0;
-        let maxMultiplierRecord = 1.00;
-        let lastClaimTime = 0;
+        let totalGamesPlayed = 0;
+        let totalStarsWon = 0;
+        let referralsCount = 0;
+        let dailyStreak = 1;
+        let profileHistoryLog = [
+            { title: 'Стартовый бонус аккаунта', amount: '+100 ★', icon: 'fa-gift' }
+        ];
+
+        function formatStars(val) {
+            return Number.isInteger(val) ? val.toString() : val.toFixed(1);
+        }
 
         let currentBetRoulette = 10;
         let currentBetRocket = 10;
@@ -1515,26 +2135,26 @@ html_content = '''<!DOCTYPE html>
         let currentCoinRotation = 0;
 
         function updateBalanceUI() {
-            document.getElementById('userStarsLobby').innerText = starsBalance;
+            const formatted = formatStars(starsBalance);
+            document.getElementById('userStarsLobby').innerText = formatted;
             const marketStarsEl = document.getElementById('userStarsMarket');
-            if (marketStarsEl) marketStarsEl.innerText = starsBalance;
-            const rEl = document.getElementById('userStarsRoulette');
-            if (rEl) rEl.innerText = starsBalance;
-            const roEl = document.getElementById('userStarsRocket');
-            if (roEl) roEl.innerText = starsBalance;
-            const mEl = document.getElementById('userStarsMines');
-            if (mEl) mEl.innerText = starsBalance;
-            const pEl = document.getElementById('userStarsPlinko');
-            if (pEl) pEl.innerText = starsBalance;
-            const cEl = document.getElementById('userStarsCoinflip');
-            if (cEl) cEl.innerText = starsBalance;
+            if (marketStarsEl) marketStarsEl.innerText = formatted;
+            const profileStarsEl = document.getElementById('userStarsProfile');
+            if (profileStarsEl) profileStarsEl.innerText = formatted;
+            const profileWalletEl = document.getElementById('profileWalletBalance');
+            if (profileWalletEl) profileWalletEl.innerText = formatted;
 
-            const statGames = document.getElementById('statGamesPlayed');
-            if (statGames) statGames.innerText = totalGamesCount;
-            const statMax = document.getElementById('statMaxWin');
-            if (statMax) statMax.innerText = 'x' + maxMultiplierRecord.toFixed(2);
+            document.getElementById('userStarsRoulette').innerText = formatted;
+            document.getElementById('userStarsRocket').innerText = formatted;
+            document.getElementById('userStarsMines').innerText = formatted;
+            document.getElementById('userStarsPlinko').innerText = formatted;
+            document.getElementById('userStarsCoinflip').innerText = formatted;
 
-            const sliderMax = Math.max(10, starsBalance);
+            document.getElementById('statGamesPlayed').innerText = totalGamesPlayed;
+            document.getElementById('statTotalWon').innerText = formatStars(totalStarsWon) + ' ★';
+            document.getElementById('statReferralsCount').innerText = referralsCount;
+
+            const sliderMax = Math.max(10, Math.floor(starsBalance));
             ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip'].forEach(game => {
                 const slider = document.getElementById('betSlider' + game);
                 const maxLabel = document.getElementById('maxSlider' + game);
@@ -1543,6 +2163,141 @@ html_content = '''<!DOCTYPE html>
                     maxLabel.innerText = sliderMax;
                 }
             });
+        }
+
+        function addProfileActivity(title, amount, icon = 'fa-star') {
+            profileHistoryLog.unshift({ title, amount, icon });
+            if (profileHistoryLog.length > 6) profileHistoryLog.pop();
+            renderProfileActivity();
+        }
+
+        function renderProfileActivity() {
+            const list = document.getElementById('profileActivityList');
+            if (!list) return;
+            list.innerHTML = '';
+            profileHistoryLog.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'activity-row';
+                row.innerHTML = `
+                    <div class="activity-left">
+                        <i class="fa-solid ${item.icon}"></i>
+                        <span>${item.title}</span>
+                    </div>
+                    <span class="activity-amount">${item.amount}</span>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        /* --- ЛОГИКА ПРОФИЛЯ: ИМПОРТ ЗВЁЗД ИЗ ТГ, ЕЖЕДНЕВНЫЙ ВХОД, РЕФЕРАЛЫ --- */
+        function openTgImportModal() {
+            triggerHaptic('impact', 'medium');
+            document.getElementById('tgImportModal').classList.add('open');
+        }
+
+        function closeTgImportModal(event) {
+            if (event && event.target !== document.getElementById('tgImportModal')) return;
+            document.getElementById('tgImportModal').classList.remove('open');
+            triggerHaptic('impact', 'light');
+        }
+
+        function setTgImportPreset(val) {
+            document.getElementById('tgImportInput').value = val;
+            triggerHaptic('impact', 'light');
+        }
+
+        function confirmTgStarsImport() {
+            const input = document.getElementById('tgImportInput');
+            const amount = parseInt(input.value);
+            if (isNaN(amount) || amount < 1) {
+                showToast('Введите корректное количество звёзд');
+                return;
+            }
+
+            starsBalance = Number((starsBalance + amount).toFixed(1));
+            updateBalanceUI();
+            addProfileActivity('Пополнение из Telegram Stars', `+${amount} ★`, 'fa-brands fa-telegram');
+            document.getElementById('tgImportModal').classList.remove('open');
+            showToast(`Добавлено +${amount} ★ из Telegram!`);
+            triggerHaptic('notification', 'success');
+        }
+
+        function getTodayKey() {
+            const now = new Date();
+            return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+        }
+
+        function initDailyBonusState() {
+            try {
+                const savedDate = localStorage.getItem('xorys_daily_claim_date');
+                const savedStreak = parseInt(localStorage.getItem('xorys_daily_streak') || '0');
+                dailyStreak = savedStreak;
+
+                const btn = document.getElementById('claimDailyBtn');
+                const sub = document.getElementById('dailyStreakSubtitle');
+                if (savedDate === getTodayKey()) {
+                    btn.classList.add('claimed');
+                    btn.innerText = 'СЕГОДНЯ ПОЛУЧЕНО (+1 ★)';
+                    sub.innerText = `Серия входов: ${Math.max(1, dailyStreak)} дн. • Приходите завтра`;
+                } else {
+                    btn.classList.remove('claimed');
+                    btn.innerText = 'ЗАБРАТЬ +1 ЗВЕЗДУ ЗА ВХОД';
+                    sub.innerText = dailyStreak > 0 ? `Текущая серия: ${dailyStreak} дн.` : 'Заходите каждый день за наградой';
+                }
+            } catch (e) {}
+        }
+
+        function claimDailyLoginBonus() {
+            const btn = document.getElementById('claimDailyBtn');
+            if (btn.classList.contains('claimed')) {
+                showToast('Вы уже забрали ежедневную звезду сегодня!');
+                return;
+            }
+
+            starsBalance = Number((starsBalance + 1).toFixed(1));
+            dailyStreak += 1;
+
+            try {
+                localStorage.setItem('xorys_daily_claim_date', getTodayKey());
+                localStorage.setItem('xorys_daily_streak', dailyStreak.toString());
+            } catch (e) {}
+
+            updateBalanceUI();
+            initDailyBonusState();
+            addProfileActivity('Ежедневный бонус за вход', '+1 ★', 'fa-calendar-check');
+            showToast('Начислена +1 ★ за ежедневный вход!');
+            triggerHaptic('notification', 'success');
+        }
+
+        function copyReferralLink() {
+            const link = document.getElementById('refLinkDisplay').innerText;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(link).catch(() => {});
+            }
+            showToast('Реферальная ссылка скопирована!');
+            triggerHaptic('impact', 'light');
+        }
+
+        function inviteFriendTelegram() {
+            const link = document.getElementById('refLinkDisplay').innerText;
+            const text = encodeURIComponent('Залетай в XORYS! Играй на Telegram Stars и забирай бонусы ⭐');
+            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${text}`;
+            triggerHaptic('impact', 'medium');
+
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(shareUrl);
+            } else {
+                copyReferralLink();
+            }
+        }
+
+        function claimReferralBonus() {
+            referralsCount += 1;
+            starsBalance = Number((starsBalance + 1.5).toFixed(1));
+            updateBalanceUI();
+            addProfileActivity(`Бонус за друга #${referralsCount}`, '+1.5 ★', 'fa-user-plus');
+            showToast('Друг приглашён! Начислено +1.5 ★');
+            triggerHaptic('notification', 'success');
         }
 
         function syncBetUI(type, val) {
@@ -1607,6 +2362,7 @@ html_content = '''<!DOCTYPE html>
             triggerHaptic('impact', 'light');
         }
 
+        /* --- 3D ОРЕЛ И РЕШКА --- */
         function setCoinChoice(side, el) {
             if (isFlippingCoin) return;
             selectedCoinSide = side;
@@ -1620,8 +2376,8 @@ html_content = '''<!DOCTYPE html>
             if (isFlippingCoin) return;
             if (starsBalance < currentBetCoinflip) { showToast('Недостаточно звезд!'); return; }
 
-            starsBalance -= currentBetCoinflip;
-            totalGamesCount++;
+            starsBalance = Number((starsBalance - currentBetCoinflip).toFixed(1));
+            totalGamesPlayed += 1;
             updateBalanceUI();
             isFlippingCoin = true;
 
@@ -1645,8 +2401,9 @@ html_content = '''<!DOCTYPE html>
                 btn.disabled = false;
 
                 if (isWin) {
-                    starsBalance += currentBetCoinflip * 2;
-                    if (2.00 > maxMultiplierRecord) maxMultiplierRecord = 2.00;
+                    const winSum = currentBetCoinflip * 2;
+                    starsBalance = Number((starsBalance + winSum).toFixed(1));
+                    totalStarsWon += winSum;
                     updateBalanceUI();
                     triggerHaptic('notification', 'success');
                 } else {
@@ -1654,17 +2411,16 @@ html_content = '''<!DOCTYPE html>
                 }
 
                 const historyContainer = document.getElementById('coinflipHistory');
-                if (historyContainer) {
-                    const pill = document.createElement('div');
-                    pill.className = 'history-pill';
-                    pill.style.borderColor = outcomeSide === 'heads' ? '#2563eb' : '#ffffff';
-                    pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
-                    historyContainer.prepend(pill);
-                    if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-                }
+                const pill = document.createElement('div');
+                pill.className = 'history-pill';
+                pill.style.borderColor = outcomeSide === 'heads' ? '#2563eb' : '#ffffff';
+                pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
+                historyContainer.prepend(pill);
+                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
             }, 3000);
         }
 
+        /* --- ПЛИНКО --- */
         let plinkoPegs = [];
         let plinkoBalls = [];
         let plinkoBins = [15, 3.0, 1.2, 0.5, 0.2, 0.5, 1.2, 3.0, 15];
@@ -1672,7 +2428,6 @@ html_content = '''<!DOCTYPE html>
 
         function initPlinkoCanvas() {
             const canvas = document.getElementById('plinkoCanvas');
-            if (!canvas) return;
             plinkoPegs = [];
             const rows = 6;
             const startY = 25;
@@ -1691,26 +2446,23 @@ html_content = '''<!DOCTYPE html>
         function dropPlinkoBall() {
             if (starsBalance < currentBetPlinko) { showToast('Недостаточно звезд!'); return; }
 
-            starsBalance -= currentBetPlinko;
-            totalGamesCount++;
+            starsBalance = Number((starsBalance - currentBetPlinko).toFixed(1));
+            totalGamesPlayed += 1;
             updateBalanceUI();
             triggerHaptic('impact', 'medium');
 
             const canvas = document.getElementById('plinkoCanvas');
-            if (canvas) {
-                plinkoBalls.push({
-                    x: canvas.width / 2 + (Math.random() * 8 - 4),
-                    y: 5,
-                    vx: (Math.random() - 0.5) * 1.4,
-                    vy: 1.5,
-                    bet: currentBetPlinko
-                });
-            }
+            plinkoBalls.push({
+                x: canvas.width / 2 + (Math.random() * 8 - 4),
+                y: 5,
+                vx: (Math.random() - 0.5) * 1.4,
+                vy: 1.5,
+                bet: currentBetPlinko
+            });
         }
 
         function renderPlinko() {
             const canvas = document.getElementById('plinkoCanvas');
-            if (!canvas) return;
             const ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
@@ -1766,21 +2518,19 @@ html_content = '''<!DOCTYPE html>
                     const winMult = plinkoBins[binIndex];
                     const winAmount = Math.floor(ball.bet * winMult);
 
-                    starsBalance += winAmount;
-                    if (winMult > maxMultiplierRecord) maxMultiplierRecord = winMult;
+                    starsBalance = Number((starsBalance + winAmount).toFixed(1));
+                    totalStarsWon += winAmount;
                     updateBalanceUI();
 
                     if (winMult >= 2) triggerHaptic('notification', 'success');
 
                     const historyContainer = document.getElementById('plinkoHistory');
-                    if (historyContainer) {
-                        const pill = document.createElement('div');
-                        pill.className = 'history-pill';
-                        pill.style.borderColor = winMult >= 2 ? '#2563eb' : 'rgba(255,255,255,0.2)';
-                        pill.innerText = `x${winMult}`;
-                        historyContainer.prepend(pill);
-                        if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-                    }
+                    const pill = document.createElement('div');
+                    pill.className = 'history-pill';
+                    pill.style.borderColor = winMult >= 2 ? '#2563eb' : 'rgba(255,255,255,0.2)';
+                    pill.innerText = `x${winMult}`;
+                    historyContainer.prepend(pill);
+                    if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
 
                     plinkoBalls.splice(b, 1);
                 }
@@ -1789,6 +2539,7 @@ html_content = '''<!DOCTYPE html>
             plinkoAnimId = requestAnimationFrame(renderPlinko);
         }
 
+        /* --- РУЛЕТКА --- */
         function setRouletteColor(color, el) {
             selectedRouletteColor = color;
             document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
@@ -1802,8 +2553,8 @@ html_content = '''<!DOCTYPE html>
             if (isSpinning) return;
             if (starsBalance < currentBetRoulette) { showToast('Недостаточно звезд!'); return; }
 
-            starsBalance -= currentBetRoulette;
-            totalGamesCount++;
+            starsBalance = Number((starsBalance - currentBetRoulette).toFixed(1));
+            totalGamesPlayed += 1;
             updateBalanceUI();
             isSpinning = true;
 
@@ -1813,14 +2564,13 @@ html_content = '''<!DOCTYPE html>
             triggerHaptic('impact', 'medium');
 
             const outcomeRand = Math.random();
-            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ', winMult = 2;
-            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; winMult = 2; }
-            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; winMult = 2; }
-            else { winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; winMult = 14; }
+            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ';
+            if (outcomeRand < 0.45) { winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; }
+            else if (outcomeRand < 0.90) { winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; }
+            else { winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; }
 
             currentWheelAngle += (360 * 6) + (winningIndex - (currentWheelAngle % 360));
-            const rc = document.getElementById('rouletteCircle');
-            if (rc) rc.style.transform = `rotate(${currentWheelAngle}deg)`;
+            document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
 
             setTimeout(() => {
                 isSpinning = false;
@@ -1828,8 +2578,9 @@ html_content = '''<!DOCTYPE html>
                 btn.disabled = false;
 
                 if (winningColor === selectedRouletteColor) {
-                    starsBalance += currentBetRoulette * winMult;
-                    if (winMult > maxMultiplierRecord) maxMultiplierRecord = winMult;
+                    const winSum = currentBetRoulette * (winningColor === 'green' ? 14 : 2);
+                    starsBalance = Number((starsBalance + winSum).toFixed(1));
+                    totalStarsWon += winSum;
                     updateBalanceUI();
                     triggerHaptic('notification', 'success');
                 } else {
@@ -1837,17 +2588,16 @@ html_content = '''<!DOCTYPE html>
                 }
 
                 const historyContainer = document.getElementById('rouletteHistory');
-                if (historyContainer) {
-                    const pill = document.createElement('div');
-                    pill.className = 'history-pill';
-                    pill.style.borderColor = winningColor === 'green' ? '#2563eb' : (winningColor === 'red' ? '#ffffff' : '#334155');
-                    pill.innerText = labelText;
-                    historyContainer.prepend(pill);
-                    if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-                }
+                const pill = document.createElement('div');
+                pill.className = 'history-pill';
+                pill.style.borderColor = winningColor === 'green' ? '#2563eb' : (winningColor === 'red' ? '#ffffff' : '#334155');
+                pill.innerText = labelText;
+                historyContainer.prepend(pill);
+                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
             }, 4100);
         }
 
+        /* --- РАКЕТА --- */
         function handleRocketClick() {
             const btn = document.getElementById('gameBtn');
             const rocket = document.getElementById('rocketObj');
@@ -1858,40 +2608,34 @@ html_content = '''<!DOCTYPE html>
 
             if (!isPlayingRocket) {
                 if (starsBalance < currentBetRocket) { showToast('Недостаточно звезд!'); return; }
-                starsBalance -= currentBetRocket;
-                totalGamesCount++;
+                starsBalance = Number((starsBalance - currentBetRocket).toFixed(1));
+                totalGamesPlayed += 1;
                 updateBalanceUI();
                 isPlayingRocket = true;
                 currentMultiplier = 1.00;
                 crashPoint = parseFloat((Math.random() * 3.5 + 1.1).toFixed(2));
 
-                if (multText) {
-                    multText.classList.remove('crashed');
-                    multText.innerText = 'x1.00';
-                }
+                multText.classList.remove('crashed');
+                multText.innerText = 'x1.00';
                 btn.innerText = 'ЗАБРАТЬ';
                 btn.className = 'btn-main-action btn-style-cashout';
 
-                if (rocket) {
-                    rocket.style.opacity = '1';
-                    rocket.style.bottom = '32px';
-                    rocket.style.left = '26px';
-                    rocket.classList.remove('idle-hover');
-                }
-                if (starsBg) starsBg.classList.add('flying');
-                if (mountains) mountains.classList.add('departed');
+                rocket.style.opacity = '1';
+                rocket.style.bottom = '32px';
+                rocket.style.left = '26px';
+                rocket.classList.remove('idle-hover');
+                starsBg.classList.add('flying');
+                mountains.classList.add('departed');
 
                 gameInterval = setInterval(() => {
                     currentMultiplier += 0.03;
-                    if (multText) multText.innerText = 'x' + currentMultiplier.toFixed(2);
+                    multText.innerText = 'x' + currentMultiplier.toFixed(2);
                     btn.innerText = `ЗАБРАТЬ (${Math.floor(currentBetRocket * currentMultiplier)})`;
 
-                    if (rocket) {
-                        let b = parseFloat(rocket.style.bottom) || 32;
-                        let l = parseFloat(rocket.style.left) || 26;
-                        if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
-                        if (l < 235) rocket.style.left = (l + 2.2) + 'px';
-                    }
+                    let b = parseFloat(rocket.style.bottom) || 32;
+                    let l = parseFloat(rocket.style.left) || 26;
+                    if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
+                    if (l < 235) rocket.style.left = (l + 2.2) + 'px';
 
                     if (currentMultiplier >= crashPoint) {
                         endRocketGame(false);
@@ -1911,7 +2655,7 @@ html_content = '''<!DOCTYPE html>
             const starsBg = document.getElementById('spaceStars');
             const mountains = document.getElementById('mountainsLayer');
 
-            if (starsBg) starsBg.classList.remove('flying');
+            starsBg.classList.remove('flying');
 
             const historyContainer = document.getElementById('rocketHistory');
             const pill = document.createElement('div');
@@ -1919,33 +2663,29 @@ html_content = '''<!DOCTYPE html>
 
             if (isWin) {
                 const winSum = Math.floor(currentBetRocket * currentMultiplier);
-                starsBalance += winSum;
-                if (currentMultiplier > maxMultiplierRecord) maxMultiplierRecord = currentMultiplier;
+                starsBalance = Number((starsBalance + winSum).toFixed(1));
+                totalStarsWon += winSum;
                 updateBalanceUI();
                 pill.style.borderColor = '#2563eb';
                 pill.innerText = 'x' + currentMultiplier.toFixed(2);
                 triggerHaptic('notification', 'success');
             } else {
                 triggerHaptic('notification', 'error');
-                if (multText) {
-                    multText.classList.add('crashed');
-                    multText.innerText = 'СЛИВ!';
-                }
-                if (rocket) rocket.style.opacity = '0';
+                multText.classList.add('crashed');
+                multText.innerText = 'СЛИВ!';
+                rocket.style.opacity = '0';
                 pill.style.borderColor = 'rgba(255,255,255,0.2)';
                 pill.innerText = 'x' + crashPoint.toFixed(2);
             }
 
-            if (historyContainer) {
-                historyContainer.prepend(pill);
-                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-            }
+            historyContainer.prepend(pill);
+            if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
 
             btn.innerText = 'СТАВКА';
             btn.className = 'btn-main-action btn-style-start';
 
             setTimeout(() => {
-                if (!isPlayingRocket && mountains && rocket) {
+                if (!isPlayingRocket) {
                     mountains.classList.remove('departed');
                     rocket.style.bottom = '32px';
                     rocket.style.left = '26px';
@@ -1955,6 +2695,7 @@ html_content = '''<!DOCTYPE html>
             }, 900);
         }
 
+        /* --- МИНЫ --- */
         function setMinesCount(count, el) {
             if (isPlayingMines) return;
             minesCount = count;
@@ -1965,7 +2706,6 @@ html_content = '''<!DOCTYPE html>
 
         function initMinesGrid() {
             const grid = document.getElementById('minesGrid');
-            if (!grid) return;
             grid.innerHTML = '';
             for (let i = 0; i < 25; i++) {
                 const tile = document.createElement('div');
@@ -1979,8 +2719,8 @@ html_content = '''<!DOCTYPE html>
             const btn = document.getElementById('minesBtn');
             if (!isPlayingMines) {
                 if (starsBalance < currentBetMines) { showToast('Недостаточно звезд!'); return; }
-                starsBalance -= currentBetMines;
-                totalGamesCount++;
+                starsBalance = Number((starsBalance - currentBetMines).toFixed(1));
+                totalGamesPlayed += 1;
                 updateBalanceUI();
                 isPlayingMines = true;
                 openedCount = 0;
@@ -1995,13 +2735,13 @@ html_content = '''<!DOCTYPE html>
                 initMinesGrid();
                 btn.innerText = 'ЗАБРАТЬ';
                 btn.className = 'btn-main-action btn-style-cashout';
-                const mm = document.getElementById('minesMultLabel');
-                if (mm) mm.innerText = 'МНОЖИТЕЛЬ: x1.00';
+                document.getElementById('minesMultLabel').innerText = 'МНОЖИТЕЛЬ: x1.00';
                 triggerHaptic('impact', 'medium');
             } else {
                 if (openedCount === 0) return;
-                starsBalance += Math.floor(currentBetMines * currentMinesMult);
-                if (currentMinesMult > maxMultiplierRecord) maxMultiplierRecord = parseFloat(currentMinesMult);
+                const winSum = Math.floor(currentBetMines * currentMinesMult);
+                starsBalance = Number((starsBalance + winSum).toFixed(1));
+                totalStarsWon += winSum;
                 updateBalanceUI();
                 endMinesGame(true);
             }
@@ -2011,7 +2751,7 @@ html_content = '''<!DOCTYPE html>
             if (!isPlayingMines) return;
             const tiles = document.querySelectorAll('.mine-tile');
             const tile = tiles[index];
-            if (!tile || tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
+            if (tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
 
             if (mineLocations.includes(index)) {
                 tile.classList.add('revealed-bomb'); tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
@@ -2022,10 +2762,8 @@ html_content = '''<!DOCTYPE html>
                 tile.classList.add('revealed-star'); tile.innerHTML = '<i class="fa-solid fa-star"></i>';
                 openedCount++;
                 currentMinesMult = (1 + (openedCount * (minesCount * 0.12))).toFixed(2);
-                const mm = document.getElementById('minesMultLabel');
-                if (mm) mm.innerText = `МНОЖИТЕЛЬ: x${currentMinesMult}`;
-                const btn = document.getElementById('minesBtn');
-                if (btn) btn.innerText = `ЗАБРАТЬ (${Math.floor(currentBetMines * currentMinesMult)})`;
+                document.getElementById('minesMultLabel').innerText = `МНОЖИТЕЛЬ: x${currentMinesMult}`;
+                document.getElementById('minesBtn').innerText = `ЗАБРАТЬ (${Math.floor(currentBetMines * currentMinesMult)})`;
                 triggerHaptic('impact', 'light');
             }
         }
@@ -2033,19 +2771,18 @@ html_content = '''<!DOCTYPE html>
         function endMinesGame(isWin) {
             isPlayingMines = false;
             const btn = document.getElementById('minesBtn');
-            if (btn) {
-                btn.innerText = 'ИГРАТЬ';
-                btn.className = 'btn-main-action btn-style-start';
-            }
+            btn.innerText = 'ИГРАТЬ';
+            btn.className = 'btn-main-action btn-style-start';
             if (isWin) triggerHaptic('notification', 'success');
-            else {
-                const mm = document.getElementById('minesMultLabel');
-                if (mm) mm.innerText = 'ВЗРЫВ!';
-            }
+            else document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ!';
         }
 
+        /* --- МАРКЕТ --- */
         const marketCatalogData = {
-            'ЗВЁЗДЫ': { sub: 'TELEGRAM STARS', packages: [] },
+            'ЗВЁЗДЫ': {
+                sub: 'TELEGRAM STARS',
+                packages: []
+            },
             'TG PREM': {
                 sub: 'ПОДПИСКА TELEGRAM PREMIUM',
                 packages: [
@@ -2081,10 +2818,8 @@ html_content = '''<!DOCTYPE html>
                 return;
             }
             if (categoryName === 'НОМЕРА') {
-                const mm = document.getElementById('marketMainView');
-                const md = document.getElementById('marketDetailView');
-                if (mm) mm.style.display = 'none';
-                if (md) md.style.display = 'block';
+                document.getElementById('marketMainView').style.display = 'none';
+                document.getElementById('marketDetailView').style.display = 'block';
                 renderCountriesList();
             } else {
                 openMarketModal(categoryName);
@@ -2093,15 +2828,12 @@ html_content = '''<!DOCTYPE html>
 
         function closeMarketDetail() {
             triggerHaptic('impact', 'light');
-            const mm = document.getElementById('marketMainView');
-            const md = document.getElementById('marketDetailView');
-            if (md) md.style.display = 'none';
-            if (mm) mm.style.display = 'block';
+            document.getElementById('marketDetailView').style.display = 'none';
+            document.getElementById('marketMainView').style.display = 'block';
         }
 
         function renderCountriesList() {
             const container = document.getElementById('countriesListContainer');
-            if (!container) return;
             container.innerHTML = '';
 
             countriesList.forEach((item) => {
@@ -2136,8 +2868,9 @@ html_content = '''<!DOCTYPE html>
                 return;
             }
 
-            starsBalance -= item.stars;
+            starsBalance = Number((starsBalance - item.stars).toFixed(1));
             updateBalanceUI();
+            addProfileActivity(`Покупка номера ${item.name} ${item.code}`, `-${item.stars} ★`, 'fa-sim-card');
             showToast(`Успешно куплен номер (${item.name} ${item.code})!`);
             triggerHaptic('notification', 'success');
         }
@@ -2149,39 +2882,33 @@ html_content = '''<!DOCTYPE html>
             activeMarketCategory = categoryName;
             selectedPackageIndex = 0;
 
-            const msub = document.getElementById('modalCategorySub');
-            const mtitle = document.getElementById('modalCategoryTitle');
-            if (msub) msub.innerText = data.sub;
-            if (mtitle) mtitle.innerText = categoryName;
+            document.getElementById('modalCategorySub').innerText = data.sub;
+            document.getElementById('modalCategoryTitle').innerText = categoryName;
 
             const starsBox = document.getElementById('starsCustomConfig');
             const pkgGrid = document.getElementById('modalPackagesGrid');
 
             if (categoryName === 'ЗВЁЗДЫ') {
-                if (starsBox) starsBox.style.display = 'block';
-                if (pkgGrid) pkgGrid.style.display = 'none';
+                starsBox.style.display = 'block';
+                pkgGrid.style.display = 'none';
                 selectedCustomStars = 100;
                 syncStarsControls(100);
             } else {
-                if (starsBox) starsBox.style.display = 'none';
-                if (pkgGrid) pkgGrid.style.display = 'grid';
+                starsBox.style.display = 'none';
+                pkgGrid.style.display = 'grid';
                 renderMarketPackages();
             }
 
-            const mm = document.getElementById('marketModal');
-            if (mm) mm.classList.add('open');
+            document.getElementById('marketModal').classList.add('open');
             triggerHaptic('impact', 'medium');
         }
 
         function syncStarsControls(amount) {
             selectedCustomStars = Math.max(1, parseInt(amount) || 50);
-            const mInput = document.getElementById('starsManualInput');
-            if (mInput) mInput.value = selectedCustomStars;
-            const sSlider = document.getElementById('starsSlider');
-            if (sSlider) sSlider.value = Math.min(5000, Math.max(50, selectedCustomStars));
+            document.getElementById('starsManualInput').value = selectedCustomStars;
+            document.getElementById('starsSlider').value = Math.min(5000, Math.max(50, selectedCustomStars));
             const usdPrice = (selectedCustomStars * 0.018).toFixed(2);
-            const sPrice = document.getElementById('selectedStarsPrice');
-            if (sPrice) sPrice.innerText = `${selectedCustomStars} ★ = ${usdPrice} USDT`;
+            document.getElementById('selectedStarsPrice').innerText = `${selectedCustomStars} ★ = ${usdPrice} USDT`;
 
             document.querySelectorAll('#starsPresetsGrid .chip').forEach(btn => {
                 btn.classList.toggle('active-chip', parseInt(btn.innerText) === selectedCustomStars);
@@ -2208,7 +2935,6 @@ html_content = '''<!DOCTYPE html>
         function renderMarketPackages() {
             const data = marketCatalogData[activeMarketCategory];
             const grid = document.getElementById('modalPackagesGrid');
-            if (!grid) return;
             grid.innerHTML = '';
 
             data.packages.forEach((pkg, idx) => {
@@ -2229,75 +2955,31 @@ html_content = '''<!DOCTYPE html>
 
         function closeMarketModal(event) {
             if (event && event.target !== document.getElementById('marketModal')) return;
-            const mm = document.getElementById('marketModal');
-            if (mm) mm.classList.remove('open');
+            document.getElementById('marketModal').classList.remove('open');
             triggerHaptic('impact', 'light');
         }
 
         function confirmMarketPurchase() {
             if (activeMarketCategory === 'ЗВЁЗДЫ') {
-                starsBalance += selectedCustomStars;
+                starsBalance = Number((starsBalance + selectedCustomStars).toFixed(1));
                 updateBalanceUI();
+                addProfileActivity('Покупка в Маркете', `+${selectedCustomStars} ★`, 'fa-store');
                 showToast(`Зачислено +${selectedCustomStars} звёзд!`);
                 triggerHaptic('notification', 'success');
             } else {
                 const data = marketCatalogData[activeMarketCategory];
                 const pkg = data.packages[selectedPackageIndex];
+                addProfileActivity(`Заявка TG Prem (${pkg.amount})`, pkg.price, 'fa-crown');
                 showToast(`Заявка на «TG Prem ${pkg.amount}» оформлена!`);
                 triggerHaptic('notification', 'success');
             }
 
-            const mm = document.getElementById('marketModal');
-            if (mm) mm.classList.remove('open');
-        }
-
-        // --- ФУНКЦИИ ПРОФИЛЯ ---
-        function syncTelegramStars() {
-            const foundStars = Math.floor(Math.random() * 50) + 25;
-            starsBalance += foundStars;
-            updateBalanceUI();
-            showToast(`Успешно синхронизировано: +${foundStars} ★ из Telegram!`);
-            triggerHaptic('notification', 'success');
-        }
-
-        function claimDailyBonus() {
-            const now = Date.now();
-            if (now - lastClaimTime < 86400000) {
-                showToast('Бонус уже получен! Ждите 24 часа.');
-                return;
-            }
-            lastClaimTime = now;
-            starsBalance += 1;
-            updateBalanceUI();
-            showToast('Бонус получен: +1 ★!');
-            triggerHaptic('notification', 'success');
-            const btn = document.getElementById('claimDailyBtn');
-            if (btn) {
-                btn.innerText = 'ПОЛУЧЕНО СЕГОДНЯ';
-                btn.style.opacity = '0.5';
-            }
-        }
-
-        function shareRefLink() {
-            const linkEl = document.getElementById('refLinkText');
-            if (linkEl && navigator.clipboard) {
-                navigator.clipboard.writeText(linkEl.innerText).then(() => {
-                    showToast('Реферальная ссылка скопирована!');
-                });
-            }
-            triggerHaptic('impact', 'medium');
-            setTimeout(() => {
-                starsBalance += 1.5;
-                updateBalanceUI();
-                showToast('Друг перешел по ссылке! Начислено +1.5 ★');
-            }, 3000);
+            document.getElementById('marketModal').classList.remove('open');
         }
 
         updateBalanceUI();
+        initDailyBonusState();
+        renderProfileActivity();
     </script>
 </body>
 </html>
-'''
-
-# Use file_gen to generate this complete file for the user.
-import file_gen
