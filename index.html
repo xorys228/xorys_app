@@ -16,11 +16,14 @@
         }
 
         body {
-            background-color: #030305;
+            background-color: #040407;
             color: #ffffff;
-            background-image: radial-gradient(circle at 50% 15%, #181824 0%, #030305 80%);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 45%),
+                radial-gradient(circle at 80% 40%, rgba(168, 85, 247, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 20%, #13131d 0%, #040407 85%);
             background-size: 100% 100%;
-            padding-bottom: 80px;
+            padding-bottom: 85px;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -46,6 +49,52 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
+        /* --- ВЕРХНЯ ШАПКА ЛОБІ --- */
+        .lobby-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 4px;
+            margin-bottom: 20px;
+            padding: 0 2px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .brand-badge {
+            width: 34px;
+            height: 34px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, #38bdf8, #818cf8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            color: #040407;
+            font-weight: 900;
+            box-shadow: 0 0 18px rgba(56, 189, 248, 0.45);
+        }
+
+        .brand-text {
+            font-size: 19px;
+            font-weight: 900;
+            letter-spacing: 1.8px;
+            color: #ffffff;
+        }
+
+        .brand-text span {
+            display: block;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.45);
+            margin-top: -2px;
+        }
+
         .page-title {
             text-align: center;
             margin-top: 8px;
@@ -55,7 +104,6 @@
             letter-spacing: 2px;
             color: #ffffff;
             text-transform: uppercase;
-            text-shadow: 0 0 20px rgba(255,255,255,0.15);
         }
 
         /* --- КАТАЛОГ МАРКЕТА --- */
@@ -107,38 +155,97 @@
             color: rgba(255,255,255,0.8);
         }
 
-        /* --- БАНЕРЫ ИГР С ЭЛЕГАНТНЫМИ ИКОНКАМИ --- */
+        /* --- ПРЕМІУМ КАРТКИ ІГР (НОВИЙ ДИЗАЙН) --- */
         .games-container {
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            gap: 13px;
         }
 
         .game-banner {
-            background: linear-gradient(135deg, rgba(22, 22, 30, 0.7), rgba(10, 10, 15, 0.9));
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 20px;
-            padding: 16px 18px;
+            position: relative;
+            border-radius: 22px;
+            padding: 14px 16px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
-            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             display: flex;
             align-items: center;
-            gap: 16px;
-            backdrop-filter: blur(12px);
-            position: relative;
+            justify-content: space-between;
+            gap: 14px;
+            background: linear-gradient(145deg, rgba(24, 25, 36, 0.85) 0%, rgba(11, 12, 18, 0.95) 100%);
+            border: 1px solid rgba(255, 255, 255, 0.09);
+            box-shadow: 
+                0 12px 28px -6px rgba(0, 0, 0, 0.75),
+                inset 0 1px 0 rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(16px);
             overflow: hidden;
+            transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+
+        /* Внутрішнє неонове підсвічування фону картки */
+        .game-banner::before {
+            content: '';
+            position: absolute;
+            top: -30px;
+            left: -20px;
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            filter: blur(32px);
+            opacity: 0.28;
+            pointer-events: none;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        /* Діагональний скляний відблиск */
+        .game-banner::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 60%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.06), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.55s ease;
+            pointer-events: none;
+        }
+
+        .game-banner:hover::after {
+            left: 140%;
         }
 
         .game-banner:active {
-            transform: scale(0.97);
-            border-color: rgba(255, 255, 255, 0.2);
+            transform: scale(0.975);
         }
 
-        .icon-box {
-            width: 54px;
-            height: 54px;
-            border-radius: 16px;
+        /* Індивідуальні теми карток */
+        .banner-rocket::before { background: #0ea5e9; }
+        .banner-rocket:hover { border-color: rgba(56, 189, 248, 0.35); box-shadow: 0 12px 30px -4px rgba(14, 165, 233, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
+
+        .banner-roulette::before { background: #f43f5e; }
+        .banner-roulette:hover { border-color: rgba(244, 63, 94, 0.35); box-shadow: 0 12px 30px -4px rgba(244, 63, 94, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
+
+        .banner-mines::before { background: #a855f7; }
+        .banner-mines:hover { border-color: rgba(168, 85, 247, 0.35); box-shadow: 0 12px 30px -4px rgba(168, 85, 247, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
+
+        .banner-plinko::before { background: #ec4899; }
+        .banner-plinko:hover { border-color: rgba(236, 72, 153, 0.35); box-shadow: 0 12px 30px -4px rgba(236, 72, 153, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
+
+        .banner-coinflip::before { background: #eab308; }
+        .banner-coinflip:hover { border-color: rgba(234, 179, 8, 0.35); box-shadow: 0 12px 30px -4px rgba(234, 179, 8, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.16); }
+
+        .banner-left {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 2;
+        }
+
+        /* Стильний 3D-контейнер іконки (скляна капсула з подвійною рамкою) */
+        .icon-orb {
+            width: 56px;
+            height: 56px;
+            border-radius: 17px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -146,55 +253,150 @@
             color: #ffffff;
             flex-shrink: 0;
             position: relative;
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: inset 0 2px 6px rgba(255,255,255,0.2);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            box-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.25), 0 8px 16px rgba(0, 0, 0, 0.45);
         }
 
-        .icon-rocket {
-            background: linear-gradient(135deg, #0ea5e9, #0369a1);
-            box-shadow: 0 0 20px rgba(14, 165, 233, 0.3);
+        .icon-orb::after {
+            content: '';
+            position: absolute;
+            inset: 3px;
+            border-radius: 13px;
+            opacity: 0.92;
+            z-index: 1;
+        }
+
+        .icon-orb i, .icon-orb svg {
+            position: relative;
+            z-index: 2;
+            filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.45));
+        }
+
+        .orb-rocket::after {
+            background: linear-gradient(135deg, #38bdf8 0%, #0284c7 60%, #0369a1 100%);
+            box-shadow: 0 0 16px rgba(56, 189, 248, 0.5);
+        }
+        .orb-rocket i {
+            transform: rotate(-45deg);
             animation: floatSlow 3s ease-in-out infinite;
         }
-        .icon-rocket i { transform: rotate(-45deg); }
 
-        .icon-roulette {
-            background: linear-gradient(135deg, #f43f5e, #9f1239);
-            box-shadow: 0 0 20px rgba(244, 63, 94, 0.3);
-            animation: pulseGlow 3s ease-in-out infinite;
+        .orb-roulette::after {
+            background: linear-gradient(135deg, #fb7185 0%, #e11d48 60%, #881337 100%);
+            box-shadow: 0 0 16px rgba(244, 63, 94, 0.5);
         }
-        .icon-roulette i { color: #fde047; }
-
-        .icon-mines {
-            background: linear-gradient(135deg, #a855f7, #6b21a8);
-            box-shadow: 0 0 20px rgba(168, 85, 247, 0.3);
-            animation: floatSlow 3.5s ease-in-out infinite;
+        .orb-roulette i {
+            color: #fef08a;
+            animation: slowSpin 14s linear infinite;
         }
 
-        .icon-plinko {
-            background: linear-gradient(135deg, #ec4899, #831843);
-            box-shadow: 0 0 20px rgba(236, 72, 153, 0.3);
+        .orb-mines::after {
+            background: linear-gradient(135deg, #c084fc 0%, #9333ea 60%, #581c87 100%);
+            box-shadow: 0 0 16px rgba(168, 85, 247, 0.5);
+        }
+        .orb-mines i {
+            animation: pulseGlow 2.8s ease-in-out infinite;
+        }
+
+        .orb-plinko::after {
+            background: linear-gradient(135deg, #f472b6 0%, #db2777 60%, #831843 100%);
+            box-shadow: 0 0 16px rgba(236, 72, 153, 0.5);
+        }
+        .orb-plinko i {
             animation: floatSlow 3.2s ease-in-out infinite;
         }
 
-        .icon-coinflip {
-            background: linear-gradient(135deg, #eab308, #854d0e);
-            box-shadow: 0 0 20px rgba(234, 179, 8, 0.3);
-            animation: pulseGlow 3.5s ease-in-out infinite;
+        .orb-coinflip::after {
+            background: linear-gradient(135deg, #fde047 0%, #eab308 55%, #a16207 100%);
+            box-shadow: 0 0 16px rgba(234, 179, 8, 0.5);
+        }
+        .orb-coinflip i {
+            color: #1e1b04;
+            animation: coinWobble 3.4s ease-in-out infinite;
         }
 
         @keyframes floatSlow {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-3px); }
+            0%, 100% { transform: translateY(0) rotate(-45deg); }
+            50% { transform: translateY(-3px) rotate(-45deg); }
+        }
+
+        @keyframes slowSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
         @keyframes pulseGlow {
-            0%, 100% { transform: scale(1); opacity: 0.9; }
-            50% { transform: scale(1.04); opacity: 1; }
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.09); }
         }
 
-        .game-info { text-align: left; }
-        .game-title { font-size: 17px; font-weight: 900; letter-spacing: 1.2px; }
-        .game-desc { font-size: 11px; color: rgba(255, 255, 255, 0.5); margin-top: 3px; font-weight: 500; }
+        @keyframes coinWobble {
+            0%, 100% { transform: rotateY(0deg); }
+            50% { transform: rotateY(28deg); }
+        }
+
+        .game-info {
+            text-align: left;
+        }
+
+        .game-title-row {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .game-title {
+            font-size: 16px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            color: #ffffff;
+        }
+
+        .game-tag {
+            font-size: 9px;
+            font-weight: 900;
+            padding: 2px 6px;
+            border-radius: 6px;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+        }
+
+        .tag-blue { background: rgba(56, 189, 248, 0.16); color: #7dd3fc; border: 1px solid rgba(56, 189, 248, 0.3); }
+        .tag-red { background: rgba(244, 63, 94, 0.16); color: #fda4af; border: 1px solid rgba(244, 63, 94, 0.3); }
+        .tag-purple { background: rgba(168, 85, 247, 0.16); color: #d8b4fe; border: 1px solid rgba(168, 85, 247, 0.3); }
+        .tag-pink { background: rgba(236, 72, 153, 0.16); color: #f9a8d4; border: 1px solid rgba(236, 72, 153, 0.3); }
+        .tag-gold { background: rgba(250, 204, 21, 0.16); color: #fde047; border: 1px solid rgba(250, 204, 21, 0.3); }
+
+        .game-desc {
+            font-size: 11.5px;
+            color: rgba(255, 255, 255, 0.48);
+            margin-top: 3px;
+            font-weight: 500;
+        }
+
+        /* Права кнопка переходу на картці */
+        .banner-arrow {
+            width: 32px;
+            height: 32px;
+            border-radius: 11px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255, 255, 255, 0.55);
+            font-size: 12px;
+            flex-shrink: 0;
+            z-index: 2;
+            transition: all 0.2s ease;
+        }
+
+        .game-banner:hover .banner-arrow {
+            background: rgba(255, 255, 255, 0.12);
+            color: #ffffff;
+            transform: translateX(2px);
+        }
 
         /* --- ШАПКА ИГРОВЫХ ЭКРАНОВ --- */
         .rg-header {
@@ -209,8 +411,8 @@
         .rg-logo span { color: rgba(255,255,255,0.4); font-weight: 500; }
 
         .rg-balance {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.11);
             padding: 6px 14px;
             border-radius: 20px;
             font-size: 12px;
@@ -220,6 +422,7 @@
             align-items: center;
             gap: 6px;
             backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
         }
 
         .rg-history {
@@ -243,7 +446,7 @@
             white-space: nowrap;
         }
 
-        /* --- ОБНОВЛЕННОЕ ИГРОВОЕ ПОЛЕ: РАКЕТА (ЗВЕЗДЫ, НЕБО, ГОРЫ) --- */
+        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА (ЗВЕЗДЫ, НЕБО, ГОРЫ) --- */
         .rg-display {
             height: 235px;
             background: linear-gradient(180deg, #060919 0%, #0f1738 45%, #1d1b4b 80%, #2a194d 100%);
@@ -258,7 +461,6 @@
             box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.85), 0 0 25px rgba(56, 189, 248, 0.12);
         }
 
-        /* Зоряне небо */
         .space-stars {
             position: absolute;
             inset: 0;
@@ -291,7 +493,6 @@
             100% { background-position: -140px 180px; }
         }
 
-        /* Далека планета / місяць */
         .space-planet {
             position: absolute;
             top: 22px;
@@ -303,10 +504,8 @@
             box-shadow: 0 0 22px rgba(251, 191, 36, 0.35);
             opacity: 0.85;
             z-index: 1;
-            transition: transform 0.6s ease, opacity 0.6s ease;
         }
 
-        /* Силуети гір знизу */
         .mountains-layer {
             position: absolute;
             bottom: 0;
@@ -338,7 +537,6 @@
             text-shadow: 0 0 25px rgba(244, 63, 94, 0.8);
         }
 
-        /* Красива SVG-ракета */
         .rocket-container {
             position: absolute;
             bottom: 32px;
@@ -389,9 +587,9 @@
             backdrop-filter: blur(4px);
         }
 
-        /* --- ІНШІ ІГРОВІ ДИСПЛЕЇ --- */
+        /* --- ИНШИ ИГРОВЫЕ ДИСПЛЕИ --- */
         .roulette-display, .mines-display, .plinko-display, .coinflip-display {
-            border-radius: 20px;
+            border-radius: 22px;
             position: relative;
             overflow: hidden;
             display: flex;
@@ -684,48 +882,115 @@
 </head>
 <body>
 
-    <!-- Вкладка КАЗИНО (ЛОББИ) -->
+    <!-- Вкладка КАЗИНО (ЛОББИ С НОВЫМИ КАРТОЧКАМИ) -->
     <div id="casino" class="page active">
-        <h1 class="page-title">🎰 XORYS CASINO</h1>
+        <div class="lobby-header">
+            <div class="brand-logo">
+                <div class="brand-badge">X</div>
+                <div class="brand-text">
+                    XORYS
+                    <span>MINI GAMES</span>
+                </div>
+            </div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star" style="color: #fde047;"></i>
+                <span id="userStarsLobby">100</span> ⭐
+            </div>
+        </div>
         
         <div class="games-container">
-            <div class="game-banner" onclick="openRocketGame()">
-                <div class="icon-box icon-rocket"><i class="fa-solid fa-rocket"></i></div>
-                <div class="game-info">
-                    <div class="game-title">РАКЕТА</div>
-                    <div class="game-desc">Космический полет • Ставки на Stars ⭐</div>
+            <!-- РАКЕТА -->
+            <div class="game-banner banner-rocket" onclick="openRocketGame()">
+                <div class="banner-left">
+                    <div class="icon-orb orb-rocket">
+                        <i class="fa-solid fa-rocket"></i>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title-row">
+                            <span class="game-title">РАКЕТА</span>
+                            <span class="game-tag tag-blue">HOT</span>
+                        </div>
+                        <div class="game-desc">Космический полет • Ставки на Stars</div>
+                    </div>
+                </div>
+                <div class="banner-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
 
-            <div class="game-banner" onclick="openRouletteGame()">
-                <div class="icon-box icon-roulette"><i class="fa-solid fa-dharmachakra"></i></div>
-                <div class="game-info">
-                    <div class="game-title">РУЛЕТКА</div>
-                    <div class="game-desc">Колесо удачи • x2 / x14 множители</div>
+            <!-- РУЛЕТКА -->
+            <div class="game-banner banner-roulette" onclick="openRouletteGame()">
+                <div class="banner-left">
+                    <div class="icon-orb orb-roulette">
+                        <i class="fa-solid fa-dharmachakra"></i>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title-row">
+                            <span class="game-title">РУЛЕТКА</span>
+                            <span class="game-tag tag-red">x14</span>
+                        </div>
+                        <div class="game-desc">Колесо удачи • Множители x2 / x14</div>
+                    </div>
+                </div>
+                <div class="banner-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
 
-            <div class="game-banner" onclick="openMinesGame()">
-                <div class="icon-box icon-mines"><i class="fa-solid fa-land-mine-on"></i></div>
-                <div class="game-info">
-                    <div class="game-title">МИНЫ</div>
-                    <div class="game-desc">Ищи звезды • Остерегайся мин 💣</div>
+            <!-- МИНЫ -->
+            <div class="game-banner banner-mines" onclick="openMinesGame()">
+                <div class="banner-left">
+                    <div class="icon-orb orb-mines">
+                        <i class="fa-solid fa-land-mine-on"></i>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title-row">
+                            <span class="game-title">МИНЫ</span>
+                            <span class="game-tag tag-purple">TOP</span>
+                        </div>
+                        <div class="game-desc">Ищи звезды • Остерегайся мин</div>
+                    </div>
+                </div>
+                <div class="banner-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
 
-            <div class="game-banner" onclick="openPlinkoGame()">
-                <div class="icon-box icon-plinko"><i class="fa-solid fa-network-wired"></i></div>
-                <div class="game-info">
-                    <div class="game-title">ПЛИНКО</div>
-                    <div class="game-desc">Падение шарика • Баланс и до x15 🎯</div>
+            <!-- ПЛИНКО -->
+            <div class="game-banner banner-plinko" onclick="openPlinkoGame()">
+                <div class="banner-left">
+                    <div class="icon-orb orb-plinko">
+                        <i class="fa-solid fa-network-wired"></i>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title-row">
+                            <span class="game-title">ПЛИНКО</span>
+                            <span class="game-tag tag-pink">x15</span>
+                        </div>
+                        <div class="game-desc">Падение шарика • Баланс и бонусы</div>
+                    </div>
+                </div>
+                <div class="banner-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
 
-            <div class="game-banner" onclick="openCoinflipGame()">
-                <div class="icon-box icon-coinflip"><i class="fa-solid fa-coins"></i></div>
-                <div class="game-info">
-                    <div class="game-title">ОРЕЛ И РЕШКА 3D</div>
-                    <div class="game-desc">Объемная 3D монета • Быстрый x2 🔥</div>
+            <!-- 3D ОРЕЛ И РЕШКА -->
+            <div class="game-banner banner-coinflip" onclick="openCoinflipGame()">
+                <div class="banner-left">
+                    <div class="icon-orb orb-coinflip">
+                        <i class="fa-solid fa-coins"></i>
+                    </div>
+                    <div class="game-info">
+                        <div class="game-title-row">
+                            <span class="game-title">ОРЕЛ И РЕШКА</span>
+                            <span class="game-tag tag-gold">3D</span>
+                        </div>
+                        <div class="game-desc">Объемная 3D монета • Быстрый x2</div>
+                    </div>
+                </div>
+                <div class="banner-arrow">
+                    <i class="fa-solid fa-chevron-right"></i>
                 </div>
             </div>
         </div>
@@ -746,24 +1011,17 @@
         </div>
 
         <div class="rg-display">
-            <!-- Звезды -->
             <div id="spaceStars" class="space-stars"></div>
-            <!-- Далекая планета -->
             <div class="space-planet"></div>
 
-            <!-- Силуэты гор на фоне -->
             <svg id="mountainsLayer" class="mountains-layer" viewBox="0 0 480 90" preserveAspectRatio="none">
-                <!-- Дальний хребет -->
                 <path d="M0,90 L0,52 L55,22 L115,58 L185,18 L255,54 L330,24 L405,56 L480,28 L480,90 Z" fill="rgba(49, 46, 129, 0.55)" />
-                <!-- Ближний хребет -->
                 <path d="M0,90 L0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62 L480,90 Z" fill="#090d1f" />
-                <!-- Неоновая окантовка вершин -->
                 <path d="M0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62" fill="none" stroke="rgba(56, 189, 248, 0.35)" stroke-width="1.5" />
             </svg>
 
             <div id="multiplierText" class="multiplier-val">x1.00</div>
 
-            <!-- Красивая SVG Ракета -->
             <div id="rocketObj" class="rocket-container idle-hover">
                 <div class="svg-rocket-wrap">
                     <svg viewBox="0 0 64 64" width="46" height="46" style="transform: rotate(45deg);">
@@ -784,18 +1042,12 @@
                                 <stop offset="100%" stop-color="rgba(239, 68, 68, 0)" />
                             </linearGradient>
                         </defs>
-                        <!-- Огонь из сопла -->
                         <path class="rocket-flame" d="M26,48 Q32,64 38,48 Q32,54 26,48 Z" fill="url(#flameGrad)" />
-                        <!-- Левое и правое крыло -->
                         <path d="M20,34 L10,46 L21,44 Z" fill="url(#finGrad)" />
                         <path d="M44,34 L54,46 L43,44 Z" fill="url(#finGrad)" />
-                        <!-- Сопло -->
                         <rect x="26" y="44" width="12" height="5" rx="2" fill="#334155" />
-                        <!-- Корпус ракеты -->
                         <path d="M32,6 C22,18 20,32 21,44 L43,44 C44,32 42,18 32,6 Z" fill="url(#bodyGrad)" />
-                        <!-- Носовой обтекатель -->
                         <path d="M32,6 C28,11 26,15 25,18 L39,18 C38,15 36,11 32,6 Z" fill="url(#finGrad)" />
-                        <!-- Иллюминатор -->
                         <circle cx="32" cy="27" r="6" fill="#0ea5e9" stroke="#334155" stroke-width="2" />
                         <circle cx="30" cy="25" r="2" fill="#ffffff" opacity="0.85" />
                     </svg>
@@ -819,7 +1071,6 @@
                 <button id="gameBtn" class="btn-main-action btn-style-start" onclick="handleRocketClick()">СТАВКА</button>
             </div>
 
-            <!-- Ползунок корректировки звезд -->
             <div class="slider-container">
                 <span class="slider-label">1⭐</span>
                 <input type="range" id="betSliderRocket" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'rocket')">
@@ -879,7 +1130,6 @@
                 <button id="rouletteBtn" class="btn-main-action btn-style-start" onclick="spinRouletteWheel()">КРУТИТЬ</button>
             </div>
 
-            <!-- Ползунок корректировки звезд -->
             <div class="slider-container">
                 <span class="slider-label">1⭐</span>
                 <input type="range" id="betSliderRoulette" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'roulette')">
@@ -929,7 +1179,6 @@
                 <button id="minesBtn" class="btn-main-action btn-style-start" onclick="handleMinesBtnClick()">ИГРАТЬ</button>
             </div>
 
-            <!-- Ползунок корректировки звезд -->
             <div class="slider-container">
                 <span class="slider-label">1⭐</span>
                 <input type="range" id="betSliderMines" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'mines')">
@@ -978,7 +1227,6 @@
                 <button id="plinkoBtn" class="btn-main-action btn-style-start" onclick="dropPlinkoBall()">БРОСИТЬ</button>
             </div>
 
-            <!-- Ползунок корректировки звезд -->
             <div class="slider-container">
                 <span class="slider-label">1⭐</span>
                 <input type="range" id="betSliderPlinko" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'plinko')">
@@ -1041,7 +1289,6 @@
                 <button id="coinflipBtn" class="btn-main-action btn-style-start" onclick="flipCoin3D()">ПОДБРОСИТЬ</button>
             </div>
 
-            <!-- Ползунок корректировки звезд -->
             <div class="slider-container">
                 <span class="slider-label">1⭐</span>
                 <input type="range" id="betSliderCoinflip" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'coinflip')">
@@ -1138,13 +1385,13 @@
         let currentCoinRotation = 0;
 
         function updateBalanceUI() {
+            document.getElementById('userStarsLobby').innerText = starsBalance;
             document.getElementById('userStarsRoulette').innerText = starsBalance;
             document.getElementById('userStarsRocket').innerText = starsBalance;
             document.getElementById('userStarsMines').innerText = starsBalance;
             document.getElementById('userStarsPlinko').innerText = starsBalance;
             document.getElementById('userStarsCoinflip').innerText = starsBalance;
 
-            // Синхронизируем максимумы ползунков с балансом (минимум 10, чтобы слайдер не ломался)
             const sliderMax = Math.max(10, starsBalance);
             ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip'].forEach(game => {
                 const slider = document.getElementById('betSlider' + game);
@@ -1166,18 +1413,9 @@
 
         function onSliderBet(value, type) {
             const val = Math.max(1, parseInt(value) || 1);
-            if (type === 'mines' && isPlayingMines) {
-                syncBetUI('mines', currentBetMines);
-                return;
-            }
-            if (type === 'coinflip' && isFlippingCoin) {
-                syncBetUI('coinflip', currentBetCoinflip);
-                return;
-            }
-            if (type === 'roulette' && isSpinning) {
-                syncBetUI('roulette', currentBetRoulette);
-                return;
-            }
+            if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
+            if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
+            if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
 
             if (type === 'roulette') currentBetRoulette = val;
             else if (type === 'rocket') currentBetRocket = val;
@@ -1357,7 +1595,6 @@
                 ball.x += ball.vx;
                 ball.y += ball.vy;
 
-                // Мягкое притяжение к центру, чтобы шарик не улетал на x15 слишком часто
                 const centerPull = (canvas.width / 2 - ball.x) * 0.0025;
                 ball.vx += centerPull;
 
@@ -1467,7 +1704,7 @@
             }, 4100);
         }
 
-        /* --- РАКЕТА (С КРАСИВОЙ SVG РАКЕТОЙ И ФОНОМ ГОР/ЗВЕЗД) --- */
+        /* --- РАКЕТА --- */
         function handleRocketClick() {
             const btn = document.getElementById('gameBtn');
             const rocket = document.getElementById('rocketObj');
@@ -1647,7 +1884,6 @@
             alert('Выбрана категория: ' + name);
         }
 
-        // Инициализация ползунков при старте
         updateBalanceUI();
     </script>
 </body>
