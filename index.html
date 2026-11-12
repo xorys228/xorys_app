@@ -1160,6 +1160,26 @@
         </div>
         
         <div class="games-container">
+            <!-- Безкоштовна рулетка за друзів -->
+            <div class="game-card-row" onclick="openRefRouletteGame()">
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <circle cx="46" cy="62" r="50" fill="#050507" stroke="#38bdf8" stroke-width="4"/>
+                        <circle cx="46" cy="62" r="45" fill="#111216" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35"/>
+                        <circle cx="46" cy="62" r="18" fill="#050507" stroke="#38bdf8" stroke-width="2.5"/>
+                        <text x="46" y="66" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">0★</text>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-gift"></i> БЕЗКОШТОВНО</span>
+                    <span class="game-name">РУЛЕТКА ЗА ДРУЗІВ</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-user-group"></i> 0 / 3 друзів</div>
+                        <button class="card-action-btn">КРУТИТИ</button>
+                    </div>
+                </div>
+            </div>
+            
             <!-- 1. РАКЕТА -->
             <div class="game-card-row" onclick="openRocketGame()">
                 <div class="game-visual-left">
@@ -2952,7 +2972,7 @@ function spinRouletteWheel() {
             triggerHaptic('impact', 'medium');
         }
 
-        function syncStarsControls(amount) {
+       function syncStarsControls(amount) {
             selectedCustomStars = Math.max(1, parseInt(amount) || 50);
             document.getElementById('starsManualInput').value = selectedCustomStars;
             document.getElementById('starsSlider').value = Math.min(5000, Math.max(50, selectedCustomStars));
@@ -3029,44 +3049,178 @@ function spinRouletteWheel() {
         updateBalanceUI();
         initDailyBonusState();
         renderProfileActivity();
+
         // ФУНКЦИЯ ДЛЯ ВЫВОДА ЗВЁЗД ОТ 100 ШТУК
-function requestWithdrawFromProfile() {
-    const input = document.getElementById('profileWithdrawInput');
-    const amount = parseInt(input.value);
+        function requestWithdrawFromProfile() {
+            const input = document.getElementById('profileWithdrawInput');
+            const amount = parseInt(input.value);
 
-    if (isNaN(amount) || amount < 100) {
-        showToast('Минимум для вывода: 100 звёзд!');
-        triggerHaptic('notification', 'error');
-        return;
-    }
+            if (isNaN(amount) || amount < 100) {
+                showToast('Минимум для вывода: 100 звёзд!');
+                triggerHaptic('notification', 'error');
+                return;
+            }
 
-    if (amount > starsBalance) {
-        showToast('Недостаточно звёзд на балансе!');
-        triggerHaptic('notification', 'error');
-        return;
-    }
+            if (amount > starsBalance) {
+                showToast('Недостаточно звёзд на балансе!');
+                triggerHaptic('notification', 'error');
+                return;
+            }
 
-    // Формируем данные для отправки вашему боту
-    const withdrawData = {
-        action: 'withdraw_request',
-        amount: amount,
-        user_id: userId,
-        username: username
-    };
+            const withdrawData = {
+                action: 'withdraw_request',
+                amount: amount,
+                user_id: userId,
+                username: username
+            };
 
-    // Если открыто в Телеграме — отправляем боту и закрываем мини-апп
-    if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
-        window.Telegram.WebApp.sendData(JSON.stringify(withdrawData));
-    } else {
-        // Если тест на компьютере в браузере: просто списываем и показываем уведомление
-        starsBalance = Number((starsBalance - amount).toFixed(1));
-        updateBalanceUI();
-        showToast(`Заявка на вывод ${amount} ★ отправлена админу!`);
-        triggerHaptic('notification', 'success');
-    }
-    
-    input.value = '100';
-}
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
+                window.Telegram.WebApp.sendData(JSON.stringify(withdrawData));
+            } else {
+                starsBalance = Number((starsBalance - amount).toFixed(1));
+                updateBalanceUI();
+                showToast(`Заявка на вывод ${amount} ★ отправлена админу!`);
+                triggerHaptic('notification', 'success');
+            }
+            
+            input.value = '100';
+        }
+
+        // --- БЕЗКОШТОВНА РУЛЕТКА ЗА ДРУЗІВ ---
+        let refInvitedCount = 0; 
+        let canSpinRefWheel = false; 
+        let isRefSpinning = false;
+        let refWheelAngle = 0;
+
+        function initRefRouletteState() {
+            try {
+                const saved = localStorage.getItem('xorys_ref_roulette_count');
+                const spun = localStorage.getItem('xorys_ref_roulette_spun');
+                if (saved !== null) refInvitedCount = parseInt(saved);
+                if (spun === 'true') canSpinRefWheel = false;
+                else if (refInvitedCount >= 3) canSpinRefWheel = true;
+            } catch (e) {}
+            updateRefRouletteUI();
+        }
+
+        function openRefRouletteGame() {
+            switchPage('refRoulettePage');
+            triggerHaptic('impact', 'medium');
+            initRefRouletteState();
+        }
+
+        function updateRefRouletteUI() {
+            const statusText = document.getElementById('refSpinStatusText');
+            const btn = document.getElementById('refSpinMainBtn');
+            
+            if (refInvitedCount >= 3) {
+                statusText.innerText = 'СТАТУС: ГОТОВО ДО ОБЕРТАННЯ!';
+                btn.innerText = 'КРУТИТИ БЕЗКОШТОВНО!';
+                btn.style.background = '#38bdf8';
+                btn.style.color = '#050507';
+            } else {
+                statusText.innerText = `ПРИГЛАШЕНО ДРУЗЕЙ: ${refInvitedCount} / 3`;
+                btn.innerText = `ПОТРІБНО 3 ДРУЗІВ (${refInvitedCount}/3)`;
+                btn.style.background = '#ffffff';
+                btn.style.color = '#050507';
+            }
+            document.getElementById('userStarsRefRoulette').innerText = formatStars(starsBalance);
+        }
+
+        function inviteFriendForRefRoulette() {
+            triggerHaptic('impact', 'medium');
+            if (refInvitedCount >= 3) {
+                showToast('Ви вже запросили 3 друзів! Можна крутити.');
+                return;
+            }
+
+            const link = document.getElementById('refLinkDisplay').innerText;
+            const text = encodeURIComponent('Залітай в XORYS Casino та вигравай безкоштовні зірки ⭐!');
+            const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(link)}&text=${text}`;
+
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(shareUrl);
+            } else {
+                copyReferralLink();
+            }
+        }
+
+        function trySpinRefRoulette() {
+            if (isRefSpinning) return;
+
+            if (refInvitedCount < 3) {
+                showToast(`Необхідно запросити 3 друзів! Зараз: ${refInvitedCount}/3`);
+                triggerHaptic('notification', 'error');
+                inviteFriendForRefRoulette();
+                return;
+            }
+
+            isRefSpinning = true;
+            const btn = document.getElementById('refSpinMainBtn');
+            btn.innerText = 'КРУТИТЬСЯ...';
+            btn.disabled = true;
+            triggerHaptic('impact', 'medium');
+
+            const prizes = [1, 2, 5, 10];
+            const wonPrize = prizes[Math.floor(Math.random() * prizes.length)];
+
+            refWheelAngle += (360 * 6) + Math.floor(Math.random() * 360);
+            document.getElementById('refRouletteCircle').style.transform = `rotate(${refWheelAngle}deg)`;
+
+            setTimeout(() => {
+                isRefSpinning = false;
+                starsBalance = Number((starsBalance + wonPrize).toFixed(1));
+                totalStarsWon += wonPrize;
+                updateBalanceUI();
+                updateRefRouletteUI();
+
+                try {
+                    localStorage.setItem('xorys_ref_roulette_spun', 'true');
+                } catch(e){}
+
+                showToast(`Виграш! Нараховано +${wonPrize} ★!`);
+                triggerHaptic('notification', 'success');
+                
+                btn.innerText = `ВИ ВИГРАЛИ ${wonPrize} ★`;
+                document.getElementById('refHubText').innerText = `${wonPrize}★`;
+            }, 4100);
+        }
+
+        initRefRouletteState();
     </script>
+
+    <!-- ЕКРАН БЕЗКОШТОВНОЇ РУЛЕТКИ ЗА ДРУЗІВ (ПОЗА СКРИПТОМ) -->
+    <div id="refRoulettePage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">РУЛЕТКА <span>ЗА ДРУЗІВ</span></div>
+            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsRefRoulette">100</span></div>
+        </div>
+
+        <div class="roulette-display" style="height: 220px;">
+            <div class="wheel-wrapper">
+                <div class="wheel-pointer"></div>
+                <div class="roulette-circle" id="refRouletteCircle">
+                    <div class="wheel-center-hub" id="refHubText">0★</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="betting-box" style="text-align: center;">
+            <div class="betting-info" style="justify-content: center; margin-bottom: 12px;">
+                <span id="refSpinStatusText" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
+            </div>
+            
+            <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
+                КРУТИТИ РУЛЕТКУ (0/3)
+            </button>
+
+            <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
+                <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ЗАПРОСИТИ ДРУЗЕЙ (0/3)
+            </button>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББІ</button>
+    </div>
+
 </body>
 </html>
