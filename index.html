@@ -2570,12 +2570,6 @@ let activeRocketBet = 10;
 let activeRocketIsFree = false;
 let rocketGamesPlayed = parseInt(localStorage.getItem('rocketGamesPlayed') || '0', 10);
 let rocketFreebetAvailable = localStorage.getItem('rocketFreebetAvailable') === 'true';
-let currentBetDoors = 10;
-let isPlayingDoors = false;
-let doorsDeathIndex = -1;
-let doorsCurrentMult = 1.00;
-let doorsStep = 0;
-const doorsMultipliers = [1.42, 2.10, 3.10, 4.60, 7.00, 11.00];
 
 function updateRocketFreebetUI() {
     const countEl = document.getElementById('rocketFreebetCount');
