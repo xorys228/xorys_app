@@ -2393,10 +2393,11 @@
             playSound('error');
         }
 
-      const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+   const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
 let soundEnabled = true;
 let hapticEnabled = true;
-
+let activeRocketBet = 10;
+let activeRocketIsFree = false;
         
      /* --- МАРКЕТ --- */
         const marketCatalogData = {
@@ -3064,28 +3065,7 @@ function spinRouletteWheel() {
 }
 
         /* --- РАКЕТА --- */
-        function handleRocketClick() {
-            const btn = document.getElementById('gameBtn');
-            const rocket = document.getElementById('rocketObj');
-            const multText = document.getElementById('multiplierText');
-            const starsBg = document.getElementById('spaceStars');
-            const mountains = document.getElementById('mountainsLayer');
-            triggerHaptic('impact', 'light');
-
-            if (!isPlayingRocket) {
-                if (starsBalance < currentBetRocket) { showToast('Недостаточно звезд!'); return; }
-                starsBalance = Number((starsBalance - currentBetRocket).toFixed(1));
-                totalGamesPlayed += 1;
-                updateBalanceUI();
-                isPlayingRocket = true;
-                currentMultiplier = 1.00;
-                crashPoint = (function() {
-    if (Math.random() < 0.10) return 1.00;
-    let r = Math.random();
-    let cp = 0.99 / (1.0 - r);
-    if (cp > 50.0) cp = 50.0;
-    return Math.max(1.01, parseFloat(cp.toFixed(2)));
-})();
+  function handleRocketClick() {
 
                 multText.classList.remove('crashed');
                 multText.innerText = 'x1.00';
