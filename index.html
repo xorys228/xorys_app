@@ -1949,6 +1949,25 @@
             </div>
         </div>
 
+    <!-- НАСТРОЙКИ ЗВУКА И ВИБРАЦИИ -->
+        <div class="profile-feature-card">
+            <div class="feature-card-header">
+                <div class="feature-title-wrap">
+                    <div class="feature-icon-box">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <div class="feature-title-text">
+                        <h3>НАСТРОЙКИ</h3>
+                        <p>Звук и вибрация в приложении</p>
+                    </div>
+                </div>
+            </div>
+            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                <button id="soundToggleBtn" class="card-action-btn" style="flex: 1; background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8;" onclick="toggleSoundSetting()">ЗВУК: ВКЛ</button>
+                <button id="hapticToggleBtn" class="card-action-btn" style="flex: 1; background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8;" onclick="toggleHapticSetting()">ВИБРАЦИЯ: ВКЛ</button>
+            </div>
+        </div>
+        
         <!-- БЛОК ВЫВОДА ЗВЁЗД (ВСТАВИТЬ СЮДА) -->
         <div class="profile-feature-card" style="border-color: rgba(56, 189, 248, 0.4); background: linear-gradient(145deg, rgba(14, 25, 40, 0.95) 0%, rgba(7, 12, 20, 0.98) 100%);">
             <div class="feature-card-header">
@@ -2220,6 +2239,7 @@
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
 
         function playSound(type) {
+            if (!soundEnabled) return;
             try {
                 if (audioCtx.state === 'suspended') { audioCtx.resume(); }
                 const osc = audioCtx.createOscillator();
@@ -2488,6 +2508,7 @@
             triggerHaptic('impact', 'medium');
         }
         function triggerHaptic(type, style) {
+            if (!hapticEnabled) return;
             try {
                 if (!tg || !tg.HapticFeedback) return;
                 if (type === 'impact') tg.HapticFeedback.impactOccurred(style || 'light');
