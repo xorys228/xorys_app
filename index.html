@@ -2393,7 +2393,11 @@
             playSound('error');
         }
 
-      const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;  
+      const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+let soundEnabled = true;
+let hapticEnabled = true;
+
+        
      /* --- МАРКЕТ --- */
         const marketCatalogData = {
             'ЗВЁЗДЫ': {
