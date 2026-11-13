@@ -1158,6 +1158,19 @@
                 <span id="userStarsLobby">100</span>
             </div>
         </div>
+
+    <!-- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ -->
+        <div class="profile-feature-card" style="padding: 10px 14px; margin-bottom: 14px; background: linear-gradient(145deg, rgba(11, 16, 26, 0.9) 0%, rgba(5, 7, 12, 0.95) 100%);">
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.7);">
+                <i class="fa-solid fa-bolt" style="color: #38bdf8; animation: pulse 1.5s infinite;"></i>
+                <div style="flex: 1; overflow: hidden; white-space: nowrap; position: relative;">
+                    <span id="liveFeedText" style="display: inline-block; transition: opacity 0.3s ease; color: #ffffff;">
+                        @crypto_king щойно виграв 250 ★ у Ракети!
+                    </span>
+                </div>
+            </div>
+        </div>
+        
         
         <div class="games-container">
             <!-- Бесплатная рулетка за друзей -->
@@ -3471,6 +3484,34 @@ function spinRouletteWheel() {
         }
 
         initRefRouletteState();
+
+   // --- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ ---
+        const liveFeedItems = [
+            { user: 'crypto_king', game: 'Ракети', amount: 250 },
+            { user: 'xorys_god', game: 'Колесо Удачи', amount: 140 },
+            { user: 'lucky_spin', game: 'Міни Старс', amount: 95 },
+            { user: 'bonus_hunter', game: 'Плинко x15', amount: 300 },
+            { user: 'telegram_star', game: 'Орел і Решка', amount: 50 },
+            { user: 'win_master', game: 'Ракети', amount: 500 }
+        ];
+
+        function startLiveFeedTicker() {
+            const feedEl = document.getElementById('liveFeedText');
+            if (!feedEl) return;
+
+            setInterval(() => {
+                const randomItem = liveFeedItems[Math.floor(Math.random() * liveFeedItems.length)];
+                feedEl.style.opacity = '0';
+                
+                setTimeout(() => {
+                    feedEl.innerText = `@${randomItem.user} щойно виграв ${randomItem.amount} ★ у грі «${randomItem.game}»!`;
+                    feedEl.style.opacity = '1';
+                }, 300);
+            }, 5000);
+        }
+
+        startLiveFeedTicker();
+        
         
     </script>
                 
