@@ -2398,6 +2398,42 @@ let soundEnabled = true;
 let hapticEnabled = true;
 let activeRocketBet = 10;
 let activeRocketIsFree = false;
+let rocketGamesPlayed = parseInt(localStorage.getItem('rocketGamesPlayed') || '0', 10);
+let rocketFreebetAvailable = localStorage.getItem('rocketFreebetAvailable') === 'true';
+
+function updateRocketFreebetUI() {
+    const countEl = document.getElementById('rocketFreebetCount');
+    const barEl = document.getElementById('rocketFreebetBar');
+    if (!countEl || !barEl) return;
+
+    if (rocketFreebetAvailable) {
+        countEl.innerText = 'ДОСТУПНА (10 ★)!';
+        countEl.style.color = '#4ade80';
+        barEl.style.borderColor = '#4ade80';
+        barEl.style.background = 'rgba(74, 222, 128, 0.15)';
+    } else {
+        countEl.innerText = `${rocketGamesPlayed} / 15`;
+        countEl.style.color = '#38bdf8';
+        barEl.style.borderColor = 'rgba(56, 189, 248, 0.35)';
+        barEl.style.background = 'rgba(56, 189, 248, 0.12)';
+    }
+}
+
+function registerRocketGamePlayed() {
+    if (rocketFreebetAvailable) return;
+    rocketGamesPlayed++;
+    if (rocketGamesPlayed >= 15) {
+        rocketGamesPlayed = 0;
+        rocketFreebetAvailable = true;
+        localStorage.setItem('rocketFreebetAvailable', 'true');
+        if (typeof showToast === 'function') showToast('Вітаємо! Доступна 1 безкоштовна гра в Ракети!');
+        if (typeof playSound === 'function') playSound('win');
+    }
+    localStorage.setItem('rocketGamesPlayed', rocketGamesPlayed.toString());
+    updateRocketFreebetUI();
+}
+   
+        
         
      /* --- МАРКЕТ --- */
         const marketCatalogData = {
