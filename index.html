@@ -3064,88 +3064,138 @@ function spinRouletteWheel() {
     }, 4100);
 }
 
-        /* --- РАКЕТА --- */
-  function handleRocketClick() {
+      /* --- РАКЕТА --- */
+function handleRocketClick() {
+    const btn = document.getElementById('gameBtn');
+    const rocket = document.getElementById('rocketObj');
+    const multText = document.getElementById('multiplierText');
+    const starsBg = document.getElementById('spaceStars');
+    const mountains = document.getElementById('mountainsLayer');
+    triggerHaptic('impact', 'light');
 
-                multText.classList.remove('crashed');
-                multText.innerText = 'x1.00';
-                btn.innerText = 'ЗАБРАТЬ';
-                btn.className = 'btn-main-action btn-style-cashout';
-
-                rocket.style.opacity = '1';
-                rocket.style.bottom = '32px';
-                rocket.style.left = '26px';
-                rocket.classList.remove('idle-hover');
-                starsBg.classList.add('flying');
-                mountains.classList.add('departed');
-
-                gameInterval = setInterval(() => {
-                    currentMultiplier += 0.03;
-                    multText.innerText = 'x' + currentMultiplier.toFixed(2);
-                    btn.innerText = `ЗАБРАТЬ (${Math.floor(currentBetRocket * currentMultiplier)})`;
-
-                    let b = parseFloat(rocket.style.bottom) || 32;
-                    let l = parseFloat(rocket.style.left) || 26;
-                    if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
-                    if (l < 235) rocket.style.left = (l + 2.2) + 'px';
-
-                    if (currentMultiplier >= crashPoint) {
-                        endRocketGame(false);
-                    }
-                }, 100);
-            } else {
-                endRocketGame(true);
+    if (!isPlayingRocket) {
+        // --- СТАРТ РАУНДУ ---
+        if (rocketFreebetAvailable) {
+            activeRocketIsFree = true;
+            activeRocketBet = 10; // фіксована ставка безкоштовної гри
+            rocketFreebetAvailable = false;
+            localStorage.setItem('rocketFreebetAvailable', 'false');
+            updateRocketFreebetUI();
+            if (typeof showToast === 'function') showToast('Запущено безкоштовну гру на 10 ★!');
+        } else {
+            if (starsBalance < currentBetRocket) { 
+                showToast('Недостаточно звезд!'); 
+                return; 
             }
+            starsBalance = Number((starsBalance - currentBetRocket).toFixed(1));
+            activeRocketIsFree = false;
+            activeRocketBet = currentBetRocket;
         }
 
-        function endRocketGame(isWin) {
-            clearInterval(gameInterval);
-            isPlayingRocket = false;
-            const btn = document.getElementById('gameBtn');
-            const rocket = document.getElementById('rocketObj');
-            const multText = document.getElementById('multiplierText');
-            const starsBg = document.getElementById('spaceStars');
-            const mountains = document.getElementById('mountainsLayer');
-
-            starsBg.classList.remove('flying');
-
-            const historyContainer = document.getElementById('rocketHistory');
-            const pill = document.createElement('div');
-            pill.className = 'history-pill';
-
-            if (isWin) {
-                const winSum = Math.floor(currentBetRocket * currentMultiplier);
-                starsBalance = Number((starsBalance + winSum).toFixed(1));
-                totalStarsWon += winSum;
-                updateBalanceUI();
-                pill.style.borderColor = '#2563eb';
-                pill.innerText = 'x' + currentMultiplier.toFixed(2);
-                triggerHaptic('notification', 'success');
-            } else {
-                triggerHaptic('notification', 'error');
-                multText.classList.add('crashed');
-                multText.innerText = 'СЛИВ!';
-                rocket.style.opacity = '0';
-                pill.style.borderColor = 'rgba(255,255,255,0.2)';
-                pill.innerText = 'x' + crashPoint.toFixed(2);
-            }
-
-            historyContainer.prepend(pill);
-            if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-
-            btn.innerText = 'СТАВКА';
-            btn.className = 'btn-main-action btn-style-start';
-
-            setTimeout(() => {
-                if (!isPlayingRocket) {
-                    mountains.classList.remove('departed');
-                    rocket.style.bottom = '32px';
-                    rocket.style.left = '26px';
-                    rocket.style.opacity = '1';
-                    rocket.classList.add('idle-hover');
-                }
-            }, 900);
+        totalGamesPlayed += 1;
+        updateBalanceUI();
+        
+        if (!activeRocketIsFree) {
+            registerRocketGamePlayed();
         }
+
+        isPlayingRocket = true;
+        currentMultiplier = 1.00;
+        crashPoint = (function() {
+            if (Math.random() < 0.10) return 1.00;
+            let r = Math.random();
+            let cp = 0.99 / (1.0 - r);
+            if (cp > 50.0) cp = 50.0;
+            return Math.max(1.01, parseFloat(cp.toFixed(2)));
+        })();
+
+        multText.classList.remove('crashed');
+        multText.innerText = 'x1.00';
+        btn.innerText = 'ЗАБРАТЬ';
+        btn.className = 'btn-main-action btn-style-cashout';
+
+        rocket.style.opacity = '1';
+        rocket.style.bottom = '32px';
+        rocket.style.left = '26px';
+        rocket.classList.remove('idle-hover');
+        starsBg.classList.add('flying');
+        mountains.classList.add('departed');
+
+        gameInterval = setInterval(() => {
+            currentMultiplier += 0.03;
+            multText.innerText = 'x' + currentMultiplier.toFixed(2);
+            // Використовуємо activeRocketBet щоб сума в кнопці показувалась правильно і для фрібета, і для звичайної ставки
+            btn.innerText = `ЗАБРАТЬ (${Math.floor(activeRocketBet * currentMultiplier)})`;
+
+            let b = parseFloat(rocket.style.bottom) || 32;
+            let l = parseFloat(rocket.style.left) || 26;
+            if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
+            if (l < 235) rocket.style.left = (l + 2.2) + 'px';
+
+            if (currentMultiplier >= crashPoint) {
+                endRocketGame(false);
+            }
+        }, 100);
+    } else {
+        // --- КЕШАУТ (НАТИСНУЛИ «ЗАБРАТЬ» ПІД ЧАС ПОЛЬОТУ) ---
+        endRocketGame(true);
+    }
+}
+
+function endRocketGame(isWin) {
+    clearInterval(gameInterval);
+    isPlayingRocket = false;
+    const btn = document.getElementById('gameBtn');
+    const rocket = document.getElementById('rocketObj');
+    const multText = document.getElementById('multiplierText');
+    const starsBg = document.getElementById('spaceStars');
+    const mountains = document.getElementById('mountainsLayer');
+
+    starsBg.classList.remove('flying');
+
+    const historyContainer = document.getElementById('rocketHistory');
+    const pill = document.createElement('div');
+    pill.className = 'history-pill';
+
+    if (isWin) {
+        // Рахуємо виграш на основі activeRocketBet (працює і для 10 зірок фрібета, і для звичайної ставки)
+        const winSum = Math.floor(activeRocketBet * currentMultiplier);
+        starsBalance = Number((starsBalance + winSum).toFixed(1));
+        totalStarsWon += winSum;
+        updateBalanceUI();
+        pill.style.borderColor = '#2563eb';
+        pill.innerText = 'x' + currentMultiplier.toFixed(2);
+        triggerHaptic('notification', 'success');
+        if (typeof showToast === 'function') {
+            showToast(`Виграно ${winSum} ★ (${currentMultiplier.toFixed(2)}x)!`);
+        }
+    } else {
+        triggerHaptic('notification', 'error');
+        multText.classList.add('crashed');
+        multText.innerText = 'СЛИВ!';
+        rocket.style.opacity = '0';
+        pill.style.borderColor = 'rgba(255,255,255,0.2)';
+        pill.innerText = 'x' + crashPoint.toFixed(2);
+    }
+
+    if (historyContainer) {
+        historyContainer.prepend(pill);
+        if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+    }
+
+    btn.innerText = 'СТАВКА';
+    btn.className = 'btn-main-action btn-style-start';
+
+    setTimeout(() => {
+        if (!isPlayingRocket) {
+            mountains.classList.remove('departed');
+            rocket.style.bottom = '32px';
+            rocket.style.left = '26px';
+            rocket.style.opacity = '1';
+            rocket.classList.add('idle-hover');
+        }
+    }, 900);
+}
 
         /* --- МИНЫ --- */
         function setMinesCount(count, el) {
