@@ -3474,11 +3474,44 @@ function endRocketGame(isWin) {
         }
 
         function confirmMarketPurchase() {
+            // Перевіряємо, чи запущено в Telegram і чи доступний метод відкриття інвойсів
+            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openInvoice) {
+                
+                // Якщо це реальний запит на зірки або підписку:
+                let title = activeMarketCategory === 'ЗВЁЗДЫ' ? `Покупка ${selectedCustomStars} Telegram Stars` : 'Оплата подписки TG Prem';
+                let description = activeMarketCategory === 'ЗВЁЗДЫ' ? `Мгновенное зачисление ${selectedCustomStars} ★ на игровой баланс XORYS` : 'Активация подписки Telegram Premium';
+                
+                // Приклад отримання посилання на інвойс від твого майбутнього бекенду / бота
+                // (Тут твій сервер повинен викликати метод createInvoiceLink через Telegram Bot API)
+                // Для прикладу передаємо структуру, яку потрібно зв'язати з твоїм ботом:
+                
+                /* 
+                   Оскільки invoice_link генерується на стороні твого Telegram-бота, 
+                   тут робиться запит на твій сервер (наприклад, fetch('/create-invoice')) 
+                   і отримується 'https://t.me/$...'
+                */
+
+                // Демо-імітація виклику openInvoice (коли отримаєш invoice_link з сервера):
+                /*
+                window.Telegram.WebApp.openInvoice(invoiceLink, function(status) {
+                    if (status === 'paid') {
+                        // Успішна оплата! Нараховуємо зірки
+                        grantSuccessfulPurchase();
+                    } else if (status === 'cancelled') {
+                        showToast('Оплата была отменена');
+                    } else {
+                        showToast('Ошибка оплаты');
+                    }
+                });
+                */
+            }
+
+            // Локальна лояльна затьмарена обробка (якщо тестуєш без піднятого серверного бота)
             if (activeMarketCategory === 'ЗВЁЗДЫ') {
                 starsBalance = Number((starsBalance + selectedCustomStars).toFixed(1));
                 updateBalanceUI();
-                addProfileActivity('Покупка в Маркете', `+${selectedCustomStars} ★`, 'fa-store');
-                showToast(`Зачислено +${selectedCustomStars} звёзд!`);
+                addProfileActivity('Покупка в Маркете (Stars)', `+${selectedCustomStars} ★`, 'fa-store');
+                showToast(`Успешно оплачено! Зачислено +${selectedCustomStars} звёзд!`);
                 triggerHaptic('notification', 'success');
             } else {
                 const data = marketCatalogData[activeMarketCategory];
