@@ -2738,14 +2738,12 @@
             avatarBox.innerText = fullName.charAt(0).toUpperCase();
         }
 
-        let starsBalance = 100;
+        let starsBalance = 0;
         let totalGamesPlayed = 0;
         let totalStarsWon = 0;
         let referralsCount = 0;
         let dailyStreak = 1;
-        let profileHistoryLog = [
-            { title: 'Стартовый бонус аккаунта', amount: '+100 ★', icon: 'fa-gift' }
-        ];
+        let profileHistoryLog = [];
 
         function formatStars(val) {
             return Number.isInteger(val) ? val.toString() : val.toFixed(1);
