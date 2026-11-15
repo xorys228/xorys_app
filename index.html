@@ -3168,18 +3168,52 @@ const assignedCode = "ОЖИДАНИЕ...";
             });
         }
 
-        function requestNumberCodeRefresh() {
-            if (!activeNumberOrder) return;
-            const codeEl = document.getElementById('smsVerificationCode');
-            const hintEl = document.getElementById('smsStatusHint');
-            codeEl.innerText = 'ПОИСК...';
-            triggerHaptic('impact', 'medium');
+      function requestNumberCodeRefresh() {
+    if (!activeNumberOrder) return;
+    const codeEl = document.getElementById('smsVerificationCode');
+    const hintEl = document.getElementById('smsStatusHint');
+    
+    // Находим элемент с номером (проверьте, какой у него ID в HTML, обычно issuedPhoneNumber)
+    const phoneEl = document.getElementById('issuedPhoneNumber') || document.querySelector('.issued-phone');
 
-            sendPayloadToXorysBot({
-                action: 'request_number_sms_code',
-                order_id: activeNumberOrder.order_id,
-                phone: activeNumberOrder.phone
-            });
+    codeEl.innerText = 'ПРОВЕРКА...';
+    triggerHaptic('impact', 'medium');
+
+    const tgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe)
+        ? window.Telegram.WebApp.initDataUnsafe.user
+        : null;
+    const userId = tgUser ? tgUser.id : 123456789;
+
+    fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/user_purchases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: userId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok && data.purchases) {
+            const order = data.purchases.find(p => p.id === activeNumberOrder.order_id);
+            
+            if (order && order.status === 'ready') {
+                activeNumberOrder.phone = order.phone_number;
+                if (phoneEl) phoneEl.innerText = order.phone_number;
+                codeEl.innerText = order.code;
+                hintEl.innerText = `Код ${order.code} получен и продублирован вам в @xorysbot!`;
+                if (typeof playSound === 'function') playSound('win');
+                showToast('✅ Номер и код получены!');
+            } else {
+                codeEl.innerText = 'ОЖИДАНИЕ...';
+                hintEl.innerText = 'Администратор еще не выдал номер и код. Нажмите «ПОЛУЧИТЬ КОД» чуть позже.';
+                showToast('⏳ Заказ еще в обработке');
+            }
+        }
+    })
+    .catch(err => {
+        console.error('Ошибка проверки заказа:', err);
+        codeEl.innerText = 'ОШИБКА';
+        showToast('Ошибка связи с сервером');
+    });
+}
 
             setTimeout(() => {
                 const urlParams = new URLSearchParams(window.location.search);
