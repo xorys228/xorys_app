@@ -1231,36 +1231,7 @@
         <span id="toastText">Уведомление</span>
     </div>
 
-    <!-- Вкладка ИГРЫ (ЛОББИ) -->
-    <div id="casino" class="page active">
-        <div class="lobby-header">
-            <div class="brand-logo">
-                <div class="brand-badge">X</div>
-                <div class="brand-text">
-                    XORYS
-                    <span>МИНИ-ИГРЫ</span>
-                </div>
-            </div>
-            <div class="rg-balance">
-                <i class="fa-solid fa-star"></i>
-                <span id="userStarsLobby">100</span>
-            </div>
-        </div>
-
-    <!-- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ -->
-        <div class="profile-feature-card" style="padding: 10px 14px; margin-bottom: 14px; background: linear-gradient(145deg, rgba(11, 16, 26, 0.9) 0%, rgba(5, 7, 12, 0.95) 100%);">
-            <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.7);">
-                <i class="fa-solid fa-bolt" style="color: #38bdf8; animation: pulse 1.5s infinite;"></i>
-                <div style="flex: 1; overflow: hidden; white-space: nowrap; position: relative;">
-                    <span id="liveFeedText" style="display: inline-block; transition: opacity 0.3s ease; color: #ffffff;">
-                        @crypto_king щойно виграв 250 ★ у Ракети!
-                    </span>
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="games-container">
+    <div class="games-container">
             <!-- Бесплатная рулетка за друзей -->
             <div class="game-card-row" onclick="openRefRouletteGame()">
                 <div class="game-visual-left">
@@ -1481,32 +1452,32 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-   <!-- 6. ТРИ ДВЕРИ (СМЕРТЬ С КОСОЙ) -->
-<div class="game-card-row" onclick="openDoorsGame()">
-    <div class="game-visual-left">
-        <svg viewBox="0 0 120 120" fill="none">
-            <rect x="28" y="16" width="52" height="88" rx="26" fill="#3d2312" stroke="#d97706" stroke-width="3"/>
-            <line x1="45" y1="20" x2="45" y2="102" stroke="#241308" stroke-width="2"/>
-            <line x1="62" y1="20" x2="62" y2="102" stroke="#241308" stroke-width="2"/>
-            <circle cx="70" cy="62" r="4" fill="#fbbf24"/>
-            <path d="M54 38 C46 38 42 46 42 54 C42 62 47 68 54 68 C61 68 66 62 66 54 C66 46 62 38 54 38 Z" fill="#ffffff" opacity="0.9"/>
-            <ellipse cx="50" cy="51" rx="2.5" ry="4" fill="#050507"/>
-            <ellipse cx="58" cy="51" rx="2.5" ry="4" fill="#050507"/>
-            <ellipse cx="54" cy="60" rx="2" ry="4.5" fill="#050507"/>
-        </svg>
-    </div>
-    <div class="game-info-right">
-        <span class="game-category-tag"><i class="fa-solid fa-skull"></i> УГАДАЙ ДВЕРЬ</span>
-        <span class="game-name">3 ДВЕРИ: СМЕРТЬ</span>
-        <div class="game-bottom-bar">
-            <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 418</div>
-            <button class="card-action-btn">ИГРАТЬ</button>
-        </div>
-    </div>
-</div>
+            <!-- 6. ТРИ ДВЕРИ (СМЕРТЬ С КОСОЙ) -->
+            <div class="game-card-row" onclick="openDoorsGame()">
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <rect x="28" y="16" width="52" height="88" rx="26" fill="#3d2312" stroke="#d97706" stroke-width="3"/>
+                        <line x1="45" y1="20" x2="45" y2="102" stroke="#241308" stroke-width="2"/>
+                        <line x1="62" y1="20" x2="62" y2="102" stroke="#241308" stroke-width="2"/>
+                        <circle cx="70" cy="62" r="4" fill="#fbbf24"/>
+                        <path d="M54 38 C46 38 42 46 42 54 C42 62 47 68 54 68 C61 68 66 62 66 54 C66 46 62 38 54 38 Z" fill="#ffffff" opacity="0.9"/>
+                        <ellipse cx="50" cy="51" rx="2.5" ry="4" fill="#050507"/>
+                        <ellipse cx="58" cy="51" rx="2.5" ry="4" fill="#050507"/>
+                        <ellipse cx="54" cy="60" rx="2" ry="4.5" fill="#050507"/>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-skull"></i> УГАДАЙ ДВЕРЬ</span>
+                    <span class="game-name">3 ДВЕРИ: СМЕРТЬ</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 418</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
+                    </div>
+                </div>
+            </div>
+        </div> <!-- Тут правильно закривається games-container -->
+    </div> <!-- Тут правильно закривається сторінка casino -->
     
 
     <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
