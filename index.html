@@ -3028,21 +3028,22 @@ function switchPage(pageId, buttonElement) {
         let selectedPackageIndex = 0;
         let selectedCustomStars = 100;
         let activeNumberOrder = null;
+        
 
-        function openMarketCategory(categoryName) {
-            triggerHaptic('impact', 'medium');
-            if (categoryName === 'USDT') {
-                showToast('Раздел USDT в разработке!');
-                return;
-            }
-            if (categoryName === 'НОМЕРА') {
-                document.getElementById('marketMainView').style.display = 'none';
-                document.getElementById('marketDetailView').style.display = 'block';
-                renderCountriesList();
-            } else {
-                openMarketModal(categoryName);
-            }
-        }
+       function openMarketCategory(categoryName) {
+    triggerHaptic('impact', 'medium');
+    if (categoryName === 'USDT' || categoryName === 'ЗВЁЗДЫ') {
+        showToast(`Раздел ${categoryName} в разработке!`);
+        return;
+    }
+    if (categoryName === 'НОМЕРА') {
+        document.getElementById('marketMainView').style.display = 'none';
+        document.getElementById('marketDetailView').style.display = 'block';
+        renderCountriesList();
+    } else {
+        openMarketModal(categoryName);
+    }
+}
 
         function closeMarketDetail() {
             triggerHaptic('impact', 'light');
