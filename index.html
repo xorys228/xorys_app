@@ -3306,7 +3306,7 @@
             triggerHaptic('impact', 'light');
         }
 
-        function confirmTgStarsImport() {
+        async function confirmTgStarsImport() {
             const input = document.getElementById('tgImportInput');
             const amount = parseInt(input.value);
             if (isNaN(amount) || amount < 1) {
@@ -3314,47 +3314,75 @@
                 return;
             }
 
-            // Проверяем, передан ли инвойс-линк Telegram Stars с бэкенда @xorysbot
-            const urlParams = new URLSearchParams(window.location.search);
-            const invoiceSlug = urlParams.get('invoice_url');
+            const payBtn = document.getElementById('tgPayStarsBtn');
+            payBtn.disabled = true;
+            payBtn.innerText = 'СОЗДАНИЕ СЧЁТА...';
 
-            if (tg && typeof tg.openInvoice === 'function' && invoiceSlug) {
-                tg.openInvoice(invoiceSlug, function(status) {
-                    if (status === 'paid') {
-                        starsBalance = Number((starsBalance + amount).toFixed(1));
-                        updateBalanceUI();
-                        addProfileActivity('Оплата Telegram Stars', `+${amount} ★`, 'fa-brands fa-telegram');
-                        showToast(`Оплачено! Зачислено +${amount} ★`);
-                        triggerHaptic('notification', 'success');
-                        playSound('win');
-                    } else {
-                        showToast('Оплата отменена или не завершена');
-                    }
+            try {
+                // СЮДА ВСТАВЬТЕ ВАШ URL API БОТА (например, ваш сервер или вебхук)
+                const API_URL = '8908403560:AAFXJDNXmqRvG574iOEtIL5PPVZFDZxxDlQ';
+
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: userId,
+                        username: username,
+                        amount: amount
+                    })
                 });
+                const data = await response.json();
+
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fa-solid fa-star" style="margin-right: 6px;"></i> ОПЛАТИТЬ TELEGRAM STARS';
+
+                // Проверяем, прислал ли сервер инвойс для нативной оплаты в Telegram
+                if (data.invoice_url && tg && typeof tg.openInvoice === 'function') {
+                    tg.openInvoice(data.invoice_url, function(status) {
+                        if (status === 'paid') {
+                            // Звёзды начисляются СТРОГО после успешной оплаты через Telegram Stars!
+                            starsBalance = Number((starsBalance + amount).toFixed(1));
+                            updateBalanceUI();
+                            addProfileActivity('Оплата Telegram Stars', `+${amount} ★`, 'fa-brands fa-telegram');
+                            showToast(`Оплачено! Зачислено +${amount} ★`);
+                            triggerHaptic('notification', 'success');
+                            playSound('win');
+                            document.getElementById('tgImportModal').classList.remove('open');
+                        } else {
+                            showToast('Оплата отменена или не завершена');
+                        }
+                    });
+                    return;
+                }
+
+                // Запасной вариант (если открыто через диплинк /start pay_stars_...)
+                sendPayloadToXorysBot({
+                    action: 'deposit_tg_stars_xtr',
+                    currency: 'XTR',
+                    amount: amount
+                });
+
+                if (tg && tg.openTelegramLink) {
+                    const payStartUrl = `https://t.me/${BOT_USERNAME}?start=pay_stars_${amount}`;
+                    tg.openTelegramLink(payStartUrl);
+                }
+
                 document.getElementById('tgImportModal').classList.remove('open');
-                return;
+                showToast(`Счёт на ${amount} ★ отправлен в @xorysbot!`);
+                triggerHaptic('impact', 'medium');
+
+            } catch (error) {
+                payBtn.disabled = false;
+                payBtn.innerHTML = '<i class="fa-solid fa-star" style="margin-right: 6px;"></i> ОПЛАТИТЬ TELEGRAM STARS';
+                
+                // Если API ещё не подключено, перенаправляем в бота для ручной оплаты
+                if (tg && tg.openTelegramLink) {
+                    tg.openTelegramLink(`https://t.me/${BOT_USERNAME}?start=pay_stars_${amount}`);
+                }
+                document.getElementById('tgImportModal').classList.remove('open');
+                showToast('Запрос перенаправлен в @xorysbot');
+                triggerHaptic('impact', 'medium');
             }
-
-            // Отправляем запрос в @xorysbot на выставление счёта Telegram Stars (XTR) и зачисляем
-            sendPayloadToXorysBot({
-                action: 'deposit_tg_stars_xtr',
-                currency: 'XTR',
-                amount: amount
-            });
-
-            if (tg && tg.openTelegramLink) {
-                // Если открыто внутри Telegram — предлагаем оплатить счёт через @xorysbot
-                const payStartUrl = `https://t.me/${BOT_USERNAME}?start=pay_stars_${amount}`;
-                tg.openTelegramLink(payStartUrl);
-            }
-
-            starsBalance = Number((starsBalance + amount).toFixed(1));
-            updateBalanceUI();
-            addProfileActivity('Пополнение Telegram Stars', `+${amount} ★`, 'fa-brands fa-telegram');
-            document.getElementById('tgImportModal').classList.remove('open');
-            showToast(`Счёт на ${amount} ★ отправлен в @xorysbot!`);
-            triggerHaptic('notification', 'success');
-            playSound('win');
         }
 
         function getTodayKey() {
