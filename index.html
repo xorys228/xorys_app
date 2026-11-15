@@ -2808,36 +2808,40 @@ const doorsMultipliers = [1.42, 2.10, 3.10, 4.60, 7.00, 11.00];
         let currentCoinRotation = 0;
 
         function updateBalanceUI() {
-            const formatted = formatStars(starsBalance);
-            document.getElementById('userStarsLobby').innerText = formatted;
-            const marketStarsEl = document.getElementById('userStarsMarket');
-            if (marketStarsEl) marketStarsEl.innerText = formatted;
-            const profileStarsEl = document.getElementById('userStarsProfile');
-            if (profileStarsEl) profileStarsEl.innerText = formatted;
-            const profileWalletEl = document.getElementById('profileWalletBalance');
-            if (profileWalletEl) profileWalletEl.innerText = formatted;
+    const formatted = formatStars(starsBalance);
+    
+    const safeSet = (id, val) => {
+        const el = document.getElementById(id);
+        if (el) el.innerText = val;
+    };
 
-            document.getElementById('userStarsRoulette').innerText = formatted;
-            document.getElementById('userStarsRocket').innerText = formatted;
-            document.getElementById('userStarsMines').innerText = formatted;
-            document.getElementById('userStarsPlinko').innerText = formatted;
-            document.getElementById('userStarsCoinflip').innerText = formatted;
-            document.getElementById('userStarsDoors').innerText = formatted;
+    safeSet('userStarsLobby', formatted);
+    safeSet('userStarsMarket', formatted);
+    safeSet('userStarsProfile', formatted);
+    safeSet('profileWalletBalance', formatted);
+    safeSet('userStarsRoulette', formatted);
+    safeSet('userStarsRocket', formatted);
+    safeSet('userStarsMines', formatted);
+    safeSet('userStarsPlinko', formatted);
+    safeSet('userStarsCoinflip', formatted);
+    safeSet('userStarsDoors', formatted);
+    safeSet('userStarsRefRoulette', formatted);
+    safeSet('userStarsLeaderboard', formatted);
 
-            document.getElementById('statGamesPlayed').innerText = totalGamesPlayed;
-            document.getElementById('statTotalWon').innerText = formatStars(totalStarsWon) + ' ★';
-            document.getElementById('statReferralsCount').innerText = referralsCount;
+    safeSet('statGamesPlayed', totalGamesPlayed);
+    safeSet('statTotalWon', formatStars(totalStarsWon) + ' ★');
+    safeSet('statReferralsCount', referralsCount);
 
-            const sliderMax = Math.max(10, Math.floor(starsBalance));
-            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Doors'].forEach(game => {
-                const slider = document.getElementById('betSlider' + game);
-                const maxLabel = document.getElementById('maxSlider' + game);
-                if (slider && maxLabel) {
-                    slider.max = sliderMax;
-                    maxLabel.innerText = sliderMax;
-                }
-            });
+    const sliderMax = Math.max(10, Math.floor(starsBalance));
+    ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Doors'].forEach(game => {
+        const slider = document.getElementById('betSlider' + game);
+        const maxLabel = document.getElementById('maxSlider' + game);
+        if (slider && maxLabel) {
+            slider.max = sliderMax;
+            maxLabel.innerText = sliderMax;
         }
+    });
+}
 
         function addProfileActivity(title, amount, icon = 'fa-star') {
             profileHistoryLog.unshift({ title, amount, icon });
