@@ -105,7 +105,7 @@
             text-transform: uppercase;
         }
 
-        /* --- КАРТОЧКИ ИГР В СТИЛЕ РЕФЕРЕНСА (ЧЕРНЫЙ + БЕЛЫЙ + ГОЛУБОЙ) --- */
+        /* --- КАРТОЧКИ ИГР --- */
         .games-container {
             display: flex;
             flex-direction: column;
@@ -146,7 +146,6 @@
             border-color: rgba(56, 189, 248, 0.5);
         }
 
-        /* Левая колонка с крупной обрезанной SVG-иллюстрацией */
         .game-visual-left {
             width: 105px;
             height: 96px;
@@ -171,7 +170,6 @@
             transform: scale(1.04) translateX(2px);
         }
 
-        /* Правая колонка с информацией и кнопкой */
         .game-info-right {
             flex: 1;
             display: flex;
@@ -321,7 +319,7 @@
             white-space: nowrap;
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА (ГЛУБОКИЙ ТЕМНО-СИНИЙ АКЦЕНТ) --- */
+        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА --- */
         .rg-display {
             height: 235px;
             background: linear-gradient(180deg, #030408 0%, #070e20 55%, #0c1a3a 100%);
@@ -413,7 +411,7 @@
             padding: 3px 8px; border-radius: 8px; font-size: 10px; font-weight: 800; color: #ffffff; backdrop-filter: blur(4px);
         }
 
-        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ (ГЛУБОКИЙ ТЕМНО-СИНИЙ) --- */
+        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ --- */
         .roulette-display, .mines-display, .plinko-display, .coinflip-display {
             border-radius: 22px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: radial-gradient(circle at center, #0a142d 0%, #03050a 85%);
@@ -442,7 +440,8 @@
         }
 
         .wheel-center-hub {
-            position: absolute; width: 36px; height: 36px; background: #050811; border: 2px solid #2563eb;
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 36px; height: 36px; background: #050811; border: 2px solid #2563eb;
             border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #ffffff;
         }
 
@@ -467,7 +466,7 @@
         }
         .mine-tile:active { transform: scale(0.9); }
         .mine-tile.revealed-star { background: linear-gradient(135deg, #2563eb, #1e3a8a); border-color: #ffffff; box-shadow: 0 0 12px rgba(37, 99, 235, 0.7); color: #ffffff; }
-        .mine-tile.revealed-bomb { background: #070a12; border-color: rgba(255, 255, 255, 0.35); color: #ffffff; }
+        .mine-tile.revealed-bomb { background: #070a12; border-color: rgba(255, 255, 255, 0.35); color: #ef4444; }
 
         .mines-config-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
         .mine-count-btn {
@@ -476,8 +475,8 @@
         }
         .mine-count-btn.active { background: #ffffff; color: #030407; border-color: #ffffff; box-shadow: 0 0 10px rgba(255, 255, 255, 0.3); }
 
-        .plinko-display { height: 245px; }
-        #plinkoCanvas { width: 100%; height: 100%; }
+        .plinko-display { height: 245px; padding: 6px; }
+        #plinkoCanvas { width: 100%; height: 100%; display: block; }
 
         .coinflip-display { height: 210px; perspective: 1000px; }
         .coin-3d-wrapper { width: 100px; height: 100px; position: relative; transform-style: preserve-3d; transition: transform 3s cubic-bezier(0.15, 0.85, 0.25, 1); }
@@ -688,7 +687,6 @@
             color: #38bdf8;
         }
 
-        /* Блок выбора количества звёзд */
         .stars-custom-box {
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.1);
@@ -1134,8 +1132,15 @@
         .nav-item i { font-size: 17px; margin-bottom: 3px; }
         .nav-item span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
         .nav-item.active { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.35); }
+    </style>
+</head>
+<body>
 
-  
+    <div id="customToast" class="toast-overlay">
+        <i class="fa-solid fa-circle-info"></i>
+        <span id="toastText">Уведомление</span>
+    </div>
+
     <!-- Вкладка ИГРЫ (ЛОББИ) -->
     <div id="casino" class="page active">
         <div class="lobby-header">
@@ -1152,18 +1157,17 @@
             </div>
         </div>
 
-    <!-- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ -->
+        <!-- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ -->
         <div class="profile-feature-card" style="padding: 10px 14px; margin-bottom: 14px; background: linear-gradient(145deg, rgba(11, 16, 26, 0.9) 0%, rgba(5, 7, 12, 0.95) 100%);">
             <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.7);">
-                <i class="fa-solid fa-bolt" style="color: #38bdf8; animation: pulse 1.5s infinite;"></i>
+                <i class="fa-solid fa-bolt" style="color: #38bdf8;"></i>
                 <div style="flex: 1; overflow: hidden; white-space: nowrap; position: relative;">
                     <span id="liveFeedText" style="display: inline-block; transition: opacity 0.3s ease; color: #ffffff;">
-                        @crypto_king щойно виграв 250 ★ у Ракети!
+                        @crypto_king щойно виграв 250 ★ у грі «Ракети»!
                     </span>
                 </div>
             </div>
         </div>
-        
         
         <div class="games-container">
             <!-- Бесплатная рулетка за друзей -->
@@ -1180,7 +1184,7 @@
                     <span class="game-category-tag"><i class="fa-solid fa-gift"></i> БЕСПЛАТНО</span>
                     <span class="game-name">РУЛЕТКА FREE</span>
                     <div class="game-bottom-bar">
-                        <div class="game-stats-badge"><i class="fa-solid fa-user-group"></i> 0 / 3 друзей</div>
+                        <div class="game-stats-badge" id="lobbyRefBadge"><i class="fa-solid fa-user-group"></i> 0 / 3 друзей</div>
                         <button class="card-action-btn">КРУТИТЬ</button>
                     </div>
                 </div>
@@ -1389,31 +1393,6 @@
         </div>
     </div>
 
-   <!-- 6. ТРИ ДВЕРИ (СМЕРТЬ С КОСОЙ) -->
-<div class="game-card-row" onclick="openDoorsGame()">
-    <div class="game-visual-left">
-        <svg viewBox="0 0 120 120" fill="none">
-            <rect x="28" y="16" width="52" height="88" rx="26" fill="#3d2312" stroke="#d97706" stroke-width="3"/>
-            <line x1="45" y1="20" x2="45" y2="102" stroke="#241308" stroke-width="2"/>
-            <line x1="62" y1="20" x2="62" y2="102" stroke="#241308" stroke-width="2"/>
-            <circle cx="70" cy="62" r="4" fill="#fbbf24"/>
-            <path d="M54 38 C46 38 42 46 42 54 C42 62 47 68 54 68 C61 68 66 62 66 54 C66 46 62 38 54 38 Z" fill="#ffffff" opacity="0.9"/>
-            <ellipse cx="50" cy="51" rx="2.5" ry="4" fill="#050507"/>
-            <ellipse cx="58" cy="51" rx="2.5" ry="4" fill="#050507"/>
-            <ellipse cx="54" cy="60" rx="2" ry="4.5" fill="#050507"/>
-        </svg>
-    </div>
-    <div class="game-info-right">
-        <span class="game-category-tag"><i class="fa-solid fa-skull"></i> УГАДАЙ ДВЕРЬ</span>
-        <span class="game-name">3 ДВЕРИ: СМЕРТЬ</span>
-        <div class="game-bottom-bar">
-            <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 418</div>
-            <button class="card-action-btn">ИГРАТЬ</button>
-        </div>
-    </div>
-</div>
-    
-
     <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
@@ -1426,6 +1405,11 @@
             <div class="history-pill">1.12x</div>
             <div class="history-pill">2.85x</div>
             <div class="history-pill">7.50x</div>
+        </div>
+
+        <div id="rocketFreebetBar" style="background: rgba(56, 189, 248, 0.12); border: 1px solid rgba(56, 189, 248, 0.35); border-radius: 12px; padding: 7px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; font-weight: 800;">
+            <span>БОНУСНАЯ ИГРА (10 ★) ЗА 15 РАУНДОВ:</span>
+            <span id="rocketFreebetCount" style="color: #38bdf8;">0 / 15</span>
         </div>
 
         <div class="rg-display">
@@ -1476,7 +1460,7 @@
         <div class="betting-box">
             <div class="betting-info">
                 <span>СТАВКА (ЗВЕЗДЫ)</span>
-                <span>АВТОВЫВОД x2.00</span>
+                <span>КРАШ-МНОЖИТЕЛЬ ДО x50</span>
             </div>
             
             <div class="bet-row">
@@ -1626,13 +1610,13 @@
         </div>
 
         <div class="plinko-display">
-            <canvas id="plinkoCanvas" width="300" height="230"></canvas>
+            <canvas id="plinkoCanvas" width="320" height="230"></canvas>
         </div>
 
         <div class="betting-box">
             <div class="betting-info">
                 <span>СТАВКА (ЗВЕЗДЫ)</span>
-                <span id="plinkoStatusLabel">СБАЛАНСИРОВАННЫЙ РЕЖИМ</span>
+                <span id="plinkoStatusLabel">МАКС. МНОЖИТЕЛЬ x15</span>
             </div>
             
             <div class="bet-row">
@@ -1722,7 +1706,6 @@
 
         <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
-
 
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
@@ -1886,7 +1869,6 @@
                 </button>
             </div>
 
-            <!-- Блок выбора количества звёзд (Слайдер + Ручной ввод + 10 пресетов) -->
             <div id="starsCustomConfig" class="stars-custom-box" style="display: none;">
                 <div class="stars-input-row">
                     <div>
@@ -1903,16 +1885,16 @@
                 </div>
 
                 <div class="stars-presets-grid" id="starsPresetsGrid">
-                    <button class="chip" onclick="setQuickStars(50, this)">50</button>
-                    <button class="chip active-chip" onclick="setQuickStars(100, this)">100</button>
-                    <button class="chip" onclick="setQuickStars(150, this)">150</button>
-                    <button class="chip" onclick="setQuickStars(250, this)">250</button>
-                    <button class="chip" onclick="setQuickStars(350, this)">350</button>
-                    <button class="chip" onclick="setQuickStars(500, this)">500</button>
-                    <button class="chip" onclick="setQuickStars(750, this)">750</button>
-                    <button class="chip" onclick="setQuickStars(1000, this)">1000</button>
-                    <button class="chip" onclick="setQuickStars(2500, this)">2500</button>
-                    <button class="chip" onclick="setQuickStars(5000, this)">5000</button>
+                    <button class="chip" onclick="setQuickStars(50)">50</button>
+                    <button class="chip active-chip" onclick="setQuickStars(100)">100</button>
+                    <button class="chip" onclick="setQuickStars(150)">150</button>
+                    <button class="chip" onclick="setQuickStars(250)">250</button>
+                    <button class="chip" onclick="setQuickStars(350)">350</button>
+                    <button class="chip" onclick="setQuickStars(500)">500</button>
+                    <button class="chip" onclick="setQuickStars(750)">750</button>
+                    <button class="chip" onclick="setQuickStars(1000)">1000</button>
+                    <button class="chip" onclick="setQuickStars(2500)">2500</button>
+                    <button class="chip" onclick="setQuickStars(5000)">5000</button>
                 </div>
             </div>
 
@@ -1981,7 +1963,7 @@
             </div>
         </div>
 
-    <!-- НАСТРОЙКИ ЗВУКА И ВИБРАЦИИ -->
+        <!-- НАСТРОЙКИ ЗВУКА И ВИБРАЦИИ -->
         <div class="profile-feature-card">
             <div class="feature-card-header">
                 <div class="feature-title-wrap">
@@ -2000,7 +1982,7 @@
             </div>
         </div>
         
-        <!-- БЛОК ВЫВОДА ЗВЁЗД (ВСТАВИТЬ СЮДА) -->
+        <!-- БЛОК ВЫВОДА ЗВЁЗД -->
         <div class="profile-feature-card" style="border-color: rgba(56, 189, 248, 0.4); background: linear-gradient(145deg, rgba(14, 25, 40, 0.95) 0%, rgba(7, 12, 20, 0.98) 100%);">
             <div class="feature-card-header">
                 <div class="feature-title-wrap">
@@ -2024,7 +2006,7 @@
             </button>
         </div>
         
-        <!-- 1. Карточка пользователя + Пополнение из своих Telegram Stars -->
+        <!-- 1. Карточка пользователя -->
         <div class="profile-hero-card">
             <div class="profile-top-row">
                 <div class="profile-avatar" id="profileAvatarBox">И</div>
@@ -2067,7 +2049,7 @@
             </div>
         </div>
 
-        <!-- 3. Ежедневный бонус (+1 звезда за вход) -->
+        <!-- 3. Ежедневный бонус -->
         <div class="profile-feature-card">
             <div class="feature-card-header">
                 <div class="feature-title-wrap">
@@ -2086,7 +2068,7 @@
             </button>
         </div>
 
-        <!-- 4. Пригласить друзей (+1.5 звезды за каждого друга) -->
+        <!-- 4. Пригласить друзей -->
         <div class="profile-feature-card">
             <div class="feature-card-header">
                 <div class="feature-title-wrap">
@@ -2133,7 +2115,7 @@
         </div>
     </div>
 
-    <!-- Нижняя панель навигации (4 вкладки) -->
+    <!-- Нижняя панель навигации -->
     <nav class="bottom-nav">
         <button class="nav-item active" onclick="switchPage('casino', this)">
             <i class="fa-solid fa-gamepad"></i>
@@ -2153,9 +2135,7 @@
         </button>
     </nav>
 
-
-  
-    <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
+    <!-- ЭКРАН РУЛЕТКИ FREE -->
     <div id="refRoulettePage" class="page">
         <div class="rg-header">
             <div class="rg-logo">РУЛЕТКА <span>FREE</span></div>
@@ -2198,14 +2178,14 @@
 
         <div class="betting-box" style="text-align: center;">
             <div class="betting-info" style="justify-content: center; margin-bottom: 12px;">
-                <span id="refSpinStatusTest" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
+                <span id="refSpinStatusText" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
             </div>
             
             <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
                 КРУТИТЬ ЗА 0 ⭐️ (0/3)
             </button>
 
-            <button class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
+            <button id="refInviteBtn" class="modal-buy-btn" style="background: linear-gradient(135deg, #38bdf8 0%, #0284c7 100%); color: #ffffff; padding: 12px;" onclick="inviteFriendForRefRoulette()">
                 <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (0/3)
             </button>
         </div>
@@ -2213,7 +2193,7 @@
         <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
-   <!-- ЭКРАН ТАБЛИЦЫ ЛИДЕРОВ (LEADERBOARD) -->
+    <!-- ЭКРАН ТАБЛИЦЫ ЛИДЕРОВ -->
     <div id="leaderboard" class="page">
         <div class="lobby-header">
             <div class="brand-logo">
@@ -2267,11 +2247,57 @@
     </div>
 
     <script>
+        const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
+        if (tg) {
+            tg.ready();
+            tg.expand();
+        }
+
+        let soundEnabled = localStorage.getItem('xorys_sound') !== 'false';
+        let hapticEnabled = localStorage.getItem('xorys_haptic') !== 'false';
+
+        /* --- НАСТРОЙКИ ЗВУКА И ВИБРАЦИИ --- */
+        function updateSettingsUI() {
+            const soundBtn = document.getElementById('soundToggleBtn');
+            const hapticBtn = document.getElementById('hapticToggleBtn');
+
+            if (soundBtn) {
+                soundBtn.innerText = soundEnabled ? 'ЗВУК: ВКЛ' : 'ЗВУК: ВЫКЛ';
+                soundBtn.style.background = soundEnabled ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.05)';
+                soundBtn.style.borderColor = soundEnabled ? '#38bdf8' : 'rgba(255, 255, 255, 0.15)';
+                soundBtn.style.color = soundEnabled ? '#ffffff' : 'rgba(255, 255, 255, 0.5)';
+            }
+
+            if (hapticBtn) {
+                hapticBtn.innerText = hapticEnabled ? 'ВИБРАЦИЯ: ВКЛ' : 'ВИБРАЦИЯ: ВЫКЛ';
+                hapticBtn.style.background = hapticEnabled ? 'rgba(56, 189, 248, 0.2)' : 'rgba(255, 255, 255, 0.05)';
+                hapticBtn.style.borderColor = hapticEnabled ? '#38bdf8' : 'rgba(255, 255, 255, 0.15)';
+                hapticBtn.style.color = hapticEnabled ? '#ffffff' : 'rgba(255, 255, 255, 0.5)';
+            }
+        }
+
+        function toggleSoundSetting() {
+            soundEnabled = !soundEnabled;
+            localStorage.setItem('xorys_sound', soundEnabled);
+            updateSettingsUI();
+            if (soundEnabled) playSound('click');
+            showToast(soundEnabled ? 'Звук включён' : 'Звук выключен');
+        }
+
+        function toggleHapticSetting() {
+            hapticEnabled = !hapticEnabled;
+            localStorage.setItem('xorys_haptic', hapticEnabled);
+            updateSettingsUI();
+            if (hapticEnabled) triggerHaptic('impact', 'medium');
+            showToast(hapticEnabled ? 'Вибрация включена' : 'Вибрация выключена');
+        }
+
         /* --- ЗВУКОВЫЕ ЭФФЕКТЫ (WEB AUDIO API) --- */
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        const audioCtx = AudioContextClass ? new AudioContextClass() : null;
 
         function playSound(type) {
-            if (!soundEnabled) return;
+            if (!soundEnabled || !audioCtx) return;
             try {
                 if (audioCtx.state === 'suspended') { audioCtx.resume(); }
                 const osc = audioCtx.createOscillator();
@@ -2312,6 +2338,209 @@
             }
         });
 
+        function triggerHaptic(type, style) {
+            if (!hapticEnabled) return;
+            try {
+                if (!tg || !tg.HapticFeedback) return;
+                if (type === 'impact') tg.HapticFeedback.impactOccurred(style || 'light');
+                if (type === 'notification') tg.HapticFeedback.notificationOccurred(style || 'success');
+            } catch (e) {}
+        }
+
+        let toastTimer = null;
+        function showToast(message) {
+            const toast = document.getElementById('customToast');
+            const text = document.getElementById('toastText');
+            text.innerText = message;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 2200);
+        }
+
+        /* --- ДАННЫЕ ПОЛЬЗОВАТЕЛЯ --- */
+        const tgUser = tg?.initDataUnsafe?.user;
+        const username = tgUser?.username ? '@' + tgUser.username : '@игрок';
+        const fullName = [tgUser?.first_name, tgUser?.last_name].filter(Boolean).join(' ') || 'Игрок XORYS';
+        const userId = tgUser?.id || 7749201;
+
+        document.getElementById('playerNickname').innerText = username;
+        document.getElementById('profileFullName').innerText = fullName;
+        document.getElementById('profileUsernameText').innerText = username;
+        document.getElementById('profileUserIdText').innerText = 'ID: ' + userId;
+        document.getElementById('refLinkDisplay').innerText = `https://t.me/xorys_bot?start=ref_${userId}`;
+
+        const avatarBox = document.getElementById('profileAvatarBox');
+        if (tgUser?.photo_url) {
+            avatarBox.innerHTML = `<img src="${tgUser.photo_url}" alt="Avatar">`;
+        } else {
+            avatarBox.innerText = fullName.charAt(0).toUpperCase();
+        }
+
+        let starsBalance = 100;
+        let totalGamesPlayed = 0;
+        let totalStarsWon = 0;
+        let referralsCount = 0;
+        let dailyStreak = 1;
+        let profileHistoryLog = [
+            { title: 'Стартовый бонус аккаунта', amount: '+100 ★', icon: 'fa-gift' }
+        ];
+
+        function formatStars(val) {
+            return Number.isInteger(val) ? val.toString() : val.toFixed(1);
+        }
+
+        let currentBetRoulette = 10;
+        let currentBetRocket = 10;
+        let currentBetMines = 10;
+        let currentBetPlinko = 10;
+        let currentBetCoinflip = 10;
+
+        let selectedRouletteColor = 'red';
+        let isSpinning = false;
+        
+        let isPlayingRocket = false;
+        let currentMultiplier = 1.00;
+        let gameInterval = null;
+        let crashPoint = 0;
+        let currentWheelAngle = 0;
+        let activeRocketBet = 10;
+        let activeRocketIsFree = false;
+        let rocketGamesPlayed = parseInt(localStorage.getItem('rocketGamesPlayed') || '0', 10);
+        let rocketFreebetAvailable = localStorage.getItem('rocketFreebetAvailable') === 'true';
+
+        let minesCount = 3;
+        let isPlayingMines = false;
+        let mineLocations = [];
+        let openedCount = 0;
+        let currentMinesMult = 1.00;
+
+        let selectedCoinSide = 'heads';
+        let isFlippingCoin = false;
+        let currentCoinRotation = 0;
+
+        function updateBalanceUI() {
+            const formatted = formatStars(starsBalance);
+            const ids = [
+                'userStarsLobby', 'userStarsMarket', 'userStarsProfile',
+                'profileWalletBalance', 'userStarsRoulette', 'userStarsRocket',
+                'userStarsMines', 'userStarsPlinko', 'userStarsCoinflip',
+                'userStarsLeaderboard', 'userStarsRefRoulette'
+            ];
+            ids.forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.innerText = formatted;
+            });
+
+            document.getElementById('statGamesPlayed').innerText = totalGamesPlayed;
+            document.getElementById('statTotalWon').innerText = formatStars(totalStarsWon) + ' ★';
+            document.getElementById('statReferralsCount').innerText = referralsCount;
+
+            const sliderMax = Math.max(10, Math.floor(starsBalance));
+            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip'].forEach(game => {
+                const slider = document.getElementById('betSlider' + game);
+                const maxLabel = document.getElementById('maxSlider' + game);
+                if (slider && maxLabel) {
+                    slider.max = sliderMax;
+                    maxLabel.innerText = sliderMax;
+                }
+            });
+        }
+
+        function addProfileActivity(title, amount, icon = 'fa-star') {
+            profileHistoryLog.unshift({ title, amount, icon });
+            if (profileHistoryLog.length > 6) profileHistoryLog.pop();
+            renderProfileActivity();
+        }
+
+        function renderProfileActivity() {
+            const list = document.getElementById('profileActivityList');
+            if (!list) return;
+            list.innerHTML = '';
+            profileHistoryLog.forEach(item => {
+                const row = document.createElement('div');
+                row.className = 'activity-row';
+                row.innerHTML = `
+                    <div class="activity-left">
+                        <i class="fa-solid ${item.icon}"></i>
+                        <span>${item.title}</span>
+                    </div>
+                    <span class="activity-amount">${item.amount}</span>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        /* --- НАВИГАЦИЯ --- */
+        function switchPage(pageId, buttonElement) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            const target = document.getElementById(pageId);
+            if (target) target.classList.add('active');
+
+            if (buttonElement) {
+                document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+                buttonElement.classList.add('active');
+            }
+
+            if (pageId === 'leaderboard') {
+                renderLeaderboard();
+            }
+        }
+
+        function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
+        function openRocketGame() { switchPage('rocketGamePage'); triggerHaptic('impact', 'medium'); updateRocketFreebetUI(); }
+        function openMinesGame() { switchPage('minesPage'); triggerHaptic('impact', 'medium'); initMinesGrid(); }
+        function openPlinkoGame() { switchPage('plinkoPage'); triggerHaptic('impact', 'medium'); initPlinkoCanvas(); }
+        function openCoinflipGame() { switchPage('coinflipPage'); triggerHaptic('impact', 'medium'); }
+
+        function closeSubGame(pageId) {
+            switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
+            triggerHaptic('impact', 'light');
+        }
+
+        function syncBetUI(type, val) {
+            const cap = type.charAt(0).toUpperCase() + type.slice(1);
+            const numEl = document.getElementById('betAmount' + cap);
+            const sliderEl = document.getElementById('betSlider' + cap);
+            if (numEl) numEl.innerText = val;
+            if (sliderEl) sliderEl.value = val;
+        }
+
+        function onSliderBet(value, type) {
+            const val = Math.max(1, parseInt(value) || 1);
+            if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
+            if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
+            if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
+            if (type === 'rocket' && isPlayingRocket) { syncBetUI('rocket', currentBetRocket); return; }
+
+            if (type === 'roulette') currentBetRoulette = val;
+            else if (type === 'rocket') currentBetRocket = val;
+            else if (type === 'mines') currentBetMines = val;
+            else if (type === 'plinko') currentBetPlinko = val;
+            else if (type === 'coinflip') currentBetCoinflip = val;
+
+            syncBetUI(type, val);
+        }
+
+        function changeBet(amount, type) {
+            if (type === 'roulette' && !isSpinning) { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
+            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = Math.max(1, currentBetRocket + amount); syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
+            else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
+            triggerHaptic('impact', 'light');
+        }
+
+        function setBet(amount, type) {
+            if (type === 'roulette' && !isSpinning) { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
+            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
+            else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
+            triggerHaptic('impact', 'light');
+        }
+
         /* --- ТАБЛИЦА ЛИДЕРОВ --- */
         function renderLeaderboard() {
             const container = document.getElementById('leaderboardList');
@@ -2319,12 +2548,12 @@
             container.innerHTML = '';
 
             const mockLeaders = [
-                { rank: 1, name: 'crypto_king', stars: 4850, avatar: '👑' },
-                { rank: 2, name: 'xorys_god', stars: 3200, avatar: '🔥' },
-                { rank: 3, name: 'telegram_star', stars: 2150, avatar: '⭐' },
-                { rank: 4, name: 'lucky_spin', stars: 1420, avatar: '🍀' },
-                { rank: 5, name: 'bonus_hunter', stars: 980, avatar: '🎯' },
-                { rank: 6, name: typeof fullName !== 'undefined' ? fullName : 'Игрок', stars: typeof totalStarsWon !== 'undefined' ? Math.floor(totalStarsWon + 100) : 100, avatar: '👤' }
+                { name: 'crypto_king', stars: 4850, avatar: '👑' },
+                { name: 'xorys_god', stars: 3200, avatar: '🔥' },
+                { name: 'telegram_star', stars: 2150, avatar: '⭐' },
+                { name: 'lucky_spin', stars: 1420, avatar: '🍀' },
+                { name: 'bonus_hunter', stars: 980, avatar: '🎯' },
+                { name: fullName, stars: Math.floor(totalStarsWon + 100), avatar: '👤' }
             ];
 
             mockLeaders.sort((a, b) => b.stars - a.stars);
@@ -2341,25 +2570,13 @@
                 `;
                 container.appendChild(row);
             });
-
-            const lbBal = document.getElementById('userStarsLeaderboard');
-            if (lbBal && typeof starsBalance !== 'undefined') lbBal.innerText = formatStars(starsBalance);
         }
-
-        // Интеграция в стандартную функцию switchPage без её перезаписи
-        const baseSwitchPage = window.switchPage;
-        window.switchPage = function(pageId, buttonElement) {
-            if (baseSwitchPage) baseSwitchPage(pageId, buttonElement);
-            if (pageId === 'leaderboard') {
-                renderLeaderboard();
-            }
-        };
 
         /* --- АДМИН-ПАНЕЛЬ --- */
         let adminWithdrawRequests = [];
 
         function openAdminPanel() {
-            if (typeof switchPage === 'function') switchPage('adminPanelPage');
+            switchPage('adminPanelPage');
             renderAdminRequests();
         }
 
@@ -2396,65 +2613,21 @@
         function approveWithdraw(idx) {
             adminWithdrawRequests.splice(idx, 1);
             renderAdminRequests();
-            if (typeof showToast === 'function') showToast('Заявка одобрена, выплачено!');
+            showToast('Заявка одобрена, выплачено!');
             playSound('win');
         }
 
         function rejectWithdraw(idx) {
             const req = adminWithdrawRequests[idx];
-            if (typeof starsBalance !== 'undefined') {
-                starsBalance = Number((starsBalance + req.amount).toFixed(1));
-                if (typeof updateBalanceUI === 'function') updateBalanceUI();
-            }
+            starsBalance = Number((starsBalance + req.amount).toFixed(1));
+            updateBalanceUI();
             adminWithdrawRequests.splice(idx, 1);
             renderAdminRequests();
-            if (typeof showToast === 'function') showToast('Заявка отклонена, звезды возвращены.');
+            showToast('Заявка отклонена, звезды возвращены.');
             playSound('error');
         }
 
-   const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-let soundEnabled = true;
-let hapticEnabled = true;
-let activeRocketBet = 10;
-let activeRocketIsFree = false;
-let rocketGamesPlayed = parseInt(localStorage.getItem('rocketGamesPlayed') || '0', 10);
-let rocketFreebetAvailable = localStorage.getItem('rocketFreebetAvailable') === 'true';
-
-function updateRocketFreebetUI() {
-    const countEl = document.getElementById('rocketFreebetCount');
-    const barEl = document.getElementById('rocketFreebetBar');
-    if (!countEl || !barEl) return;
-
-    if (rocketFreebetAvailable) {
-        countEl.innerText = 'ДОСТУПНА (10 ★)!';
-        countEl.style.color = '#4ade80';
-        barEl.style.borderColor = '#4ade80';
-        barEl.style.background = 'rgba(74, 222, 128, 0.15)';
-    } else {
-        countEl.innerText = `${rocketGamesPlayed} / 15`;
-        countEl.style.color = '#38bdf8';
-        barEl.style.borderColor = 'rgba(56, 189, 248, 0.35)';
-        barEl.style.background = 'rgba(56, 189, 248, 0.12)';
-    }
-}
-
-function registerRocketGamePlayed() {
-    if (rocketFreebetAvailable) return;
-    rocketGamesPlayed++;
-    if (rocketGamesPlayed >= 15) {
-        rocketGamesPlayed = 0;
-        rocketFreebetAvailable = true;
-        localStorage.setItem('rocketFreebetAvailable', 'true');
-        if (typeof showToast === 'function') showToast('Вітаємо! Доступна 1 безкоштовна гра в Ракети!');
-        if (typeof playSound === 'function') playSound('win');
-    }
-    localStorage.setItem('rocketGamesPlayed', rocketGamesPlayed.toString());
-    updateRocketFreebetUI();
-}
-   
-        
-        
-     /* --- МАРКЕТ --- */
+        /* --- МАРКЕТ --- */
         const marketCatalogData = {
             'ЗВЁЗДЫ': {
                 sub: 'TELEGRAM STARS',
@@ -2580,168 +2753,82 @@ function registerRocketGamePlayed() {
             document.getElementById('marketModal').classList.add('open');
             triggerHaptic('impact', 'medium');
         }
-        function triggerHaptic(type, style) {
-            if (!hapticEnabled) return;
-            try {
-                if (!tg || !tg.HapticFeedback) return;
-                if (type === 'impact') tg.HapticFeedback.impactOccurred(style || 'light');
-                if (type === 'notification') tg.HapticFeedback.notificationOccurred(style || 'success');
-            } catch (e) {}
-        }
 
-        let toastTimer = null;
-        function showToast(message) {
-            const toast = document.getElementById('customToast');
-            const text = document.getElementById('toastText');
-            text.innerText = message;
-            toast.classList.add('show');
-            clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
-                toast.classList.remove('show');
-            }, 2200);
-        }
+        function syncStarsControls(amount) {
+            selectedCustomStars = Math.max(1, parseInt(amount) || 50);
+            document.getElementById('starsManualInput').value = selectedCustomStars;
+            document.getElementById('starsSlider').value = Math.min(5000, Math.max(50, selectedCustomStars));
+            const usdPrice = (selectedCustomStars * 0.018).toFixed(2);
+            document.getElementById('selectedStarsPrice').innerText = `${selectedCustomStars} ★ = ${usdPrice} USDT`;
 
-        const tgUser = tg?.initDataUnsafe?.user;
-        const username = tgUser?.username ? '@' + tgUser.username : '@игрок';
-        const fullName = [tgUser?.first_name, tgUser?.last_name].filter(Boolean).join(' ') || 'Игрок XORYS';
-        const userId = tgUser?.id || 7749201;
-
-        document.getElementById('playerNickname').innerText = username;
-        document.getElementById('profileFullName').innerText = fullName;
-        document.getElementById('profileUsernameText').innerText = username;
-        document.getElementById('profileUserIdText').innerText = 'ID: ' + userId;
-        document.getElementById('refLinkDisplay').innerText = `https://t.me/xorys_bot?start=ref_${userId}`;
-
-        const avatarBox = document.getElementById('profileAvatarBox');
-        if (tgUser?.photo_url) {
-            avatarBox.innerHTML = `<img src="${tgUser.photo_url}" alt="Avatar">`;
-        } else {
-            avatarBox.innerText = fullName.charAt(0).toUpperCase();
-        }
-
-        let starsBalance = 100;
-        let totalGamesPlayed = 0;
-        let totalStarsWon = 0;
-        let referralsCount = 0;
-        let dailyStreak = 1;
-        let profileHistoryLog = [
-            { title: 'Стартовый бонус аккаунта', amount: '+100 ★', icon: 'fa-gift' }
-        ];
-
-        function formatStars(val) {
-            return Number.isInteger(val) ? val.toString() : val.toFixed(1);
-        }
-
-        let currentBetRoulette = 10;
-        let currentBetRocket = 10;
-        let currentBetMines = 10;
-        let currentBetPlinko = 10;
-        let currentBetCoinflip = 10;
-        let currentBetDoors = 10;
-let isPlayingDoors = false;
-let doorsDeathIndex = -1;
-let doorsCurrentMult = 1.00;
-let doorsStep = 0;
-const doorsMultipliers = [1.42, 2.10, 3.10, 4.60, 7.00, 11.00];
-
-       
-    // --- ДОДАЙ СЮДИ ДВА ЦИХ SVG-БЛОКУ ---
-    const grimReaperSVG = `
-    <svg viewBox="0 0 90 110" width="68" height="84" fill="none">
-        <path d="M18 102 L68 14" stroke="#a1a1aa" stroke-width="3.5" stroke-linecap="round"/>
-        <path d="M68 14 C46 8 24 14 12 28 C28 22 48 20 65 23 Z" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
-        <path d="M45 22 C28 22 22 44 18 96 L72 96 C68 44 62 22 45 22 Z" fill="#09090b" stroke="#ef4444" stroke-width="1.5"/>
-        <path d="M45 30 C36 30 33 39 34 49 C35 58 40 65 45 65 C50 65 55 58 56 49 C57 39 54 30 45 30 Z" fill="#ffffff"/>
-        <ellipse cx="40" cy="43" rx="2.8" ry="4.5" transform="rotate(-10 40 43)" fill="#050507"/>
-        <ellipse cx="50" cy="43" rx="2.8" ry="4.5" transform="rotate(10 50 43)" fill="#050507"/>
-        <ellipse cx="45" cy="56" rx="2.4" ry="5.5" fill="#050507"/>
-    </svg>
-    `;
-
-    const winDoorSVG = `
-    <svg viewBox="0 0 80 80" width="54" height="54" fill="none">
-        <path d="M40 10 L48.5 29.5 L70 32 L54 46.5 L58.5 67.5 L40 56.5 L21.5 67.5 L26 46.5 L10 32 L31.5 29.5 Z" fill="#38bdf8" stroke="#ffffff" stroke-width="2.5" stroke-linejoin="round"/>
-    </svg>
-    `;
-    // ------------------------------------
-
-    let selectedRouletteColor = 'red';
-    let isSpinning = false;
-        
-        
-        let isPlayingRocket = false;
-        let currentMultiplier = 1.00;
-        let gameInterval = null;
-        let crashPoint = 0;
-        let currentWheelAngle = 0;
-
-        let minesCount = 3;
-        let isPlayingMines = false;
-        let mineLocations = [];
-        let openedCount = 0;
-        let currentMinesMult = 1.00;
-
-        let selectedCoinSide = 'heads';
-        let isFlippingCoin = false;
-        let currentCoinRotation = 0;
-
-        function updateBalanceUI() {
-            const formatted = formatStars(starsBalance);
-            document.getElementById('userStarsLobby').innerText = formatted;
-            const marketStarsEl = document.getElementById('userStarsMarket');
-            if (marketStarsEl) marketStarsEl.innerText = formatted;
-            const profileStarsEl = document.getElementById('userStarsProfile');
-            if (profileStarsEl) profileStarsEl.innerText = formatted;
-            const profileWalletEl = document.getElementById('profileWalletBalance');
-            if (profileWalletEl) profileWalletEl.innerText = formatted;
-
-            document.getElementById('userStarsRoulette').innerText = formatted;
-            document.getElementById('userStarsRocket').innerText = formatted;
-            document.getElementById('userStarsMines').innerText = formatted;
-            document.getElementById('userStarsPlinko').innerText = formatted;
-            document.getElementById('userStarsCoinflip').innerText = formatted;
-            document.getElementById('userStarsDoors').innerText = formatted;
-
-            document.getElementById('statGamesPlayed').innerText = totalGamesPlayed;
-            document.getElementById('statTotalWon').innerText = formatStars(totalStarsWon) + ' ★';
-            document.getElementById('statReferralsCount').innerText = referralsCount;
-
-            const sliderMax = Math.max(10, Math.floor(starsBalance));
-            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Doors'].forEach(game => {
-                const slider = document.getElementById('betSlider' + game);
-                const maxLabel = document.getElementById('maxSlider' + game);
-                if (slider && maxLabel) {
-                    slider.max = sliderMax;
-                    maxLabel.innerText = sliderMax;
-                }
+            document.querySelectorAll('#starsPresetsGrid .chip').forEach(btn => {
+                btn.classList.toggle('active-chip', parseInt(btn.innerText) === selectedCustomStars);
             });
         }
 
-        function addProfileActivity(title, amount, icon = 'fa-star') {
-            profileHistoryLog.unshift({ title, amount, icon });
-            if (profileHistoryLog.length > 6) profileHistoryLog.pop();
-            renderProfileActivity();
+        function onStarsSliderChange(val) {
+            syncStarsControls(val);
+            triggerHaptic('impact', 'light');
         }
 
-        function renderProfileActivity() {
-            const list = document.getElementById('profileActivityList');
-            if (!list) return;
-            list.innerHTML = '';
-            profileHistoryLog.forEach(item => {
-                const row = document.createElement('div');
-                row.className = 'activity-row';
-                row.innerHTML = `
-                    <div class="activity-left">
-                        <i class="fa-solid ${item.icon}"></i>
-                        <span>${item.title}</span>
-                    </div>
-                    <span class="activity-amount">${item.amount}</span>
+        function onStarsManualInput(val) {
+            const num = parseInt(val);
+            if (!isNaN(num) && num > 0) {
+                syncStarsControls(num);
+            }
+        }
+
+        function setQuickStars(amount) {
+            syncStarsControls(amount);
+            triggerHaptic('impact', 'light');
+        }
+
+        function renderMarketPackages() {
+            const data = marketCatalogData[activeMarketCategory];
+            const grid = document.getElementById('modalPackagesGrid');
+            grid.innerHTML = '';
+
+            data.packages.forEach((pkg, idx) => {
+                const item = document.createElement('div');
+                item.className = 'package-option' + (idx === selectedPackageIndex ? ' selected' : '');
+                item.onclick = () => {
+                    selectedPackageIndex = idx;
+                    renderMarketPackages();
+                    triggerHaptic('impact', 'light');
+                };
+                item.innerHTML = `
+                    <div class="pkg-amount">${pkg.amount}</div>
+                    <div class="pkg-price">${pkg.price}</div>
                 `;
-                list.appendChild(row);
+                grid.appendChild(item);
             });
         }
 
-        /* --- ЛОГИКА ПРОФИЛЯ: ИМПОРТ ЗВЁЗД ИЗ ТГ, ЕЖЕДНЕВНЫЙ ВХОД, РЕФЕРАЛЫ --- */
+        function closeMarketModal(event) {
+            if (event && event.target !== document.getElementById('marketModal')) return;
+            document.getElementById('marketModal').classList.remove('open');
+            triggerHaptic('impact', 'light');
+        }
+
+        function confirmMarketPurchase() {
+            if (activeMarketCategory === 'ЗВЁЗДЫ') {
+                starsBalance = Number((starsBalance + selectedCustomStars).toFixed(1));
+                updateBalanceUI();
+                addProfileActivity('Покупка в Маркете', `+${selectedCustomStars} ★`, 'fa-store');
+                showToast(`Зачислено +${selectedCustomStars} звёзд!`);
+                triggerHaptic('notification', 'success');
+            } else {
+                const data = marketCatalogData[activeMarketCategory];
+                const pkg = data.packages[selectedPackageIndex];
+                addProfileActivity(`Заявка TG Prem (${pkg.amount})`, pkg.price, 'fa-crown');
+                showToast(`Заявка на «TG Prem ${pkg.amount}» оформлена!`);
+                triggerHaptic('notification', 'success');
+            }
+
+            document.getElementById('marketModal').classList.remove('open');
+        }
+
+        /* --- ПРОФИЛЬ: ИМПОРТ ЗВЁЗД, ЕЖЕДНЕВНЫЙ ВХОД, РЕФЕРАЛЫ, ВЫВОД --- */
         function openTgImportModal() {
             triggerHaptic('impact', 'medium');
             document.getElementById('tgImportModal').classList.add('open');
@@ -2852,319 +2939,277 @@ const doorsMultipliers = [1.42, 2.10, 3.10, 4.60, 7.00, 11.00];
             triggerHaptic('notification', 'success');
         }
 
-        function syncBetUI(type, val) {
-            const cap = type.charAt(0).toUpperCase() + type.slice(1);
-            const numEl = document.getElementById('betAmount' + cap);
-            const sliderEl = document.getElementById('betSlider' + cap);
-            if (numEl) numEl.innerText = val;
-            if (sliderEl) sliderEl.value = val;
+        function requestWithdrawFromProfile() {
+            const input = document.getElementById('profileWithdrawInput');
+            const amount = parseInt(input.value);
+
+            if (isNaN(amount) || amount < 100) {
+                showToast('Минимум для вывода: 100 звёзд!');
+                triggerHaptic('notification', 'error');
+                return;
+            }
+
+            if (amount > starsBalance) {
+                showToast('Недостаточно звёзд на балансе!');
+                triggerHaptic('notification', 'error');
+                return;
+            }
+
+            starsBalance = Number((starsBalance - amount).toFixed(1));
+            updateBalanceUI();
+            addProfileActivity('Заявка на вывод звёзд', `-${amount} ★`, 'fa-paper-plane');
+
+            const withdrawData = {
+                action: 'withdraw_request',
+                amount: amount,
+                user_id: userId,
+                username: username
+            };
+
+            adminWithdrawRequests.push(withdrawData);
+
+            if (tg && tg.sendData) {
+                try { tg.sendData(JSON.stringify(withdrawData)); } catch (e) {}
+            }
+
+            showToast(`Заявка на вывод ${amount} ★ отправлена админу!`);
+            triggerHaptic('notification', 'success');
+            input.value = '100';
         }
 
-        function onSliderBet(value, type) {
-            const val = Math.max(1, parseInt(value) || 1);
-            if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
-            if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
-            if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
+        /* --- 1. РАКЕТА --- */
+        function updateRocketFreebetUI() {
+            const countEl = document.getElementById('rocketFreebetCount');
+            const barEl = document.getElementById('rocketFreebetBar');
+            if (!countEl || !barEl) return;
 
-            if (type === 'roulette') currentBetRoulette = val;
-            else if (type === 'rocket') currentBetRocket = val;
-            else if (type === 'mines') currentBetMines = val;
-            else if (type === 'plinko') currentBetPlinko = val;
-            else if (type === 'coinflip') currentBetCoinflip = val;
-
-            syncBetUI(type, val);
-        }
-
-        function switchPage(pageId, buttonElement) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById(pageId).classList.add('active');
-
-            if (buttonElement) {
-                document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-                buttonElement.classList.add('active');
+            if (rocketFreebetAvailable) {
+                countEl.innerText = 'ДОСТУПНА (10 ★)!';
+                countEl.style.color = '#4ade80';
+                barEl.style.borderColor = '#4ade80';
+                barEl.style.background = 'rgba(74, 222, 128, 0.15)';
+            } else {
+                countEl.innerText = `${rocketGamesPlayed} / 15`;
+                countEl.style.color = '#38bdf8';
+                barEl.style.borderColor = 'rgba(56, 189, 248, 0.35)';
+                barEl.style.background = 'rgba(56, 189, 248, 0.12)';
             }
         }
 
-        function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
-        function openRocketGame() { switchPage('rocketGamePage'); triggerHaptic('impact', 'medium'); }
-        function openMinesGame() { switchPage('minesPage'); triggerHaptic('impact', 'medium'); initMinesGrid(); }
-        function openPlinkoGame() { switchPage('plinkoPage'); triggerHaptic('impact', 'medium'); initPlinkoCanvas(); }
-        function openCoinflipGame() { switchPage('coinflipPage'); triggerHaptic('impact', 'medium'); }
-
-        function closeSubGame(pageId) {
-            switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
-            triggerHaptic('impact', 'light');
+        function registerRocketGamePlayed() {
+            if (rocketFreebetAvailable) return;
+            rocketGamesPlayed++;
+            if (rocketGamesPlayed >= 15) {
+                rocketGamesPlayed = 0;
+                rocketFreebetAvailable = true;
+                localStorage.setItem('rocketFreebetAvailable', 'true');
+                showToast('Вітаємо! Доступна 1 безкоштовна гра в Ракети!');
+                playSound('win');
+            }
+            localStorage.setItem('rocketGamesPlayed', rocketGamesPlayed.toString());
+            updateRocketFreebetUI();
         }
 
-        function changeBet(amount, type) {
-            if (type === 'roulette') { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket') { currentBetRocket = Math.max(1, currentBetRocket + amount); syncBetUI('rocket', currentBetRocket); }
-            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
-            else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
-            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
+        function handleRocketClick() {
+            const btn = document.getElementById('gameBtn');
+            const rocket = document.getElementById('rocketObj');
+            const multText = document.getElementById('multiplierText');
+            const starsBg = document.getElementById('spaceStars');
+            const mountains = document.getElementById('mountainsLayer');
             triggerHaptic('impact', 'light');
+
+            if (!isPlayingRocket) {
+                if (rocketFreebetAvailable) {
+                    activeRocketIsFree = true;
+                    activeRocketBet = 10;
+                    rocketFreebetAvailable = false;
+                    localStorage.setItem('rocketFreebetAvailable', 'false');
+                    updateRocketFreebetUI();
+                    showToast('Запущено безкоштовну гру на 10 ★!');
+                } else {
+                    if (starsBalance < currentBetRocket) { 
+                        showToast('Недостаточно звезд!'); 
+                        return; 
+                    }
+                    starsBalance = Number((starsBalance - currentBetRocket).toFixed(1));
+                    activeRocketIsFree = false;
+                    activeRocketBet = currentBetRocket;
+                }
+
+                totalGamesPlayed += 1;
+                updateBalanceUI();
+                
+                if (!activeRocketIsFree) {
+                    registerRocketGamePlayed();
+                }
+
+                isPlayingRocket = true;
+                currentMultiplier = 1.00;
+                crashPoint = (function() {
+                    if (Math.random() < 0.10) return 1.00;
+                    let r = Math.random();
+                    let cp = 0.99 / (1.0 - r);
+                    if (cp > 50.0) cp = 50.0;
+                    return Math.max(1.01, parseFloat(cp.toFixed(2)));
+                })();
+
+                multText.classList.remove('crashed');
+                multText.innerText = 'x1.00';
+                btn.innerText = `ЗАБРАТЬ (${activeRocketBet})`;
+                btn.className = 'btn-main-action btn-style-cashout';
+
+                rocket.style.opacity = '1';
+                rocket.style.bottom = '32px';
+                rocket.style.left = '26px';
+                rocket.classList.remove('idle-hover');
+                starsBg.classList.add('flying');
+                mountains.classList.add('departed');
+
+                gameInterval = setInterval(() => {
+                    currentMultiplier += 0.03;
+                    multText.innerText = 'x' + currentMultiplier.toFixed(2);
+                    btn.innerText = `ЗАБРАТЬ (${Math.floor(activeRocketBet * currentMultiplier)})`;
+
+                    let b = parseFloat(rocket.style.bottom) || 32;
+                    let l = parseFloat(rocket.style.left) || 26;
+                    if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
+                    if (l < 235) rocket.style.left = (l + 2.2) + 'px';
+
+                    if (currentMultiplier >= crashPoint) {
+                        endRocketGame(false);
+                    }
+                }, 100);
+            } else {
+                endRocketGame(true);
+            }
         }
 
-        function setBet(amount, type) {
-            if (type === 'roulette') { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket') { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
-            else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
-            else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
-            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
-            triggerHaptic('impact', 'light');
+        function endRocketGame(isWin) {
+            clearInterval(gameInterval);
+            isPlayingRocket = false;
+            const btn = document.getElementById('gameBtn');
+            const rocket = document.getElementById('rocketObj');
+            const multText = document.getElementById('multiplierText');
+            const starsBg = document.getElementById('spaceStars');
+            const mountains = document.getElementById('mountainsLayer');
+
+            starsBg.classList.remove('flying');
+
+            const historyContainer = document.getElementById('rocketHistory');
+            const pill = document.createElement('div');
+            pill.className = 'history-pill';
+
+            if (isWin) {
+                const winSum = Math.floor(activeRocketBet * currentMultiplier);
+                starsBalance = Number((starsBalance + winSum).toFixed(1));
+                totalStarsWon += winSum;
+                updateBalanceUI();
+                pill.style.borderColor = '#2563eb';
+                pill.innerText = 'x' + currentMultiplier.toFixed(2);
+                triggerHaptic('notification', 'success');
+                playSound('win');
+                showToast(`Виграно ${winSum} ★ (${currentMultiplier.toFixed(2)}x)!`);
+            } else {
+                triggerHaptic('notification', 'error');
+                playSound('error');
+                multText.classList.add('crashed');
+                multText.innerText = 'СЛИВ!';
+                rocket.style.opacity = '0';
+                pill.style.borderColor = 'rgba(255,255,255,0.2)';
+                pill.innerText = 'x' + crashPoint.toFixed(2);
+            }
+
+            if (historyContainer) {
+                historyContainer.prepend(pill);
+                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+            }
+
+            btn.innerText = 'СТАВКА';
+            btn.className = 'btn-main-action btn-style-start';
+
+            setTimeout(() => {
+                if (!isPlayingRocket) {
+                    mountains.classList.remove('departed');
+                    rocket.style.bottom = '32px';
+                    rocket.style.left = '26px';
+                    rocket.style.opacity = '1';
+                    rocket.classList.add('idle-hover');
+                }
+            }, 900);
         }
 
-        /* --- 3D ОРЕЛ И РЕШКА --- */
-        function setCoinChoice(side, el) {
-            if (isFlippingCoin) return;
-            selectedCoinSide = side;
-            document.querySelectorAll('#coinflipPage .color-btn').forEach(b => b.classList.remove('active'));
+        /* --- 2. РУЛЕТКА --- */
+        function setRouletteColor(color, el) {
+            if (isSpinning) return;
+            selectedRouletteColor = color;
+            document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            document.getElementById('selectedCoinLabel').innerText = 'ВЫБОР: ' + (side === 'heads' ? 'ОРЕЛ' : 'РЕШКА');
+            const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СИНИЙ' };
+            document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
             triggerHaptic('impact', 'light');
         }
 
-        /* --- 3D ОРЕЛ И РЕШКА (С УЧЕТОМ RTP КАЗИНО 93-94%) --- */
-        function flipCoin3D() {
-            if (isFlippingCoin) return;
-            if (starsBalance < currentBetCoinflip) { showToast('Недостаточно звезд!'); return; }
-
-            starsBalance = Number((starsBalance - currentBetCoinflip).toFixed(1));
+        function spinRouletteWheel() {
+            if (isSpinning) return;
+            if (starsBalance < currentBetRoulette) { showToast('Недостаточно звезд!'); return; }
+            
+            starsBalance = Number((starsBalance - currentBetRoulette).toFixed(1));
             totalGamesPlayed += 1;
             updateBalanceUI();
-            isFlippingCoin = true;
+            isSpinning = true;
 
-            const btn = document.getElementById('coinflipBtn');
-            btn.innerText = 'ПОЛЕТ...';
+            const btn = document.getElementById('rouletteBtn');
+            btn.innerText = 'КРУТИТСЯ...';
             btn.disabled = true;
             triggerHaptic('impact', 'medium');
 
-            // Защита RTP казино: шанс выигрыша ~46.5% вместо 50%
-            const isWin = Math.random() < 0.465;
-            const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
+            const outcomeRand = Math.random();
+            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ', pillBorder = '#ffffff';
+            
+            if (outcomeRand < 0.48) { 
+                winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; pillBorder = '#ffffff';
+            } else if (outcomeRand < 0.93) { 
+                winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; pillBorder = '#334155';
+            } else { 
+                winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; pillBorder = '#2563eb';
+            }
 
-            const coin = document.getElementById('coin3d');
-            const spins = 12 * 360;
-            const targetDegree = outcomeSide === 'heads' ? 0 : 180;
-            currentCoinRotation += spins + targetDegree - (currentCoinRotation % 360);
-            coin.style.transform = `rotateY(${currentCoinRotation}deg)`;
+            const targetAngle = (360 - winningIndex) % 360;
+            currentWheelAngle += (360 * 6) + (targetAngle - (currentWheelAngle % 360));
+            document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
 
             setTimeout(() => {
-                isFlippingCoin = false;
-                btn.innerText = 'ПОДБРОСИТЬ';
+                isSpinning = false;
+                btn.innerText = 'КРУТИТЬ';
                 btn.disabled = false;
 
-                if (isWin) {
-                    const winSum = Math.floor(currentBetCoinflip * 2.0); // Множитель x2.0 при победе
+                const historyContainer = document.getElementById('rouletteHistory');
+                if (historyContainer) {
+                    const pill = document.createElement('div');
+                    pill.className = 'history-pill';
+                    pill.style.borderColor = pillBorder;
+                    pill.innerText = labelText;
+                    historyContainer.prepend(pill);
+                    if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+                }
+
+                if (winningColor === selectedRouletteColor) {
+                    const winSum = Math.floor(currentBetRoulette * (winningColor === 'green' ? 14 : 2));
                     starsBalance = Number((starsBalance + winSum).toFixed(1));
                     totalStarsWon += winSum;
                     updateBalanceUI();
                     triggerHaptic('notification', 'success');
+                    playSound('win');
+                    showToast(`Выпал ${labelText}! Выигрыш +${winSum} ★`);
                 } else {
                     triggerHaptic('notification', 'error');
+                    playSound('error');
+                    showToast(`Выпал ${labelText}. Попробуйте ещё!`);
                 }
-
-                const historyContainer = document.getElementById('coinflipHistory');
-                const pill = document.createElement('div');
-                pill.className = 'history-pill';
-                pill.style.borderColor = outcomeSide === 'heads' ? '#2563eb' : '#ffffff';
-                pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
-                historyContainer.prepend(pill);
-                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-            }, 3000);
+            }, 4100);
         }
 
-   
-
-       // --- РУЛЕТКА ---
-function setRouletteColor(color, el) {
-    selectedRouletteColor = color;
-    document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
-    el.classList.add('active');
-    const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СИНИЙ' };
-    document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
-    triggerHaptic('impact', 'light');
-}
-
-function spinRouletteWheel() {
-    if (isSpinning) return;
-    if (starsBalance < currentBetRoulette) { showToast('Недостаточно звезд!'); return; }
-    
-    starsBalance = Number((starsBalance - currentBetRoulette).toFixed(1));
-    totalGamesPlayed += 1;
-    updateBalanceUI();
-    isSpinning = true;
-
-    const btn = document.getElementById('rouletteBtn');
-    btn.innerText = 'КРУТИТСЯ...';
-    btn.disabled = true;
-    triggerHaptic('impact', 'medium');
-
-    const outcomeRand = Math.random();
-    let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ';
-    
-    if (outcomeRand < 0.48) { 
-        winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; 
-    } else if (outcomeRand < 0.93) { 
-        winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; 
-    } else { 
-        winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; 
-    }
-
-    currentWheelAngle += (360 * 6) + (winningIndex - (currentWheelAngle % 360));
-    document.getElementById('rouletteCircle').style.transform = `rotate(${currentWheelAngle}deg)`;
-
-    setTimeout(() => {
-        isSpinning = false;
-        btn.innerText = 'КРУТИТЬ';
-        btn.disabled = false;
-
-        if (winningColor === selectedRouletteColor) {
-            const winSum = Math.floor(currentBetRoulette * (winningColor === 'green' ? 14 : 1.95));
-            starsBalance = Number((starsBalance + winSum).toFixed(1));
-            totalStarsWon += winSum;
-            updateBalanceUI();
-            triggerHaptic('notification', 'success');
-        } else {
-            triggerHaptic('notification', 'error');
-        }
-    }, 4100);
-}
-
-      /* --- РАКЕТА --- */
-function handleRocketClick() {
-    const btn = document.getElementById('gameBtn');
-    const rocket = document.getElementById('rocketObj');
-    const multText = document.getElementById('multiplierText');
-    const starsBg = document.getElementById('spaceStars');
-    const mountains = document.getElementById('mountainsLayer');
-    triggerHaptic('impact', 'light');
-
-    if (!isPlayingRocket) {
-        // --- СТАРТ РАУНДУ ---
-        if (rocketFreebetAvailable) {
-            activeRocketIsFree = true;
-            activeRocketBet = 10; // фіксована ставка безкоштовної гри
-            rocketFreebetAvailable = false;
-            localStorage.setItem('rocketFreebetAvailable', 'false');
-            updateRocketFreebetUI();
-            if (typeof showToast === 'function') showToast('Запущено безкоштовну гру на 10 ★!');
-        } else {
-            if (starsBalance < currentBetRocket) { 
-                showToast('Недостаточно звезд!'); 
-                return; 
-            }
-            starsBalance = Number((starsBalance - currentBetRocket).toFixed(1));
-            activeRocketIsFree = false;
-            activeRocketBet = currentBetRocket;
-        }
-
-        totalGamesPlayed += 1;
-        updateBalanceUI();
-        
-        if (!activeRocketIsFree) {
-            registerRocketGamePlayed();
-        }
-
-        isPlayingRocket = true;
-        currentMultiplier = 1.00;
-        crashPoint = (function() {
-            if (Math.random() < 0.10) return 1.00;
-            let r = Math.random();
-            let cp = 0.99 / (1.0 - r);
-            if (cp > 50.0) cp = 50.0;
-            return Math.max(1.01, parseFloat(cp.toFixed(2)));
-        })();
-
-        multText.classList.remove('crashed');
-        multText.innerText = 'x1.00';
-        btn.innerText = 'ЗАБРАТЬ';
-        btn.className = 'btn-main-action btn-style-cashout';
-
-        rocket.style.opacity = '1';
-        rocket.style.bottom = '32px';
-        rocket.style.left = '26px';
-        rocket.classList.remove('idle-hover');
-        starsBg.classList.add('flying');
-        mountains.classList.add('departed');
-
-        gameInterval = setInterval(() => {
-            currentMultiplier += 0.03;
-            multText.innerText = 'x' + currentMultiplier.toFixed(2);
-            // Використовуємо activeRocketBet щоб сума в кнопці показувалась правильно і для фрібета, і для звичайної ставки
-            btn.innerText = `ЗАБРАТЬ (${Math.floor(activeRocketBet * currentMultiplier)})`;
-
-            let b = parseFloat(rocket.style.bottom) || 32;
-            let l = parseFloat(rocket.style.left) || 26;
-            if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
-            if (l < 235) rocket.style.left = (l + 2.2) + 'px';
-
-            if (currentMultiplier >= crashPoint) {
-                endRocketGame(false);
-            }
-        }, 100);
-    } else {
-        // --- КЕШАУТ (НАТИСНУЛИ «ЗАБРАТЬ» ПІД ЧАС ПОЛЬОТУ) ---
-        endRocketGame(true);
-    }
-}
-
-function endRocketGame(isWin) {
-    clearInterval(gameInterval);
-    isPlayingRocket = false;
-    const btn = document.getElementById('gameBtn');
-    const rocket = document.getElementById('rocketObj');
-    const multText = document.getElementById('multiplierText');
-    const starsBg = document.getElementById('spaceStars');
-    const mountains = document.getElementById('mountainsLayer');
-
-    starsBg.classList.remove('flying');
-
-    const historyContainer = document.getElementById('rocketHistory');
-    const pill = document.createElement('div');
-    pill.className = 'history-pill';
-
-    if (isWin) {
-        // Рахуємо виграш на основі activeRocketBet (працює і для 10 зірок фрібета, і для звичайної ставки)
-        const winSum = Math.floor(activeRocketBet * currentMultiplier);
-        starsBalance = Number((starsBalance + winSum).toFixed(1));
-        totalStarsWon += winSum;
-        updateBalanceUI();
-        pill.style.borderColor = '#2563eb';
-        pill.innerText = 'x' + currentMultiplier.toFixed(2);
-        triggerHaptic('notification', 'success');
-        if (typeof showToast === 'function') {
-            showToast(`Виграно ${winSum} ★ (${currentMultiplier.toFixed(2)}x)!`);
-        }
-    } else {
-        triggerHaptic('notification', 'error');
-        multText.classList.add('crashed');
-        multText.innerText = 'СЛИВ!';
-        rocket.style.opacity = '0';
-        pill.style.borderColor = 'rgba(255,255,255,0.2)';
-        pill.innerText = 'x' + crashPoint.toFixed(2);
-    }
-
-    if (historyContainer) {
-        historyContainer.prepend(pill);
-        if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-    }
-
-    btn.innerText = 'СТАВКА';
-    btn.className = 'btn-main-action btn-style-start';
-
-    setTimeout(() => {
-        if (!isPlayingRocket) {
-            mountains.classList.remove('departed');
-            rocket.style.bottom = '32px';
-            rocket.style.left = '26px';
-            rocket.style.opacity = '1';
-            rocket.classList.add('idle-hover');
-        }
-    }, 900);
-}
-
-        /* --- МИНЫ --- */
+        /* --- 3. МИНЫ --- */
         function setMinesCount(count, el) {
             if (isPlayingMines) return;
             minesCount = count;
@@ -3175,6 +3220,7 @@ function endRocketGame(isWin) {
 
         function initMinesGrid() {
             const grid = document.getElementById('minesGrid');
+            if (!grid) return;
             grid.innerHTML = '';
             for (let i = 0; i < 25; i++) {
                 const tile = document.createElement('div');
@@ -3207,11 +3253,16 @@ function endRocketGame(isWin) {
                 document.getElementById('minesMultLabel').innerText = 'МНОЖИТЕЛЬ: x1.00';
                 triggerHaptic('impact', 'medium');
             } else {
-                if (openedCount === 0) return;
+                if (openedCount === 0) {
+                    showToast('Откройте хотя бы одну клетку!');
+                    return;
+                }
                 const winSum = Math.floor(currentBetMines * currentMinesMult);
                 starsBalance = Number((starsBalance + winSum).toFixed(1));
                 totalStarsWon += winSum;
                 updateBalanceUI();
+                playSound('win');
+                showToast(`Забрано +${winSum} ★!`);
                 endMinesGame(true);
             }
         }
@@ -3226,6 +3277,7 @@ function endRocketGame(isWin) {
                 tile.classList.add('revealed-bomb'); 
                 tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
                 triggerHaptic('notification', 'error');
+                playSound('error');
                 tiles.forEach((t, idx) => { 
                     if (mineLocations.includes(idx)) { 
                         t.classList.add('revealed-bomb'); 
@@ -3234,26 +3286,15 @@ function endRocketGame(isWin) {
                 });
                 endMinesGame(false);
             } else {
-                // Скрытая проверка RTP для защиты казино при серии успешных шагов
-                if (openedCount >= 4 && Math.random() < 0.12) {
-                    tile.classList.add('revealed-bomb');
-                    tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
-                    triggerHaptic('notification', 'error');
-                    tiles.forEach((t, idx) => { 
-                        if (mineLocations.includes(idx)) { 
-                            t.classList.add('revealed-bomb'); 
-                            t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
-                        } 
-                    });
-                    endMinesGame(false);
-                    return; 
-                }
-
                 tile.classList.add('revealed-star');
                 tile.innerHTML = '<i class="fa-solid fa-star"></i>';
                 openedCount++;
-                currentMinesMult = Number((currentMinesMult * 1.18).toFixed(2));
+                const stepMult = minesCount === 3 ? 1.15 : (minesCount === 5 ? 1.25 : 1.55);
+                currentMinesMult = Number((currentMinesMult * stepMult).toFixed(2));
+                const potentialWin = Math.floor(currentBetMines * currentMinesMult);
                 document.getElementById('minesMultLabel').innerText = 'МНОЖИТЕЛЬ: x' + currentMinesMult.toFixed(2);
+                document.getElementById('minesBtn').innerText = `ЗАБРАТЬ (${potentialWin})`;
+                triggerHaptic('impact', 'light');
             }
         }
 
@@ -3266,133 +3307,257 @@ function endRocketGame(isWin) {
             else document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ!';
         }
 
-      function syncStarsControls(amount) {
-            selectedCustomStars = Math.max(1, parseInt(amount) || 50);
-            document.getElementById('starsManualInput').value = selectedCustomStars;
-            document.getElementById('starsSlider').value = Math.min(5000, Math.max(50, selectedCustomStars));
-            const usdPrice = (selectedCustomStars * 0.018).toFixed(2);
-            document.getElementById('selectedStarsPrice').innerText = `${selectedCustomStars} ★ = ${usdPrice} USDT`;
+        /* --- 4. ПЛИНКО x15 --- */
+        const plinkoMultipliers = [15, 3, 1.5, 0.5, 0.5, 1.5, 3, 15];
+        let activePlinkoBalls = [];
+        let plinkoAnimId = null;
 
-            document.querySelectorAll('#starsPresetsGrid .chip').forEach(btn => {
-                btn.classList.toggle('active-chip', parseInt(btn.innerText) === selectedCustomStars);
-            });
+        function getPlinkoLayout(w, h) {
+            const rows = 7;
+            const pegs = [];
+            const startY = 34;
+            const endY = h - 42;
+            const rowGap = (endY - startY) / (rows - 1);
+            const colGap = 28;
+
+            for (let r = 0; r < rows; r++) {
+                const count = r + 3;
+                const rowWidth = (count - 1) * colGap;
+                const startX = (w - rowWidth) / 2;
+                for (let c = 0; c < count; c++) {
+                    pegs.push({
+                        x: startX + c * colGap,
+                        y: startY + r * rowGap,
+                        row: r,
+                        col: c
+                    });
+                }
+            }
+            return { rows, pegs, startY, endY, rowGap, colGap };
         }
 
-        function onStarsSliderChange(val) {
-            syncStarsControls(val);
-            triggerHaptic('impact', 'light');
-        }
-
-        function onStarsManualInput(val) {
-            const num = parseInt(val);
-            if (!isNaN(num) && num > 0) {
-                syncStarsControls(num);
+        function initPlinkoCanvas() {
+            const canvas = document.getElementById('plinkoCanvas');
+            if (!canvas) return;
+            if (!plinkoAnimId) {
+                renderPlinkoLoop();
             }
         }
 
-        function setQuickStars(amount) {
-            syncStarsControls(amount);
-            triggerHaptic('impact', 'light');
-        }
+        function renderPlinkoLoop() {
+            const canvas = document.getElementById('plinkoCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
 
-        function renderMarketPackages() {
-            const data = marketCatalogData[activeMarketCategory];
-            const grid = document.getElementById('modalPackagesGrid');
-            grid.innerHTML = '';
+            ctx.clearRect(0, 0, w, h);
 
-            data.packages.forEach((pkg, idx) => {
-                const item = document.createElement('div');
-                item.className = 'package-option' + (idx === selectedPackageIndex ? ' selected' : '');
-                item.onclick = () => {
-                    selectedPackageIndex = idx;
-                    renderMarketPackages();
-                    triggerHaptic('impact', 'light');
-                };
-                item.innerHTML = `
-                    <div class="pkg-amount">${pkg.amount}</div>
-                    <div class="pkg-price">${pkg.price}</div>
-                `;
-                grid.appendChild(item);
+            const { pegs, colGap } = getPlinkoLayout(w, h);
+
+            // Отрисовка пинов
+            pegs.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, 3, 0, Math.PI * 2);
+                ctx.fillStyle = '#ffffff';
+                ctx.fill();
             });
-        }
 
-        function closeMarketModal(event) {
-            if (event && event.target !== document.getElementById('marketModal')) return;
-            document.getElementById('marketModal').classList.remove('open');
-            triggerHaptic('impact', 'light');
-        }
+            // Отрисовка нижних слотов
+            const slotCount = plinkoMultipliers.length;
+            const slotWidth = colGap - 3;
+            const totalSlotsWidth = slotCount * colGap;
+            const slotsStartX = (w - totalSlotsWidth) / 2 + 1.5;
+            const slotY = h - 26;
 
-        function confirmMarketPurchase() {
-            if (activeMarketCategory === 'ЗВЁЗДЫ') {
-                starsBalance = Number((starsBalance + selectedCustomStars).toFixed(1));
-                updateBalanceUI();
-                addProfileActivity('Покупка в Маркете', `+${selectedCustomStars} ★`, 'fa-store');
-                showToast(`Зачислено +${selectedCustomStars} звёзд!`);
-                triggerHaptic('notification', 'success');
-            } else {
-                const data = marketCatalogData[activeMarketCategory];
-                const pkg = data.packages[selectedPackageIndex];
-                addProfileActivity(`Заявка TG Prem (${pkg.amount})`, pkg.price, 'fa-crown');
-                showToast(`Заявка на «TG Prem ${pkg.amount}» оформлена!`);
-                triggerHaptic('notification', 'success');
+            plinkoMultipliers.forEach((mult, idx) => {
+                const sx = slotsStartX + idx * colGap;
+                ctx.fillStyle = mult >= 15 ? '#38bdf8' : (mult >= 3 ? '#2563eb' : 'rgba(255,255,255,0.12)');
+                ctx.beginPath();
+                ctx.roundRect(sx, slotY, slotWidth, 20, 5);
+                ctx.fill();
+
+                ctx.fillStyle = mult >= 15 ? '#050507' : '#ffffff';
+                ctx.font = '900 9px system-ui, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                ctx.fillText('x' + mult, sx + slotWidth / 2, slotY + 10.5);
+            });
+
+            // Обновление и отрисовка шариков
+            for (let i = activePlinkoBalls.length - 1; i >= 0; i--) {
+                const ball = activePlinkoBalls[i];
+                ball.progress += 0.045;
+
+                const totalSteps = ball.path.length - 1;
+                const exactStep = ball.progress * totalSteps;
+                const stepIdx = Math.min(Math.floor(exactStep), totalSteps - 1);
+                const t = exactStep - stepIdx;
+
+                const p1 = ball.path[stepIdx];
+                const p2 = ball.path[stepIdx + 1];
+
+                // Параболическая дуга отскока
+                const bx = p1.x + (p2.x - p1.x) * t;
+                const arc = Math.sin(t * Math.PI) * 6;
+                const by = p1.y + (p2.y - p1.y) * t - arc;
+
+                ctx.beginPath();
+                ctx.arc(bx, by, 5.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#38bdf8';
+                ctx.shadowColor = '#38bdf8';
+                ctx.shadowBlur = 10;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (ball.progress >= 1) {
+                    const mult = plinkoMultipliers[ball.slotIndex];
+                    const winSum = Number((ball.bet * mult).toFixed(1));
+                    if (winSum > 0) {
+                        starsBalance = Number((starsBalance + winSum).toFixed(1));
+                        if (mult >= 1) totalStarsWon += winSum;
+                        updateBalanceUI();
+                    }
+
+                    const historyContainer = document.getElementById('plinkoHistory');
+                    if (historyContainer) {
+                        const pill = document.createElement('div');
+                        pill.className = 'history-pill';
+                        pill.style.borderColor = mult >= 3 ? '#38bdf8' : 'rgba(255,255,255,0.2)';
+                        pill.innerText = 'x' + mult;
+                        historyContainer.prepend(pill);
+                        if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+                    }
+
+                    if (mult >= 1.5) {
+                        playSound('win');
+                        triggerHaptic('notification', 'success');
+                        showToast(`Плинко x${mult}! Выигрыш +${winSum} ★`);
+                    }
+
+                    activePlinkoBalls.splice(i, 1);
+                }
             }
 
-            document.getElementById('marketModal').classList.remove('open');
+            plinkoAnimId = requestAnimationFrame(renderPlinkoLoop);
         }
 
-        updateBalanceUI();
-        initDailyBonusState();
-        renderProfileActivity();
-
-        // ФУНКЦИЯ ДЛЯ ВЫВОДА ЗВЁЗД ОТ 100 ШТУК
-        function requestWithdrawFromProfile() {
-            const input = document.getElementById('profileWithdrawInput');
-            const amount = parseInt(input.value);
-
-            if (isNaN(amount) || amount < 100) {
-                showToast('Минимум для вывода: 100 звёзд!');
-                triggerHaptic('notification', 'error');
+        function dropPlinkoBall() {
+            if (starsBalance < currentBetPlinko) {
+                showToast('Недостаточно звезд!');
                 return;
             }
 
-            if (amount > starsBalance) {
-                showToast('Недостаточно звёзд на балансе!');
-                triggerHaptic('notification', 'error');
-                return;
+            starsBalance = Number((starsBalance - currentBetPlinko).toFixed(1));
+            totalGamesPlayed += 1;
+            updateBalanceUI();
+            triggerHaptic('impact', 'light');
+
+            const canvas = document.getElementById('plinkoCanvas');
+            const w = canvas.width;
+            const h = canvas.height;
+            const { rows, startY, rowGap, colGap } = getPlinkoLayout(w, h);
+
+            // Генерация пути по 7 рядам (7 поворотов влево/вправо -> 8 слотов 0..7)
+            let rightTurns = 0;
+            const path = [{ x: w / 2, y: 12 }];
+
+            for (let r = 0; r < rows; r++) {
+                // Слегка смещаем вероятность к центру для сбалансированного RTP
+                const dir = Math.random() < 0.5 ? 0 : 1;
+                rightTurns += dir;
+                const countInNext = r + 3;
+                const rowWidth = (countInNext - 1) * colGap;
+                const rowStartX = (w - rowWidth) / 2;
+                const px = rowStartX + rightTurns * colGap;
+                const py = startY + r * rowGap - 5;
+                path.push({ x: px, y: py });
             }
 
-            const withdrawData = {
-                action: 'withdraw_request',
-                amount: amount,
-                user_id: userId,
-                username: username
-            };
+            const slotCount = plinkoMultipliers.length;
+            const totalSlotsWidth = slotCount * colGap;
+            const slotsStartX = (w - totalSlotsWidth) / 2 + colGap / 2;
+            path.push({ x: slotsStartX + rightTurns * colGap, y: h - 22 });
 
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.sendData) {
-                window.Telegram.WebApp.sendData(JSON.stringify(withdrawData));
-            } else {
-                starsBalance = Number((starsBalance - amount).toFixed(1));
-                updateBalanceUI();
-                showToast(`Заявка на вывод ${amount} ★ отправлена админу!`);
-                triggerHaptic('notification', 'success');
-            }
-            
-            input.value = '100';
+            activePlinkoBalls.push({
+                bet: currentBetPlinko,
+                path,
+                slotIndex: rightTurns,
+                progress: 0
+            });
         }
 
-        // --- БЕСПЛАТНАЯ РУЛЕТКА ЗА ДРУЗЕЙ (@xorysbot) ---
+        /* --- 5. 3D ОРЕЛ И РЕШКА --- */
+        function setCoinChoice(side, el) {
+            if (isFlippingCoin) return;
+            selectedCoinSide = side;
+            document.querySelectorAll('#coinflipPage .color-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            document.getElementById('selectedCoinLabel').innerText = 'ВЫБОР: ' + (side === 'heads' ? 'ОРЕЛ' : 'РЕШКА');
+            triggerHaptic('impact', 'light');
+        }
+
+        function flipCoin3D() {
+            if (isFlippingCoin) return;
+            if (starsBalance < currentBetCoinflip) { showToast('Недостаточно звезд!'); return; }
+
+            starsBalance = Number((starsBalance - currentBetCoinflip).toFixed(1));
+            totalGamesPlayed += 1;
+            updateBalanceUI();
+            isFlippingCoin = true;
+
+            const btn = document.getElementById('coinflipBtn');
+            btn.innerText = 'ПОЛЕТ...';
+            btn.disabled = true;
+            triggerHaptic('impact', 'medium');
+
+            const isWin = Math.random() < 0.465;
+            const outcomeSide = isWin ? selectedCoinSide : (selectedCoinSide === 'heads' ? 'tails' : 'heads');
+
+            const coin = document.getElementById('coin3d');
+            const spins = 12 * 360;
+            const targetDegree = outcomeSide === 'heads' ? 0 : 180;
+            currentCoinRotation += spins + targetDegree - (currentCoinRotation % 360);
+            coin.style.transform = `rotateY(${currentCoinRotation}deg)`;
+
+            setTimeout(() => {
+                isFlippingCoin = false;
+                btn.innerText = 'ПОДБРОСИТЬ';
+                btn.disabled = false;
+
+                if (isWin) {
+                    const winSum = Math.floor(currentBetCoinflip * 2.0);
+                    starsBalance = Number((starsBalance + winSum).toFixed(1));
+                    totalStarsWon += winSum;
+                    updateBalanceUI();
+                    triggerHaptic('notification', 'success');
+                    playSound('win');
+                    showToast(`Выпал ${outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА'}! +${winSum} ★`);
+                } else {
+                    triggerHaptic('notification', 'error');
+                    playSound('error');
+                    showToast(`Выпал ${outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА'}. Не повезло!`);
+                }
+
+                const historyContainer = document.getElementById('coinflipHistory');
+                const pill = document.createElement('div');
+                pill.className = 'history-pill';
+                pill.style.borderColor = outcomeSide === 'heads' ? '#2563eb' : '#ffffff';
+                pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
+                historyContainer.prepend(pill);
+                if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
+            }, 3000);
+        }
+
+        /* --- 6. БЕСПЛАТНАЯ РУЛЕТКА ЗА ДРУЗЕЙ --- */
         let refInvitedCount = 0; 
-        let canSpinRefWheel = false; 
         let isRefSpinning = false;
         let refWheelAngle = 0;
 
         function initRefRouletteState() {
             try {
                 const saved = localStorage.getItem('xorys_ref_roulette_count');
-                const spun = localStorage.getItem('xorys_ref_roulette_spun');
-                if (saved !== null) refInvitedCount = parseInt(saved);
-                if (spun === 'true') canSpinRefWheel = false;
-                else if (refInvitedCount >= 3) canSpinRefWheel = true;
+                if (saved !== null) refInvitedCount = parseInt(saved) || 0;
             } catch (e) {}
             updateRefRouletteUI();
         }
@@ -3403,25 +3568,35 @@ function endRocketGame(isWin) {
             initRefRouletteState();
         }
 
-       function updateRefRouletteUI() {
-    const statusText = document.getElementById('refSpinStatusText');
-    const btn = document.getElementById('refSpinMainBtn');
-    if (!statusText || !btn) return;
+        function updateRefRouletteUI() {
+            const statusText = document.getElementById('refSpinStatusText');
+            const btn = document.getElementById('refSpinMainBtn');
+            const inviteBtn = document.getElementById('refInviteBtn');
+            const lobbyBadge = document.getElementById('lobbyRefBadge');
 
-    if (refInvitedCount >= 3) {
-        statusText.innerText = 'СТАТУС: ГОТОВО К ВРАЩЕНИЮ!';
-        btn.innerText = 'КРУТИТЬ БЕСПЛАТНО!';
-        btn.style.background = '#38bdf8';
-        btn.style.color = '#050507';
-    } else {
-        statusText.innerText = `ПРИГЛАШЕНО ДРУЗЕЙ: ${refInvitedCount} / 3`;
-        btn.innerText = `КРУТИТЬ ЗА 0 🌟 (${refInvitedCount}/3)`;
-        btn.style.background = '#ffffff';
-        btn.style.color = '#050507';
-    }
-   document.getElementById('userStarsRefRoulette').innerText = formatStars(starsBalance);
-}
+            if (lobbyBadge) {
+                lobbyBadge.innerHTML = `<i class="fa-solid fa-user-group"></i> ${Math.min(3, refInvitedCount)} / 3 друзей`;
+            }
 
+            if (inviteBtn) {
+                inviteBtn.innerHTML = `<i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (${Math.min(3, refInvitedCount)}/3)`;
+            }
+
+            if (!statusText || !btn) return;
+
+            if (refInvitedCount >= 3) {
+                statusText.innerText = 'СТАТУС: ГОТОВО К ВРАЩЕНИЮ!';
+                btn.innerText = 'КРУТИТЬ БЕСПЛАТНО!';
+                btn.style.background = '#38bdf8';
+                btn.style.color = '#050507';
+            } else {
+                statusText.innerText = `ПРИГЛАШЕНО ДРУЗЕЙ: ${refInvitedCount} / 3`;
+                btn.innerText = `КРУТИТЬ ЗА 0 ⭐️ (${refInvitedCount}/3)`;
+                btn.style.background = '#ffffff';
+                btn.style.color = '#050507';
+            }
+            document.getElementById('userStarsRefRoulette').innerText = formatStars(starsBalance);
+        }
 
         function inviteFriendForRefRoulette() {
             triggerHaptic('impact', 'medium');
@@ -3430,17 +3605,14 @@ function endRocketGame(isWin) {
                 return;
             }
 
-            // Реферальная ссылка на вашего бота @xorysbot
-            const currentUserId = typeof userId !== 'undefined' ? userId : 'user';
-            const refLink = `https://t.me/xorysbot?start=ref_${currentUserId}`;
-            
+            const refLink = `https://t.me/xorysbot?start=ref_${userId}`;
             const text = encodeURIComponent('Залетай в XORYS Casino и выигрывай бесплатные звезды ⭐!');
             const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${text}`;
 
             if (tg && tg.openTelegramLink) {
                 tg.openTelegramLink(shareUrl);
-            } else {
-                navigator.clipboard.writeText(refLink);
+            } else if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(refLink).catch(() => {});
                 showToast('Реферальная ссылка скопирована!');
             }
         }
@@ -3461,34 +3633,43 @@ function endRocketGame(isWin) {
             btn.disabled = true;
             triggerHaptic('impact', 'medium');
 
-            const prizes = [1, 2, 5, 10];
-            const wonPrize = prizes[Math.floor(Math.random() * prizes.length)];
+            // Сектора SVG по часовой стрелке от 12 часов (по 45 градусов):
+            // 0-45: 10★, 45-90: 1★, 90-135: 5★, 135-180: 2★, 180-225: 10★, 225-270: 1★, 270-315: 5★, 315-360: 2★
+            const sectors = [
+                { prize: 10, angle: 22.5 },
+                { prize: 1,  angle: 67.5 },
+                { prize: 5,  angle: 112.5 },
+                { prize: 2,  angle: 157.5 }
+            ];
+            const chosen = sectors[Math.floor(Math.random() * sectors.length)];
+            const targetRotation = (360 - chosen.angle) % 360;
 
-            refWheelAngle += (360 * 6) + Math.floor(Math.random() * 360);
+            refWheelAngle += (360 * 6) + (targetRotation - (refWheelAngle % 360));
             document.getElementById('refRouletteCircle').style.transform = `rotate(${refWheelAngle}deg)`;
 
             setTimeout(() => {
                 isRefSpinning = false;
-                starsBalance = Number((starsBalance + wonPrize).toFixed(1));
-                totalStarsWon += wonPrize;
+                btn.disabled = false;
+                starsBalance = Number((starsBalance + chosen.prize).toFixed(1));
+                totalStarsWon += chosen.prize;
+                refInvitedCount = Math.max(0, refInvitedCount - 3);
+                try {
+                    localStorage.setItem('xorys_ref_roulette_count', refInvitedCount.toString());
+                } catch (e) {}
+
                 updateBalanceUI();
                 updateRefRouletteUI();
+                addProfileActivity('Приз в Рулетке Free', `+${chosen.prize} ★`, 'fa-gift');
 
-                try {
-                    localStorage.setItem('xorys_ref_roulette_spun', 'true');
-                } catch(e){}
-
-                showToast(`Выигрыш! Начислено +${wonPrize} ★!`);
+                showToast(`Выигрыш! Начислено +${chosen.prize} ★!`);
                 triggerHaptic('notification', 'success');
+                playSound('win');
                 
-                btn.innerText = `ВЫ ВЫИГРАЛИ ${wonPrize} ⭐️`;
-                document.getElementById('refHubText').innerText = `${wonPrize}⭐️`;
-            }, 4100);
+                document.getElementById('refHubText').innerText = `${chosen.prize}⭐️`;
+            }, 4300);
         }
 
-        initRefRouletteState();
-
-   // --- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ ---
+        /* --- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ --- */
         const liveFeedItems = [
             { user: 'crypto_king', game: 'Ракети', amount: 250 },
             { user: 'xorys_god', game: 'Колесо Удачи', amount: 140 },
@@ -3498,74 +3679,31 @@ function endRocketGame(isWin) {
             { user: 'win_master', game: 'Ракети', amount: 500 }
         ];
 
+        let liveFeedInterval = null;
         function startLiveFeedTicker() {
             const feedEl = document.getElementById('liveFeedText');
             if (!feedEl) return;
+            if (liveFeedInterval) clearInterval(liveFeedInterval);
 
-            setInterval(() => {
+            liveFeedInterval = setInterval(() => {
                 const randomItem = liveFeedItems[Math.floor(Math.random() * liveFeedItems.length)];
                 feedEl.style.opacity = '0';
                 
                 setTimeout(() => {
-                    feedEl.innerText = `${randomItem.user} щойно виграв ${randomItem.amount} ★ у грі «${randomItem.game}»!`;
+                    feedEl.innerText = `@${randomItem.user} щойно виграв ${randomItem.amount} ★ у грі «${randomItem.game}»!`;
                     feedEl.style.opacity = '1';
                 }, 300);
             }, 5000);
         }
 
-        startLiveFeedTicker();
-
-  /* --- ПЛИНКО --- */
-    function initPlinkoCanvas() {
-        const canvas = document.getElementById('plinkoCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = '#38bdf8';
-        for (let row = 0; row < 6; row++) {
-            for (let col = 0; col <= row; col++) {
-                let x = canvas.width / 2 + (col - row / 2) * 35;
-                let y = 30 + row * 32;
-                ctx.beginPath();
-                ctx.arc(x, y, 3.5, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-    }
-
-    function dropPlinkoBall() {
-        if (starsBalance < currentBetPlinko) {
-            showToast('Недостаточно звезд!');
-            triggerHaptic('notification', 'error');
-            return;
-        }
-
-        starsBalance = Number((starsBalance - currentBetPlinko).toFixed(1));
-        totalGamesPlayed += 1;
+        /* --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ --- */
         updateBalanceUI();
-        triggerHaptic('impact', 'medium');
-
-        const mults = [0.5, 1.2, 1.5, 2.0, 5.0, 15.0];
-        const chosenMult = mults[Math.floor(Math.random() * mults.length)];
-        const winSum = Math.floor(currentBetPlinko * chosenMult);
-
-        if (winSum > 0) {
-            starsBalance = Number((starsBalance + winSum).toFixed(1));
-            totalStarsWon += winSum;
-            updateBalanceUI();
-            showToast(`Плинко: выигрыш ${winSum} ★ (x${chosenMult})!`);
-            triggerHaptic('notification', 'success');
-            playSound('win');
-        } else {
-            showToast('Шарик попал в нулевую зону!');
-            triggerHaptic('notification', 'error');
-            playSound('error');
-        }
-    }
-                    
-
-  
-</script>
+        updateSettingsUI();
+        initDailyBonusState();
+        renderProfileActivity();
+        initRefRouletteState();
+        updateRocketFreebetUI();
+        startLiveFeedTicker();
+    </script>
 </body>
 </html>
