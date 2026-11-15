@@ -3507,7 +3507,7 @@ function endRocketGame(isWin) {
                 feedEl.style.opacity = '0';
                 
                 setTimeout(() => {
-                    feedEl.innerText = `@${randomItem.user} щойно виграв ${randomItem.amount} ★ у грі «${randomItem.game}»!`;
+                    feedEl.innerText = `${randomItem.user} щойно виграв ${randomItem.amount} ★ у грі «${randomItem.game}»!`;
                     feedEl.style.opacity = '1';
                 }, 300);
             }, 5000);
