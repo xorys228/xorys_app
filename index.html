@@ -1135,102 +1135,7 @@
         .nav-item span { font-size: 10px; font-weight: 900; letter-spacing: 0.5px; }
         .nav-item.active { color: #ffffff; text-shadow: 0 0 12px rgba(255, 255, 255, 0.35); }
 
-   /* --- СТИЛІ ДЛЯ ГРИ "3 ДВЕРІ" --- */
-.doors-stage {
-    display: flex;
-    justify-content: center;
-    gap: 14px;
-    width: 100%;
-    padding: 10px 0;
-}
-
-.wood-door {
-    width: 84px;
-    height: 138px;
-    border-radius: 42px 42px 8px 8px;
-    background: linear-gradient(180deg, #5c3a21 0%, #3d2312 50%, #241308 100%);
-    border: 3px solid #784b2a;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.85), inset 0 0 15px rgba(0,0,0,0.7);
-    position: relative;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s, box-shadow 0.25s;
-    overflow: hidden;
-}
-
-.wood-door::before {
-    content: '';
-    position: absolute;
-    inset: 6px;
-    border-radius: 36px 36px 4px 4px;
-    border: 1.5px solid rgba(255, 200, 140, 0.18);
-    background: repeating-linear-gradient(90deg, transparent, transparent 16px, rgba(0, 0, 0, 0.25) 16px, rgba(0, 0, 0, 0.25) 18px);
-    pointer-events: none;
-}
-
-.wood-door:hover {
-    transform: translateY(-4px);
-    border-color: #d97706;
-    box-shadow: 0 14px 28px rgba(0,0,0,0.9), 0 0 15px rgba(217, 119, 6, 0.35);
-}
-
-.wood-door:active {
-    transform: scale(0.95);
-}
-
-.door-knob {
-    position: absolute;
-    right: 11px;
-    top: 55%;
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 30% 30%, #fde047, #b45309);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    z-index: 2;
-}
-
-.door-number {
-    font-size: 16px;
-    font-weight: 900;
-    color: rgba(255, 225, 180, 0.55);
-    z-index: 2;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-}
-
-.wood-door.opened-win {
-    background: radial-gradient(circle at center, #1e3a8a 0%, #050814 100%);
-    border-color: #38bdf8;
-    box-shadow: 0 0 25px rgba(56, 189, 248, 0.6);
-    transform: scale(1.03);
-}
-
-.wood-door.opened-death {
-    background: radial-gradient(circle at center, #7f1d1d 0%, #090303 100%);
-    border-color: #ef4444;
-    box-shadow: 0 0 28px rgba(239, 68, 68, 0.75);
-    animation: shakeDoor 0.45s ease;
-}
-
-@keyframes shakeDoor {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-6px) rotate(-2deg); }
-    50% { transform: translateX(6px) rotate(2deg); }
-    75% { transform: translateX(-4px); }
-}
-        
-    </style>
-</head>
-<body>
-
-    <div id="customToast" class="toast-overlay">
-        <i class="fa-solid fa-circle-info"></i>
-        <span id="toastText">Уведомление</span>
-    </div>
-
+  
     <!-- Вкладка ИГРЫ (ЛОББИ) -->
     <div id="casino" class="page active">
         <div class="lobby-header">
@@ -1818,62 +1723,6 @@
         <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
-
-    <!-- ЭКРАН ИГРЫ "3 ДВЕРИ" -->
-<div id="doorsPage" class="page">
-    <div class="rg-header">
-        <div class="rg-logo">3 ДВЕРИ <span>XORYS</span></div>
-        <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsDoors">100</span></div>
-    </div>
-
-    <div class="rg-history" id="doorsHistory">
-        <div class="history-pill" style="border-color: #38bdf8;">x1.42</div>
-        <div class="history-pill" style="border-color: #ef4444;">СМЕРТЬ</div>
-    </div>
-
-    <div class="roulette-display" style="height: 225px; padding: 12px;">
-        <div id="doorsPromptText" style="font-size: 11px; font-weight: 900; color: #fbbf24; letter-spacing: 0.8px; margin-bottom: 8px; text-transform: uppercase;">
-            СДЕЛАЙТЕ СТАВКУ И ВЫБЕРИТЕ ДВЕРЬ
-        </div>
-
-        <div class="doors-stage" id="doorsStage">
-            <div class="wood-door" onclick="chooseDoor(0)"><span class="door-number">I</span><div class="door-knob"></div></div>
-            <div class="wood-door" onclick="chooseDoor(1)"><span class="door-number">II</span><div class="door-knob"></div></div>
-            <div class="wood-door" onclick="chooseDoor(2)"><span class="door-number">III</span><div class="door-knob"></div></div>
-        </div>
-    </div>
-
-    <div class="betting-box">
-        <div class="betting-info">
-            <span>СТАВКА (ЗВЕЗДЫ)</span>
-            <span id="doorsMultLabel">МНОЖИТЕЛЬ: x1.00</span>
-        </div>
-        
-        <div class="bet-row">
-            <div class="bet-adjuster">
-                <button class="btn-chg" onclick="changeBet(-5, 'doors')">-</button>
-                <span id="betAmountDoors" class="bet-number">10</span>
-                <button class="btn-chg" onclick="changeBet(5, 'doors')">+</button>
-            </div>
-            <button id="doorsBtn" class="btn-main-action btn-style-start" onclick="handleDoorsBtnClick()">ИГРАТЬ</button>
-        </div>
-
-        <div class="slider-container">
-            <span class="slider-label">1</span>
-            <input type="range" id="betSliderDoors" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'doors')">
-            <span class="slider-label" id="maxSliderDoors">100</span>
-        </div>
-
-        <div class="quick-chips">
-            <button class="chip" onclick="setBet(10, 'doors')">10</button>
-            <button class="chip" onclick="setBet(25, 'doors')">25</button>
-            <button class="chip" onclick="setBet(50, 'doors')">50</button>
-            <button class="chip" onclick="setBet(100, 'doors')">100</button>
-        </div>
-    </div>
-
-    <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
-</div>
 
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
@@ -3666,132 +3515,57 @@ function endRocketGame(isWin) {
 
         startLiveFeedTicker();
 
-  
-function openDoorsGame() {
-    switchPage('doorsPage');
-    triggerHaptic('impact', 'medium');
-    resetDoorsVisuals();
-}
+  /* --- ПЛИНКО --- */
+    function initPlinkoCanvas() {
+        const canvas = document.getElementById('plinkoCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#38bdf8';
+        for (let row = 0; row < 6; row++) {
+            for (let col = 0; col <= row; col++) {
+                let x = canvas.width / 2 + (col - row / 2) * 35;
+                let y = 30 + row * 32;
+                ctx.beginPath();
+                ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
 
-function resetDoorsVisuals() {
-    const stage = document.getElementById('doorsStage');
-    if (!stage) return;
-    stage.innerHTML = `
-        <div class="wood-door" onclick="chooseDoor(0)"><span class="door-number">I</span><div class="door-knob"></div></div>
-        <div class="wood-door" onclick="chooseDoor(1)"><span class="door-number">II</span><div class="door-knob"></div></div>
-        <div class="wood-door" onclick="chooseDoor(2)"><span class="door-number">III</span><div class="door-knob"></div></div>
-    `;
-}
-
-function handleDoorsBtnClick() {
-    const btn = document.getElementById('doorsBtn');
-    if (!isPlayingDoors) {
-        if (starsBalance < currentBetDoors) { showToast('Недостаточно звезд!'); return; }
-        starsBalance = Number((starsBalance - currentBetDoors).toFixed(1));
-        totalGamesPlayed += 1;
-        updateBalanceUI();
-
-        isPlayingDoors = true;
-        doorsStep = 0;
-        doorsCurrentMult = doorsMultipliers[0]; 
-        doorsDeathIndex = Math.floor(Math.random() * 3);
-
-        resetDoorsVisuals();
-        document.getElementById('doorsPromptText').innerText = 'ВЫБЕРИТЕ ОДНУ ИЗ ТРЕХ ДВЕРЕЙ!';
-        document.getElementById('doorsPromptText').style.color = '#38bdf8';
-        document.getElementById('doorsMultLabel').innerText = `УРОВЕНЬ 1 • МНОЖИТЕЛЬ: x${doorsCurrentMult}`;
-
-        btn.innerText = 'ЗАБРАТЬ';
-        btn.className = 'btn-main-action btn-style-cashout';
-        triggerHaptic('impact', 'medium');
-    } else {
-        if (doorsStep === 0) {
-            showToast('Откройте хотя бы одну дверь!');
+    function dropPlinkoBall() {
+        if (starsBalance < currentBetPlinko) {
+            showToast('Недостаточно звезд!');
+            triggerHaptic('notification', 'error');
             return;
         }
-        const winSum = Math.floor(currentBetDoors * doorsCurrentMult);
-        starsBalance = Number((starsBalance + winSum).toFixed(1));
-        totalStarsWon += winSum;
+
+        starsBalance = Number((starsBalance - currentBetPlinko).toFixed(1));
+        totalGamesPlayed += 1;
         updateBalanceUI();
-        endDoorsGame(true, winSum);
-    }
-}
+        triggerHaptic('impact', 'medium');
 
-function chooseDoor(index) {
-    if (!isPlayingDoors) {
-        showToast('Сначала нажмите «ИГРАТЬ»!');
-        return;
-    }
+        const mults = [0.5, 1.2, 1.5, 2.0, 5.0, 15.0];
+        const chosenMult = mults[Math.floor(Math.random() * mults.length)];
+        const winSum = Math.floor(currentBetPlinko * chosenMult);
 
-    const doors = document.querySelectorAll('#doorsStage .wood-door');
-    if (!doors[index] || doors[index].dataset.opened) return;
-
-    doors.forEach((door, i) => {
-        door.dataset.opened = 'true';
-        if (i === doorsDeathIndex) {
-            door.classList.add('opened-death');
-            door.innerHTML = grimReaperSVG;
+        if (winSum > 0) {
+            starsBalance = Number((starsBalance + winSum).toFixed(1));
+            totalStarsWon += winSum;
+            updateBalanceUI();
+            showToast(`Плинко: выигрыш ${winSum} ★ (x${chosenMult})!`);
+            triggerHaptic('notification', 'success');
+            playSound('win');
         } else {
-            door.classList.add('opened-win');
-            door.innerHTML = winDoorSVG;
+            showToast('Шарик попал в нулевую зону!');
+            triggerHaptic('notification', 'error');
+            playSound('error');
         }
-    });
-
-    if (index === doorsDeathIndex) {
-        triggerHaptic('notification', 'error');
-        if (typeof playSound === 'function') playSound('error');
-        endDoorsGame(false, 0);
-    } else {
-        doorsStep++;
-        doorsCurrentMult = doorsMultipliers[Math.min(doorsStep, doorsMultipliers.length - 1)];
-        const potentialWin = Math.floor(currentBetDoors * doorsCurrentMult);
-
-        document.getElementById('doorsMultLabel').innerText = `УРОВЕНЬ ${doorsStep + 1} • МНОЖИТЕЛЬ: x${doorsCurrentMult}`;
-        document.getElementById('doorsPromptText').innerText = `УСПЕХ! ЗАБРАТЬ ${potentialWin} ★ ИЛИ ИДТИ В СЛЕДУЮЩУЮ ДВЕРЬ?`;
-        document.getElementById('doorsBtn').innerText = `ЗАБРАТЬ (${potentialWin})`;
-
-        triggerHaptic('notification', 'success');
-        if (typeof playSound === 'function') playSound('win');
-
-        setTimeout(() => {
-            if (isPlayingDoors) {
-                doorsDeathIndex = Math.floor(Math.random() * 3);
-                resetDoorsVisuals();
-            }
-        }, 1100);
     }
-}
+                    
 
-function endDoorsGame(isWin, winSum) {
-    isPlayingDoors = false;
-    const btn = document.getElementById('doorsBtn');
-    const prompt = document.getElementById('doorsPromptText');
-    const historyContainer = document.getElementById('doorsHistory');
-
-    const pill = document.createElement('div');
-    pill.className = 'history-pill';
-
-    if (isWin) {
-        prompt.innerText = `ВЫ ЗАБРАЛИ +${winSum} ★ (x${doorsCurrentMult})!`;
-        prompt.style.color = '#4ade80';
-        pill.style.borderColor = '#38bdf8';
-        pill.innerText = `x${doorsCurrentMult}`;
-        showToast(`Выигрыш +${winSum} ★!`);
-    } else {
-        prompt.innerText = 'ВАС ВСТРЕТИЛА СМЕРТЬ! СТАВКА СГОРЕЛА.';
-        prompt.style.color = '#ef4444';
-        pill.style.borderColor = '#ef4444';
-        pill.innerText = 'СМЕРТЬ';
-    }
-
-    if (historyContainer) {
-        historyContainer.prepend(pill);
-        if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
-    }
-
-    btn.innerText = 'ИГРАТЬ';
-    btn.className = 'btn-main-action btn-style-start';
-}
+  
 </script>
 </body>
 </html>
