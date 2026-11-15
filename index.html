@@ -1231,7 +1231,36 @@
         <span id="toastText">Уведомление</span>
     </div>
 
-    <div class="games-container">
+    <!-- Вкладка ИГРЫ (ЛОББИ) -->
+    <div id="casino" class="page active">
+        <div class="lobby-header">
+            <div class="brand-logo">
+                <div class="brand-badge">X</div>
+                <div class="brand-text">
+                    XORYS
+                    <span>МИНИ-ИГРЫ</span>
+                </div>
+            </div>
+            <div class="rg-balance">
+                <i class="fa-solid fa-star"></i>
+                <span id="userStarsLobby">100</span>
+            </div>
+        </div>
+
+    <!-- ЖИВАЯ СТРИЧКА ВЫИГРЫШЕЙ -->
+        <div class="profile-feature-card" style="padding: 10px 14px; margin-bottom: 14px; background: linear-gradient(145deg, rgba(11, 16, 26, 0.9) 0%, rgba(5, 7, 12, 0.95) 100%);">
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.7);">
+                <i class="fa-solid fa-bolt" style="color: #38bdf8; animation: pulse 1.5s infinite;"></i>
+                <div style="flex: 1; overflow: hidden; white-space: nowrap; position: relative;">
+                    <span id="liveFeedText" style="display: inline-block; transition: opacity 0.3s ease; color: #ffffff;">
+                        @crypto_king щойно виграв 250 ★ у Ракети!
+                    </span>
+                </div>
+            </div>
+        </div>
+        
+        
+        <div class="games-container">
             <!-- Бесплатная рулетка за друзей -->
             <div class="game-card-row" onclick="openRefRouletteGame()">
                 <div class="game-visual-left">
@@ -1452,32 +1481,32 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
 
-            <!-- 6. ТРИ ДВЕРИ (СМЕРТЬ С КОСОЙ) -->
-            <div class="game-card-row" onclick="openDoorsGame()">
-                <div class="game-visual-left">
-                    <svg viewBox="0 0 120 120" fill="none">
-                        <rect x="28" y="16" width="52" height="88" rx="26" fill="#3d2312" stroke="#d97706" stroke-width="3"/>
-                        <line x1="45" y1="20" x2="45" y2="102" stroke="#241308" stroke-width="2"/>
-                        <line x1="62" y1="20" x2="62" y2="102" stroke="#241308" stroke-width="2"/>
-                        <circle cx="70" cy="62" r="4" fill="#fbbf24"/>
-                        <path d="M54 38 C46 38 42 46 42 54 C42 62 47 68 54 68 C61 68 66 62 66 54 C66 46 62 38 54 38 Z" fill="#ffffff" opacity="0.9"/>
-                        <ellipse cx="50" cy="51" rx="2.5" ry="4" fill="#050507"/>
-                        <ellipse cx="58" cy="51" rx="2.5" ry="4" fill="#050507"/>
-                        <ellipse cx="54" cy="60" rx="2" ry="4.5" fill="#050507"/>
-                    </svg>
-                </div>
-                <div class="game-info-right">
-                    <span class="game-category-tag"><i class="fa-solid fa-skull"></i> УГАДАЙ ДВЕРЬ</span>
-                    <span class="game-name">3 ДВЕРИ: СМЕРТЬ</span>
-                    <div class="game-bottom-bar">
-                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 418</div>
-                        <button class="card-action-btn">ИГРАТЬ</button>
-                    </div>
-                </div>
-            </div>
-        </div> <!-- Тут правильно закривається games-container -->
-    </div> <!-- Тут правильно закривається сторінка casino -->
+   <!-- 6. ТРИ ДВЕРИ (СМЕРТЬ С КОСОЙ) -->
+<div class="game-card-row" onclick="openDoorsGame()">
+    <div class="game-visual-left">
+        <svg viewBox="0 0 120 120" fill="none">
+            <rect x="28" y="16" width="52" height="88" rx="26" fill="#3d2312" stroke="#d97706" stroke-width="3"/>
+            <line x1="45" y1="20" x2="45" y2="102" stroke="#241308" stroke-width="2"/>
+            <line x1="62" y1="20" x2="62" y2="102" stroke="#241308" stroke-width="2"/>
+            <circle cx="70" cy="62" r="4" fill="#fbbf24"/>
+            <path d="M54 38 C46 38 42 46 42 54 C42 62 47 68 54 68 C61 68 66 62 66 54 C66 46 62 38 54 38 Z" fill="#ffffff" opacity="0.9"/>
+            <ellipse cx="50" cy="51" rx="2.5" ry="4" fill="#050507"/>
+            <ellipse cx="58" cy="51" rx="2.5" ry="4" fill="#050507"/>
+            <ellipse cx="54" cy="60" rx="2" ry="4.5" fill="#050507"/>
+        </svg>
+    </div>
+    <div class="game-info-right">
+        <span class="game-category-tag"><i class="fa-solid fa-skull"></i> УГАДАЙ ДВЕРЬ</span>
+        <span class="game-name">3 ДВЕРИ: СМЕРТЬ</span>
+        <div class="game-bottom-bar">
+            <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 418</div>
+            <button class="card-action-btn">ИГРАТЬ</button>
+        </div>
+    </div>
+</div>
     
 
     <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
@@ -1862,7 +1891,6 @@
             </div>
         </div>
 
-        <!-- Главный экран маркетплейса -->
         <div id="marketMainView">
             <h1 class="page-title">МАРКЕТ</h1>
             <div class="games-container">
@@ -1926,7 +1954,7 @@
                     </div>
                 </div>
 
-                <!-- 3. TG PREM -->
+                <!-- 3. TG PREM (3 / 6 / 12 МЕС) -->
                 <div class="game-card-row" onclick="openMarketCategory('TG PREM')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -1954,7 +1982,7 @@
                     </div>
                 </div>
 
-                <!-- 4. USDT -->
+                <!-- 4. USDT (В РАЗРАБОТКЕ) -->
                 <div class="game-card-row" onclick="openMarketCategory('USDT')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -1985,7 +2013,7 @@
             </div>
         </div>
 
-        <!-- Подкаталог стран (скрыт по умолчанию) -->
+        <!-- Подкаталог стран (для Номеров) -->
         <div id="marketDetailView" style="display: none;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
                 <button class="btn-return" style="width: auto; margin-top: 0; padding: 8px 14px;" onclick="closeMarketDetail()"><i class="fa-solid fa-arrow-left"></i> НАЗАД</button>
@@ -2009,6 +2037,7 @@
                 </button>
             </div>
 
+            <!-- Блок выбора количества звёзд (Слайдер + Ручной ввод + 10 пресетов) -->
             <div id="starsCustomConfig" class="stars-custom-box" style="display: none;">
                 <div class="stars-input-row">
                     <div>
@@ -2808,40 +2837,36 @@ const doorsMultipliers = [1.42, 2.10, 3.10, 4.60, 7.00, 11.00];
         let currentCoinRotation = 0;
 
         function updateBalanceUI() {
-    const formatted = formatStars(starsBalance);
-    
-    const safeSet = (id, val) => {
-        const el = document.getElementById(id);
-        if (el) el.innerText = val;
-    };
+            const formatted = formatStars(starsBalance);
+            document.getElementById('userStarsLobby').innerText = formatted;
+            const marketStarsEl = document.getElementById('userStarsMarket');
+            if (marketStarsEl) marketStarsEl.innerText = formatted;
+            const profileStarsEl = document.getElementById('userStarsProfile');
+            if (profileStarsEl) profileStarsEl.innerText = formatted;
+            const profileWalletEl = document.getElementById('profileWalletBalance');
+            if (profileWalletEl) profileWalletEl.innerText = formatted;
 
-    safeSet('userStarsLobby', formatted);
-    safeSet('userStarsMarket', formatted);
-    safeSet('userStarsProfile', formatted);
-    safeSet('profileWalletBalance', formatted);
-    safeSet('userStarsRoulette', formatted);
-    safeSet('userStarsRocket', formatted);
-    safeSet('userStarsMines', formatted);
-    safeSet('userStarsPlinko', formatted);
-    safeSet('userStarsCoinflip', formatted);
-    safeSet('userStarsDoors', formatted);
-    safeSet('userStarsRefRoulette', formatted);
-    safeSet('userStarsLeaderboard', formatted);
+            document.getElementById('userStarsRoulette').innerText = formatted;
+            document.getElementById('userStarsRocket').innerText = formatted;
+            document.getElementById('userStarsMines').innerText = formatted;
+            document.getElementById('userStarsPlinko').innerText = formatted;
+            document.getElementById('userStarsCoinflip').innerText = formatted;
+            document.getElementById('userStarsDoors').innerText = formatted;
 
-    safeSet('statGamesPlayed', totalGamesPlayed);
-    safeSet('statTotalWon', formatStars(totalStarsWon) + ' ★');
-    safeSet('statReferralsCount', referralsCount);
+            document.getElementById('statGamesPlayed').innerText = totalGamesPlayed;
+            document.getElementById('statTotalWon').innerText = formatStars(totalStarsWon) + ' ★';
+            document.getElementById('statReferralsCount').innerText = referralsCount;
 
-    const sliderMax = Math.max(10, Math.floor(starsBalance));
-    ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Doors'].forEach(game => {
-        const slider = document.getElementById('betSlider' + game);
-        const maxLabel = document.getElementById('maxSlider' + game);
-        if (slider && maxLabel) {
-            slider.max = sliderMax;
-            maxLabel.innerText = sliderMax;
+            const sliderMax = Math.max(10, Math.floor(starsBalance));
+            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Doors'].forEach(game => {
+                const slider = document.getElementById('betSlider' + game);
+                const maxLabel = document.getElementById('maxSlider' + game);
+                if (slider && maxLabel) {
+                    slider.max = sliderMax;
+                    maxLabel.innerText = sliderMax;
+                }
+            });
         }
-    });
-}
 
         function addProfileActivity(title, amount, icon = 'fa-star') {
             profileHistoryLog.unshift({ title, amount, icon });
@@ -3449,44 +3474,11 @@ function endRocketGame(isWin) {
         }
 
         function confirmMarketPurchase() {
-            // Перевіряємо, чи запущено в Telegram і чи доступний метод відкриття інвойсів
-            if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openInvoice) {
-                
-                // Якщо це реальний запит на зірки або підписку:
-                let title = activeMarketCategory === 'ЗВЁЗДЫ' ? `Покупка ${selectedCustomStars} Telegram Stars` : 'Оплата подписки TG Prem';
-                let description = activeMarketCategory === 'ЗВЁЗДЫ' ? `Мгновенное зачисление ${selectedCustomStars} ★ на игровой баланс XORYS` : 'Активация подписки Telegram Premium';
-                
-                // Приклад отримання посилання на інвойс від твого майбутнього бекенду / бота
-                // (Тут твій сервер повинен викликати метод createInvoiceLink через Telegram Bot API)
-                // Для прикладу передаємо структуру, яку потрібно зв'язати з твоїм ботом:
-                
-                /* 
-                   Оскільки invoice_link генерується на стороні твого Telegram-бота, 
-                   тут робиться запит на твій сервер (наприклад, fetch('/create-invoice')) 
-                   і отримується 'https://t.me/$...'
-                */
-
-                // Демо-імітація виклику openInvoice (коли отримаєш invoice_link з сервера):
-                /*
-                window.Telegram.WebApp.openInvoice(invoiceLink, function(status) {
-                    if (status === 'paid') {
-                        // Успішна оплата! Нараховуємо зірки
-                        grantSuccessfulPurchase();
-                    } else if (status === 'cancelled') {
-                        showToast('Оплата была отменена');
-                    } else {
-                        showToast('Ошибка оплаты');
-                    }
-                });
-                */
-            }
-
-            // Локальна лояльна затьмарена обробка (якщо тестуєш без піднятого серверного бота)
             if (activeMarketCategory === 'ЗВЁЗДЫ') {
                 starsBalance = Number((starsBalance + selectedCustomStars).toFixed(1));
                 updateBalanceUI();
-                addProfileActivity('Покупка в Маркете (Stars)', `+${selectedCustomStars} ★`, 'fa-store');
-                showToast(`Успешно оплачено! Зачислено +${selectedCustomStars} звёзд!`);
+                addProfileActivity('Покупка в Маркете', `+${selectedCustomStars} ★`, 'fa-store');
+                showToast(`Зачислено +${selectedCustomStars} звёзд!`);
                 triggerHaptic('notification', 'success');
             } else {
                 const data = marketCatalogData[activeMarketCategory];
