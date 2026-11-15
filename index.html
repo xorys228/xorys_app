@@ -2307,6 +2307,9 @@
     </nav>
 
 
+            
+
+
   
     <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
     <div id="refRoulettePage" class="page">
@@ -2418,7 +2421,7 @@
             </div>
         </div>
     </div>
-
+     
     <script>
         /* --- ЗВУКОВЫЕ ЭФФЕКТЫ (WEB AUDIO API) --- */
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -3794,6 +3797,56 @@ function endDoorsGame(isWin, winSum) {
     btn.innerText = 'ИГРАТЬ';
     btn.className = 'btn-main-action btn-style-start';
 }
+
+  /* --- ПЛИНКО --- */
+    function initPlinkoCanvas() {
+        const canvas = document.getElementById('plinkoCanvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.fillStyle = '#38bdf8';
+        for (let row = 0; row < 6; row++) {
+            for (let col = 0; col <= row; col++) {
+                let x = canvas.width / 2 + (col - row / 2) * 35;
+                let y = 30 + row * 32;
+                ctx.beginPath();
+                ctx.arc(x, y, 3.5, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+    }
+
+    function dropPlinkoBall() {
+        if (starsBalance < currentBetPlinko) {
+            showToast('Недостаточно звезд!');
+            triggerHaptic('notification', 'error');
+            return;
+        }
+
+        starsBalance = Number((starsBalance - currentBetPlinko).toFixed(1));
+        totalGamesPlayed += 1;
+        updateBalanceUI();
+        triggerHaptic('impact', 'medium');
+
+        const mults = [0.5, 1.2, 1.5, 2.0, 5.0, 15.0];
+        const chosenMult = mults[Math.floor(Math.random() * mults.length)];
+        const winSum = Math.floor(currentBetPlinko * chosenMult);
+
+        if (winSum > 0) {
+            starsBalance = Number((starsBalance + winSum).toFixed(1));
+            totalStarsWon += winSum;
+            updateBalanceUI();
+            showToast(`Плинко: выигрыш ${winSum} ★ (x${chosenMult})!`);
+            triggerHaptic('notification', 'success');
+            playSound('win');
+        } else {
+            showToast('Шарик попал в нулевую зону!');
+            triggerHaptic('notification', 'error');
+            playSound('error');
+        }
+    }
+        
 </script>
 </body>
 </html>
