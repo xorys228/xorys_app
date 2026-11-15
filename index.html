@@ -3111,9 +3111,9 @@
                 if (data.ok) {
                     const realPurchaseId = data.purchase_id; // Реальный ID из базы данных SQLite
 
-                    // Генерация номера для интерфейса
-                    const randomTail = Math.floor(1000 + Math.random() * 9000);
-                    const assignedPhone = item.sample.slice(0, -4) + randomTail;
+                   // Указываем, что номер и код еще ожидают выдачи админом
+const assignedPhone = "Ожидает выдачи...";
+const assignedCode = "ОЖИДАНИЕ...";
 
                     activeNumberOrder = {
                         order_id: realPurchaseId,
