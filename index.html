@@ -3087,47 +3087,85 @@
             updateBalanceUI();
             addProfileActivity(`Номер ${item.name} (${item.code})`, `-${item.stars} ★`, 'fa-sim-card');
 
-            // Генерируем уникальный ID заказа и отправляем мгновенное уведомление в @xorysbot
-            const orderId = 'NUM-' + Math.floor(100000 + Math.random() * 900000);
-            const randomTail = Math.floor(1000 + Math.random() * 9000);
-            const assignedPhone = item.sample.slice(0, -4) + randomTail;
+            // Безопасно получаем данные пользователя из Telegram WebApp
+            const tgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) 
+                ? window.Telegram.WebApp.initDataUnsafe.user 
+                : null;
 
-            activeNumberOrder = {
-                order_id: orderId,
-                country: item.name,
-                dial_code: item.code,
-                phone: assignedPhone,
-                price_stars: item.stars
-            };
+            const userId = tgUser ? tgUser.id : 123456789;
+            const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
 
-            const botNotification = sendPayloadToXorysBot({
-                action: 'market_number_selected',
-                notify_admin_bot: '@xorysbot',
-                order_id: orderId,
-                country: item.name,
-                dial_code: item.code,
-                assigned_phone: assignedPhone,
-                price_stars: item.stars,
-                delivery_target: 'bot_and_app'
+            // Отправляем запрос на наш бэкенд для записи в базу данных
+           fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/buy', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    user_id: userId,
+                    username: username,
+                    item_name: `Номер ${item.name} (${item.code})`,
+                    price: item.stars
+                })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.ok) {
+                    const realPurchaseId = data.purchase_id; // Реальный ID из базы данных SQLite
+
+                    // Генерация номера для интерфейса
+                    const randomTail = Math.floor(1000 + Math.random() * 9000);
+                    const assignedPhone = item.sample.slice(0, -4) + randomTail;
+
+                    activeNumberOrder = {
+                        order_id: realPurchaseId,
+                        country: item.name,
+                        dial_code: item.code,
+                        phone: assignedPhone,
+                        price_stars: item.stars
+                    };
+
+                    const botNotification = sendPayloadToXorysBot({
+                        action: 'market_number_selected',
+                        notify_admin_bot: '@xorysbot',
+                        order_id: realPurchaseId,
+                        country: item.name,
+                        dial_code: item.code,
+                        assigned_phone: assignedPhone,
+                        price_stars: item.stars,
+                        delivery_target: 'bot_and_app'
+                    });
+
+                    adminWithdrawRequests.push({
+                        username: username,
+                        user_id: userId,
+                        amount: 0,
+                        label: `📱 Номер ${item.name} (${assignedPhone})`
+                    });
+
+                    // Открываем модальное окно получения SMS-кода в приложении
+                    document.getElementById('orderNumberCountryTitle').innerText = `${item.name.toUpperCase()} (${item.code})`;
+                    document.getElementById('issuedPhoneNumber').innerText = assignedPhone;
+                    document.getElementById('smsVerificationCode').innerText = 'ОЖИДАНИЕ...';
+                    document.getElementById('smsStatusHint').innerText = `Заказ #${realPurchaseId} отправлен в @xorysbot. Нажмите «ПОЛУЧИТЬ КОД» после запроса SMS в Telegram.`;
+                    document.getElementById('numberOrderModal').classList.add('open');
+
+                    showToast(`Заказ #${realPurchaseId} отправлен в @xorysbot!`);
+                    triggerHaptic('notification', 'success');
+                    playSound('win');
+                } else {
+                    // Возвращаем баланс при ошибке бэкенда
+                    starsBalance = Number((starsBalance + item.stars).toFixed(1));
+                    updateBalanceUI();
+                    showToast("Ошибка: " + (data.error || "Не удалось купить"));
+                    triggerHaptic('notification', 'error');
+                }
+            })
+            .catch(err => {
+                console.error("Ошибка сети:", err);
+                starsBalance = Number((starsBalance + item.stars).toFixed(1));
+                updateBalanceUI();
+                showToast("Ошибка соединения с сервером");
+                triggerHaptic('notification', 'error');
             });
-
-            adminWithdrawRequests.push({
-                username: username,
-                user_id: userId,
-                amount: 0,
-                label: `📱 Номер ${item.name} (${assignedPhone})`
-            });
-
-            // Открываем модальное окно получения SMS-кода в приложении
-            document.getElementById('orderNumberCountryTitle').innerText = `${item.name.toUpperCase()} (${item.code})`;
-            document.getElementById('issuedPhoneNumber').innerText = assignedPhone;
-            document.getElementById('smsVerificationCode').innerText = 'ОЖИДАНИЕ...';
-            document.getElementById('smsStatusHint').innerText = `Заказ #${orderId} отправлен в @xorysbot. Нажмите «ПОЛУЧИТЬ КОД» после запроса SMS в Telegram.`;
-            document.getElementById('numberOrderModal').classList.add('open');
-
-            showToast(`Заказ #${orderId} отправлен в @xorysbot!`);
-            triggerHaptic('notification', 'success');
-            playSound('win');
         }
 
         function requestNumberCodeRefresh() {
@@ -3144,7 +3182,6 @@
             });
 
             setTimeout(() => {
-                // Проверяем, передал ли бот код через URL/параметр или формируем код сессии
                 const urlParams = new URLSearchParams(window.location.search);
                 const serverCode = urlParams.get('sms_code') || Math.floor(10000 + Math.random() * 89999).toString();
                 codeEl.innerText = serverCode;
@@ -3288,7 +3325,7 @@
 
             document.getElementById('marketModal').classList.remove('open');
         }
-
+        
         /* --- РЕАЛЬНОЕ ПОПОЛНЕНИЕ ЗВЁЗД ИЗ TELEGRAM --- */
         function openTgImportModal() {
             triggerHaptic('impact', 'medium');
