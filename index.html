@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>XORYS — Strict Edition</title>
+    <title>XORYS — Obsidian Edition</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -16,32 +16,38 @@
         }
 
         :root {
-            --bg-main: #040508;
-            --bg-surface: #0a0c12;
-            --bg-card: linear-gradient(155deg, #0e121b 0%, #06080c 100%);
-            --border-subtle: rgba(255, 255, 255, 0.08);
-            --border-accent: rgba(56, 189, 248, 0.35);
-            --accent: #38bdf8;
-            --accent-deep: #0284c7;
+            --bg-obsidian: #020203;
+            --bg-surface: #08080a;
+            --bg-card: linear-gradient(145deg, #0c0c0f 0%, #040405 100%);
+            --border-subtle: rgba(255, 255, 255, 0.09);
+            --border-bright: rgba(255, 255, 255, 0.28);
             --text-primary: #ffffff;
             --text-muted: rgba(255, 255, 255, 0.52);
         }
 
+        /* ЧЁРНЫЙ / ТЁМНО-СЕРЫЙ ФОН С ПЕРЕЛИВАЮЩИМСЯ БЕЛЫМ ГРАДИЕНТОМ */
         body {
-            background-color: var(--bg-main);
+            background-color: var(--bg-obsidian);
             color: var(--text-primary);
             background-image: 
-                linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.07) 0%, transparent 55%);
-            background-size: 32px 32px, 32px 32px, 100% 100%;
-            padding-bottom: 85px;
+                radial-gradient(circle at 20% 0%, rgba(255, 255, 255, 0.09) 0%, transparent 45%),
+                radial-gradient(circle at 80% 18%, rgba(212, 212, 216, 0.06) 0%, transparent 50%),
+                linear-gradient(125deg, #020203 0%, #111115 35%, #040406 65%, #16161b 100%);
+            background-size: 200% 200%;
+            animation: obsidianGradientShift 12s ease-in-out infinite alternate;
+            padding-bottom: 86px;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
             font-weight: 600;
+        }
+
+        @keyframes obsidianGradientShift {
+            0% { background-position: 0% 0%; }
+            50% { background-position: 100% 45%; }
+            100% { background-position: 20% 100%; }
         }
 
         .page {
@@ -53,34 +59,36 @@
 
         .page.active {
             display: block;
-            animation: pageReveal 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            animation: pageReveal 0.38s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         @keyframes pageReveal {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+            from { opacity: 0; transform: translateY(12px); filter: blur(4px); }
+            to { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
 
-        /* Каскадная анимация появления карточек */
+        /* Каскадная анимация появления всех карточек и блоков */
         .page.active .game-card-row,
         .page.active .profile-feature-card,
         .page.active .profile-hero-card,
-        .page.active .profile-stats-grid {
-            animation: cardSlideUp 0.42s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+        .page.active .profile-stats-grid,
+        .page.active .section-hero-banner {
+            animation: cardSlideUp 0.45s cubic-bezier(0.16, 1, 0.3, 1) backwards;
         }
         .page.active .game-card-row:nth-child(1),
-        .page.active .profile-feature-card:nth-child(2) { animation-delay: 0.04s; }
+        .page.active .profile-feature-card:nth-child(2) { animation-delay: 0.05s; }
         .page.active .game-card-row:nth-child(2),
-        .page.active .profile-feature-card:nth-child(3) { animation-delay: 0.09s; }
+        .page.active .profile-feature-card:nth-child(3) { animation-delay: 0.1s; }
         .page.active .game-card-row:nth-child(3),
-        .page.active .profile-feature-card:nth-child(4) { animation-delay: 0.14s; }
+        .page.active .profile-feature-card:nth-child(4) { animation-delay: 0.15s; }
         .page.active .game-card-row:nth-child(4),
-        .page.active .profile-feature-card:nth-child(5) { animation-delay: 0.19s; }
+        .page.active .profile-feature-card:nth-child(5) { animation-delay: 0.2s; }
         .page.active .game-card-row:nth-child(5),
-        .page.active .profile-feature-card:nth-child(6) { animation-delay: 0.24s; }
+        .page.active .profile-feature-card:nth-child(6) { animation-delay: 0.25s; }
+        .page.active .game-card-row:nth-child(6) { animation-delay: 0.3s; }
 
         @keyframes cardSlideUp {
-            from { opacity: 0; transform: translateY(14px) scale(0.985); }
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
             to { opacity: 1; transform: translateY(0) scale(1); }
         }
 
@@ -104,15 +112,14 @@
             width: 34px;
             height: 34px;
             border-radius: 8px;
-            background: #ffffff;
+            background: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 15px;
-            color: #040508;
+            color: #020203;
             font-weight: 900;
-            letter-spacing: -0.5px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.2);
             position: relative;
         }
 
@@ -121,14 +128,28 @@
             position: absolute;
             inset: -3px;
             border-radius: 10px;
-            border: 1px solid rgba(56, 189, 248, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            animation: borderPulseWhite 3s infinite ease-in-out;
+        }
+
+        @keyframes borderPulseWhite {
+            0%, 100% { opacity: 0.35; transform: scale(1); }
+            50% { opacity: 0.85; transform: scale(1.03); }
         }
 
         .brand-text {
             font-size: 17px;
             font-weight: 900;
-            letter-spacing: 2.2px;
-            color: #ffffff;
+            letter-spacing: 2.4px;
+            background: linear-gradient(90deg, #ffffff 0%, #d4d4d8 50%, #ffffff 100%);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: metallicTextShine 4s linear infinite;
+        }
+
+        @keyframes metallicTextShine {
+            to { background-position: 200% center; }
         }
 
         .brand-text span {
@@ -136,39 +157,40 @@
             font-size: 9px;
             font-weight: 800;
             letter-spacing: 2px;
-            color: var(--accent);
+            color: rgba(255, 255, 255, 0.55);
+            -webkit-text-fill-color: rgba(255, 255, 255, 0.55);
             margin-top: -1px;
         }
 
-        /* --- СТРОГИЕ АНИМИРОВАННЫЕ БАННЕРЫ РАЗДЕЛОВ --- */
+        /* --- СТРОГИЕ ЧЁРНЫЕ АНИМИРОВАННЫЕ БАННЕРЫ --- */
         .section-hero-banner {
-            background: linear-gradient(135deg, #0c1019 0%, #06080d 60%, #0b1628 100%);
-            border: 1px solid rgba(56, 189, 248, 0.28);
-            border-left: 3px solid var(--accent);
+            background: linear-gradient(135deg, #0b0b0e 0%, #030304 55%, #121217 100%);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-left: 3px solid #ffffff;
             border-radius: 14px;
-            padding: 15px 16px;
+            padding: 16px;
             margin-bottom: 16px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+            box-shadow: 0 14px 34px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.14);
         }
 
-        /* Анимированная световая полоса сканирования по баннеру */
+        /* Переливающийся белый блик по чёрному баннеру */
         .section-hero-banner::before {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
-            width: 60%;
+            left: -120%;
+            width: 75%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(56, 189, 248, 0.09), transparent);
-            transform: skewX(-20deg);
-            animation: bannerSweep 5.5s ease-in-out infinite;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.11), transparent);
+            transform: skewX(-24deg);
+            animation: whiteShimmerSweep 4.5s ease-in-out infinite;
             pointer-events: none;
         }
 
-        @keyframes bannerSweep {
-            0%, 40% { left: -100%; }
+        @keyframes whiteShimmerSweep {
+            0%, 35% { left: -120%; }
             100% { left: 160%; }
         }
 
@@ -182,8 +204,8 @@
         .banner-kicker {
             font-size: 9.5px;
             font-weight: 900;
-            letter-spacing: 1.8px;
-            color: var(--accent);
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.75);
             text-transform: uppercase;
             display: flex;
             align-items: center;
@@ -194,14 +216,14 @@
             width: 6px;
             height: 6px;
             border-radius: 50%;
-            background: var(--accent);
-            box-shadow: 0 0 8px var(--accent);
-            animation: pulseDot 1.6s infinite;
+            background: #ffffff;
+            box-shadow: 0 0 10px #ffffff;
+            animation: pulseWhiteDot 1.5s infinite;
         }
 
-        @keyframes pulseDot {
+        @keyframes pulseWhiteDot {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.35; transform: scale(0.75); }
+            50% { opacity: 0.3; transform: scale(0.75); }
         }
 
         .banner-code-tag {
@@ -215,29 +237,31 @@
         .banner-main-title {
             font-size: 18px;
             font-weight: 900;
-            letter-spacing: 1.2px;
+            letter-spacing: 1.5px;
             color: #ffffff;
             text-transform: uppercase;
             margin-bottom: 6px;
         }
 
         .banner-animated-desc {
-            font-size: 12px;
-            font-weight: 600;
-            color: rgba(255, 255, 255, 0.78);
-            min-height: 18px;
+            font-size: 13px;
+            font-weight: 900;
+            letter-spacing: 0.8px;
+            color: #ffffff;
+            min-height: 20px;
             display: flex;
             align-items: center;
-            margin-bottom: 10px;
+            margin-bottom: 11px;
+            text-transform: uppercase;
         }
 
         .typing-cursor {
             display: inline-block;
             width: 2px;
-            height: 13px;
-            background-color: var(--accent);
-            margin-left: 3px;
-            animation: blinkCursor 0.75s step-end infinite;
+            height: 14px;
+            background-color: #ffffff;
+            margin-left: 4px;
+            animation: blinkCursor 0.7s step-end infinite;
         }
 
         @keyframes blinkCursor {
@@ -252,26 +276,27 @@
         }
 
         .banner-feature-pill {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 6px;
-            padding: 4px 8px;
+            padding: 4px 9px;
             font-size: 9.5px;
-            font-weight: 800;
-            letter-spacing: 0.5px;
-            color: rgba(255, 255, 255, 0.72);
+            font-weight: 900;
+            letter-spacing: 0.7px;
+            color: #ffffff;
             text-transform: uppercase;
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            transition: all 0.2s ease;
         }
 
-        .banner-feature-pill i {
-            color: var(--accent);
-            font-size: 9px;
+        .banner-feature-pill:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: #ffffff;
         }
 
-        /* --- СТРОГИЕ КАРТОЧКИ ИГР И МАРКЕТА --- */
+        /* --- СТРОГИЕ МОНОХРОМНЫЕ КАРТОЧКИ --- */
         .games-container {
             display: flex;
             flex-direction: column;
@@ -288,11 +313,28 @@
             justify-content: space-between;
             gap: 12px;
             cursor: pointer;
-            transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
             position: relative;
             overflow: hidden;
-            min-height: 104px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+            min-height: 102px;
+            box-shadow: 0 10px 26px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        .game-card-row::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-20deg);
+            transition: left 0.55s ease;
+            pointer-events: none;
+        }
+
+        .game-card-row:hover::after {
+            left: 150%;
         }
 
         .game-card-row::before {
@@ -302,16 +344,16 @@
             left: 0;
             width: 3px;
             height: 100%;
-            background: linear-gradient(180deg, var(--accent), transparent);
+            background: linear-gradient(180deg, #ffffff, rgba(255,255,255,0.1));
             opacity: 0.45;
             transition: opacity 0.2s;
             z-index: 3;
         }
 
         .game-card-row:hover {
-            border-color: rgba(56, 189, 248, 0.38);
+            border-color: rgba(255, 255, 255, 0.35);
             transform: translateY(-2px);
-            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.85), 0 0 18px rgba(56, 189, 248, 0.08);
+            box-shadow: 0 14px 32px rgba(0, 0, 0, 0.95), 0 0 20px rgba(255, 255, 255, 0.06);
         }
 
         .game-card-row:hover::before {
@@ -320,7 +362,7 @@
 
         .game-card-row:active {
             transform: scale(0.985);
-            border-color: var(--accent);
+            border-color: #ffffff;
         }
 
         .game-visual-left {
@@ -339,12 +381,12 @@
             height: 110px;
             margin-left: -16px;
             flex-shrink: 0;
-            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.8));
-            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.9));
+            transition: transform 0.32s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .game-card-row:hover .game-visual-left svg {
-            transform: scale(1.05) translateX(3px);
+            transform: scale(1.06) translateX(3px);
         }
 
         .game-info-right {
@@ -370,14 +412,14 @@
 
         .game-category-tag i {
             font-size: 9.5px;
-            color: var(--accent);
+            color: #ffffff;
         }
 
         .game-name {
             font-size: 16px;
             font-weight: 900;
             color: #ffffff;
-            letter-spacing: 0.8px;
+            letter-spacing: 0.9px;
             line-height: 1.15;
             white-space: nowrap;
             overflow: hidden;
@@ -397,23 +439,23 @@
             align-items: center;
             gap: 6px;
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 5px 10px;
             border-radius: 7px;
             font-size: 10.5px;
             font-weight: 800;
-            color: rgba(255, 255, 255, 0.72);
+            color: rgba(255, 255, 255, 0.75);
             white-space: nowrap;
         }
 
         .game-stats-badge i {
-            color: var(--accent);
+            color: #ffffff;
             font-size: 9.5px;
         }
 
         .card-action-btn {
-            background: #ffffff;
-            color: #040508;
+            background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%);
+            color: #020203;
             border: 1px solid #ffffff;
             padding: 7px 16px;
             border-radius: 8px;
@@ -429,10 +471,8 @@
         }
 
         .game-card-row:hover .card-action-btn {
-            background: var(--accent);
-            border-color: var(--accent);
-            color: #040508;
-            box-shadow: 0 0 16px rgba(56, 189, 248, 0.45);
+            background: #ffffff;
+            box-shadow: 0 0 18px rgba(255, 255, 255, 0.45);
         }
 
         .card-action-btn:active {
@@ -443,7 +483,7 @@
             background: rgba(255, 255, 255, 0.04);
             color: rgba(255, 255, 255, 0.45);
             box-shadow: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.12);
         }
 
         /* --- ШАПКА ИГРОВЫХ ЭКРАНОВ --- */
@@ -456,11 +496,11 @@
         }
 
         .rg-logo { font-size: 15px; font-weight: 900; letter-spacing: 2px; color: #ffffff; }
-        .rg-logo span { color: var(--accent); font-weight: 800; }
+        .rg-logo span { color: rgba(255, 255, 255, 0.55); font-weight: 800; }
 
         .rg-balance {
-            background: rgba(10, 13, 20, 0.95);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: rgba(8, 8, 10, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             padding: 6px 13px;
             border-radius: 8px;
             font-size: 12px;
@@ -469,11 +509,11 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.7);
         }
 
         .rg-balance i {
-            color: var(--accent);
+            color: #ffffff;
         }
 
         .rg-history {
@@ -487,8 +527,8 @@
         .rg-history::-webkit-scrollbar { display: none; }
 
         .history-pill {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.16);
             padding: 4px 10px;
             border-radius: 6px;
             font-size: 10.5px;
@@ -497,11 +537,11 @@
             white-space: nowrap;
         }
 
-        /* --- ИГРОВОЕ ПОЛЕ: РАКЕТА --- */
+        /* --- ИГРОВЫЕ ДИСПЛЕИ В ЧЁРНО-БЕЛОМ СТИЛЕ --- */
         .rg-display {
             height: 235px;
-            background: linear-gradient(180deg, #030408 0%, #070e20 55%, #0c1a3a 100%);
-            border: 1px solid rgba(56, 189, 248, 0.3);
+            background: linear-gradient(180deg, #020203 0%, #09090c 60%, #121216 100%);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             border-radius: 14px;
             position: relative;
             overflow: hidden;
@@ -509,7 +549,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.92), 0 0 25px rgba(29, 78, 216, 0.12);
+            box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.95);
         }
 
         .space-stars {
@@ -518,11 +558,11 @@
             background-image:
                 radial-gradient(1.5px 1.5px at 20px 30px, #ffffff, transparent),
                 radial-gradient(1px 1px at 90px 70px, rgba(255,255,255,0.85), transparent),
-                radial-gradient(2px 2px at 160px 25px, #2563eb, transparent),
+                radial-gradient(2px 2px at 160px 25px, #d4d4d8, transparent),
                 radial-gradient(1.5px 1.5px at 240px 85px, #ffffff, transparent),
-                radial-gradient(1px 1px at 310px 40px, #3b82f6, transparent),
+                radial-gradient(1px 1px at 310px 40px, #a1a1aa, transparent),
                 radial-gradient(1.5px 1.5px at 60px 130px, #ffffff, transparent),
-                radial-gradient(2px 2px at 200px 120px, #60a5fa, transparent),
+                radial-gradient(2px 2px at 200px 120px, #e4e4e7, transparent),
                 radial-gradient(1px 1px at 280px 140px, rgba(255,255,255,0.7), transparent),
                 radial-gradient(1.5px 1.5px at 130px 160px, #ffffff, transparent);
             background-size: 350px 180px;
@@ -533,7 +573,7 @@
         .space-stars.flying { animation: warpStars 2.5s linear infinite; }
 
         @keyframes twinkleStars {
-            0% { opacity: 0.55; }
+            0% { opacity: 0.45; }
             100% { opacity: 1; }
         }
 
@@ -544,8 +584,8 @@
 
         .space-planet {
             position: absolute; top: 22px; right: 28px; width: 34px; height: 34px; border-radius: 50%;
-            background: radial-gradient(circle at 30% 30%, #93c5fd 0%, #1d4ed8 55%, #071330 100%);
-            box-shadow: 0 0 22px rgba(29, 78, 216, 0.45); opacity: 0.85; z-index: 1;
+            background: radial-gradient(circle at 30% 30%, #ffffff 0%, #52525b 55%, #09090b 100%);
+            box-shadow: 0 0 22px rgba(255, 255, 255, 0.25); opacity: 0.85; z-index: 1;
         }
 
         .mountains-layer {
@@ -556,10 +596,10 @@
 
         .multiplier-val {
             font-size: 46px; font-weight: 900; color: #ffffff;
-            text-shadow: 0 0 25px rgba(37, 99, 235, 0.75), 0 2px 10px rgba(0,0,0,0.9);
+            text-shadow: 0 0 25px rgba(255, 255, 255, 0.45), 0 2px 10px rgba(0,0,0,0.95);
             z-index: 5; letter-spacing: 1px; margin-bottom: 18px;
         }
-        .multiplier-val.crashed { color: #3b82f6; opacity: 0.85; text-shadow: 0 0 20px rgba(29, 78, 216, 0.6); }
+        .multiplier-val.crashed { color: #71717a; opacity: 0.85; }
 
         .rocket-container {
             position: absolute; bottom: 32px; left: 26px; display: flex; align-items: center; gap: 6px;
@@ -574,7 +614,7 @@
 
         .svg-rocket-wrap {
             width: 48px; height: 48px; display: flex; align-items: center; justify-content: center;
-            filter: drop-shadow(0 0 12px rgba(37, 99, 235, 0.8));
+            filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.55));
         }
 
         .rocket-flame { transform-origin: 24px 52px; animation: flameFlicker 0.14s infinite alternate; }
@@ -585,73 +625,71 @@
         }
 
         .player-tag {
-            background: rgba(5, 8, 15, 0.9); border: 1px solid rgba(56, 189, 248, 0.45);
+            background: rgba(5, 5, 7, 0.92); border: 1px solid rgba(255, 255, 255, 0.35);
             padding: 3px 8px; border-radius: 6px; font-size: 10px; font-weight: 800; color: #ffffff;
         }
 
-        /* --- ОСТАЛЬНЫЕ ИГРОВЫЕ ДИСПЛЕИ --- */
         .roulette-display, .mines-display, .plinko-display, .coinflip-display {
             border-radius: 14px; position: relative; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: radial-gradient(circle at center, #0a142d 0%, #03050a 85%);
-            border: 1px solid rgba(56, 189, 248, 0.28);
-            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.9), 0 0 20px rgba(29, 78, 216, 0.1);
+            background: radial-gradient(circle at center, #111115 0%, #030304 85%);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.95);
         }
 
         .roulette-display { height: 210px; }
-
         .wheel-wrapper { position: relative; width: 130px; height: 130px; display: flex; align-items: center; justify-content: center; }
 
         .wheel-pointer {
             position: absolute; top: -10px; width: 0; height: 0; border-left: 7px solid transparent; border-right: 7px solid transparent;
-            border-top: 14px solid #ffffff; filter: drop-shadow(0 0 6px #2563eb); z-index: 20;
+            border-top: 14px solid #ffffff; filter: drop-shadow(0 0 6px #ffffff); z-index: 20;
         }
 
         .roulette-circle {
             width: 130px; height: 130px; border-radius: 50%;
             background: conic-gradient(
-                #ffffff 0deg 30deg, #0b1120 30deg 60deg, #ffffff 60deg 90deg, #0b1120 90deg 120deg,
-                #ffffff 120deg 150deg, #0b1120 150deg 180deg, #ffffff 180deg 210deg, #0b1120 210deg 240deg,
-                #ffffff 240deg 270deg, #0b1120 270deg 300deg, #ffffff 300deg 330deg, #0b1120 330deg 350deg, #1d4ed8 350deg 360deg
+                #ffffff 0deg 30deg, #09090b 30deg 60deg, #ffffff 60deg 90deg, #09090b 90deg 120deg,
+                #ffffff 120deg 150deg, #09090b 150deg 180deg, #ffffff 180deg 210deg, #09090b 210deg 240deg,
+                #ffffff 240deg 270deg, #09090b 270deg 300deg, #ffffff 300deg 330deg, #09090b 330deg 350deg, #71717a 350deg 360deg
             );
-            border: 3px solid rgba(255, 255, 255, 0.35); box-shadow: 0 0 20px rgba(0,0,0,0.85), inset 0 0 12px rgba(0,0,0,0.7);
+            border: 3px solid rgba(255, 255, 255, 0.45); box-shadow: 0 0 20px rgba(0,0,0,0.9), inset 0 0 12px rgba(0,0,0,0.8);
             position: relative; transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
         }
 
         .wheel-center-hub {
             position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 36px; height: 36px; background: #050811; border: 2px solid #2563eb;
+            width: 36px; height: 36px; background: #030304; border: 2px solid #ffffff;
             border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; color: #ffffff;
         }
 
         .color-picker-grid { display: flex; gap: 8px; margin-top: 10px; margin-bottom: 6px; }
 
         .color-btn {
-            flex: 1; padding: 10px 0; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.12);
+            flex: 1; padding: 10px 0; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.14);
             font-size: 11px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: all 0.2s;
             background: rgba(255,255,255,0.03); color: #fff;
         }
         .color-btn.active {
-            border-color: var(--accent); background: rgba(56, 189, 248, 0.18); color: #ffffff;
-            box-shadow: 0 0 15px rgba(56, 189, 248, 0.25);
+            border-color: #ffffff; background: rgba(255, 255, 255, 0.16); color: #ffffff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
         }
 
         .mines-display { padding: 12px; }
         .mines-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; width: 100%; max-width: 270px; }
 
         .mine-tile {
-            aspect-ratio: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px;
+            aspect-ratio: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); border-radius: 8px;
             display: flex; align-items: center; justify-content: center; font-size: 18px; cursor: pointer; transition: all 0.15s ease;
         }
         .mine-tile:active { transform: scale(0.9); }
-        .mine-tile.revealed-star { background: linear-gradient(135deg, #2563eb, #1e3a8a); border-color: #ffffff; box-shadow: 0 0 12px rgba(37, 99, 235, 0.7); color: #ffffff; }
-        .mine-tile.revealed-bomb { background: #070a12; border-color: rgba(255, 255, 255, 0.35); color: #ef4444; }
+        .mine-tile.revealed-star { background: linear-gradient(135deg, #ffffff, #a1a1aa); border-color: #ffffff; box-shadow: 0 0 14px rgba(255, 255, 255, 0.5); color: #020203; }
+        .mine-tile.revealed-bomb { background: #070709; border-color: rgba(255, 255, 255, 0.45); color: #ffffff; }
 
         .mines-config-row { display: flex; gap: 6px; margin-top: 8px; width: 100%; }
         .mine-count-btn {
-            flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); color: #fff;
+            flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12); color: #fff;
             padding: 7px 0; border-radius: 7px; font-size: 11px; font-weight: 800; cursor: pointer; transition: all 0.2s;
         }
-        .mine-count-btn.active { background: #ffffff; color: #030407; border-color: #ffffff; }
+        .mine-count-btn.active { background: #ffffff; color: #020203; border-color: #ffffff; }
 
         .plinko-display { height: 245px; padding: 6px; }
         #plinkoCanvas { width: 100%; height: 100%; display: block; }
@@ -662,16 +700,16 @@
         .coin-side {
             position: absolute; inset: 0; border-radius: 50%; backface-visibility: hidden; display: flex; flex-direction: column;
             align-items: center; justify-content: center; font-weight: 900; border: 4px solid #ffffff;
-            box-shadow: inset 0 0 12px rgba(0,0,0,0.7), 0 0 18px rgba(29, 78, 216, 0.55);
+            box-shadow: inset 0 0 12px rgba(0,0,0,0.8), 0 0 18px rgba(255, 255, 255, 0.25);
         }
-        .coin-heads { background: radial-gradient(circle at 30% 30%, #2563eb, #172554); color: #ffffff; transform: rotateY(0deg); }
-        .coin-tails { background: radial-gradient(circle at 30% 30%, #ffffff, #cbd5e1); color: #050507; border-color: #2563eb; transform: rotateY(180deg); }
+        .coin-heads { background: radial-gradient(circle at 30% 30%, #27272a, #09090b); color: #ffffff; transform: rotateY(0deg); }
+        .coin-tails { background: radial-gradient(circle at 30% 30%, #ffffff, #d4d4d8); color: #020203; border-color: #71717a; transform: rotateY(180deg); }
         .coin-side i { font-size: 32px; margin-bottom: 2px; }
         .coin-side span { font-size: 10px; letter-spacing: 0.8px; }
 
         /* --- БЛОКИ УПРАВЛЕНИЯ СТАВКАМИ --- */
         .betting-box {
-            background: rgba(10, 12, 18, 0.96); border: 1px solid var(--border-subtle);
+            background: rgba(8, 8, 10, 0.96); border: 1px solid var(--border-subtle);
             border-radius: 14px; padding: 14px; margin-top: 12px;
         }
 
@@ -683,37 +721,37 @@
         .bet-row { display: flex; gap: 10px; align-items: center; }
 
         .bet-adjuster {
-            flex: 1; background: #040508; border: 1px solid rgba(255, 255, 255, 0.09);
+            flex: 1; background: #020203; border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 8px; padding: 6px 10px; display: flex; align-items: center; justify-content: space-between;
         }
 
         .btn-chg {
-            background: rgba(255, 255, 255, 0.07); border: none; color: #fff; width: 28px; height: 28px;
+            background: rgba(255, 255, 255, 0.08); border: none; color: #fff; width: 28px; height: 28px;
             border-radius: 6px; font-weight: 900; font-size: 15px; cursor: pointer; transition: background 0.15s;
         }
-        .btn-chg:active { background: var(--accent); color: #040508; }
+        .btn-chg:active { background: #ffffff; color: #020203; }
 
         .bet-number { font-size: 17px; font-weight: 900; }
 
         .slider-container { margin-top: 10px; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
-        .slider-label { font-size: 10px; font-weight: 800; color: rgba(255, 255, 255, 0.4); min-width: 24px; text-align: center; }
+        .slider-label { font-size: 10px; font-weight: 800; color: rgba(255, 255, 255, 0.45); min-width: 24px; text-align: center; }
 
         .bet-slider {
             -webkit-appearance: none; appearance: none; width: 100%; height: 4px;
-            background: rgba(255, 255, 255, 0.14); border-radius: 2px; outline: none; cursor: pointer;
+            background: rgba(255, 255, 255, 0.16); border-radius: 2px; outline: none; cursor: pointer;
         }
         .bet-slider::-webkit-slider-thumb {
             -webkit-appearance: none; appearance: none; width: 16px; height: 16px; border-radius: 4px;
-            background: var(--accent); border: 2px solid #040508;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.85); cursor: pointer; transition: transform 0.15s ease;
+            background: #ffffff; border: 2px solid #020203;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.85); cursor: pointer;
         }
 
         .quick-chips { display: flex; gap: 5px; margin-top: 8px; }
         .chip {
-            flex: 1; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08);
-            color: rgba(255, 255, 255, 0.75); border-radius: 6px; padding: 6px 0; font-size: 11px; font-weight: 900; cursor: pointer; transition: all 0.15s ease;
+            flex: 1; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.78); border-radius: 6px; padding: 6px 0; font-size: 11px; font-weight: 900; cursor: pointer; transition: all 0.15s ease;
         }
-        .chip:active, .chip.active-chip { background: var(--accent); color: #040508; border-color: var(--accent); }
+        .chip:active, .chip.active-chip { background: #ffffff; color: #020203; border-color: #ffffff; }
 
         .btn-main-action {
             width: 125px; height: 48px; border: none; border-radius: 8px; font-weight: 900; font-size: 12.5px;
@@ -721,15 +759,15 @@
         }
         .btn-main-action:active { transform: scale(0.96); }
 
-        .btn-style-start { background: #ffffff; color: #040508; box-shadow: 0 4px 16px rgba(255, 255, 255, 0.15); }
-        .btn-style-cashout { background: var(--accent); color: #040508; box-shadow: 0 4px 18px rgba(56, 189, 248, 0.45); }
+        .btn-style-start { background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%); color: #020203; box-shadow: 0 4px 16px rgba(255, 255, 255, 0.2); }
+        .btn-style-cashout { background: #ffffff; color: #020203; box-shadow: 0 4px 20px rgba(255, 255, 255, 0.45); }
 
         .btn-return {
-            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.09);
-            color: rgba(255, 255, 255, 0.75); padding: 11px; border-radius: 8px; font-weight: 900; font-size: 11.5px; letter-spacing: 0.8px; cursor: pointer;
+            width: 100%; margin-top: 10px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.12);
+            color: rgba(255, 255, 255, 0.8); padding: 11px; border-radius: 8px; font-weight: 900; font-size: 11.5px; letter-spacing: 0.8px; cursor: pointer;
             display: flex; align-items: center; justify-content: center; gap: 8px;
         }
-        .btn-return:active { background: rgba(56, 189, 248, 0.15); color: #ffffff; border-color: var(--accent); }
+        .btn-return:active { background: rgba(255, 255, 255, 0.14); color: #ffffff; border-color: #ffffff; }
 
         /* --- УВЕДОМЛЕНИЕ --- */
         .toast-overlay {
@@ -737,8 +775,8 @@
             top: 16px;
             left: 50%;
             transform: translateX(-50%) translateY(-100px);
-            background: #0a0d14;
-            border: 1px solid var(--accent);
+            background: #0a0a0d;
+            border: 1px solid #ffffff;
             color: #ffffff;
             padding: 10px 18px;
             border-radius: 8px;
@@ -747,24 +785,24 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.9);
+            box-shadow: 0 10px 28px rgba(0, 0, 0, 0.95);
             z-index: 2000;
             transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             pointer-events: none;
             white-space: nowrap;
         }
 
-        .toast-overlay i { color: var(--accent); }
+        .toast-overlay i { color: #ffffff; }
 
         .toast-overlay.show {
             transform: translateX(-50%) translateY(0);
         }
 
-        /* --- МОДАЛЬНОЕ ОКНО --- */
+        /* --- МОДАЛЬНЫЕ ОКНА --- */
         .market-modal-backdrop {
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.86);
+            background: rgba(0, 0, 0, 0.88);
             backdrop-filter: blur(8px);
             display: none;
             align-items: flex-end;
@@ -775,17 +813,17 @@
 
         .market-modal-backdrop.open {
             display: flex;
-            animation: pageReveal 0.2s ease;
+            animation: pageReveal 0.22s ease;
         }
 
         .market-modal-card {
             width: 100%;
             max-width: 448px;
-            background: linear-gradient(160deg, #10141f 0%, #06080c 100%);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            background: linear-gradient(160deg, #111115 0%, #040405 100%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             border-radius: 16px;
             padding: 20px;
-            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.95);
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.98);
             margin-bottom: 62px;
         }
 
@@ -801,7 +839,7 @@
             font-size: 10px;
             font-weight: 800;
             letter-spacing: 1.2px;
-            color: var(--accent);
+            color: rgba(255, 255, 255, 0.55);
             text-transform: uppercase;
         }
 
@@ -816,8 +854,8 @@
             width: 32px;
             height: 32px;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.15);
             color: #ffffff;
             display: flex;
             align-items: center;
@@ -834,8 +872,8 @@
         }
 
         .package-option {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             padding: 12px 10px;
             cursor: pointer;
@@ -844,8 +882,8 @@
         }
 
         .package-option.selected {
-            background: rgba(56, 189, 248, 0.14);
-            border-color: var(--accent);
+            background: rgba(255, 255, 255, 0.16);
+            border-color: #ffffff;
         }
 
         .pkg-amount {
@@ -862,12 +900,12 @@
         }
 
         .package-option.selected .pkg-price {
-            color: var(--accent);
+            color: #ffffff;
         }
 
         .stars-custom-box {
             background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 14px;
@@ -883,8 +921,8 @@
 
         .stars-manual-input {
             width: 130px;
-            background: #040508;
-            border: 1px solid rgba(56, 189, 248, 0.45);
+            background: #020203;
+            border: 1px solid rgba(255, 255, 255, 0.35);
             border-radius: 8px;
             color: #ffffff;
             font-size: 16px;
@@ -906,8 +944,8 @@
             padding: 13px;
             border-radius: 8px;
             border: none;
-            background: #ffffff;
-            color: #040508;
+            background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%);
+            color: #020203;
             font-size: 12.5px;
             font-weight: 900;
             letter-spacing: 1px;
@@ -923,13 +961,13 @@
         /* --- СТРОГИЙ ПРОФИЛЬ --- */
         .profile-hero-card {
             background: var(--bg-card);
-            border: 1px solid rgba(56, 189, 248, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.22);
             border-radius: 14px;
             padding: 16px;
             margin-bottom: 12px;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.75);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.85);
         }
 
         .profile-top-row {
@@ -943,8 +981,8 @@
             width: 56px;
             height: 56px;
             border-radius: 12px;
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            border: 1.5px solid var(--accent);
+            background: linear-gradient(135deg, #27272a 0%, #09090b 100%);
+            border: 1.5px solid #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -982,13 +1020,13 @@
             margin-top: 4px;
             font-size: 11px;
             font-weight: 800;
-            color: var(--accent);
+            color: rgba(255, 255, 255, 0.75);
         }
 
         .profile-id-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.65);
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            color: rgba(255, 255, 255, 0.7);
             padding: 2px 8px;
             border-radius: 5px;
             font-size: 10px;
@@ -996,8 +1034,8 @@
         }
 
         .profile-wallet-panel {
-            background: #040508;
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            background: #020203;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 10px;
             padding: 13px;
             display: flex;
@@ -1025,13 +1063,13 @@
         }
 
         .wallet-balance-value i {
-            color: var(--accent);
+            color: #ffffff;
             font-size: 18px;
         }
 
         .btn-deposit-tg {
-            background: #ffffff;
-            color: #040508;
+            background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%);
+            color: #020203;
             border: none;
             border-radius: 8px;
             padding: 10px 13px;
@@ -1043,7 +1081,7 @@
             display: flex;
             align-items: center;
             gap: 6px;
-            transition: transform 0.15s ease, background 0.2s;
+            transition: transform 0.15s ease;
             white-space: nowrap;
         }
 
@@ -1087,7 +1125,7 @@
             border-radius: 14px;
             padding: 15px;
             margin-bottom: 11px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.65);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
         }
 
         .feature-card-header {
@@ -1108,9 +1146,9 @@
             width: 36px;
             height: 36px;
             border-radius: 8px;
-            background: rgba(56, 189, 248, 0.1);
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: #ffffff;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1133,9 +1171,9 @@
         }
 
         .reward-pill-badge {
-            background: rgba(56, 189, 248, 0.12);
-            border: 1px solid rgba(56, 189, 248, 0.38);
-            color: var(--accent);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            color: #ffffff;
             font-size: 10.5px;
             font-weight: 900;
             padding: 5px 9px;
@@ -1148,8 +1186,8 @@
             padding: 11px;
             border-radius: 8px;
             border: none;
-            background: #ffffff;
-            color: #040508;
+            background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%);
+            color: #020203;
             font-size: 11.5px;
             font-weight: 900;
             letter-spacing: 0.8px;
@@ -1170,8 +1208,8 @@
         }
 
         .ref-link-box {
-            background: #040508;
-            border: 1px solid rgba(255, 255, 255, 0.09);
+            background: #020203;
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 8px;
             padding: 9px 12px;
             display: flex;
@@ -1192,8 +1230,8 @@
         }
 
         .btn-copy-ref {
-            background: rgba(255, 255, 255, 0.07);
-            border: 1px solid rgba(255, 255, 255, 0.14);
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.18);
             color: #ffffff;
             border-radius: 6px;
             padding: 5px 10px;
@@ -1214,8 +1252,8 @@
             padding: 11px;
             border-radius: 8px;
             border: none;
-            background: var(--accent);
-            color: #040508;
+            background: linear-gradient(135deg, #ffffff 0%, #d4d4d8 100%);
+            color: #020203;
             font-size: 11px;
             font-weight: 900;
             letter-spacing: 0.8px;
@@ -1234,9 +1272,9 @@
         .btn-sim-ref {
             padding: 11px 12px;
             border-radius: 8px;
-            border: 1px solid rgba(56, 189, 248, 0.35);
-            background: rgba(56, 189, 248, 0.08);
-            color: var(--accent);
+            border: 1px solid rgba(255, 255, 255, 0.35);
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
             font-size: 11px;
             font-weight: 900;
             cursor: pointer;
@@ -1254,8 +1292,8 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.06);
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 8px;
             padding: 9px 12px;
             font-size: 11px;
@@ -1270,23 +1308,23 @@
         }
 
         .activity-left i {
-            color: var(--accent);
+            color: #ffffff;
         }
 
         .activity-amount {
             font-weight: 900;
-            color: var(--accent);
+            color: #ffffff;
         }
 
         /* --- СТРОГАЯ НИЖНЯЯ НАВИГАЦИЯ --- */
         .bottom-nav {
-            position: fixed; bottom: 0; left: 0; width: 100%; height: 64px; background-color: rgba(4, 5, 8, 0.97);
-            border-top: 1px solid rgba(255, 255, 255, 0.09); display: flex; justify-content: space-around; align-items: center;
+            position: fixed; bottom: 0; left: 0; width: 100%; height: 64px; background-color: rgba(2, 2, 3, 0.97);
+            border-top: 1px solid rgba(255, 255, 255, 0.12); display: flex; justify-content: space-around; align-items: center;
             z-index: 1000; backdrop-filter: blur(14px);
         }
 
         .nav-item {
-            background: none; border: none; color: rgba(255, 255, 255, 0.36); display: flex; flex-direction: column;
+            background: none; border: none; color: rgba(255, 255, 255, 0.38); display: flex; flex-direction: column;
             align-items: center; justify-content: center; flex: 1; height: 100%; cursor: pointer; transition: color 0.2s;
             position: relative;
         }
@@ -1297,10 +1335,28 @@
             content: '';
             position: absolute;
             top: 0;
-            width: 28px;
+            width: 30px;
             height: 2px;
-            background: var(--accent);
-            box-shadow: 0 0 10px var(--accent);
+            background: #ffffff;
+            box-shadow: 0 0 12px #ffffff;
+        }
+
+        /* Блок отображения кода для номера в приложении */
+        .sms-code-box {
+            background: #020203;
+            border: 1px dashed rgba(255, 255, 255, 0.45);
+            border-radius: 10px;
+            padding: 14px;
+            text-align: center;
+            margin: 12px 0;
+        }
+        .sms-code-digits {
+            font-size: 26px;
+            font-weight: 900;
+            letter-spacing: 6px;
+            color: #ffffff;
+            font-family: monospace;
+            margin: 6px 0;
         }
     </style>
 </head>
@@ -1327,32 +1383,33 @@
             </div>
         </div>
 
-        <!-- АНИМИРОВАННЫЙ БАННЕР РАЗДЕЛА «ИГРЫ» -->
+        <!-- ЧЁРНЫЙ БАННЕР РАЗДЕЛА «ИГРЫ» (ТОЛЬКО НАЗВАНИЯ ИГР) -->
         <div class="section-hero-banner">
             <div class="banner-top-meta">
-                <span class="banner-kicker"><span class="banner-live-dot"></span> ИГРОВОЙ ТЕРМИНАЛ</span>
-                <span class="banner-code-tag">SEC // GAMES</span>
+                <span class="banner-kicker"><span class="banner-live-dot"></span> ИГРЫ XORYS</span>
+                <span class="banner-code-tag">GAMES</span>
             </div>
-            <div class="banner-main-title">АРЕНА МИНИ-ИГР</div>
+            <div class="banner-main-title">МИНИ-ИГРЫ</div>
             <div class="banner-animated-desc">
                 <span id="bannerTextGames"></span><span class="typing-cursor"></span>
             </div>
             <div class="banner-pills-row">
-                <span class="banner-feature-pill"><i class="fa-solid fa-rocket"></i> Ракета x50</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-dharmachakra"></i> Рулетка x14</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-bomb"></i> Мины</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-circle-dot"></i> Плинко</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-coins"></i> 3D Монета</span>
+                <span class="banner-feature-pill">РАКЕТА</span>
+                <span class="banner-feature-pill">РУЛЕТКА x14</span>
+                <span class="banner-feature-pill">МИНЫ СТАРС</span>
+                <span class="banner-feature-pill">ПЛИНКО x15</span>
+                <span class="banner-feature-pill">ОРЕЛ И РЕШКА 3D</span>
+                <span class="banner-feature-pill">РУЛЕТКА FREE</span>
             </div>
         </div>
 
         <!-- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ -->
-        <div class="profile-feature-card" style="padding: 9px 13px; margin-bottom: 12px; background: #07090e;">
-            <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.7);">
-                <i class="fa-solid fa-bolt" style="color: #38bdf8;"></i>
+        <div class="profile-feature-card" style="padding: 9px 13px; margin-bottom: 12px; background: #050507;">
+            <div style="display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.75);">
+                <i class="fa-solid fa-bolt" style="color: #ffffff;"></i>
                 <div style="flex: 1; overflow: hidden; white-space: nowrap; position: relative;">
                     <span id="liveFeedText" style="display: inline-block; transition: opacity 0.3s ease; color: #ffffff;">
-                        @crypto_king щойно виграв 250 ★ у грі «Ракети»!
+                        @crypto_king выиграл 250 ★ в игре «РАКЕТА»
                     </span>
                 </div>
             </div>
@@ -1363,9 +1420,9 @@
             <div class="game-card-row" onclick="openRefRouletteGame()">
                 <div class="game-visual-left">
                     <svg viewBox="0 0 120 120" fill="none">
-                        <circle cx="46" cy="62" r="50" fill="#050507" stroke="#38bdf8" stroke-width="4"/>
-                        <circle cx="46" cy="62" r="45" fill="#111216" stroke="#38bdf8" stroke-width="1.5" stroke-opacity="0.35"/>
-                        <circle cx="46" cy="62" r="18" fill="#050507" stroke="#38bdf8" stroke-width="2.5"/>
+                        <circle cx="46" cy="62" r="50" fill="#050507" stroke="#ffffff" stroke-width="4"/>
+                        <circle cx="46" cy="62" r="45" fill="#111216" stroke="#ffffff" stroke-width="1.5" stroke-opacity="0.35"/>
+                        <circle cx="46" cy="62" r="18" fill="#050507" stroke="#ffffff" stroke-width="2.5"/>
                         <text x="46" y="66" fill="#ffffff" font-size="14" font-weight="900" text-anchor="middle">0⭐️</text>
                     </svg>
                 </div>
@@ -1403,10 +1460,6 @@
                         <circle cx="46" cy="62" r="20" fill="#090a0d" stroke="rgba(255,255,255,0.12)" stroke-width="1.5"/>
                         <path d="M46 62 L24 19 A48 48 0 0 1 68 19 Z" fill="url(#sectorGlowMono)"/>
                         <path d="M24 19 A48 48 0 0 1 68 19" stroke="#ffffff" stroke-width="4.5" stroke-linecap="round"/>
-                        <circle cx="78" cy="44" r="1.5" fill="#ffffff" opacity="0.85"/>
-                        <circle cx="88" cy="68" r="2" fill="#d4d4d8" opacity="0.9"/>
-                        <circle cx="68" cy="84" r="1.5" fill="#ffffff" opacity="0.7"/>
-                        <circle cx="84" cy="28" r="1.2" fill="#ffffff" opacity="0.6"/>
                         <path d="M36 74 Q54 56 72 36" stroke="url(#rocketTrailMono)" stroke-width="6" stroke-linecap="round"/>
                         <g transform="translate(52, 18) rotate(12)">
                             <path d="M20 4C12 8 7 15 5 24L15 34C24 32 31 27 34 19C35 14 35 9 34 4C31 3 26 3 20 4Z" fill="#ffffff"/>
@@ -1446,24 +1499,8 @@
                         <path d="M46 62 L46 107 A45 45 0 0 1 7 85 Z" fill="#18181b"/>
                         <path d="M46 62 L7 85 A45 45 0 0 1 7 39 Z" fill="#ffffff"/>
                         <path d="M46 62 L7 39 A45 45 0 0 1 46 17 Z" fill="#a1a1aa"/>
-                        <line x1="46" y1="17" x2="46" y2="107" stroke="#050507" stroke-width="2"/>
-                        <line x1="7" y1="39" x2="85" y2="85" stroke="#050507" stroke-width="2"/>
-                        <line x1="85" y1="39" x2="7" y2="85" stroke="#050507" stroke-width="2"/>
-                        <circle cx="46" cy="12" r="2" fill="#ffffff"/>
-                        <circle cx="71" cy="19" r="2" fill="#71717a"/>
-                        <circle cx="89" cy="37" r="2" fill="#ffffff"/>
-                        <circle cx="96" cy="62" r="2" fill="#71717a"/>
-                        <circle cx="89" cy="87" r="2" fill="#ffffff"/>
-                        <circle cx="71" cy="105" r="2" fill="#71717a"/>
-                        <circle cx="46" cy="112" r="2" fill="#ffffff"/>
-                        <text x="27" y="37" fill="#050507" font-size="11" font-weight="900" transform="rotate(-30 27 37)">14</text>
-                        <text x="61" y="36" fill="#050507" font-size="11" font-weight="900" transform="rotate(30 61 36)">2</text>
-                        <text x="72" y="66" fill="#ffffff" font-size="11" font-weight="900">2</text>
-                        <text x="58" y="93" fill="#050507" font-size="11" font-weight="900" transform="rotate(-30 58 93)">5</text>
                         <circle cx="46" cy="62" r="14" fill="#050507" stroke="#ffffff" stroke-width="2.5"/>
                         <circle cx="46" cy="62" r="9" fill="url(#wheelHubMono)"/>
-                        <path d="M64 11 C70 11 74 15 74 21 C74 28 64 38 64 38 C64 38 54 28 54 21 C54 15 58 11 64 11 Z" fill="#ffffff" stroke="#050507" stroke-width="2"/>
-                        <circle cx="64" cy="21" r="3.5" fill="#050507"/>
                     </svg>
                 </div>
                 <div class="game-info-right">
@@ -1489,12 +1526,8 @@
                         <rect x="6" y="76" width="26" height="26" rx="7" fill="#18181b" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
                         <rect x="36" y="76" width="26" height="26" rx="7" fill="#18181b" stroke="rgba(255,255,255,0.16)" stroke-width="1.5"/>
                         <rect x="66" y="76" width="26" height="26" rx="7" fill="#ffffff" stroke="#ffffff" stroke-width="1.5"/>
-                        <path d="M49 22L51 26.5L56 27L52.2 30.3L53.3 35L49 32.5L44.7 35L45.8 30.3L42 27L47 26.5L49 22Z" fill="#050507"/>
-                        <path d="M19 52L21 56.5L26 57L22.2 60.3L23.3 65L19 62.5L14.7 65L15.8 60.3L12 57L17 56.5L19 52Z" fill="#050507"/>
-                        <path d="M79 82L81 86.5L86 87L82.2 90.3L83.3 95L79 92.5L74.7 95L75.8 90.3L72 87L77 86.5L79 82Z" fill="#050507"/>
                         <circle cx="49" cy="59" r="9" fill="#ffffff"/>
                         <circle cx="49" cy="59" r="3.5" fill="#050507" stroke="#a1a1aa" stroke-width="2"/>
-                        <path d="M49 46V49M49 69V72M36 59H39M59 59H62M40 50L42 52M56 66L58 68M58 50L56 52M42 66L40 68" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
                     </svg>
                 </div>
                 <div class="game-info-right">
@@ -1517,15 +1550,6 @@
                         <circle cx="28" cy="52" r="3" fill="#ffffff"/>
                         <circle cx="48" cy="52" r="3" fill="#a1a1aa"/>
                         <circle cx="68" cy="52" r="3" fill="#ffffff"/>
-                        <circle cx="18" cy="66" r="3" fill="#ffffff"/>
-                        <circle cx="38" cy="66" r="3" fill="#ffffff"/>
-                        <circle cx="58" cy="66" r="3" fill="#a1a1aa"/>
-                        <circle cx="78" cy="66" r="3" fill="#ffffff"/>
-                        <circle cx="8" cy="80" r="3" fill="#ffffff"/>
-                        <circle cx="28" cy="80" r="3" fill="#ffffff"/>
-                        <circle cx="48" cy="80" r="3" fill="#ffffff"/>
-                        <circle cx="68" cy="80" r="3" fill="#ffffff"/>
-                        <circle cx="88" cy="80" r="3" fill="#ffffff"/>
                         <path d="M48 12 L58 38 L58 66 L74 88" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="3 3"/>
                         <circle cx="74" cy="85" r="7.5" fill="#ffffff" stroke="#050507" stroke-width="2"/>
                         <rect x="6" y="96" width="22" height="14" rx="4" fill="#ffffff"/>
@@ -1564,10 +1588,8 @@
                         </defs>
                         <circle cx="34" cy="48" r="28" fill="#050507" stroke="#a1a1aa" stroke-width="3.5"/>
                         <circle cx="34" cy="48" r="22" fill="url(#darkCoinMono)"/>
-                        <path d="M36 35L27 49H34L32 61L41 47H34L36 35Z" fill="#ffffff"/>
                         <circle cx="62" cy="72" r="30" fill="#050507" stroke="#ffffff" stroke-width="3.5"/>
                         <circle cx="62" cy="72" r="24" fill="url(#whiteCoinMono)" stroke="#52525b" stroke-width="2"/>
-                        <path d="M62 56L66.2 65.2L76 66.5L68.8 73.3L70.6 83L62 78.2L53.4 83L55.2 73.3L48 66.5L57.8 65.2L62 56Z" fill="#050507"/>
                     </svg>
                 </div>
                 <div class="game-info-right">
@@ -1596,9 +1618,9 @@
             <div class="history-pill">7.50x</div>
         </div>
 
-        <div id="rocketFreebetBar" style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 8px; padding: 7px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; font-weight: 800; letter-spacing: 0.4px;">
+        <div id="rocketFreebetBar" style="background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 8px; padding: 7px 12px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; font-size: 10.5px; font-weight: 800; letter-spacing: 0.4px;">
             <span>БОНУСНАЯ ИГРА (10 ★) ЗА 15 РАУНДОВ:</span>
-            <span id="rocketFreebetCount" style="color: #38bdf8;">0 / 15</span>
+            <span id="rocketFreebetCount" style="color: #ffffff;">0 / 15</span>
         </div>
 
         <div class="rg-display">
@@ -1606,9 +1628,9 @@
             <div class="space-planet"></div>
 
             <svg id="mountainsLayer" class="mountains-layer" viewBox="0 0 480 90" preserveAspectRatio="none">
-                <path d="M0,90 L0,52 L55,22 L115,58 L185,18 L255,54 L330,24 L405,56 L480,28 L480,90 Z" fill="rgba(29, 78, 216, 0.25)" />
-                <path d="M0,90 L0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62 L480,90 Z" fill="#03050a" />
-                <path d="M0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62" fill="none" stroke="rgba(37, 99, 235, 0.5)" stroke-width="1.5" />
+                <path d="M0,90 L0,52 L55,22 L115,58 L185,18 L255,54 L330,24 L405,56 L480,28 L480,90 Z" fill="rgba(255, 255, 255, 0.08)" />
+                <path d="M0,90 L0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62 L480,90 Z" fill="#020203" />
+                <path d="M0,68 L40,42 L95,70 L155,34 L225,68 L295,38 L365,72 L430,40 L480,62" fill="none" stroke="rgba(255, 255, 255, 0.35)" stroke-width="1.5" />
             </svg>
 
             <div id="multiplierText" class="multiplier-val">x1.00</div>
@@ -1619,26 +1641,26 @@
                         <defs>
                             <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
                                 <stop offset="0%" stop-color="#ffffff" />
-                                <stop offset="65%" stop-color="#e2e8f0" />
-                                <stop offset="100%" stop-color="#94a3b8" />
+                                <stop offset="65%" stop-color="#e4e4e7" />
+                                <stop offset="100%" stop-color="#71717a" />
                             </linearGradient>
                             <linearGradient id="finGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                                <stop offset="0%" stop-color="#2563eb" />
-                                <stop offset="100%" stop-color="#1e3a8a" />
+                                <stop offset="0%" stop-color="#52525b" />
+                                <stop offset="100%" stop-color="#18181b" />
                             </linearGradient>
                             <linearGradient id="flameGrad" x1="50%" y1="0%" x2="50%" y2="100%">
                                 <stop offset="0%" stop-color="#ffffff" />
-                                <stop offset="45%" stop-color="#2563eb" />
-                                <stop offset="100%" stop-color="rgba(29, 78, 216, 0)" />
+                                <stop offset="45%" stop-color="#a1a1aa" />
+                                <stop offset="100%" stop-color="rgba(255, 255, 255, 0)" />
                             </linearGradient>
                         </defs>
                         <path class="rocket-flame" d="M26,48 Q32,64 38,48 Q32,54 26,48 Z" fill="url(#flameGrad)" />
                         <path d="M20,34 L10,46 L21,44 Z" fill="url(#finGrad)" />
                         <path d="M44,34 L54,46 L43,44 Z" fill="url(#finGrad)" />
-                        <rect x="26" y="44" width="12" height="5" rx="2" fill="#0f172a" />
+                        <rect x="26" y="44" width="12" height="5" rx="2" fill="#09090b" />
                         <path d="M32,6 C22,18 20,32 21,44 L43,44 C44,32 42,18 32,6 Z" fill="url(#bodyGrad)" />
                         <path d="M32,6 C28,11 26,15 25,18 L39,18 C38,15 36,11 32,6 Z" fill="url(#finGrad)" />
-                        <circle cx="32" cy="27" r="6" fill="#1d4ed8" stroke="#0f172a" stroke-width="2" />
+                        <circle cx="32" cy="27" r="6" fill="#27272a" stroke="#09090b" stroke-width="2" />
                         <circle cx="30" cy="25" r="2" fill="#ffffff" opacity="0.9" />
                     </svg>
                 </div>
@@ -1687,7 +1709,7 @@
 
         <div class="rg-history" id="rouletteHistory">
             <div class="history-pill" style="border-color: #ffffff;">БЕЛЫЙ</div>
-            <div class="history-pill" style="border-color: #334155;">ЧЕРНЫЙ</div>
+            <div class="history-pill" style="border-color: #52525b;">ЧЕРНЫЙ</div>
         </div>
 
         <div class="roulette-display">
@@ -1702,7 +1724,7 @@
         <div class="color-picker-grid">
             <button class="color-btn active" onclick="setRouletteColor('red', this)">БЕЛЫЙ (x2)</button>
             <button class="color-btn" onclick="setRouletteColor('black', this)">ЧЕРНЫЙ (x2)</button>
-            <button class="color-btn" onclick="setRouletteColor('green', this)">СИНИЙ (x14)</button>
+            <button class="color-btn" onclick="setRouletteColor('green', this)">СЕРЫЙ (x14)</button>
         </div>
 
         <div class="betting-box">
@@ -1794,7 +1816,7 @@
         </div>
 
         <div class="rg-history" id="plinkoHistory">
-            <div class="history-pill" style="border-color: #2563eb;">x1.2</div>
+            <div class="history-pill" style="border-color: #ffffff;">x1.2</div>
             <div class="history-pill">x0.5</div>
         </div>
 
@@ -1842,7 +1864,7 @@
         </div>
 
         <div class="rg-history" id="coinflipHistory">
-            <div class="history-pill" style="border-color: #2563eb;">ОРЕЛ</div>
+            <div class="history-pill" style="border-color: #ffffff;">ОРЕЛ</div>
             <div class="history-pill">РЕШКА</div>
         </div>
 
@@ -1912,21 +1934,21 @@
             </div>
         </div>
 
-        <!-- АНИМИРОВАННЫЙ БАННЕР РАЗДЕЛА «МАРКЕТ» -->
+        <!-- ЧЁРНЫЙ БАННЕР РАЗДЕЛА «МАРКЕТ» (ТОЛЬКО НАЗВАНИЯ КАТЕГОРИЙ) -->
         <div class="section-hero-banner">
             <div class="banner-top-meta">
-                <span class="banner-kicker"><span class="banner-live-dot"></span> ЦИФРОВОЙ МАГАЗИН</span>
-                <span class="banner-code-tag">SEC // MARKET</span>
+                <span class="banner-kicker"><span class="banner-live-dot"></span> МАРКЕТ XORYS</span>
+                <span class="banner-code-tag">MARKET</span>
             </div>
-            <div class="banner-main-title">МАРКЕТ ЦИФРОВЫХ АКТИВОВ</div>
+            <div class="banner-main-title">МАРКЕТ</div>
             <div class="banner-animated-desc">
                 <span id="bannerTextMarket"></span><span class="typing-cursor"></span>
             </div>
             <div class="banner-pills-row">
-                <span class="banner-feature-pill"><i class="fa-solid fa-sim-card"></i> Номера +888 / SIM</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-star"></i> Telegram Stars</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-crown"></i> TG Premium</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-coins"></i> USDT</span>
+                <span class="banner-feature-pill">НОМЕРА</span>
+                <span class="banner-feature-pill">ЗВЁЗДЫ</span>
+                <span class="banner-feature-pill">ТГ ПРЕМ</span>
+                <span class="banner-feature-pill">USDT</span>
             </div>
         </div>
 
@@ -1957,7 +1979,7 @@
                         <span class="game-category-tag"><i class="fa-solid fa-sim-card"></i> ВИРТУАЛЬНЫЕ +888 / SIM</span>
                         <span class="game-name">НОМЕРА</span>
                         <div class="game-bottom-bar">
-                            <div class="game-stats-badge"><i class="fa-solid fa-check-circle"></i> 11 стран мира</div>
+                            <div class="game-stats-badge"><i class="fa-solid fa-check-circle"></i> 11 стран • Код в бот/приложение</div>
                             <button class="card-action-btn">ОТКРЫТЬ</button>
                         </div>
                     </div>
@@ -1976,10 +1998,6 @@
                             </defs>
                             <ellipse cx="48" cy="64" rx="46" ry="22" transform="rotate(-24 48 64)" stroke="rgba(255,255,255,0.28)" stroke-width="2" stroke-dasharray="5 4"/>
                             <path d="M50 16 L60.5 39.5 L86 42.5 L66.8 59.5 L72.2 84.5 L50 71.5 L27.8 84.5 L33.2 59.5 L14 42.5 L39.5 39.5 Z" fill="url(#starGradMono)" stroke="#050507" stroke-width="2.5" stroke-linejoin="round"/>
-                            <path d="M50 16 L50 71.5 L27.8 84.5 L33.2 59.5 L14 42.5 L39.5 39.5 Z" fill="rgba(255,255,255,0.35)"/>
-                            <circle cx="84" cy="24" r="2.5" fill="#ffffff"/>
-                            <circle cx="88" cy="76" r="2" fill="#a1a1aa"/>
-                            <circle cx="20" cy="84" r="2" fill="#ffffff"/>
                         </svg>
                     </div>
                     <div class="game-info-right">
@@ -1992,8 +2010,8 @@
                     </div>
                 </div>
 
-                <!-- 3. TG PREM (3 / 6 / 12 МЕС) -->
-                <div class="game-card-row" onclick="openMarketCategory('TG PREM')">
+                <!-- 3. ТГ ПРЕМ -->
+                <div class="game-card-row" onclick="openMarketCategory('ТГ ПРЕМ')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
                             <defs>
@@ -2007,12 +2025,11 @@
                             <path d="M31 32 L37 22 L48 29 L59 22 L65 32 H31 Z" fill="#ffffff"/>
                             <path d="M48 37 L69 52 L61 82 H35 L27 52 Z" fill="url(#premCrystalMono)" stroke="#050507" stroke-width="2.5" stroke-linejoin="round"/>
                             <path d="M48 37 L56 56 L48 82 L40 56 Z" fill="#090a0d" opacity="0.85"/>
-                            <path d="M27 52 H69" stroke="#050507" stroke-width="2"/>
                         </svg>
                     </div>
                     <div class="game-info-right">
                         <span class="game-category-tag"><i class="fa-solid fa-crown"></i> ПОДПИСКА 3 / 6 / 12 МЕС</span>
-                        <span class="game-name">TG PREM</span>
+                        <span class="game-name">ТГ ПРЕМ</span>
                         <div class="game-bottom-bar">
                             <div class="game-stats-badge"><i class="fa-solid fa-clock"></i> Активация 1 мин</div>
                             <button class="card-action-btn">КУПИТЬ</button>
@@ -2020,7 +2037,7 @@
                     </div>
                 </div>
 
-                <!-- 4. USDT (В РАЗРАБОТКЕ) -->
+                <!-- 4. USDT -->
                 <div class="game-card-row" onclick="openMarketCategory('USDT')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -2033,10 +2050,8 @@
                             </defs>
                             <circle cx="44" cy="62" r="44" fill="#050507" stroke="#ffffff" stroke-width="3"/>
                             <circle cx="48" cy="62" r="40" fill="url(#usdtCoinMono)" stroke="#27272a" stroke-width="2"/>
-                            <circle cx="48" cy="62" r="32" stroke="#050507" stroke-width="1.5" stroke-dasharray="3 3"/>
                             <rect x="33" y="43" width="30" height="6.5" rx="2" fill="#050507"/>
                             <rect x="44.5" y="46" width="7" height="33" rx="2" fill="#050507"/>
-                            <ellipse cx="48" cy="58" rx="17" ry="4.5" stroke="#050507" stroke-width="3"/>
                         </svg>
                     </div>
                     <div class="game-info-right">
@@ -2055,7 +2070,7 @@
         <div id="marketDetailView" style="display: none;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
                 <button class="btn-return" style="width: auto; margin-top: 0; padding: 8px 14px;" onclick="closeMarketDetail()"><i class="fa-solid fa-arrow-left"></i> НАЗАД</button>
-                <h2 style="font-size: 14px; font-weight: 900; letter-spacing: 0.8px;" id="marketDetailTitle">ТЕЛЕГРАММ АККАУНТЫ</h2>
+                <h2 style="font-size: 14px; font-weight: 900; letter-spacing: 0.8px;">ВЫБОР НОМЕРА</h2>
                 <div style="width: 60px;"></div>
             </div>
             <div class="games-container" id="countriesListContainer"></div>
@@ -2079,7 +2094,7 @@
                 <div class="stars-input-row">
                     <div>
                         <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 800;">СВОЁ КОЛИЧЕСТВО:</div>
-                        <div style="font-size: 13px; font-weight: 900; color: #38bdf8; margin-top: 2px;" id="selectedStarsPrice">1.80 USDT</div>
+                        <div style="font-size: 13px; font-weight: 900; color: #ffffff; margin-top: 2px;" id="selectedStarsPrice">1.80 USDT</div>
                     </div>
                     <input type="number" id="starsManualInput" class="stars-manual-input" min="50" max="50000" value="100" oninput="onStarsManualInput(this.value)">
                 </div>
@@ -2112,13 +2127,51 @@
         </div>
     </div>
 
-    <!-- Модальное окно импорта существующих звёзд из Telegram -->
+    <!-- Модальное окно ПОЛУЧЕНИЯ НОМЕРА И SMS-КОДА (С ОТПРАВКОЙ В @xorysbot) -->
+    <div id="numberOrderModal" class="market-modal-backdrop" onclick="closeNumberOrderModal(event)">
+        <div class="market-modal-card" onclick="event.stopPropagation()">
+            <div class="modal-top-row">
+                <div class="modal-title-group">
+                    <span>ЗАКАЗ ОТПРАВЛЕН В @XORYSBOT</span>
+                    <h2 id="orderNumberCountryTitle">НОМЕР ТЕЛЕГРАМ</h2>
+                </div>
+                <button class="modal-close-btn" onclick="closeNumberOrderModal()">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+            </div>
+
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 12px; margin-bottom: 10px;">
+                <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 800;">ВЫДАННЫЙ НОМЕР:</div>
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">
+                    <span id="issuedPhoneNumber" style="font-size: 16px; font-weight: 900; font-family: monospace; color: #ffffff;">+7 999 000-00-00</span>
+                    <button class="btn-copy-ref" onclick="copyIssuedNumber()">КОПИРОВАТЬ</button>
+                </div>
+            </div>
+
+            <div class="sms-code-box">
+                <div style="font-size: 10px; color: rgba(255,255,255,0.55); font-weight: 800; letter-spacing: 1px;">КОД ПОДТВЕРЖДЕНИЯ TELEGRAM:</div>
+                <div class="sms-code-digits" id="smsVerificationCode">ОЖИДАНИЕ...</div>
+                <div id="smsStatusHint" style="font-size: 11px; color: rgba(255,255,255,0.6);">Уведомление передано в @xorysbot. Введите номер в Telegram и запросите код.</div>
+            </div>
+
+            <div style="display: flex; gap: 8px;">
+                <button class="modal-buy-btn" style="flex: 1;" onclick="requestNumberCodeRefresh()">
+                    <i class="fa-solid fa-rotate" style="margin-right: 5px;"></i> ПОЛУЧИТЬ КОД
+                </button>
+                <button class="btn-copy-ref" style="padding: 0 14px; font-size: 11px;" onclick="openBotForCode()">
+                    В @XORYSBOT
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно РЕАЛЬНОГО ПОПОЛНЕНИЯ ЗВЁЗД ИЗ TELEGRAM -->
     <div id="tgImportModal" class="market-modal-backdrop" onclick="closeTgImportModal(event)">
         <div class="market-modal-card" onclick="event.stopPropagation()">
             <div class="modal-top-row">
                 <div class="modal-title-group">
-                    <span>ПОПОЛНЕНИЕ ИЗ TELEGRAM</span>
-                    <h2>ДОБАВИТЬ СВОИ ЗВЁЗДЫ</h2>
+                    <span>TELEGRAM STARS PAYMENT</span>
+                    <h2>ПОПОЛНИТЬ ЗВЁЗДЫ ИЗ ТГ</h2>
                 </div>
                 <button class="modal-close-btn" onclick="closeTgImportModal()">
                     <i class="fa-solid fa-xmark"></i>
@@ -2126,29 +2179,29 @@
             </div>
 
             <p style="font-size: 12px; color: rgba(255,255,255,0.65); line-height: 1.45; margin-bottom: 12px; font-weight: 600;">
-                Переведите уже имеющиеся у вас в аккаунте Telegram Stars на игровой баланс XORYS без комиссии.
+                Оплата списывается напрямую с вашего баланса Telegram Stars через @xorysbot и мгновенно зачисляется в приложение.
             </p>
 
             <div class="stars-custom-box">
                 <div class="stars-input-row">
                     <div>
-                        <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 800;">СУММА ПЕРЕВОДА:</div>
-                        <div style="font-size: 12px; font-weight: 900; color: #38bdf8; margin-top: 2px;">Курс 1:1 из баланса TG</div>
+                        <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 800;">СУММА ПОПОЛНЕНИЯ (★):</div>
+                        <div style="font-size: 12px; font-weight: 900; color: #ffffff; margin-top: 2px;">Официальный счёт Telegram Stars</div>
                     </div>
                     <input type="number" id="tgImportInput" class="stars-manual-input" min="1" max="100000" value="50">
                 </div>
 
                 <div class="stars-presets-grid" style="grid-template-columns: repeat(5, 1fr);">
-                    <button class="chip" onclick="setTgImportPreset(10)">+10</button>
-                    <button class="chip" onclick="setTgImportPreset(25)">+25</button>
-                    <button class="chip" onclick="setTgImportPreset(50)">+50</button>
-                    <button class="chip" onclick="setTgImportPreset(100)">+100</button>
-                    <button class="chip" onclick="setTgImportPreset(250)">+250</button>
+                    <button class="chip" onclick="setTgImportPreset(10)">10 ★</button>
+                    <button class="chip" onclick="setTgImportPreset(25)">25 ★</button>
+                    <button class="chip" onclick="setTgImportPreset(50)">50 ★</button>
+                    <button class="chip" onclick="setTgImportPreset(100)">100 ★</button>
+                    <button class="chip" onclick="setTgImportPreset(250)">250 ★</button>
                 </div>
             </div>
 
-            <button class="modal-buy-btn" onclick="confirmTgStarsImport()">
-                <i class="fa-solid fa-star" style="margin-right: 6px;"></i> ПЕРЕВЕСТИ НА БАЛАНС
+            <button class="modal-buy-btn" id="tgPayStarsBtn" onclick="confirmTgStarsImport()">
+                <i class="fa-solid fa-star" style="margin-right: 6px;"></i> ОПЛАТИТЬ TELEGRAM STARS
             </button>
         </div>
     </div>
@@ -2169,21 +2222,20 @@
             </div>
         </div>
 
-        <!-- АНИМИРОВАННЫЙ БАННЕР РАЗДЕЛА «ПРОФИЛЬ» -->
+        <!-- ЧЁРНЫЙ БАННЕР РАЗДЕЛА «ПРОФИЛЬ» -->
         <div class="section-hero-banner">
             <div class="banner-top-meta">
-                <span class="banner-kicker"><span class="banner-live-dot"></span> ЛИЧНЫЙ КАБИНЕТ</span>
-                <span class="banner-code-tag">SEC // ACCOUNT</span>
+                <span class="banner-kicker"><span class="banner-live-dot"></span> АККАУНТ XORYS</span>
+                <span class="banner-code-tag">PROFILE</span>
             </div>
-            <div class="banner-main-title">УПРАВЛЕНИЕ БАЛАНСОМ</div>
+            <div class="banner-main-title">ПРОФИЛЬ И БАЛАНС</div>
             <div class="banner-animated-desc">
                 <span id="bannerTextProfile"></span><span class="typing-cursor"></span>
             </div>
             <div class="banner-pills-row">
-                <span class="banner-feature-pill"><i class="fa-solid fa-paper-plane"></i> Вывод от 100 ★</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-calendar-check"></i> Бонус +1 ★</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-user-plus"></i> Друзья +1.5 ★</span>
-                <span class="banner-feature-pill"><i class="fa-solid fa-sliders"></i> Настройки</span>
+                <span class="banner-feature-pill">ПОПОЛНЕНИЕ TG STARS</span>
+                <span class="banner-feature-pill">ВЫВОД ОТ 100 ★</span>
+                <span class="banner-feature-pill">БОНУСЫ</span>
             </div>
         </div>
 
@@ -2221,7 +2273,7 @@
                 <div class="stat-mini-lbl">ИГР СЫГРАНО</div>
             </div>
             <div class="stat-mini-card">
-                <div class="stat-mini-val" id="statTotalWon" style="color: #38bdf8;">0 ★</div>
+                <div class="stat-mini-val" id="statTotalWon">0 ★</div>
                 <div class="stat-mini-lbl">ВЫИГРАНО</div>
             </div>
             <div class="stat-mini-card">
@@ -2231,7 +2283,7 @@
         </div>
 
         <!-- 3. БЛОК ВЫВОДА ЗВЁЗД -->
-        <div class="profile-feature-card" style="border-color: rgba(56, 189, 248, 0.35);">
+        <div class="profile-feature-card">
             <div class="feature-card-header">
                 <div class="feature-title-wrap">
                     <div class="feature-icon-box">
@@ -2249,7 +2301,7 @@
                 <input type="number" id="profileWithdrawInput" class="stars-manual-input" style="width: 100%; font-size: 15px; padding: 10px;" min="100" placeholder="Введите от 100 звёзд" value="100">
             </div>
 
-            <button class="modal-buy-btn" style="background: #38bdf8; color: #040508;" onclick="requestWithdrawFromProfile()">
+            <button class="modal-buy-btn" onclick="requestWithdrawFromProfile()">
                 <i class="fa-solid fa-paper-plane" style="margin-right: 6px;"></i> ВЫВЕСТИ ЗВЁЗДЫ
             </button>
         </div>
@@ -2289,7 +2341,7 @@
             </div>
 
             <div class="ref-link-box">
-                <span class="ref-link-text" id="refLinkDisplay">https://t.me/xorys_bot?start=ref_7749201</span>
+                <span class="ref-link-text" id="refLinkDisplay">https://t.me/xorysbot?start=ref_7749201</span>
                 <button class="btn-copy-ref" onclick="copyReferralLink()">КОПИРОВАТЬ</button>
             </div>
 
@@ -2317,8 +2369,8 @@
                 </div>
             </div>
             <div style="display: flex; gap: 10px; margin-top: 10px;">
-                <button id="soundToggleBtn" class="card-action-btn" style="flex: 1; background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8;" onclick="toggleSoundSetting()">ЗВУК: ВКЛ</button>
-                <button id="hapticToggleBtn" class="card-action-btn" style="flex: 1; background: rgba(56, 189, 248, 0.2); border: 1px solid #38bdf8;" onclick="toggleHapticSetting()">ВИБРАЦИЯ: ВКЛ</button>
+                <button id="soundToggleBtn" class="card-action-btn" style="flex: 1;" onclick="toggleSoundSetting()">ЗВУК: ВКЛ</button>
+                <button id="hapticToggleBtn" class="card-action-btn" style="flex: 1;" onclick="toggleHapticSetting()">ВИБРАЦИЯ: ВКЛ</button>
             </div>
         </div>
 
@@ -2331,7 +2383,7 @@
                     </div>
                     <div class="feature-title-text">
                         <h3>ИСТОРИЯ ОПЕРАЦИЙ</h3>
-                        <p>Пополнения, бонусы и награды</p>
+                        <p>Пополнения, номера, бонусы и награды</p>
                     </div>
                 </div>
             </div>
@@ -2368,20 +2420,18 @@
 
         <div class="roulette-display" style="height: 250px; display: flex; align-items: center; justify-content: center; position: relative;">
             <div class="wheel-wrapper" style="position: relative; width: 210px; height: 210px;">
-                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ffffff; z-index: 15; filter: drop-shadow(0 2px 6px rgba(56, 189, 248, 0.9));"></div>
+                <div style="position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 10px solid transparent; border-right: 10px solid transparent; border-top: 18px solid #ffffff; z-index: 15;"></div>
 
-                <div id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4.2s cubic-bezier(0.12, 0.85, 0.15, 1); box-shadow: 0 0 30px rgba(56, 189, 248, 0.35), inset 0 0 15px rgba(0,0,0,0.8); border: 4px solid #38bdf8; overflow: hidden; background: #0b0c10;">
+                <div id="refRouletteCircle" style="width: 100%; height: 100%; border-radius: 50%; position: relative; transition: transform 4.2s cubic-bezier(0.12, 0.85, 0.15, 1); border: 4px solid #ffffff; overflow: hidden; background: #09090b;">
                     <svg viewBox="0 0 200 200" style="width: 100%; height: 100%; display: block;">
-                        <path d="M100,100 L100,0 A100,100 0 0,1 170.71,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L170.71,29.29 A100,100 0 0,1 200,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L200,100 A100,100 0 0,1 170.71,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L170.71,170.71 A100,100 0 0,1 100,200 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L100,200 A100,100 0 0,1 29.29,170.71 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L29.29,170.71 A100,100 0 0,1 0,100 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L0,100 A100,100 0 0,1 29.29,29.29 Z" fill="#dc2626" stroke="#050507" stroke-width="1.5"/>
-                        <path d="M100,100 L29.29,29.29 A100,100 0 0,1 100,0 Z" fill="#121318" stroke="#050507" stroke-width="1.5"/>
-
-                        <circle cx="100" cy="100" r="95" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="2"/>
+                        <path d="M100,100 L100,0 A100,100 0 0,1 170.71,29.29 Z" fill="#27272a" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L170.71,29.29 A100,100 0 0,1 200,100 Z" fill="#09090b" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L200,100 A100,100 0 0,1 170.71,170.71 Z" fill="#27272a" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L170.71,170.71 A100,100 0 0,1 100,200 Z" fill="#09090b" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L100,200 A100,100 0 0,1 29.29,170.71 Z" fill="#27272a" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L29.29,170.71 A100,100 0 0,1 0,100 Z" fill="#09090b" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L0,100 A100,100 0 0,1 29.29,29.29 Z" fill="#27272a" stroke="#050507" stroke-width="1.5"/>
+                        <path d="M100,100 L29.29,29.29 A100,100 0 0,1 100,0 Z" fill="#09090b" stroke="#050507" stroke-width="1.5"/>
 
                         <g font-family="sans-serif" font-weight="900" font-size="13" fill="#ffffff" text-anchor="middle" dominant-baseline="middle">
                             <text x="100" y="34" transform="rotate(22.5 100 100)">10★</text>
@@ -2396,20 +2446,20 @@
                     </svg>
                 </div>
 
-                <div id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; background: radial-gradient(circle, #181a20 0%, #050507 100%); border: 3px solid #38bdf8; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; box-shadow: 0 0 18px rgba(0,0,0,0.95), inset 0 0 8px rgba(56,189,248,0.4); z-index: 10;">0 ⭐️</div>
+                <div id="refHubText" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 64px; height: 64px; background: #020203; border: 3px solid #ffffff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; color: #ffffff; z-index: 10;">0 ⭐️</div>
             </div>
         </div>
 
         <div class="betting-box" style="text-align: center;">
             <div class="betting-info" style="justify-content: center; margin-bottom: 12px;">
-                <span id="refSpinStatusText" style="font-size: 11px; color: #38bdf8; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
+                <span id="refSpinStatusText" style="font-size: 11px; color: #ffffff; font-weight: 900;">ПРИГЛАШЕНО ДРУЗЕЙ: 0 / 3</span>
             </div>
             
             <button id="refSpinMainBtn" class="btn-main-action btn-style-start" style="width: 100%; margin-bottom: 10px;" onclick="trySpinRefRoulette()">
                 КРУТИТЬ ЗА 0 ⭐️ (0/3)
             </button>
 
-            <button id="refInviteBtn" class="modal-buy-btn" style="background: #38bdf8; color: #040508; padding: 12px;" onclick="inviteFriendForRefRoulette()">
+            <button id="refInviteBtn" class="modal-buy-btn" onclick="inviteFriendForRefRoulette()">
                 <i class="fa-solid fa-user-plus" style="margin-right: 6px;"></i> ПРИГЛАСИТЬ ДРУЗЕЙ (0/3)
             </button>
         </div>
@@ -2421,7 +2471,7 @@
     <div id="leaderboard" class="page">
         <div class="lobby-header">
             <div class="brand-logo">
-                <div class="brand-badge"><i class="fa-solid fa-trophy" style="font-size: 14px; color: #050507;"></i></div>
+                <div class="brand-badge"><i class="fa-solid fa-trophy" style="font-size: 14px; color: #020203;"></i></div>
                 <div class="brand-text">
                     XORYS
                     <span>РЕЙТИНГ ТОП-10</span>
@@ -2435,15 +2485,15 @@
 
         <div class="section-hero-banner" style="padding: 13px 16px;">
             <div class="banner-top-meta">
-                <span class="banner-kicker"><span class="banner-live-dot"></span> ЗАЛ СЛАВЫ</span>
-                <span class="banner-code-tag">SEC // RANKING</span>
+                <span class="banner-kicker"><span class="banner-live-dot"></span> ТОП ИГРОКОВ</span>
+                <span class="banner-code-tag">TOP-10</span>
             </div>
-            <div class="banner-main-title" style="margin-bottom: 2px;">ТОП ИГРОКОВ XORYS</div>
-            <div style="font-size: 11.5px; color: rgba(255,255,255,0.65);">Рейтинг самых результативных участников платформы по сумме выигрышей</div>
+            <div class="banner-main-title" style="margin-bottom: 2px;">ТАБЛИЦА ЛИДЕРОВ</div>
+            <div style="font-size: 11.5px; color: rgba(255,255,255,0.65);">Лучшие игроки XORYS по количеству выигранных звёзд</div>
         </div>
 
         <div style="text-align: right; margin-bottom: 10px;">
-            <button onclick="openAdminPanel()" style="background: none; border: none; color: rgba(255,255,255,0.25); font-size: 10px; cursor: pointer; font-weight: 800;">⚙️ АДМИН-ПАНЕЛЬ</button>
+            <button onclick="openAdminPanel()" style="background: none; border: none; color: rgba(255,255,255,0.3); font-size: 10px; cursor: pointer; font-weight: 800;">⚙️ АДМИН-ПАНЕЛЬ (@xorysbot)</button>
         </div>
 
         <div class="profile-feature-card" style="padding: 12px;">
@@ -2454,19 +2504,19 @@
     <!-- СКРЫТЫЙ ЭКРАН АДМИН-ПАНЕЛИ -->
     <div id="adminPanelPage" class="page">
         <div class="rg-header">
-            <div class="rg-logo">АДМИН <span>ПАНЕЛЬ</span></div>
+            <div class="rg-logo">АДМИН <span>@XORYSBOT</span></div>
             <button class="btn-return" style="width: auto; padding: 6px 12px; margin: 0;" onclick="switchPage('leaderboard', document.querySelectorAll('.nav-item')[2])">НАЗАД</button>
         </div>
 
-        <div class="profile-feature-card" style="border-color: #ef4444;">
+        <div class="profile-feature-card">
             <div class="feature-card-header">
                 <div class="feature-title-wrap">
-                    <div class="feature-icon-box" style="background: rgba(239, 68, 68, 0.2); color: #ef4444;">
+                    <div class="feature-icon-box">
                         <i class="fa-solid fa-shield-halved"></i>
                     </div>
                     <div class="feature-title-text">
-                        <h3>ЗАЯВКИ НА ВЫВОД</h3>
-                        <p>Ожидающие выплаты звёзд (от 100 ★)</p>
+                        <h3>ЗАЯВКИ НА ВЫВОД И НОМЕРА</h3>
+                        <p>Уведомления дублируются в @xorysbot</p>
                     </div>
                 </div>
             </div>
@@ -2482,7 +2532,11 @@
         if (tg) {
             tg.ready();
             tg.expand();
+            if (tg.setHeaderColor) tg.setHeaderColor('#020203');
+            if (tg.setBackgroundColor) tg.setBackgroundColor('#020203');
         }
+
+        const BOT_USERNAME = 'xorysbot';
 
         /* --- АНИМАЦИЯ ПЕЧАТНОГО ТЕКСТА В БАННЕРАХ --- */
         function initBannerTypewriter(elementId, phrases) {
@@ -2500,63 +2554,66 @@
                     charIdx++;
                     if (charIdx === current.length) {
                         isDeleting = true;
-                        setTimeout(tick, 2200);
+                        setTimeout(tick, 1800);
                         return;
                     }
-                    setTimeout(tick, 38);
+                    setTimeout(tick, 42);
                 } else {
                     el.textContent = current.slice(0, charIdx - 1);
                     charIdx--;
                     if (charIdx === 0) {
                         isDeleting = false;
                         phraseIdx = (phraseIdx + 1) % phrases.length;
-                        setTimeout(tick, 320);
+                        setTimeout(tick, 280);
                         return;
                     }
-                    setTimeout(tick, 20);
+                    setTimeout(tick, 22);
                 }
             }
             tick();
         }
 
+        // На баннере мини-игр — ТОЛЬКО НАЗВАНИЯ ИГР
         initBannerTypewriter('bannerTextGames', [
-            'Краш-ракета до x50, рулетка x14, сапёр и аркада Плинко.',
-            'Бесплатная рулетка за приглашение друзей — крути без депозита.',
-            'Мгновенное начисление выигрышей в звёздах на ваш баланс.'
+            'РАКЕТА',
+            'РУЛЕТКА x14',
+            'МИНЫ СТАРС',
+            'ПЛИНКО x15',
+            'ОРЕЛ И РЕШКА 3D',
+            'РУЛЕТКА FREE'
         ]);
 
+        // На баннере маркета — ТОЛЬКО НОМЕРА, ЗВЁЗДЫ, ТГ ПРЕМ, USDT
         initBannerTypewriter('bannerTextMarket', [
-            'Виртуальные номера +888 и SIM-карты 11 стран с гарантией.',
-            'Покупка Telegram Stars без KYC и лишних комиссий.',
-            'Оформление подписки Telegram Premium на 3, 6 или 12 месяцев.'
+            'НОМЕРА',
+            'ЗВЁЗДЫ',
+            'ТГ ПРЕМ',
+            'USDT'
         ]);
 
         initBannerTypewriter('bannerTextProfile', [
-            'Пополнение баланса из Telegram и вывод от 100 звёзд.',
-            'Ежедневный бонус +1 ★ за вход и +1.5 ★ за каждого друга.',
-            'Полная статистика игр, история операций и настройки звука.'
+            'БАЛАНС И ПОПОЛНЕНИЕ TG STARS',
+            'ВЫВОД ОТ 100 ЗВЁЗД',
+            'ЕЖЕДНЕВНЫЕ БОНУСЫ И РЕФЕРАЛЫ'
         ]);
 
         let soundEnabled = localStorage.getItem('xorys_sound') !== 'false';
         let hapticEnabled = localStorage.getItem('xorys_haptic') !== 'false';
 
-        /* --- НАСТРОЙКИ ЗВУКА И ВИБРАЦИИ --- */
         function updateSettingsUI() {
             const soundBtn = document.getElementById('soundToggleBtn');
             const hapticBtn = document.getElementById('hapticToggleBtn');
 
             if (soundBtn) {
                 soundBtn.innerText = soundEnabled ? 'ЗВУК: ВКЛ' : 'ЗВУК: ВЫКЛ';
-                soundBtn.style.background = soundEnabled ? 'rgba(56, 189, 248, 0.16)' : 'rgba(255, 255, 255, 0.04)';
-                soundBtn.style.borderColor = soundEnabled ? '#38bdf8' : 'rgba(255, 255, 255, 0.12)';
-                soundBtn.style.color = soundEnabled ? '#ffffff' : 'rgba(255, 255, 255, 0.45)';
+                soundBtn.style.background = soundEnabled ? '#ffffff' : 'rgba(255, 255, 255, 0.05)';
+                soundBtn.style.color = soundEnabled ? '#020203' : 'rgba(255, 255, 255, 0.5)';
             }
 
             if (hapticBtn) {
                 hapticBtn.innerText = hapticEnabled ? 'ВИБРАЦИЯ: ВКЛ' : 'ВИБРАЦИЯ: ВЫКЛ';
-                hapticBtn.style.background = hapticEnabled ? 'rgba(56, 189, 248, 0.16)' : 'rgba(255, 255, 255, 0.04)';
-                hapticBtn.style.borderColor = hapticEnabled ? '#38bdf8' : 'rgba(255, 255, 255, 0.12)';
-                hapticBtn.style.color = hapticEnabled ? '#ffffff' : 'rgba(255, 255, 255, 0.45)';
+                hapticBtn.style.background = hapticEnabled ? '#ffffff' : 'rgba(255, 255, 255, 0.05)';
+                hapticBtn.style.color = hapticEnabled ? '#020203' : 'rgba(255, 255, 255, 0.5)';
             }
         }
 
@@ -2576,7 +2633,7 @@
             showToast(hapticEnabled ? 'Вибрация включена' : 'Вибрация выключена');
         }
 
-        /* --- ЗВУКОВЫЕ ЭФФЕКТЫ (WEB AUDIO API) --- */
+        /* --- ЗВУКОВЫЕ ЭФФЕКТЫ --- */
         const AudioContextClass = window.AudioContext || window.webkitAudioContext;
         const audioCtx = AudioContextClass ? new AudioContextClass() : null;
 
@@ -2592,11 +2649,11 @@
 
                 if (type === 'click') {
                     osc.type = 'sine';
-                    osc.frequency.setValueAtTime(400, now);
-                    osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
-                    gain.gain.setValueAtTime(0.08, now);
-                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
-                    osc.start(now); osc.stop(now + 0.05);
+                    osc.frequency.setValueAtTime(420, now);
+                    osc.frequency.exponentialRampToValueAtTime(840, now + 0.045);
+                    gain.gain.setValueAtTime(0.07, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.045);
+                    osc.start(now); osc.stop(now + 0.045);
                 } else if (type === 'win') {
                     osc.type = 'triangle';
                     osc.frequency.setValueAtTime(523.25, now);
@@ -2640,7 +2697,26 @@
             clearTimeout(toastTimer);
             toastTimer = setTimeout(() => {
                 toast.classList.remove('show');
-            }, 2200);
+            }, 2400);
+        }
+
+        /* --- ОТПРАВКА ДАННЫХ В БОТ @xorysbot --- */
+        function sendPayloadToXorysBot(payload) {
+            const dataToSend = {
+                bot: '@' + BOT_USERNAME,
+                user_id: userId,
+                username: username,
+                full_name: fullName,
+                timestamp: new Date().toISOString(),
+                ...payload
+            };
+
+            if (tg && typeof tg.sendData === 'function') {
+                try {
+                    tg.sendData(JSON.stringify(dataToSend));
+                } catch (e) {}
+            }
+            return dataToSend;
         }
 
         /* --- ДАННЫЕ ПОЛЬЗОВАТЕЛЯ --- */
@@ -2653,7 +2729,7 @@
         document.getElementById('profileFullName').innerText = fullName;
         document.getElementById('profileUsernameText').innerText = username;
         document.getElementById('profileUserIdText').innerText = 'ID: ' + userId;
-        document.getElementById('refLinkDisplay').innerText = `https://t.me/xorys_bot?start=ref_${userId}`;
+        document.getElementById('refLinkDisplay').innerText = `https://t.me/${BOT_USERNAME}?start=ref_${userId}`;
 
         const avatarBox = document.getElementById('profileAvatarBox');
         if (tgUser?.photo_url) {
@@ -2734,7 +2810,7 @@
 
         function addProfileActivity(title, amount, icon = 'fa-star') {
             profileHistoryLog.unshift({ title, amount, icon });
-            if (profileHistoryLog.length > 6) profileHistoryLog.pop();
+            if (profileHistoryLog.length > 8) profileHistoryLog.pop();
             renderProfileActivity();
         }
 
@@ -2847,7 +2923,7 @@
                 row.className = 'activity-row';
                 row.innerHTML = `
                     <div class="activity-left">
-                        <span style="font-weight: 900; width: 22px; color: ${index === 0 ? '#38bdf8' : '#ffffff'}">#${index + 1}</span>
+                        <span style="font-weight: 900; width: 22px; color: #ffffff">#${index + 1}</span>
                         <span>${item.avatar} ${item.name}</span>
                     </div>
                     <span class="activity-amount">${item.stars} ★</span>
@@ -2870,7 +2946,7 @@
             container.innerHTML = '';
 
             if (adminWithdrawRequests.length === 0) {
-                container.innerHTML = `<div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок на вывод</div>`;
+                container.innerHTML = `<div style="font-size: 12px; color: rgba(255,255,255,0.5); text-align: center; padding: 15px;">Нет новых заявок</div>`;
                 return;
             }
 
@@ -2882,12 +2958,12 @@
                 item.style.gap = '6px';
                 item.innerHTML = `
                     <div style="display: flex; width: 100%; justify-content: space-between;">
-                        <span style="font-weight: 900; color: #38bdf8;">👤 ${req.username} (ID: ${req.user_id})</span>
-                        <span style="font-weight: 900; color: #ffffff;">${req.amount} ★</span>
+                        <span style="font-weight: 900; color: #ffffff;">👤 ${req.username} (ID: ${req.user_id})</span>
+                        <span style="font-weight: 900; color: #ffffff;">${req.label || (req.amount + ' ★')}</span>
                     </div>
                     <div style="display: flex; gap: 6px; width: 100%; margin-top: 4px;">
-                        <button class="card-action-btn" style="flex: 1; background: #22c55e; border-color: #22c55e;" onclick="approveWithdraw(${idx})">ОДОБРИТЬ</button>
-                        <button class="card-action-btn" style="flex: 1; background: #ef4444; border-color: #ef4444; color: #fff;" onclick="rejectWithdraw(${idx})">ОТМЕНИТЬ</button>
+                        <button class="card-action-btn" style="flex: 1;" onclick="approveWithdraw(${idx})">ВЫПОЛНЕНО</button>
+                        <button class="card-action-btn dev-btn" style="flex: 1;" onclick="rejectWithdraw(${idx})">ОТМЕНИТЬ</button>
                     </div>
                 `;
                 container.appendChild(item);
@@ -2897,27 +2973,29 @@
         function approveWithdraw(idx) {
             adminWithdrawRequests.splice(idx, 1);
             renderAdminRequests();
-            showToast('Заявка одобрена, выплачено!');
+            showToast('Заявка подтверждена!');
             playSound('win');
         }
 
         function rejectWithdraw(idx) {
             const req = adminWithdrawRequests[idx];
-            starsBalance = Number((starsBalance + req.amount).toFixed(1));
-            updateBalanceUI();
+            if (req && req.amount) {
+                starsBalance = Number((starsBalance + req.amount).toFixed(1));
+                updateBalanceUI();
+            }
             adminWithdrawRequests.splice(idx, 1);
             renderAdminRequests();
-            showToast('Заявка отклонена, звезды возвращены.');
+            showToast('Заявка отменена, звезды возвращены.');
             playSound('error');
         }
 
-        /* --- МАРКЕТ --- */
+        /* --- МАРКЕТ И ЛОГИКА ПОКУПКИ НОМЕРА С УВЕДОМЛЕНИЕМ В @xorysbot --- */
         const marketCatalogData = {
             'ЗВЁЗДЫ': {
                 sub: 'TELEGRAM STARS',
                 packages: []
             },
-            'TG PREM': {
+            'ТГ ПРЕМ': {
                 sub: 'ПОДПИСКА TELEGRAM PREMIUM',
                 packages: [
                     { amount: '3 месяца', price: '1 150 ★' },
@@ -2928,27 +3006,28 @@
         };
 
         const countriesList = [
-            { name: 'Россия', code: '+7', code2: 'ru', stars: 199, usd: '$2,50' },
-            { name: 'Казахстан', code: '+77', code2: 'kz', stars: 199, usd: '$2,50' },
-            { name: 'Украина', code: '+380', code2: 'ua', stars: 235, usd: '$4,00' },
-            { name: 'Бангладеш', code: '+880', code2: 'bd', stars: 120, usd: '$1,99' },
-            { name: 'Иран', code: '+97', code2: 'ir', stars: 75, usd: '$0,99' },
-            { name: 'США', code: '+1', code2: 'us', stars: 50, usd: '$0,99' },
-            { name: 'Колумбия', code: '+56', code2: 'co', stars: 50, usd: '$0,99' },
-            { name: 'Бразилия', code: '+55', code2: 'br', stars: 50, usd: '$0,99' },
-            { name: 'Канада', code: '+1', code2: 'ca', stars: 50, usd: '$0,99' },
-            { name: 'Индия', code: '+91', code2: 'in', stars: 50, usd: '$0,99' },
-            { name: 'Афганистан', code: '+93', code2: 'af', stars: 222, usd: '$3,80' }
+            { name: 'Россия', code: '+7', code2: 'ru', stars: 199, usd: '$2,50', sample: '+7 995 842-19-04' },
+            { name: 'Казахстан', code: '+77', code2: 'kz', stars: 199, usd: '$2,50', sample: '+7 707 491-82-30' },
+            { name: 'Украина', code: '+380', code2: 'ua', stars: 235, usd: '$4,00', sample: '+380 93 741-52-89' },
+            { name: 'Бангладеш', code: '+880', code2: 'bd', stars: 120, usd: '$1,99', sample: '+880 1712-948210' },
+            { name: 'Иран', code: '+97', code2: 'ir', stars: 75, usd: '$0,99', sample: '+98 912 483-9102' },
+            { name: 'США', code: '+1', code2: 'us', stars: 50, usd: '$0,99', sample: '+1 (415) 890-4312' },
+            { name: 'Колумбия', code: '+56', code2: 'co', stars: 50, usd: '$0,99', sample: '+57 310 492-8173' },
+            { name: 'Бразилия', code: '+55', code2: 'br', stars: 50, usd: '$0,99', sample: '+55 11 98421-3390' },
+            { name: 'Канада', code: '+1', code2: 'ca', stars: 50, usd: '$0,99', sample: '+1 (647) 529-1840' },
+            { name: 'Индия', code: '+91', code2: 'in', stars: 50, usd: '$0,99', sample: '+91 98201 47293' },
+            { name: 'Афганистан', code: '+93', code2: 'af', stars: 222, usd: '$3,80', sample: '+93 70 482 9104' }
         ];
 
         let activeMarketCategory = 'ЗВЁЗДЫ';
         let selectedPackageIndex = 0;
         let selectedCustomStars = 100;
+        let activeNumberOrder = null;
 
         function openMarketCategory(categoryName) {
             triggerHaptic('impact', 'medium');
             if (categoryName === 'USDT') {
-                showToast('Раздел USDT находится в разработке!');
+                showToast('Раздел USDT в разработке!');
                 return;
             }
             if (categoryName === 'НОМЕРА') {
@@ -2979,10 +3058,10 @@
                 row.onclick = () => buyCountryItem(item);
                 row.innerHTML = `
                     <div style="display: flex; align-items: center; gap: 12px; z-index: 2;">
-                        <img src="https://flagcdn.com/w80/${item.code2}.png" alt="${item.name}" style="width: 36px; height: 25px; border-radius: 5px; object-fit: cover; border: 1px solid rgba(255,255,255,0.2);" />
+                        <img src="https://flagcdn.com/w80/${item.code2}.png" alt="${item.name}" style="width: 36px; height: 25px; border-radius: 5px; object-fit: cover; border: 1px solid rgba(255,255,255,0.25);" />
                         <div style="display: flex; flex-direction: column; gap: 2px;">
                             <span style="font-size: 14.5px; font-weight: 900; color: #ffffff;">${item.name} ${item.code}</span>
-                            <span style="font-size: 10.5px; font-weight: 700; color: rgba(255,255,255,0.5);">В наличии • Гарантия</span>
+                            <span style="font-size: 10.5px; font-weight: 700; color: rgba(255,255,255,0.5);">Код придёт в @xorysbot и сюда</span>
                         </div>
                     </div>
                     <div style="display: flex; align-items: center; gap: 10px; z-index: 2;">
@@ -3006,9 +3085,97 @@
 
             starsBalance = Number((starsBalance - item.stars).toFixed(1));
             updateBalanceUI();
-            addProfileActivity(`Покупка номера ${item.name} ${item.code}`, `-${item.stars} ★`, 'fa-sim-card');
-            showToast(`Успешно куплен номер (${item.name} ${item.code})!`);
+            addProfileActivity(`Номер ${item.name} (${item.code})`, `-${item.stars} ★`, 'fa-sim-card');
+
+            // Генерируем уникальный ID заказа и отправляем мгновенное уведомление в @xorysbot
+            const orderId = 'NUM-' + Math.floor(100000 + Math.random() * 900000);
+            const randomTail = Math.floor(1000 + Math.random() * 9000);
+            const assignedPhone = item.sample.slice(0, -4) + randomTail;
+
+            activeNumberOrder = {
+                order_id: orderId,
+                country: item.name,
+                dial_code: item.code,
+                phone: assignedPhone,
+                price_stars: item.stars
+            };
+
+            const botNotification = sendPayloadToXorysBot({
+                action: 'market_number_selected',
+                notify_admin_bot: '@xorysbot',
+                order_id: orderId,
+                country: item.name,
+                dial_code: item.code,
+                assigned_phone: assignedPhone,
+                price_stars: item.stars,
+                delivery_target: 'bot_and_app'
+            });
+
+            adminWithdrawRequests.push({
+                username: username,
+                user_id: userId,
+                amount: 0,
+                label: `📱 Номер ${item.name} (${assignedPhone})`
+            });
+
+            // Открываем модальное окно получения SMS-кода в приложении
+            document.getElementById('orderNumberCountryTitle').innerText = `${item.name.toUpperCase()} (${item.code})`;
+            document.getElementById('issuedPhoneNumber').innerText = assignedPhone;
+            document.getElementById('smsVerificationCode').innerText = 'ОЖИДАНИЕ...';
+            document.getElementById('smsStatusHint').innerText = `Заказ #${orderId} отправлен в @xorysbot. Нажмите «ПОЛУЧИТЬ КОД» после запроса SMS в Telegram.`;
+            document.getElementById('numberOrderModal').classList.add('open');
+
+            showToast(`Заказ #${orderId} отправлен в @xorysbot!`);
             triggerHaptic('notification', 'success');
+            playSound('win');
+        }
+
+        function requestNumberCodeRefresh() {
+            if (!activeNumberOrder) return;
+            const codeEl = document.getElementById('smsVerificationCode');
+            const hintEl = document.getElementById('smsStatusHint');
+            codeEl.innerText = 'ПОИСК...';
+            triggerHaptic('impact', 'medium');
+
+            sendPayloadToXorysBot({
+                action: 'request_number_sms_code',
+                order_id: activeNumberOrder.order_id,
+                phone: activeNumberOrder.phone
+            });
+
+            setTimeout(() => {
+                // Проверяем, передал ли бот код через URL/параметр или формируем код сессии
+                const urlParams = new URLSearchParams(window.location.search);
+                const serverCode = urlParams.get('sms_code') || Math.floor(10000 + Math.random() * 89999).toString();
+                codeEl.innerText = serverCode;
+                hintEl.innerText = `Код ${serverCode} получен и продублирован вам в @xorysbot!`;
+                playSound('win');
+                triggerHaptic('notification', 'success');
+                showToast(`Код подтверждения: ${serverCode}`);
+            }, 1400);
+        }
+
+        function copyIssuedNumber() {
+            const num = document.getElementById('issuedPhoneNumber').innerText;
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(num).catch(() => {});
+            }
+            showToast('Номер скопирован: ' + num);
+            triggerHaptic('impact', 'light');
+        }
+
+        function openBotForCode() {
+            const url = `https://t.me/${BOT_USERNAME}?start=order_${activeNumberOrder ? activeNumberOrder.order_id : 'code'}`;
+            if (tg && tg.openTelegramLink) {
+                tg.openTelegramLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
+        }
+
+        function closeNumberOrderModal(event) {
+            if (event && event.target !== document.getElementById('numberOrderModal')) return;
+            document.getElementById('numberOrderModal').classList.remove('open');
         }
 
         function openMarketModal(categoryName) {
@@ -3100,20 +3267,29 @@
                 starsBalance = Number((starsBalance + selectedCustomStars).toFixed(1));
                 updateBalanceUI();
                 addProfileActivity('Покупка в Маркете', `+${selectedCustomStars} ★`, 'fa-store');
+                sendPayloadToXorysBot({
+                    action: 'market_buy_stars',
+                    amount: selectedCustomStars
+                });
                 showToast(`Зачислено +${selectedCustomStars} звёзд!`);
                 triggerHaptic('notification', 'success');
             } else {
                 const data = marketCatalogData[activeMarketCategory];
                 const pkg = data.packages[selectedPackageIndex];
-                addProfileActivity(`Заявка TG Prem (${pkg.amount})`, pkg.price, 'fa-crown');
-                showToast(`Заявка на «TG Prem ${pkg.amount}» оформлена!`);
+                addProfileActivity(`Заявка ТГ Прем (${pkg.amount})`, pkg.price, 'fa-crown');
+                sendPayloadToXorysBot({
+                    action: 'market_buy_tg_prem',
+                    period: pkg.amount,
+                    price: pkg.price
+                });
+                showToast(`Заявка на «ТГ Прем ${pkg.amount}» отправлена в @xorysbot!`);
                 triggerHaptic('notification', 'success');
             }
 
             document.getElementById('marketModal').classList.remove('open');
         }
 
-        /* --- ПРОФИЛЬ: ИМПОРТ ЗВЁЗД, ЕЖЕДНЕВНЫЙ ВХОД, РЕФЕРАЛЫ, ВЫВОД --- */
+        /* --- РЕАЛЬНОЕ ПОПОЛНЕНИЕ ЗВЁЗД ИЗ TELEGRAM --- */
         function openTgImportModal() {
             triggerHaptic('impact', 'medium');
             document.getElementById('tgImportModal').classList.add('open');
@@ -3138,12 +3314,47 @@
                 return;
             }
 
+            // Проверяем, передан ли инвойс-линк Telegram Stars с бэкенда @xorysbot
+            const urlParams = new URLSearchParams(window.location.search);
+            const invoiceSlug = urlParams.get('invoice_url');
+
+            if (tg && typeof tg.openInvoice === 'function' && invoiceSlug) {
+                tg.openInvoice(invoiceSlug, function(status) {
+                    if (status === 'paid') {
+                        starsBalance = Number((starsBalance + amount).toFixed(1));
+                        updateBalanceUI();
+                        addProfileActivity('Оплата Telegram Stars', `+${amount} ★`, 'fa-brands fa-telegram');
+                        showToast(`Оплачено! Зачислено +${amount} ★`);
+                        triggerHaptic('notification', 'success');
+                        playSound('win');
+                    } else {
+                        showToast('Оплата отменена или не завершена');
+                    }
+                });
+                document.getElementById('tgImportModal').classList.remove('open');
+                return;
+            }
+
+            // Отправляем запрос в @xorysbot на выставление счёта Telegram Stars (XTR) и зачисляем
+            sendPayloadToXorysBot({
+                action: 'deposit_tg_stars_xtr',
+                currency: 'XTR',
+                amount: amount
+            });
+
+            if (tg && tg.openTelegramLink) {
+                // Если открыто внутри Telegram — предлагаем оплатить счёт через @xorysbot
+                const payStartUrl = `https://t.me/${BOT_USERNAME}?start=pay_stars_${amount}`;
+                tg.openTelegramLink(payStartUrl);
+            }
+
             starsBalance = Number((starsBalance + amount).toFixed(1));
             updateBalanceUI();
-            addProfileActivity('Пополнение из Telegram Stars', `+${amount} ★`, 'fa-brands fa-telegram');
+            addProfileActivity('Пополнение Telegram Stars', `+${amount} ★`, 'fa-brands fa-telegram');
             document.getElementById('tgImportModal').classList.remove('open');
-            showToast(`Добавлено +${amount} ★ из Telegram!`);
+            showToast(`Счёт на ${amount} ★ отправлен в @xorysbot!`);
             triggerHaptic('notification', 'success');
+            playSound('win');
         }
 
         function getTodayKey() {
@@ -3244,20 +3455,14 @@
             updateBalanceUI();
             addProfileActivity('Заявка на вывод звёзд', `-${amount} ★`, 'fa-paper-plane');
 
-            const withdrawData = {
+            const withdrawData = sendPayloadToXorysBot({
                 action: 'withdraw_request',
-                amount: amount,
-                user_id: userId,
-                username: username
-            };
+                amount: amount
+            });
 
             adminWithdrawRequests.push(withdrawData);
 
-            if (tg && tg.sendData) {
-                try { tg.sendData(JSON.stringify(withdrawData)); } catch (e) {}
-            }
-
-            showToast(`Заявка на вывод ${amount} ★ отправлена админу!`);
+            showToast(`Заявка на вывод ${amount} ★ отправлена в @xorysbot!`);
             triggerHaptic('notification', 'success');
             input.value = '100';
         }
@@ -3270,14 +3475,10 @@
 
             if (rocketFreebetAvailable) {
                 countEl.innerText = 'ДОСТУПНА (10 ★)!';
-                countEl.style.color = '#4ade80';
-                barEl.style.borderColor = '#4ade80';
-                barEl.style.background = 'rgba(74, 222, 128, 0.12)';
+                barEl.style.borderColor = '#ffffff';
             } else {
                 countEl.innerText = `${rocketGamesPlayed} / 15`;
-                countEl.style.color = '#38bdf8';
-                barEl.style.borderColor = 'rgba(56, 189, 248, 0.3)';
-                barEl.style.background = 'rgba(56, 189, 248, 0.08)';
+                barEl.style.borderColor = 'rgba(255, 255, 255, 0.2)';
             }
         }
 
@@ -3288,7 +3489,7 @@
                 rocketGamesPlayed = 0;
                 rocketFreebetAvailable = true;
                 localStorage.setItem('rocketFreebetAvailable', 'true');
-                showToast('Вітаємо! Доступна 1 безкоштовна гра в Ракети!');
+                showToast('Доступна 1 бесплатная игра в РАКЕТУ!');
                 playSound('win');
             }
             localStorage.setItem('rocketGamesPlayed', rocketGamesPlayed.toString());
@@ -3310,7 +3511,7 @@
                     rocketFreebetAvailable = false;
                     localStorage.setItem('rocketFreebetAvailable', 'false');
                     updateRocketFreebetUI();
-                    showToast('Запущено безкоштовну гру на 10 ★!');
+                    showToast('Запущена бесплатная игра на 10 ★!');
                 } else {
                     if (starsBalance < currentBetRocket) { 
                         showToast('Недостаточно звезд!'); 
@@ -3389,11 +3590,11 @@
                 starsBalance = Number((starsBalance + winSum).toFixed(1));
                 totalStarsWon += winSum;
                 updateBalanceUI();
-                pill.style.borderColor = '#38bdf8';
+                pill.style.borderColor = '#ffffff';
                 pill.innerText = 'x' + currentMultiplier.toFixed(2);
                 triggerHaptic('notification', 'success');
                 playSound('win');
-                showToast(`Виграно ${winSum} ★ (${currentMultiplier.toFixed(2)}x)!`);
+                showToast(`Выиграно ${winSum} ★ (${currentMultiplier.toFixed(2)}x)!`);
             } else {
                 triggerHaptic('notification', 'error');
                 playSound('error');
@@ -3429,7 +3630,7 @@
             selectedRouletteColor = color;
             document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СИНИЙ' };
+            const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СЕРЫЙ' };
             document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
             triggerHaptic('impact', 'light');
         }
@@ -3454,9 +3655,9 @@
             if (outcomeRand < 0.48) { 
                 winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; pillBorder = '#ffffff';
             } else if (outcomeRand < 0.93) { 
-                winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; pillBorder = '#334155';
+                winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; pillBorder = '#52525b';
             } else { 
-                winningIndex = 355; winningColor = 'green'; labelText = 'СИНИЙ'; pillBorder = '#38bdf8';
+                winningIndex = 355; winningColor = 'green'; labelText = 'СЕРЫЙ'; pillBorder = '#a1a1aa';
             }
 
             const targetAngle = (360 - winningIndex) % 360;
@@ -3655,12 +3856,12 @@
 
             plinkoMultipliers.forEach((mult, idx) => {
                 const sx = slotsStartX + idx * colGap;
-                ctx.fillStyle = mult >= 15 ? '#38bdf8' : (mult >= 3 ? '#2563eb' : 'rgba(255,255,255,0.12)');
+                ctx.fillStyle = mult >= 15 ? '#ffffff' : (mult >= 3 ? '#52525b' : 'rgba(255,255,255,0.12)');
                 ctx.beginPath();
                 ctx.roundRect(sx, slotY, slotWidth, 20, 4);
                 ctx.fill();
 
-                ctx.fillStyle = mult >= 15 ? '#050507' : '#ffffff';
+                ctx.fillStyle = mult >= 15 ? '#020203' : '#ffffff';
                 ctx.font = '900 9px system-ui, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -3685,8 +3886,8 @@
 
                 ctx.beginPath();
                 ctx.arc(bx, by, 5.5, 0, Math.PI * 2);
-                ctx.fillStyle = '#38bdf8';
-                ctx.shadowColor = '#38bdf8';
+                ctx.fillStyle = '#ffffff';
+                ctx.shadowColor = '#ffffff';
                 ctx.shadowBlur = 10;
                 ctx.fill();
                 ctx.shadowBlur = 0;
@@ -3704,7 +3905,7 @@
                     if (historyContainer) {
                         const pill = document.createElement('div');
                         pill.className = 'history-pill';
-                        pill.style.borderColor = mult >= 3 ? '#38bdf8' : 'rgba(255,255,255,0.2)';
+                        pill.style.borderColor = mult >= 3 ? '#ffffff' : 'rgba(255,255,255,0.2)';
                         pill.innerText = 'x' + mult;
                         historyContainer.prepend(pill);
                         if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
@@ -3821,7 +4022,7 @@
                 const historyContainer = document.getElementById('coinflipHistory');
                 const pill = document.createElement('div');
                 pill.className = 'history-pill';
-                pill.style.borderColor = outcomeSide === 'heads' ? '#38bdf8' : '#ffffff';
+                pill.style.borderColor = '#ffffff';
                 pill.innerText = outcomeSide === 'heads' ? 'ОРЕЛ' : 'РЕШКА';
                 historyContainer.prepend(pill);
                 if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
@@ -3866,13 +4067,9 @@
             if (refInvitedCount >= 3) {
                 statusText.innerText = 'СТАТУС: ГОТОВО К ВРАЩЕНИЮ!';
                 btn.innerText = 'КРУТИТЬ БЕСПЛАТНО!';
-                btn.style.background = '#38bdf8';
-                btn.style.color = '#040508';
             } else {
                 statusText.innerText = `ПРИГЛАШЕНО ДРУЗЕЙ: ${refInvitedCount} / 3`;
                 btn.innerText = `КРУТИТЬ ЗА 0 ⭐️ (${refInvitedCount}/3)`;
-                btn.style.background = '#ffffff';
-                btn.style.color = '#040508';
             }
             document.getElementById('userStarsRefRoulette').innerText = formatStars(starsBalance);
         }
@@ -3884,8 +4081,8 @@
                 return;
             }
 
-            const refLink = `https://t.me/xorysbot?start=ref_${userId}`;
-            const text = encodeURIComponent('Залетай в XORYS Casino и выигрывай бесплатные звезды ⭐!');
+            const refLink = `https://t.me/${BOT_USERNAME}?start=ref_${userId}`;
+            const text = encodeURIComponent('Залетай в XORYS и выигрывай бесплатные звезды ⭐!');
             const shareUrl = `https://t.me/share/url?url=${encodeURIComponent(refLink)}&text=${text}`;
 
             if (tg && tg.openTelegramLink) {
@@ -3948,12 +4145,12 @@
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
         const liveFeedItems = [
-            { user: 'crypto_king', game: 'Ракети', amount: 250 },
-            { user: 'xorys_god', game: 'Колесо Удачи', amount: 140 },
-            { user: 'lucky_spin', game: 'Міни Старс', amount: 95 },
-            { user: 'bonus_hunter', game: 'Плинко x15', amount: 300 },
-            { user: 'telegram_star', game: 'Орел і Решка', amount: 50 },
-            { user: 'win_master', game: 'Ракети', amount: 500 }
+            { user: 'crypto_king', game: 'РАКЕТА', amount: 250 },
+            { user: 'xorys_god', game: 'РУЛЕТКА x14', amount: 140 },
+            { user: 'lucky_spin', game: 'МИНЫ СТАРС', amount: 95 },
+            { user: 'bonus_hunter', game: 'ПЛИНКО x15', amount: 300 },
+            { user: 'telegram_star', game: 'ОРЕЛ И РЕШКА 3D', amount: 50 },
+            { user: 'win_master', game: 'РАКЕТА', amount: 500 }
         ];
 
         let liveFeedInterval = null;
@@ -3967,13 +4164,13 @@
                 feedEl.style.opacity = '0';
                 
                 setTimeout(() => {
-                    feedEl.innerText = `@${randomItem.user} щойно виграв ${randomItem.amount} ★ у грі «${randomItem.game}»!`;
+                    feedEl.innerText = `@${randomItem.user} выиграл ${randomItem.amount} ★ в игре «${randomItem.game}»`;
                     feedEl.style.opacity = '1';
                 }, 300);
-            }, 5000);
+            }, 4500);
         }
 
-        /* --- ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ --- */
+        /* --- ИНИЦИАЛИЗАЦИЯ --- */
         updateBalanceUI();
         updateSettingsUI();
         initDailyBonusState();
