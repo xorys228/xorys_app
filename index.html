@@ -1862,6 +1862,7 @@
             </div>
         </div>
 
+        <!-- Главный экран маркетплейса -->
         <div id="marketMainView">
             <h1 class="page-title">МАРКЕТ</h1>
             <div class="games-container">
@@ -1925,7 +1926,7 @@
                     </div>
                 </div>
 
-                <!-- 3. TG PREM (3 / 6 / 12 МЕС) -->
+                <!-- 3. TG PREM -->
                 <div class="game-card-row" onclick="openMarketCategory('TG PREM')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -1953,7 +1954,7 @@
                     </div>
                 </div>
 
-                <!-- 4. USDT (В РАЗРАБОТКЕ) -->
+                <!-- 4. USDT -->
                 <div class="game-card-row" onclick="openMarketCategory('USDT')">
                     <div class="game-visual-left">
                         <svg viewBox="0 0 120 120" fill="none">
@@ -1984,7 +1985,7 @@
             </div>
         </div>
 
-        <!-- Подкаталог стран (для Номеров) -->
+        <!-- Подкаталог стран (скрыт по умолчанию) -->
         <div id="marketDetailView" style="display: none;">
             <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px;">
                 <button class="btn-return" style="width: auto; margin-top: 0; padding: 8px 14px;" onclick="closeMarketDetail()"><i class="fa-solid fa-arrow-left"></i> НАЗАД</button>
@@ -2008,7 +2009,6 @@
                 </button>
             </div>
 
-            <!-- Блок выбора количества звёзд (Слайдер + Ручной ввод + 10 пресетов) -->
             <div id="starsCustomConfig" class="stars-custom-box" style="display: none;">
                 <div class="stars-input-row">
                     <div>
