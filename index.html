@@ -1448,67 +1448,65 @@
                 </div>
             </div>
 
-           <div class="games-container">
-    <!-- 1. РУЛЕТКА FREE -->
-    ... (тут твої інші ігри) ...
-
-    <!-- 5. ОРЕЛ И РЕШКА 3D -->
-    <div class="game-card-row" onclick="openCoinflipGame()">
-        <div class="game-visual-left">
-            <svg viewBox="0 0 120 120" fill="none">
-                <defs>
-                    <radialGradient id="darkCoinMono" cx="30%" cy="30%" r="70%">
-                        <stop offset="0%" stop-color="#52525b"/>
-                        <stop offset="55%" stop-color="#27272a"/>
-                        <stop offset="100%" stop-color="#09090b"/>
-                    </radialGradient>
-                    <radialGradient id="whiteCoinMono" cx="30%" cy="30%" r="70%">
-                        <stop offset="0%" stop-color="#ffffff"/>
-                        <stop offset="70%" stop-color="#e4e4e7"/>
-                        <stop offset="100%" stop-color="#a1a1aa"/>
-                    </radialGradient>
-                </defs>
-                <circle cx="34" cy="48" r="28" fill="#050507" stroke="#a1a1aa" stroke-width="3.5"/>
-                <circle cx="34" cy="48" r="22" fill="url(#darkCoinMono)"/>
-                <path d="M36 35L27 49H34L32 61L41 47H34L36 35Z" fill="#ffffff"/>
-                <circle cx="62" cy="72" r="30" fill="#050507" stroke="#ffffff" stroke-width="3.5"/>
-                <circle cx="62" cy="72" r="24" fill="url(#whiteCoinMono)" stroke="#52525b" stroke-width="2"/>
-                <path d="M62 56L66.2 65.2L76 66.5L68.8 73.3L70.6 83L62 78.2L53.4 83L55.2 73.3L48 66.5L57.8 65.2L62 56Z" fill="#050507"/>
-            </svg>
-        </div>
-        <div class="game-info-right">
-            <span class="game-category-tag"><i class="fa-solid fa-coins"></i> 50 / 50 ШАНС</span>
-            <span class="game-name">ОРЕЛ И РЕШКА 3D</span>
-            <div class="game-bottom-bar">
-                <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 254</div>
-                <button class="card-action-btn">ИГРАТЬ</button>
-            </div>
-        </div>
-    </div>
-<!-- 6. ТРИ ДВЕРИ (СМЕРТЬ С КОСОЙ) -->
-            <div class="game-card-row" onclick="openDoorsGame()">
+            <!-- 5. ОРЕЛ И РЕШКА 3D -->
+            <div class="game-card-row" onclick="openCoinflipGame()">
                 <div class="game-visual-left">
                     <svg viewBox="0 0 120 120" fill="none">
-                        <rect x="28" y="16" width="52" height="88" rx="26" fill="#3d2312" stroke="#d97706" stroke-width="3"/>
-                        <line x1="45" y1="20" x2="45" y2="102" stroke="#241308" stroke-width="2"/>
-                        <line x1="62" y1="20" x2="62" y2="102" stroke="#241308" stroke-width="2"/>
-                        <circle cx="70" cy="62" r="4" fill="#fbbf24"/>
-                        <path d="M54 38 C46 38 42 46 42 54 C42 62 47 68 54 68 C61 68 66 62 66 54 C66 46 62 38 54 38 Z" fill="#ffffff" opacity="0.9"/>
-                        <ellipse cx="50" cy="51" rx="2.5" ry="4" fill="#050507"/>
-                        <ellipse cx="58" cy="51" rx="2.5" ry="4" fill="#050507"/>
-                        <ellipse cx="54" cy="60" rx="2" ry="4.5" fill="#050507"/>
+                        <defs>
+                            <radialGradient id="darkCoinMono" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#52525b"/>
+                                <stop offset="55%" stop-color="#27272a"/>
+                                <stop offset="100%" stop-color="#09090b"/>
+                            </radialGradient>
+                            <radialGradient id="whiteCoinMono" cx="30%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#ffffff"/>
+                                <stop offset="70%" stop-color="#e4e4e7"/>
+                                <stop offset="100%" stop-color="#a1a1aa"/>
+                            </radialGradient>
+                        </defs>
+                        <circle cx="34" cy="48" r="28" fill="#050507" stroke="#a1a1aa" stroke-width="3.5"/>
+                        <circle cx="34" cy="48" r="22" fill="url(#darkCoinMono)"/>
+                        <path d="M36 35L27 49H34L32 61L41 47H34L36 35Z" fill="#ffffff"/>
+                        <circle cx="62" cy="72" r="30" fill="#050507" stroke="#ffffff" stroke-width="3.5"/>
+                        <circle cx="62" cy="72" r="24" fill="url(#whiteCoinMono)" stroke="#52525b" stroke-width="2"/>
+                        <path d="M62 56L66.2 65.2L76 66.5L68.8 73.3L70.6 83L62 78.2L53.4 83L55.2 73.3L48 66.5L57.8 65.2L62 56Z" fill="#050507"/>
                     </svg>
                 </div>
                 <div class="game-info-right">
-                    <span class="game-category-tag"><i class="fa-solid fa-skull"></i> УГАДАЙ ДВЕРЬ</span>
-                    <span class="game-name">3 ДВЕРИ: СМЕРТЬ</span>
+                    <span class="game-category-tag"><i class="fa-solid fa-coins"></i> 50 / 50 ШАНС</span>
+                    <span class="game-name">ОРЕЛ И РЕШКА 3D</span>
                     <div class="game-bottom-bar">
-                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 418</div>
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 254</div>
                         <button class="card-action-btn">ИГРАТЬ</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+
+   <!-- 6. ТРИ ДВЕРИ (СМЕРТЬ С КОСОЙ) -->
+<div class="game-card-row" onclick="openDoorsGame()">
+    <div class="game-visual-left">
+        <svg viewBox="0 0 120 120" fill="none">
+            <rect x="28" y="16" width="52" height="88" rx="26" fill="#3d2312" stroke="#d97706" stroke-width="3"/>
+            <line x1="45" y1="20" x2="45" y2="102" stroke="#241308" stroke-width="2"/>
+            <line x1="62" y1="20" x2="62" y2="102" stroke="#241308" stroke-width="2"/>
+            <circle cx="70" cy="62" r="4" fill="#fbbf24"/>
+            <path d="M54 38 C46 38 42 46 42 54 C42 62 47 68 54 68 C61 68 66 62 66 54 C66 46 62 38 54 38 Z" fill="#ffffff" opacity="0.9"/>
+            <ellipse cx="50" cy="51" rx="2.5" ry="4" fill="#050507"/>
+            <ellipse cx="58" cy="51" rx="2.5" ry="4" fill="#050507"/>
+            <ellipse cx="54" cy="60" rx="2" ry="4.5" fill="#050507"/>
+        </svg>
+    </div>
+    <div class="game-info-right">
+        <span class="game-category-tag"><i class="fa-solid fa-skull"></i> УГАДАЙ ДВЕРЬ</span>
+        <span class="game-name">3 ДВЕРИ: СМЕРТЬ</span>
+        <div class="game-bottom-bar">
+            <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 418</div>
+            <button class="card-action-btn">ИГРАТЬ</button>
+        </div>
+    </div>
+</div>
     
 
     <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
@@ -2307,9 +2305,6 @@
     </nav>
 
 
-            
-
-
   
     <!-- ЭКРАН РУЛЕТКИ FREE (ВНЕ СКРИПТА) -->
     <div id="refRoulettePage" class="page">
@@ -2421,7 +2416,7 @@
             </div>
         </div>
     </div>
-     
+
     <script>
         /* --- ЗВУКОВЫЕ ЭФФЕКТЫ (WEB AUDIO API) --- */
         const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -3797,56 +3792,6 @@ function endDoorsGame(isWin, winSum) {
     btn.innerText = 'ИГРАТЬ';
     btn.className = 'btn-main-action btn-style-start';
 }
-
-  /* --- ПЛИНКО --- */
-    function initPlinkoCanvas() {
-        const canvas = document.getElementById('plinkoCanvas');
-        if (!canvas) return;
-        const ctx = canvas.getContext('2d');
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        ctx.fillStyle = '#38bdf8';
-        for (let row = 0; row < 6; row++) {
-            for (let col = 0; col <= row; col++) {
-                let x = canvas.width / 2 + (col - row / 2) * 35;
-                let y = 30 + row * 32;
-                ctx.beginPath();
-                ctx.arc(x, y, 3.5, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-    }
-
-    function dropPlinkoBall() {
-        if (starsBalance < currentBetPlinko) {
-            showToast('Недостаточно звезд!');
-            triggerHaptic('notification', 'error');
-            return;
-        }
-
-        starsBalance = Number((starsBalance - currentBetPlinko).toFixed(1));
-        totalGamesPlayed += 1;
-        updateBalanceUI();
-        triggerHaptic('impact', 'medium');
-
-        const mults = [0.5, 1.2, 1.5, 2.0, 5.0, 15.0];
-        const chosenMult = mults[Math.floor(Math.random() * mults.length)];
-        const winSum = Math.floor(currentBetPlinko * chosenMult);
-
-        if (winSum > 0) {
-            starsBalance = Number((starsBalance + winSum).toFixed(1));
-            totalStarsWon += winSum;
-            updateBalanceUI();
-            showToast(`Плинко: выигрыш ${winSum} ★ (x${chosenMult})!`);
-            triggerHaptic('notification', 'success');
-            playSound('win');
-        } else {
-            showToast('Шарик попал в нулевую зону!');
-            triggerHaptic('notification', 'error');
-            playSound('error');
-        }
-    }
-        
 </script>
 </body>
 </html>
