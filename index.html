@@ -2738,12 +2738,14 @@
             avatarBox.innerText = fullName.charAt(0).toUpperCase();
         }
 
-        let starsBalance = 0;
+        let starsBalance = 100;
         let totalGamesPlayed = 0;
         let totalStarsWon = 0;
         let referralsCount = 0;
         let dailyStreak = 1;
-        let profileHistoryLog = [];
+        let profileHistoryLog = [
+    { title: 'Стартовый бонус аккаунта', amount: '+100 ★', icon: 'fa-gift' }
+];
 
         function formatStars(val) {
             return Number.isInteger(val) ? val.toString() : val.toFixed(1);
@@ -3461,37 +3463,56 @@
             triggerHaptic('notification', 'success');
         }
 
-        function requestWithdrawFromProfile() {
-            const input = document.getElementById('profileWithdrawInput');
-            const amount = parseInt(input.value);
+        async function requestWithdrawFromProfile() {
+    const input = document.getElementById('profileWithdrawInput');
+    const amount = parseInt(input.value);
 
-            if (isNaN(amount) || amount < 100) {
-                showToast('Минимум для вывода: 100 звёзд!');
-                triggerHaptic('notification', 'error');
-                return;
-            }
+    if (isNaN(amount) || amount < 100) {
+        showToast('Минимум для вывода: 100 звёзд!');
+        triggerHaptic('notification', 'error');
+        return;
+    }
 
-            if (amount > starsBalance) {
-                showToast('Недостаточно звёзд на балансе!');
-                triggerHaptic('notification', 'error');
-                return;
-            }
+    if (amount > starsBalance) {
+        showToast('Недостаточно звёзд на балансе!');
+        triggerHaptic('notification', 'error');
+        return;
+    }
 
+    try {
+        // Укажите ваш адрес сервера/бэкенда, где крутится бот
+        const API_URL = 'https://ВАШ_ДОМЕН_ИЛИ_СЕРВЕР/api/withdraw';
+
+        const response = await fetch(API_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: userId,
+                username: username,
+                amount: amount
+            })
+        });
+
+        const data = await response.json();
+
+        if (data.ok) {
+            // Списываем звезды локально только после успешного запроса на сервер
             starsBalance = Number((starsBalance - amount).toFixed(1));
             updateBalanceUI();
             addProfileActivity('Заявка на вывод звёзд', `-${amount} ★`, 'fa-paper-plane');
 
-            const withdrawData = sendPayloadToXorysBot({
-                action: 'withdraw_request',
-                amount: amount
-            });
-
-            adminWithdrawRequests.push(withdrawData);
-
-            showToast(`Заявка на вывод ${amount} ★ отправлена в @xorysbot!`);
+            showToast(`Заявка на вывод ${amount} ★ успешно отправлена!`);
             triggerHaptic('notification', 'success');
             input.value = '100';
+            document.getElementById('profileWithdrawModal')?.classList.remove('open');
+        } else {
+            showToast('Ошибка при отправке заявки');
         }
+    } catch (e) {
+        showToast('Сервер недоступен. Попробуйте позже.');
+        triggerHaptic('notification', 'error');
+    }
+}
 
         /* --- 1. РАКЕТА --- */
         function updateRocketFreebetUI() {
