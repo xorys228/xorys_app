@@ -2833,20 +2833,25 @@
         }
 
         /* --- НАВИГАЦИЯ --- */
-        function switchPage(pageId, buttonElement) {
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            const target = document.getElementById(pageId);
-            if (target) target.classList.add('active');
+       /* --- НАВИГАЦИЯ --- */
+function switchPage(pageId, buttonElement) {
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    const target = document.getElementById(pageId);
+    if (target) target.classList.add('active');
 
-            if (buttonElement) {
-                document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-                buttonElement.classList.add('active');
-            }
+    if (buttonElement) {
+        document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+        buttonElement.classList.add('active');
+    }
 
-            if (pageId === 'leaderboard') {
-                renderLeaderboard();
-            }
-        }
+    if (pageId === 'leaderboard') {
+        renderLeaderboard();
+    }
+
+    if (pageId === 'profile') {
+        loadUserHistoryFromServer();
+    }
+}
 
         function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
         function openRocketGame() { switchPage('rocketGamePage'); triggerHaptic('impact', 'medium'); updateRocketFreebetUI(); }
@@ -4275,6 +4280,44 @@ const assignedCode = "ОЖИДАНИЕ...";
                 }, 300);
             }, 4500);
         }
+
+   function loadUserHistoryFromServer() {
+    const tgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe)
+        ? window.Telegram.WebApp.initDataUnsafe.user
+        : null;
+    const userId = tgUser ? tgUser.id : 123456789;
+
+    fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/user_purchases', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: userId })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok && data.purchases) {
+            profileHistoryLog = [];
+            
+            data.purchases.forEach(p => {
+                let statusText = p.status === 'ready' ? '✅ Готов' : '⏳ Ожидание';
+                profileHistoryLog.push({
+                    title: `${p.item_name} (${statusText})`,
+                    amount: `-${p.price} ★`,
+                    icon: 'fa-sim-card'
+                });
+            });
+
+            if (profileHistoryLog.length === 0) {
+                profileHistoryLog.push({ title: 'Пока нет покупок', amount: '0 ★', icon: 'fa-info-circle' });
+            }
+
+            renderProfileActivity();
+        }
+    })
+    .catch(err => {
+        console.error('Не удалось загрузить историю:', err);
+    });
+}
+        
 
         /* --- ИНИЦИАЛИЗАЦИЯ --- */
         updateBalanceUI();
