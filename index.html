@@ -2481,16 +2481,9 @@
             <div class="ladder-step" data-step="7"><span class="ladder-step-num">7</span><span class="ladder-step-mult">x25.0</span></div>
         </div>
 
-        <div class="betting-box">
+      <div class="betting-box">
             <div class="betting-info">
                 <span>СТАВКА НА РЫБАЛКУ</span>
-                <span id="selectedFishingLabel">ШАГ 0 / 7 • ЗАБЕРИ В ЛЮБОЙ МОМЕНТ</span>
-            </div>
-
-            <!-- Панель ставки и кнопки зажатия -->
-        <div class="betting-box">
-            <div class="betting-info">
-                <span>СТАВКА НА ЗАБРОС</span>
                 <span id="selectedFishingLabel">ЗАЖМИ И ОТПУСТИ ДО ОБРЫВА</span>
             </div>
 
@@ -2520,7 +2513,6 @@
         </div>
 
         <button class="btn-return" onclick="exitIceFishingLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
-    </div>
 
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
@@ -4899,7 +4891,7 @@ const assignedCode = "ОЖИДАНИЕ...";
             closeSubGame('casino');
         }
 
-        function bindFishingHoldEvents() {
+       function bindFishingHoldEvents() {
             const btn = document.getElementById('fishingHoldBtn');
             if (!btn || btn.dataset.bound === '1') return;
             btn.dataset.bound = '1';
@@ -4922,6 +4914,11 @@ const assignedCode = "ОЖИДАНИЕ...";
             window.addEventListener('touchend', onRelease);
             window.addEventListener('touchcancel', onRelease);
         }
+
+        // Автоматически привязываем события при загрузке страницы
+        document.addEventListener('DOMContentLoaded', () => {
+            bindFishingHoldEvents();
+        });
 
         // Генерация скрытой точки обрыва с RTP ~84% в пользу казино
         function generateSecretSnapPoint() {
