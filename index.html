@@ -3473,57 +3473,7 @@ function switchPage(pageId, buttonElement) {
             if (sliderEl) sliderEl.value = val;
         }
 
-        function onSliderBet(value, type) {
-            const val = Math.max(1, parseInt(value) || 1);
-            if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
-            if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
-            if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
-            if (type === 'rocket' && isPlayingRocket) { syncBetUI('rocket', currentBetRocket); return; }
-
-            if (type === 'roulette') currentBetRoulette = val;
-            else if (type === 'rocket') currentBetRocket = val;
-            else if (type === 'mines') currentBetMines = val;
-            else if (type === 'plinko') currentBetPlinko = val;
-            else if (type === 'coinflip') currentBetCoinflip = val;
-
-            syncBetUI(type, val);
-        }
-
-        function changeBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = Math.max(1, currentBetRocket + amount); syncBetUI('rocket', currentBetRocket); }
-            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
-            else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
-            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
-            triggerHaptic('impact', 'light');
-        }
-function setBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
-            else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
-            else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
-            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
-            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
-                currentBetFishing = amount;
-                syncBetUI('fishing', currentBetFishing);
-            }
-            triggerHaptic('impact', 'light');
-        }
-
-        function changeBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = Math.max(1, currentBetRocket + amount); syncBetUI('rocket', currentBetRocket); }
-            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
-            else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
-            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
-            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
-                currentBetFishing = Math.max(1, currentBetFishing + amount);
-                syncBetUI('fishing', currentBetFishing);
-            }
-            triggerHaptic('impact', 'light');
-        }
-
-        function onSliderBet(value, type) {
+    function onSliderBet(value, type) {
             const val = Math.max(1, parseInt(value) || 1);
             if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
             if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
@@ -3539,6 +3489,52 @@ function setBet(amount, type) {
             else if (type === 'fishing') currentBetFishing = val;
 
             syncBetUI(type, val);
+        }
+
+        function changeBet(amount, type) {
+            if (type === 'roulette' && !isSpinning) { 
+                currentBetRoulette = Math.max(1, currentBetRoulette + amount); 
+                syncBetUI('roulette', currentBetRoulette); 
+            } else if (type === 'rocket' && !isPlayingRocket) { 
+                currentBetRocket = Math.max(1, currentBetRocket + amount); 
+                syncBetUI('rocket', currentBetRocket); 
+            } else if (type === 'mines' && !isPlayingMines) { 
+                currentBetMines = Math.max(1, currentBetMines + amount); 
+                syncBetUI('mines', currentBetMines); 
+            } else if (type === 'plinko') { 
+                currentBetPlinko = Math.max(1, currentBetPlinko + amount); 
+                syncBetUI('plinko', currentBetPlinko); 
+            } else if (type === 'coinflip' && !isFlippingCoin) { 
+                currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); 
+                syncBetUI('coinflip', currentBetCoinflip); 
+            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
+                currentBetFishing = Math.max(1, currentBetFishing + amount);
+                syncBetUI('fishing', currentBetFishing);
+            }
+            triggerHaptic('impact', 'light');
+        }
+
+        function setBet(amount, type) {
+            if (type === 'roulette' && !isSpinning) { 
+                currentBetRoulette = amount; 
+                syncBetUI('roulette', currentBetRoulette); 
+            } else if (type === 'rocket' && !isPlayingRocket) { 
+                currentBetRocket = amount; 
+                syncBetUI('rocket', currentBetRocket); 
+            } else if (type === 'mines' && !isPlayingMines) { 
+                currentBetMines = amount; 
+                syncBetUI('mines', currentBetMines); 
+            } else if (type === 'plinko') { 
+                currentBetPlinko = amount; 
+                syncBetUI('plinko', currentBetPlinko); 
+            } else if (type === 'coinflip' && !isFlippingCoin) { 
+                currentBetCoinflip = amount; 
+                syncBetUI('coinflip', currentBetCoinflip); 
+            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
+                currentBetFishing = amount;
+                syncBetUI('fishing', currentBetFishing);
+            }
+            triggerHaptic('impact', 'light');
         }
 
         /* --- ТАБЛИЦА ЛИДЕРОВ --- */
