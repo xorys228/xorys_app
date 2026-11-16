@@ -1928,8 +1928,7 @@
             </div>
         </div>
     </div>
-
-    <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
+<!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
             <div class="rg-logo">РАКЕТА <span>XORYS</span></div>
@@ -1993,34 +1992,33 @@
             </div>
         </div>
 
-     <div class="betting-box">
+        <!-- ПРАВИЛЬНЫЙ БЛОК СТАВОК ДЛЯ РАКЕТЫ (НЕ РЫБОЛОВЛЯ!) -->
+        <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА НА ЗАБРОС</span>
-                <span id="selectedFishingLabel">ЗАЖМИ И ОТПУСТИ ДО ОБРЫВА</span>
+                <span>СТАВКА (ЗВЕЗДЫ)</span>
+                <span id="rocketStatusLabel">КРАШ ИГРА</span>
             </div>
 
             <div class="bet-row">
                 <div class="bet-adjuster">
-                    <button class="btn-chg" onclick="changeBet(-5, 'fishing')">-</button>
-                    <span id="betAmountFishing" class="bet-number">10</span>
-                    <button class="btn-chg" onclick="changeBet(5, 'fishing')">+</button>
+                    <button class="btn-chg" onclick="changeBet(-5, 'rocket')">-</button>
+                    <span id="betAmountRocket" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'rocket')">+</button>
                 </div>
-                <button id="fishingHoldBtn" class="btn-main-action btn-style-start" style="user-select: none; -webkit-user-select: none; touch-action: none;">
-                    ЗАЖАТЬ И ТЯНУТЬ
-                </button>
+                <button id="gameBtn" class="btn-main-action btn-style-start" onclick="handleRocketClick()">СТАВКА</button>
             </div>
 
             <div class="slider-container">
                 <span class="slider-label">1</span>
-                <input type="range" id="betSliderFishing" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'fishing')">
-                <span class="slider-label" id="maxSliderFishing">100</span>
+                <input type="range" id="betSliderRocket" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'rocket')">
+                <span class="slider-label" id="maxSliderRocket">100</span>
             </div>
 
             <div class="quick-chips">
-                <button class="chip" onclick="setBet(10, 'fishing')">10</button>
-                <button class="chip" onclick="setBet(25, 'fishing')">25</button>
-                <button class="chip" onclick="setBet(50, 'fishing')">50</button>
-                <button class="chip" onclick="setBet(100, 'fishing')">100</button>
+                <button class="chip" onclick="setBet(10, 'rocket')">10</button>
+                <button class="chip" onclick="setBet(25, 'rocket')">25</button>
+                <button class="chip" onclick="setBet(50, 'rocket')">50</button>
+                <button class="chip" onclick="setBet(100, 'rocket')">100</button>
             </div>
         </div>
 
