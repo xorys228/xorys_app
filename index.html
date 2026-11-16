@@ -2487,35 +2487,35 @@
                 <span id="selectedFishingLabel">ШАГ 0 / 7 • ЗАБЕРИ В ЛЮБОЙ МОМЕНТ</span>
             </div>
 
-            <!-- Стартовая панель ставки (скрывается во время серии забросов) -->
-            <div id="fishingBetControls">
-                <div class="bet-row">
-                    <div class="bet-adjuster">
-                        <button class="btn-chg" onclick="changeBet(-5, 'fishing')">-</button>
-                        <span id="betAmountFishing" class="bet-number">10</span>
-                        <button class="btn-chg" onclick="changeBet(5, 'fishing')">+</button>
-                    </div>
-                    <button id="fishingStartBtn" class="btn-main-action btn-style-start" onclick="castFishingLine()">ЗАБРОСИТЬ</button>
-                </div>
-
-                <div class="slider-container">
-                    <span class="slider-label">1</span>
-                    <input type="range" id="betSliderFishing" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'fishing')">
-                    <span class="slider-label" id="maxSliderFishing">100</span>
-                </div>
-
-                <div class="quick-chips">
-                    <button class="chip" onclick="setBet(10, 'fishing')">10</button>
-                    <button class="chip" onclick="setBet(25, 'fishing')">25</button>
-                    <button class="chip" onclick="setBet(50, 'fishing')">50</button>
-                    <button class="chip" onclick="setBet(100, 'fishing')">100</button>
-                </div>
+            <!-- Панель ставки и кнопки зажатия -->
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА НА ЗАБРОС</span>
+                <span id="selectedFishingLabel">ЗАЖМИ И ОТПУСТИ ДО ОБРЫВА</span>
             </div>
 
-            <!-- Панель активной серии (ЕЩЁ ЗАБРОС / ЗАБРАТЬ УЛОВ) -->
-            <div id="fishingActiveControls" class="fishing-actions-grid" style="display: none;">
-                <button id="fishingCashoutBtn" class="btn-cashout-fish" onclick="cashoutIceFishing()">ЗАБРАТЬ 0 ★</button>
-                <button id="fishingCastMoreBtn" class="btn-main-action btn-style-start" onclick="castFishingLine()">ЕЩЁ ЗАБРОС</button>
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'fishing')">-</button>
+                    <span id="betAmountFishing" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'fishing')">+</button>
+                </div>
+                <button id="fishingHoldBtn" class="btn-main-action btn-style-start" style="user-select: none; -webkit-user-select: none; touch-action: none;">
+                    ЗАЖАТЬ И ТЯНУТЬ
+                </button>
+            </div>
+
+            <div class="slider-container">
+                <span class="slider-label">1</span>
+                <input type="range" id="betSliderFishing" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'fishing')">
+                <span class="slider-label" id="maxSliderFishing">100</span>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'fishing')">10</button>
+                <button class="chip" onclick="setBet(25, 'fishing')">25</button>
+                <button class="chip" onclick="setBet(50, 'fishing')">50</button>
+                <button class="chip" onclick="setBet(100, 'fishing')">100</button>
             </div>
         </div>
 
