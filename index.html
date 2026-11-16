@@ -1993,32 +1993,34 @@
             </div>
         </div>
 
-        <div class="betting-box">
+       <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА (ЗВЕЗДЫ)</span>
-                <span>КРАШ-МНОЖИТЕЛЬ ДО x50</span>
+                <span>СТАВКА НА ЗАБРОС</span>
+                <span id="selectedFishingLabel">ЗАЖМИ И ОТПУСТИ ДО ОБРЫВА</span>
             </div>
-            
+
             <div class="bet-row">
                 <div class="bet-adjuster">
-                    <button class="btn-chg" onclick="changeBet(-5, 'rocket')">-</button>
-                    <span id="betAmountRocket" class="bet-number">10</span>
-                    <button class="btn-chg" onclick="changeBet(5, 'rocket')">+</button>
+                    <button class="btn-chg" onclick="changeBet(-5, 'fishing')">-</button>
+                    <span id="betAmountFishing" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'fishing')">+</button>
                 </div>
-                <button id="gameBtn" class="btn-main-action btn-style-start" onclick="handleRocketClick()">СТАВКА</button>
+                <button id="fishingHoldBtn" class="btn-main-action btn-style-start" style="user-select: none; -webkit-user-select: none; touch-action: none;">
+                    ЗАЖАТЬ И ТЯНУТЬ
+                </button>
             </div>
 
             <div class="slider-container">
                 <span class="slider-label">1</span>
-                <input type="range" id="betSliderRocket" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'rocket')">
-                <span class="slider-label" id="maxSliderRocket">100</span>
+                <input type="range" id="betSliderFishing" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'fishing')">
+                <span class="slider-label" id="maxSliderFishing">100</span>
             </div>
 
             <div class="quick-chips">
-                <button class="chip" onclick="setBet(10, 'rocket')">10</button>
-                <button class="chip" onclick="setBet(25, 'rocket')">25</button>
-                <button class="chip" onclick="setBet(50, 'rocket')">50</button>
-                <button class="chip" onclick="setBet(100, 'rocket')">100</button>
+                <button class="chip" onclick="setBet(10, 'fishing')">10</button>
+                <button class="chip" onclick="setBet(25, 'fishing')">25</button>
+                <button class="chip" onclick="setBet(50, 'fishing')">50</button>
+                <button class="chip" onclick="setBet(100, 'fishing')">100</button>
             </div>
         </div>
 
@@ -4861,41 +4863,81 @@ const assignedCode = "ОЖИДАНИЕ...";
             }, 4300);
         }
 
-    /* --- 7. ICE FISHING (СЕРИЯ ЗАБРОСОВ + АКУЛА-ХИЩНИК, RTP ~84%) --- */
+   /* --- 7. ICE FISHING: HOLD & RELEASE (ЗАЖМИ И ОТПУСТИ, RTP ~84%) --- */
         let currentBetFishing = 10;
         let activeFishingBet = 0;
-        let isFishingSessionActive = false;
-        let isCastingNow = false;
-        let fishingStep = 0;
+        let isHoldingRod = false;
+        let isFishingCooldown = false;
+        let holdAnimFrame = null;
+        let holdStartTime = 0;
+        let currentLiveMult = 1.00;
+        let secretSnapMult = 1.00;
+        let lastHapticStep = 0;
 
-        // Конфиг ступеней: множитель, шанс успеха (RTP ~84% в пользу казино), рыба и цвета
-        const FISHING_STEPS = [
-            { mult: 1.25, winChance: 0.70, name: 'ОКУНЬ',     c1: '#38bdf8', c2: '#0369a1', border: '#38bdf8' },
-            { mult: 1.65, winChance: 0.68, name: 'ГОЛЕЦ',     c1: '#34d399', c2: '#047857', border: '#10b981' },
-            { mult: 2.30, winChance: 0.64, name: 'СУДАК',     c1: '#818cf8', c2: '#4338ca', border: '#6366f1' },
-            { mult: 3.50, winChance: 0.58, name: 'ЛОСОСЬ',    c1: '#fb7185', c2: '#be123c', border: '#f43f5e' },
-            { mult: 6.00, winChance: 0.50, name: 'ОСЁТР',     c1: '#facc15', c2: '#b45309', border: '#facc15' },
-            { mult: 12.0, winChance: 0.42, name: 'ТУНЕЦ',     c1: '#f97316', c2: '#9a3412', border: '#f97316' },
-            { mult: 25.0, winChance: 0.35, name: 'ЛЕВИАФАН',  c1: '#ef4444', c2: '#7f1d1d', border: '#ef4444' }
+        // Пороги рыбы для отображения трофея при отпускании
+        const FISH_TIERS = [
+            { minMult: 12.0, name: 'ЛЕВИАФАН', c1: '#ef4444', c2: '#7f1d1d', border: '#ef4444' },
+            { minMult: 6.0,  name: 'ТУНЕЦ',    c1: '#f97316', c2: '#9a3412', border: '#f97316' },
+            { minMult: 3.5,  name: 'ОСЁТР',    c1: '#facc15', c2: '#b45309', border: '#facc15' },
+            { minMult: 2.3,  name: 'ЛОСОСЬ',   c1: '#fb7185', c2: '#be123c', border: '#f43f5e' },
+            { minMult: 1.65, name: 'СУДАК',    c1: '#818cf8', c2: '#4338ca', border: '#6366f1' },
+            { minMult: 1.15, name: 'ОКУНЬ',    c1: '#38bdf8', c2: '#0369a1', border: '#38bdf8' }
         ];
 
         function openFishingGame() {
             switchPage('fishingPage');
             triggerHaptic('impact', 'medium');
-            if (!isFishingSessionActive) {
-                resetFishingVisuals(true);
-            }
+            resetFishingVisuals(true);
+            bindFishingHoldEvents();
             updateBalanceUI();
             const el = document.getElementById('userStarsFishing');
             if (el) el.innerText = formatStars(starsBalance);
         }
 
         function exitIceFishingLobby() {
-            if (isCastingNow) return;
-            if (isFishingSessionActive && fishingStep > 0) {
-                cashoutIceFishing();
-            }
+            if (isHoldingRod) releaseFishingRod();
             closeSubGame('casino');
+        }
+
+        function bindFishingHoldEvents() {
+            const btn = document.getElementById('fishingHoldBtn');
+            if (!btn || btn.dataset.bound === '1') return;
+            btn.dataset.bound = '1';
+
+            const onPress = (e) => {
+                e.preventDefault();
+                startHoldingRod();
+            };
+
+            const onRelease = (e) => {
+                if (!isHoldingRod) return;
+                e.preventDefault();
+                releaseFishingRod();
+            };
+
+            btn.addEventListener('mousedown', onPress);
+            btn.addEventListener('touchstart', onPress, { passive: false });
+
+            window.addEventListener('mouseup', onRelease);
+            window.addEventListener('touchend', onRelease);
+            window.addEventListener('touchcancel', onRelease);
+        }
+
+        // Генерация скрытой точки обрыва с RTP ~84% в пользу казино
+        function generateSecretSnapPoint() {
+            const r = Math.random();
+            // 16% мгновенный срыв до 1.15x (акула у самой лунки)
+            if (r < 0.16) return 1.05 + Math.random() * 0.09;
+            // Формула с house edge ~16%: P(X >= m) = 0.84 / m
+            const raw = 0.84 / (1 - r);
+            return Math.min(25.0, Number(raw.toFixed(2)));
+        }
+
+        function getFishTierByMult(mult) {
+            for (let i = 0; i < FISH_TIERS.length; i++) {
+                if (mult >= FISH_TIERS[i].minMult) return FISH_TIERS[i];
+            }
+            return FISH_TIERS[FISH_TIERS.length - 1];
         }
 
         function resetFishingVisuals(fullReset = false) {
@@ -4906,7 +4948,10 @@ const assignedCode = "ОЖИДАНИЕ...";
             const fisherman = document.getElementById('fishermanChar');
             const bobber = document.getElementById('fishingBobber');
             const tensionWrap = document.getElementById('tensionMeterWrap');
+            const tensionFill = document.getElementById('tensionMeterFill');
             const status = document.getElementById('fishingStatusBanner');
+            const potEl = document.getElementById('fishingCurrentPot');
+            const btn = document.getElementById('fishingHoldBtn');
 
             if (display) display.classList.remove('danger-flash', 'win-flash');
             if (trophy) trophy.classList.remove('lifted', 'floating');
@@ -4915,94 +4960,38 @@ const assignedCode = "ОЖИДАНИЕ...";
             if (fisherman) fisherman.classList.remove('reeling');
             if (bobber) bobber.classList.remove('bite');
             if (tensionWrap) tensionWrap.classList.remove('active');
+            if (tensionFill) tensionFill.style.width = '10%';
 
             if (fullReset) {
-                fishingStep = 0;
-                activeFishingBet = 0;
-                isFishingSessionActive = false;
-                isCastingNow = false;
-                if (status) status.innerText = 'СДЕЛАЙТЕ ЗАБРОС';
-                updateFishingPotUI();
-                updateFishingLadderUI();
-                toggleFishingControls(false);
-            }
-        }
-
-        function toggleFishingControls(inSession) {
-            const betCtrl = document.getElementById('fishingBetControls');
-            const actCtrl = document.getElementById('fishingActiveControls');
-            if (betCtrl) betCtrl.style.display = inSession ? 'none' : 'block';
-            if (actCtrl) actCtrl.style.display = inSession ? 'grid' : 'none';
-        }
-
-        function updateFishingPotUI() {
-            const potEl = document.getElementById('fishingCurrentPot');
-            const lblEl = document.getElementById('selectedFishingLabel');
-            const cashoutBtn = document.getElementById('fishingCashoutBtn');
-
-            if (!isFishingSessionActive || fishingStep === 0) {
+                isHoldingRod = false;
+                isFishingCooldown = false;
+                currentLiveMult = 1.00;
+                if (status) status.innerText = 'ЗАЖМИТЕ КНОПКУ';
                 if (potEl) potEl.innerText = '0 ★ (x1.00)';
-                if (lblEl) lblEl.innerText = 'ШАГ 0 / 7 • ЗАБЕРИ В ЛЮБОЙ МОМЕНТ';
-                return;
-            }
-
-            const stepData = FISHING_STEPS[fishingStep - 1];
-            const currentWin = Number((activeFishingBet * stepData.mult).toFixed(1));
-            if (potEl) potEl.innerText = `${formatStars(currentWin)} ★ (x${stepData.mult})`;
-            if (lblEl) lblEl.innerText = `УЛОВ: ${stepData.name} • ШАГ ${fishingStep} / 7`;
-            if (cashoutBtn) {
-                cashoutBtn.innerText = `ЗАБРАТЬ ${formatStars(currentWin)} ★`;
-                cashoutBtn.disabled = isCastingNow;
+                if (btn) {
+                    btn.innerText = 'ЗАЖАТЬ И ТЯНУТЬ';
+                    btn.className = 'btn-main-action btn-style-start';
+                    btn.disabled = false;
+                }
+                updateFishingLadderHighlight(0);
             }
         }
 
-        function updateFishingLadderUI() {
+        function updateFishingLadderHighlight(mult) {
+            const thresholds = [1.25, 1.65, 2.30, 3.50, 6.00, 12.0, 25.0];
+            let activeStep = 0;
+            for (let i = 0; i < thresholds.length; i++) {
+                if (mult >= thresholds[i]) activeStep = i + 1;
+            }
             document.querySelectorAll('#fishingLadder .ladder-step').forEach(el => {
                 const s = parseInt(el.getAttribute('data-step'), 10);
                 el.classList.remove('passed', 'current');
-                if (s < fishingStep) el.classList.add('passed');
-                if (s === fishingStep) el.classList.add('current');
+                if (s < activeStep) el.classList.add('passed');
+                if (s === activeStep) el.classList.add('current');
             });
         }
 
-        // Синхронизация кнопок ставки для fishing
-        const origChangeBet = changeBet;
-        changeBet = function(amount, type) {
-            if (type === 'fishing' && !isFishingSessionActive && !isCastingNow) {
-                currentBetFishing = Math.max(1, currentBetFishing + amount);
-                syncBetUI('fishing', currentBetFishing);
-                triggerHaptic('impact', 'light');
-                return;
-            }
-            origChangeBet(amount, type);
-        };
-
-        const origSetBet = setBet;
-        setBet = function(amount, type) {
-            if (type === 'fishing' && !isFishingSessionActive && !isCastingNow) {
-                currentBetFishing = amount;
-                syncBetUI('fishing', currentBetFishing);
-                triggerHaptic('impact', 'light');
-                return;
-            }
-            origSetBet(amount, type);
-        };
-
-        const origOnSliderBet = onSliderBet;
-        onSliderBet = function(value, type) {
-            if (type === 'fishing') {
-                if (isFishingSessionActive || isCastingNow) {
-                    syncBetUI('fishing', currentBetFishing);
-                    return;
-                }
-                currentBetFishing = Math.max(1, parseInt(value) || 1);
-                syncBetUI('fishing', currentBetFishing);
-                return;
-            }
-            origOnSliderBet(value, type);
-        };
-
-        function renderTrophyVisual(isShark, stepData) {
+        function renderTrophyVisual(isShark, tierData, finalMult) {
             const peaceful = document.getElementById('peacefulFishSvg');
             const shark = document.getElementById('predatorSharkSvg');
             const gradStart = document.getElementById('trophyGradStart');
@@ -5019,164 +5008,250 @@ const assignedCode = "ОЖИДАНИЕ...";
                 if (badgeRect) badgeRect.setAttribute('stroke', '#ef4444');
                 if (badgeText) {
                     badgeText.setAttribute('fill', '#ef4444');
-                    badgeText.textContent = 'АКУЛА 0x!';
+                    badgeText.textContent = 'ОБРЫВ / АКУЛА!';
                 }
             } else {
                 if (peaceful) peaceful.style.display = 'block';
                 if (shark) shark.style.display = 'none';
-                if (gradStart) gradStart.setAttribute('stop-color', stepData.c1);
-                if (gradEnd) gradEnd.setAttribute('stop-color', stepData.c2);
-                if (tail) tail.setAttribute('fill', stepData.c2);
-                if (finL) finL.setAttribute('fill', stepData.c1);
-                if (finR) finR.setAttribute('fill', stepData.c1);
-                if (badgeRect) badgeRect.setAttribute('stroke', stepData.border);
+                if (gradStart) gradStart.setAttribute('stop-color', tierData.c1);
+                if (gradEnd) gradEnd.setAttribute('stop-color', tierData.c2);
+                if (tail) tail.setAttribute('fill', tierData.c2);
+                if (finL) finL.setAttribute('fill', tierData.c1);
+                if (finR) finR.setAttribute('fill', tierData.c1);
+                if (badgeRect) badgeRect.setAttribute('stroke', tierData.border);
                 if (badgeText) {
                     badgeText.setAttribute('fill', '#facc15');
-                    badgeText.textContent = `${stepData.name} x${stepData.mult}`;
+                    badgeText.textContent = `${tierData.name} x${finalMult.toFixed(2)}`;
                 }
             }
         }
 
-        function castFishingLine() {
-            if (isCastingNow) return;
-
-            // Если это первый заброс — списываем ставку
-            if (!isFishingSessionActive) {
-                if (starsBalance < currentBetFishing) {
-                    showToast('Недостаточно звезд!');
-                    return;
-                }
-                starsBalance = Number((starsBalance - currentBetFishing).toFixed(1));
-                activeFishingBet = currentBetFishing;
-                totalGamesPlayed += 1;
-                isFishingSessionActive = true;
-                fishingStep = 0;
-                updateBalanceUI();
-                document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
-                toggleFishingControls(true);
-            }
-
-            if (fishingStep >= FISHING_STEPS.length) {
-                cashoutIceFishing();
+        function startHoldingRod() {
+            if (isHoldingRod || isFishingCooldown) return;
+            if (starsBalance < currentBetFishing) {
+                showToast('Недостаточно звезд!');
                 return;
             }
 
-            isCastingNow = true;
-            resetFishingVisuals(false);
+            // Списываем ставку при зажатии кнопки
+            starsBalance = Number((starsBalance - currentBetFishing).toFixed(1));
+            activeFishingBet = currentBetFishing;
+            totalGamesPlayed += 1;
+            updateBalanceUI();
+            document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
 
-            const castMoreBtn = document.getElementById('fishingCastMoreBtn');
-            const cashoutBtn = document.getElementById('fishingCashoutBtn');
+            resetFishingVisuals(false);
+            isHoldingRod = true;
+            holdStartTime = performance.now();
+            currentLiveMult = 1.00;
+            secretSnapMult = generateSecretSnapPoint();
+            lastHapticStep = 0;
+
+            const btn = document.getElementById('fishingHoldBtn');
             const status = document.getElementById('fishingStatusBanner');
             const fisherman = document.getElementById('fishermanChar');
             const bobber = document.getElementById('fishingBobber');
             const tensionWrap = document.getElementById('tensionMeterWrap');
+
+            if (btn) {
+                btn.innerText = 'ОТПУСТИ! x1.00';
+                btn.className = 'btn-main-action btn-style-cashout';
+            }
+            if (status) status.innerText = 'ТЯНЕМ! ОТПУСТИ ВОВРЕМЯ!';
+            if (fisherman) fisherman.classList.add('reeling');
+            if (bobber) bobber.classList.add('bite');
+            if (tensionWrap) tensionWrap.classList.add('active');
+
+            triggerHaptic('impact', 'medium');
+            holdAnimFrame = requestAnimationFrame(updateFishingHoldLoop);
+        }
+
+        function updateFishingHoldLoop(now) {
+            if (!isHoldingRod) return;
+
+            const elapsedSec = (now - holdStartTime) / 1000;
+            // Плавный ускоряющийся рост множителя от времени удержания
+            currentLiveMult = Number((1.00 + Math.pow(elapsedSec, 1.38) * 0.42).toFixed(2));
+
+            // Проверка на обрыв лески / атаку акулы (передержал кнопку!)
+            if (currentLiveMult >= secretSnapMult) {
+                triggerFishingSnapLoss();
+                return;
+            }
+
+            const potentialWin = Number((activeFishingBet * currentLiveMult).toFixed(1));
+            const potEl = document.getElementById('fishingCurrentPot');
+            const btn = document.getElementById('fishingHoldBtn');
             const tensionFill = document.getElementById('tensionMeterFill');
+
+            if (potEl) potEl.innerText = `${formatStars(potentialWin)} ★ (x${currentLiveMult.toFixed(2)})`;
+            if (btn) btn.innerText = `ОТПУСТИ (${formatStars(potentialWin)} ★)`;
+
+            // Визуальное заполнение полоски натяжения (растёт с мультипликатором + лёгкая дрожь)
+            const visualPct = Math.min(98, 12 + Math.log2(currentLiveMult) * 24 + (Math.random() * 4));
+            if (tensionFill) tensionFill.style.width = visualPct + '%';
+
+            updateFishingLadderHighlight(currentLiveMult);
+
+            // Тактильный отклик по мере натяжения
+            const hapticTick = Math.floor(elapsedSec * 3.5);
+            if (hapticTick > lastHapticStep) {
+                lastHapticStep = hapticTick;
+                triggerHaptic('impact', currentLiveMult > 2.5 ? 'heavy' : 'light');
+            }
+
+            holdAnimFrame = requestAnimationFrame(updateFishingHoldLoop);
+        }
+
+        // Игрок отпустил кнопку вовремя — вытаскиваем рыбу!
+        function releaseFishingRod() {
+            if (!isHoldingRod) return;
+            isHoldingRod = false;
+            isFishingCooldown = true;
+            cancelAnimationFrame(holdAnimFrame);
+
+            const fisherman = document.getElementById('fishermanChar');
+            const bobber = document.getElementById('fishingBobber');
+            const tensionWrap = document.getElementById('tensionMeterWrap');
             const trophy = document.getElementById('caughtTrophyGroup');
             const splash = document.getElementById('waterSplash');
             const display = document.getElementById('fishingDisplayBox');
+            const status = document.getElementById('fishingStatusBanner');
             const popup = document.getElementById('fishingWinPopup');
+            const btn = document.getElementById('fishingHoldBtn');
 
-            if (castMoreBtn) { castMoreBtn.disabled = true; castMoreBtn.innerText = 'ТЯНЕМ...'; }
-            if (cashoutBtn) cashoutBtn.disabled = true;
+            if (fisherman) fisherman.classList.remove('reeling');
+            if (bobber) bobber.classList.remove('bite');
+            if (tensionWrap) tensionWrap.classList.remove('active');
+            if (btn) { btn.disabled = true; btn.innerText = 'ПОДСЕЧКА...'; }
 
-            status.innerText = 'ПОКЛЁВКА! НАТЯЖЕНИЕ ЛЕСКИ...';
-            fisherman.classList.add('reeling');
-            bobber.classList.add('bite');
-            tensionWrap.classList.add('active');
-            triggerHaptic('impact', 'medium');
+            // Защита от случайного микро-клика (< 1.15x — рыба сорвалась с крючка)
+            if (currentLiveMult < 1.15) {
+                status.innerText = 'РАНО ОТПУСТИЛ — СОРВАЛАСЬ!';
+                document.getElementById('fishingPopupTitle').innerText = 'СЛИШКОМ РАНО!';
+                document.getElementById('fishingPopupTitle').style.color = '#94a3b8';
+                document.getElementById('fishingPopupValue').innerText = 'Держите дольше x1.15';
+                document.getElementById('fishingPopupValue').style.color = '#ffffff';
+                popup.classList.add('show');
+                playSound('error');
+                triggerHaptic('notification', 'warning');
 
-            // Анимация натяжения лески
-            let tension = 18;
-            const tensionTimer = setInterval(() => {
-                tension = Math.min(98, tension + Math.floor(Math.random() * 22 + 8));
-                if (tensionFill) tensionFill.style.width = tension + '%';
-            }, 140);
+                setTimeout(() => resetFishingVisuals(true), 1500);
+                return;
+            }
 
-            const targetStep = FISHING_STEPS[fishingStep];
-            const isCatchSuccess = (Math.random() < targetStep.winChance);
-
-            setTimeout(() => {
-                clearInterval(tensionTimer);
-                tensionWrap.classList.remove('active');
-                fisherman.classList.remove('reeling');
-                bobber.classList.remove('bite');
-
-                splash.style.opacity = '1';
-                setTimeout(() => { splash.style.opacity = '0'; }, 650);
-
-                if (isCatchSuccess) {
-                    // УСПЕШНЫЙ УЛОВ
-                    fishingStep += 1;
-                    renderTrophyVisual(false, targetStep);
-                    trophy.classList.add('lifted');
-                    setTimeout(() => { if (isFishingSessionActive) trophy.classList.add('floating'); }, 650);
-
-                    display.classList.add('win-flash');
-                    status.innerText = `ПОЙМАН: ${targetStep.name} (x${targetStep.mult})`;
-
-                    const currentWin = Number((activeFishingBet * targetStep.mult).toFixed(1));
-                    document.getElementById('fishingPopupTitle').innerText = `ШАГ ${fishingStep} ПРОЙДЕН!`;
-                    document.getElementById('fishingPopupTitle').style.color = '#38bdf8';
-                    document.getElementById('fishingPopupValue').innerText = `${targetStep.name} x${targetStep.mult} (${formatStars(currentWin)} ★)`;
-                    document.getElementById('fishingPopupValue').style.color = '#facc15';
-                    popup.classList.add('show');
-
-                    updateFishingPotUI();
-                    updateFishingLadderUI();
-                    playSound('win');
-                    triggerHaptic('notification', 'success');
-
-                    isCastingNow = false;
-                    if (fishingStep >= FISHING_STEPS.length) {
-                        // Максимальный 7-й шаг — автовыплата джекпота
-                        setTimeout(() => cashoutIceFishing(), 900);
-                    } else {
-                        if (castMoreBtn) { castMoreBtn.disabled = false; castMoreBtn.innerText = 'ЕЩЁ ЗАБРОС'; }
-                        if (cashoutBtn) cashoutBtn.disabled = false;
-                    }
-                } else {
-                    // ВЫЛЕТЕЛА АКУЛА-ХИЩНИК — СГОРАНИЕ БАНКА
-                    renderTrophyVisual(true, null);
-                    trophy.classList.add('lifted');
-                    display.classList.add('danger-flash');
-                    status.innerText = 'АКУЛА ПЕРЕКУСИЛА ЛЕСКУ!';
-
-                    document.getElementById('fishingPopupTitle').innerText = 'УЛОВ ПОТЕРЯН!';
-                    document.getElementById('fishingPopupTitle').style.color = '#ef4444';
-                    document.getElementById('fishingPopupValue').innerText = `ЛЕДЯНАЯ АКУЛА (-${activeFishingBet} ★)`;
-                    document.getElementById('fishingPopupValue').style.color = '#ffffff';
-                    popup.classList.add('show');
-
-                    addFishingHistory('АКУЛА 0x', '#ef4444');
-                    playSound('error');
-                    triggerHaptic('notification', 'error');
-
-                    setTimeout(() => {
-                        if (castMoreBtn) { castMoreBtn.disabled = false; castMoreBtn.innerText = 'ЕЩЁ ЗАБРОС'; }
-                        resetFishingVisuals(true);
-                    }, 2100);
-                }
-            }, 1250);
-        }
-
-        function cashoutIceFishing() {
-            if (!isFishingSessionActive || isCastingNow || fishingStep === 0) return;
-
-            const stepData = FISHING_STEPS[fishingStep - 1];
-            const winSum = Number((activeFishingBet * stepData.mult).toFixed(1));
+            // УСПЕШНЫЙ УЛОВ
+            const finalMult = currentLiveMult;
+            const tier = getFishTierByMult(finalMult);
+            const winSum = Number((activeFishingBet * finalMult).toFixed(1));
 
             starsBalance = Number((starsBalance + winSum).toFixed(1));
             totalStarsWon += winSum;
             updateBalanceUI();
             document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
 
-            addFishingHistory(`${stepData.name} x${stepData.mult}`, stepData.border);
+            splash.style.opacity = '1';
+            setTimeout(() => { splash.style.opacity = '0'; }, 650);
+
+            renderTrophyVisual(false, tier, finalMult);
+            trophy.classList.add('lifted');
+            setTimeout(() => trophy.classList.add('floating'), 600);
+
+            display.classList.add('win-flash');
+            status.innerText = `ПОЙМАН: ${tier.name} (x${finalMult.toFixed(2)})`;
+
+            document.getElementById('fishingPopupTitle').innerText = 'ОТЛИЧНАЯ ПОДСЕЧКА!';
+            document.getElementById('fishingPopupTitle').style.color = '#38bdf8';
+            document.getElementById('fishingPopupValue').innerText = `${tier.name} x${finalMult.toFixed(2)} (+${formatStars(winSum)} ★)`;
+            document.getElementById('fishingPopupValue').style.color = '#facc15';
+            popup.classList.add('show');
+
+            addFishingHistory(`${tier.name} x${finalMult.toFixed(2)}`, tier.border);
             playSound('win');
             triggerHaptic('notification', 'success');
-            showToast(`Улов забран: +${formatStars(winSum)} ★ (x${stepData.mult})`);
+            showToast(`Улов: ${tier.name} x${finalMult.toFixed(2)} (+${formatStars(winSum)} ★)`);
 
-            resetFishingVisuals(true);
+            setTimeout(() => resetFishingVisuals(true), 2100);
         }
+
+        // Игрок передержал кнопку — обрыв / атака Акулы
+        function triggerFishingSnapLoss() {
+            isHoldingRod = false;
+            isFishingCooldown = true;
+            cancelAnimationFrame(holdAnimFrame);
+
+            const fisherman = document.getElementById('fishermanChar');
+            const bobber = document.getElementById('fishingBobber');
+            const tensionWrap = document.getElementById('tensionMeterWrap');
+            const trophy = document.getElementById('caughtTrophyGroup');
+            const splash = document.getElementById('waterSplash');
+            const display = document.getElementById('fishingDisplayBox');
+            const status = document.getElementById('fishingStatusBanner');
+            const popup = document.getElementById('fishingWinPopup');
+            const btn = document.getElementById('fishingHoldBtn');
+
+            if (fisherman) fisherman.classList.remove('reeling');
+            if (bobber) bobber.classList.remove('bite');
+            if (tensionWrap) tensionWrap.classList.remove('active');
+            if (btn) { btn.disabled = true; btn.innerText = 'ОБРЫВ!'; }
+
+            splash.style.opacity = '1';
+            setTimeout(() => { splash.style.opacity = '0'; }, 650);
+
+            renderTrophyVisual(true, null, 0);
+            trophy.classList.add('lifted');
+            display.classList.add('danger-flash');
+            status.innerText = 'ПЕРЕДЕРЖАЛ! АКУЛА ПОРВАЛА ЛЕСКУ!';
+
+            document.getElementById('fishingPopupTitle').innerText = 'ЛЕСКА ЛОПНУЛА!';
+            document.getElementById('fishingPopupTitle').style.color = '#ef4444';
+            document.getElementById('fishingPopupValue').innerText = `АКУЛА (-${activeFishingBet} ★)`;
+            document.getElementById('fishingPopupValue').style.color = '#ffffff';
+            popup.classList.add('show');
+
+            addFishingHistory('ОБРЫВ 0x', '#ef4444');
+            playSound('error');
+            triggerHaptic('notification', 'error');
+
+            setTimeout(() => resetFishingVisuals(true), 2000);
+        }
+
+        // Синхронизация кнопок ставки для fishing
+        const origChangeBet = changeBet;
+        changeBet = function(amount, type) {
+            if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
+                currentBetFishing = Math.max(1, currentBetFishing + amount);
+                syncBetUI('fishing', currentBetFishing);
+                triggerHaptic('impact', 'light');
+                return;
+            }
+            origChangeBet(amount, type);
+        };
+
+        const origSetBet = setBet;
+        setBet = function(amount, type) {
+            if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
+                currentBetFishing = amount;
+                syncBetUI('fishing', currentBetFishing);
+                triggerHaptic('impact', 'light');
+                return;
+            }
+            origSetBet(amount, type);
+        };
+
+        const origOnSliderBet = onSliderBet;
+        onSliderBet = function(value, type) {
+            if (type === 'fishing') {
+                if (isHoldingRod || isFishingCooldown) {
+                    syncBetUI('fishing', currentBetFishing);
+                    return;
+                }
+                currentBetFishing = Math.max(1, parseInt(value) || 1);
+                syncBetUI('fishing', currentBetFishing);
+                return;
+            }
+            origOnSliderBet(value, type);
+        };
 
         function addFishingHistory(text, borderColor) {
             const hist = document.getElementById('fishingHistory');
