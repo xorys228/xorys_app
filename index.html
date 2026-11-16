@@ -1281,7 +1281,176 @@
             color: #38bdf8;
             font-family: monospace;
             margin: 6px 0;
+
+   /* --- ЭКРАН ИГРЫ ICE FISHING --- */
+        .fishing-display {
+            height: 245px;
+            border-radius: 16px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(180deg, #1e3a8a 0%, #3b82f6 42%, #bae6fd 58%, #e0f2fe 100%);
+            border: 1px solid rgba(56, 189, 248, 0.45);
+            box-shadow: inset 0 0 30px rgba(3, 7, 18, 0.5);
         }
+
+        .snow-overlay {
+            position: absolute;
+            inset: 0;
+            background-image:
+                radial-gradient(2px 2px at 20px 30px, #ffffff, transparent),
+                radial-gradient(2px 2px at 90px 70px, #ffffff, transparent),
+                radial-gradient(2.5px 2.5px at 160px 25px, #ffffff, transparent),
+                radial-gradient(2px 2px at 240px 85px, #ffffff, transparent);
+            background-size: 260px 140px;
+            animation: snowFall 4s linear infinite;
+            pointer-events: none;
+            z-index: 2;
+        }
+
+        @keyframes snowFall {
+            0% { background-position: 0 0; }
+            100% { background-position: 30px 140px; }
+        }
+
+        /* Этап 1: Ледяное колесо */
+        .ice-wheel-wrapper {
+            position: relative;
+            width: 145px;
+            height: 145px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 5;
+        }
+
+        .ice-wheel-pointer {
+            position: absolute;
+            top: -11px;
+            width: 0;
+            height: 0;
+            border-left: 8px solid transparent;
+            border-right: 8px solid transparent;
+            border-top: 16px solid #ef4444;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+            z-index: 15;
+        }
+
+        .ice-wheel-circle {
+            width: 145px;
+            height: 145px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #0284c7 0deg 60deg,
+                #f8fafc 60deg 120deg,
+                #2563eb 120deg 180deg,
+                #facc15 180deg 220deg,
+                #0284c7 220deg 280deg,
+                #dc2626 280deg 320deg,
+                #f8fafc 320deg 360deg
+            );
+            border: 4px solid #ffffff;
+            box-shadow: 0 8px 24px rgba(3, 7, 18, 0.45);
+            position: relative;
+            transition: transform 4s cubic-bezier(0.12, 0.8, 0.2, 1);
+        }
+
+        .ice-wheel-hub {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 44px;
+            height: 44px;
+            background: #0f172a;
+            border: 2.5px solid #38bdf8;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+            color: #38bdf8;
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+        }
+
+        /* Этап 2: Зимнее озеро и 3 лунки */
+        .ice-lake-scene {
+            display: none;
+            width: 100%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 12px 18px;
+            z-index: 6;
+            position: relative;
+        }
+
+        .ice-lake-scene.active {
+            display: flex;
+            animation: pageReveal 0.35s ease;
+        }
+
+        .fishing-prompt-badge {
+            background: rgba(15, 23, 42, 0.88);
+            border: 1px solid #38bdf8;
+            color: #ffffff;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 900;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+        }
+
+        .ice-catch-stage {
+            height: 85px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .caught-fish-anim {
+            animation: fishJumpOut 0.55s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes fishJumpOut {
+            0% { opacity: 0; transform: translateY(35px) scale(0.4); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        .ice-holes-row {
+            display: flex;
+            justify-content: space-around;
+            width: 100%;
+            gap: 10px;
+        }
+
+        .ice-hole-btn {
+            flex: 1;
+            height: 44px;
+            border-radius: 50%;
+            background: radial-gradient(ellipse at center, #0c4a6e 0%, #0284c7 75%, #ffffff 100%);
+            border: 2.5px solid #ffffff;
+            color: #ffffff;
+            font-size: 11px;
+            font-weight: 900;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(15, 23, 42, 0.4), inset 0 4px 8px rgba(0, 0, 0, 0.6);
+            transition: transform 0.15s ease;
+        }
+
+        .ice-hole-btn:active {
+            transform: scale(0.92);
+        }
+            
+        
     </style>
 </head>
 <body>
@@ -1527,6 +1696,33 @@
             </div>
         </div>
     </div>
+
+
+    <!-- 6. ICE FISHING -->
+            <div class="game-card-row" onclick="openFishingGame()">
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <circle cx="46" cy="62" r="48" fill="#0c4a6e" stroke="#38bdf8" stroke-width="3.5"/>
+                        <path d="M46 62 L46 14 A48 48 0 0 1 94 62 Z" fill="#0284c7"/>
+                        <path d="M46 62 L7 85 A48 48 0 0 1 46 14 Z" fill="#e0f2fe"/>
+                        <path d="M22 86 C26 52 52 24 84 22" stroke="#ffffff" stroke-width="3.5" stroke-linecap="round"/>
+                        <path d="M84 22 L84 44 C84 49 77 49 77 44" stroke="#facc15" stroke-width="2.5" stroke-linecap="round"/>
+                        <path d="M34 66 C44 54 62 54 72 66 C62 78 44 78 34 66 Z" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
+                        <polygon points="70,66 82,58 82,74" fill="#dc2626"/>
+                        <circle cx="43" cy="64" r="2.5" fill="#ffffff"/>
+                        <path d="M46 82 C54 73 68 73 76 82 C68 91 54 91 46 82 Z" fill="#facc15" stroke="#ffffff" stroke-width="1.5"/>
+                        <polygon points="75,82 84,76 84,88" fill="#eab308"/>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-fish"></i> БОНУС-ШОУ</span>
+                    <span class="game-name">ICE FISHING</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 415</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
+                    </div>
+                </div>
+            </div>
 
     <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
@@ -1836,6 +2032,85 @@
                 <button class="chip" onclick="setBet(25, 'coinflip')">25</button>
                 <button class="chip" onclick="setBet(50, 'coinflip')">50</button>
                 <button class="chip" onclick="setBet(100, 'coinflip')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="closeSubGame('casino')"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
+    </div>
+
+
+    <!-- ЭКРАН ИГРЫ "ICE FISHING" -->
+    <div id="fishingPage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">ICE FISHING <span>XORYS</span></div>
+            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsFishing">100</span></div>
+        </div>
+
+        <div class="rg-history" id="fishingHistory">
+            <div class="history-pill" style="border-color: #38bdf8;">x2</div>
+            <div class="history-pill" style="border-color: #ef4444;">HUGE RED x25</div>
+            <div class="history-pill" style="border-color: #facc15;">x5</div>
+        </div>
+
+        <div class="fishing-display">
+            <div class="snow-overlay"></div>
+
+            <!-- Этап 1: Колесо -->
+            <div class="ice-wheel-wrapper" id="iceWheelStage">
+                <div class="ice-wheel-pointer"></div>
+                <div class="ice-wheel-circle" id="iceWheelCircle">
+                    <div class="ice-wheel-hub"><i class="fa-solid fa-snowflake"></i></div>
+                </div>
+            </div>
+
+            <!-- Этап 2: Лунки (открывается при выпадении бонуса) -->
+            <div class="ice-lake-scene" id="iceLakeStage">
+                <div class="fishing-prompt-badge" id="fishingPromptText">ВЫБЕРИТЕ ЛУНКУ ДЛЯ ЗАБРОСА!</div>
+
+                <div class="ice-catch-stage" id="iceCatchResult">
+                    <i class="fa-solid fa-fish-fins" style="font-size: 36px; color: #0f172a; opacity: 0.45;"></i>
+                </div>
+
+                <div class="ice-holes-row" id="iceHolesRow">
+                    <button class="ice-hole-btn" onclick="pickIceHole(0)">ЛУНКА 1</button>
+                    <button class="ice-hole-btn" onclick="pickIceHole(1)">ЛУНКА 2</button>
+                    <button class="ice-hole-btn" onclick="pickIceHole(2)">ЛУНКА 3</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="color-picker-grid">
+            <button class="color-btn active" onclick="setFishingBetTarget('x2', this)">РЫБА (x2)</button>
+            <button class="color-btn" onclick="setFishingBetTarget('x5', this)">ЗОЛОТАЯ (x5)</button>
+            <button class="color-btn" onclick="setFishingBetTarget('bonus', this)">ЛУНКА (ДО x50)</button>
+        </div>
+
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА (ЗВЕЗДЫ)</span>
+                <span id="selectedFishingLabel">ВЫБОР: РЫБА (x2)</span>
+            </div>
+
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'fishing')">-</button>
+                    <span id="betAmountFishing" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'fishing')">+</button>
+                </div>
+                <button id="fishingBtn" class="btn-main-action btn-style-start" onclick="spinFishingWheel()">ЗАБРОС</button>
+            </div>
+
+            <div class="slider-container">
+                <span class="slider-label">1</span>
+                <input type="range" id="betSliderFishing" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'fishing')">
+                <span class="slider-label" id="maxSliderFishing">100</span>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'fishing')">10</button>
+                <button class="chip" onclick="setBet(25, 'fishing')">25</button>
+                <button class="chip" onclick="setBet(50, 'fishing')">50</button>
+                <button class="chip" onclick="setBet(100, 'fishing')">100</button>
             </div>
         </div>
 
@@ -4178,6 +4453,218 @@ const assignedCode = "ОЖИДАНИЕ...";
                 document.getElementById('refHubText').innerText = `${chosen.prize}⭐️`;
             }, 4300);
         }
+
+     /* --- 7. ICE FISHING --- */
+        let currentBetFishing = 10;
+        let selectedFishingTarget = 'x2';
+        let isFishingSpinning = false;
+        let isWaitingHolePick = false;
+        let iceWheelAngle = 0;
+
+        function openFishingGame() {
+            switchPage('fishingPage');
+            triggerHaptic('impact', 'medium');
+            updateBalanceUI();
+            const el = document.getElementById('userStarsFishing');
+            if (el) el.innerText = formatStars(starsBalance);
+        }
+
+        function setFishingBetTarget(target, el) {
+            if (isFishingSpinning || isWaitingHolePick) return;
+            selectedFishingTarget = target;
+            document.querySelectorAll('#fishingPage .color-btn').forEach(b => b.classList.remove('active'));
+            el.classList.add('active');
+            const names = {
+                x2: 'РЫБА (x2)',
+                x5: 'ЗОЛОТАЯ (x5)',
+                bonus: 'ЛУНКА (ДО x50)'
+            };
+            document.getElementById('selectedFishingLabel').innerText = 'ВЫБОР: ' + names[target];
+            triggerHaptic('impact', 'light');
+        }
+
+        // Подключаем изменение ставок для fishing
+        const origChangeBet = changeBet;
+        changeBet = function(amount, type) {
+            if (type === 'fishing' && !isFishingSpinning && !isWaitingHolePick) {
+                currentBetFishing = Math.max(1, currentBetFishing + amount);
+                syncBetUI('fishing', currentBetFishing);
+                triggerHaptic('impact', 'light');
+                return;
+            }
+            origChangeBet(amount, type);
+        };
+
+        const origSetBet = setBet;
+        setBet = function(amount, type) {
+            if (type === 'fishing' && !isFishingSpinning && !isWaitingHolePick) {
+                currentBetFishing = amount;
+                syncBetUI('fishing', currentBetFishing);
+                triggerHaptic('impact', 'light');
+                return;
+            }
+            origSetBet(amount, type);
+        };
+
+        const origOnSliderBet = onSliderBet;
+        onSliderBet = function(value, type) {
+            if (type === 'fishing') {
+                if (isFishingSpinning || isWaitingHolePick) {
+                    syncBetUI('fishing', currentBetFishing);
+                    return;
+                }
+                currentBetFishing = Math.max(1, parseInt(value) || 1);
+                syncBetUI('fishing', currentBetFishing);
+                return;
+            }
+            origOnSliderBet(value, type);
+        };
+
+        function spinFishingWheel() {
+            if (isFishingSpinning || isWaitingHolePick) return;
+            if (starsBalance < currentBetFishing) {
+                showToast('Недостаточно звезд!');
+                return;
+            }
+
+            starsBalance = Number((starsBalance - currentBetFishing).toFixed(1));
+            totalGamesPlayed += 1;
+            updateBalanceUI();
+            document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
+
+            isFishingSpinning = true;
+            const btn = document.getElementById('fishingBtn');
+            btn.innerText = 'КРУТИТСЯ...';
+            btn.disabled = true;
+            triggerHaptic('impact', 'medium');
+
+            // Сектора колеса: x2 (55%), x5 (25%), bonus (20%)
+            const rand = Math.random();
+            let outcome = 'x2';
+            let stopAngle = 30;
+            let pillLabel = 'x2';
+            let pillColor = '#38bdf8';
+
+            if (rand < 0.55) {
+                outcome = 'x2';
+                stopAngle = 30;
+                pillLabel = 'x2';
+                pillColor = '#38bdf8';
+            } else if (rand < 0.80) {
+                outcome = 'x5';
+                stopAngle = 200;
+                pillLabel = 'x5';
+                pillColor = '#facc15';
+            } else {
+                outcome = 'bonus';
+                stopAngle = 300;
+                pillLabel = 'ЛУНКА!';
+                pillColor = '#ef4444';
+            }
+
+            const targetAngle = (360 - stopAngle) % 360;
+            iceWheelAngle += (360 * 6) + (targetAngle - (iceWheelAngle % 360));
+            document.getElementById('iceWheelCircle').style.transform = `rotate(${iceWheelAngle}deg)`;
+
+            setTimeout(() => {
+                isFishingSpinning = false;
+
+                if (outcome === 'bonus') {
+                    // Запускаем этап выбора лунки!
+                    isWaitingHolePick = true;
+                    btn.innerText = 'В ЛУНКЕ...';
+                    document.getElementById('iceWheelStage').style.display = 'none';
+                    document.getElementById('iceLakeStage').classList.add('active');
+                    document.getElementById('fishingPromptText').innerText = 'ВЫБЕРИТЕ ЛУНКУ ДЛЯ ЗАБРОСА!';
+                    document.getElementById('iceCatchResult').innerHTML = '<i class="fa-solid fa-fish-fins" style="font-size: 36px; color: #0f172a; opacity: 0.45;"></i>';
+                    document.getElementById('iceHolesRow').style.pointerEvents = 'auto';
+                    triggerHaptic('notification', 'success');
+                    playSound('win');
+                    return;
+                }
+
+                btn.innerText = 'ЗАБРОС';
+                btn.disabled = false;
+                addFishingHistory(pillLabel, pillColor);
+
+                if (outcome === selectedFishingTarget) {
+                    const mult = outcome === 'x5' ? 5 : 2;
+                    const winSum = Math.floor(currentBetFishing * mult);
+                    starsBalance = Number((starsBalance + winSum).toFixed(1));
+                    totalStarsWon += winSum;
+                    updateBalanceUI();
+                    document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
+                    triggerHaptic('notification', 'success');
+                    playSound('win');
+                    showToast(`Улов ${pillLabel}! Выигрыш +${winSum} ★`);
+                } else {
+                    triggerHaptic('notification', 'error');
+                    playSound('error');
+                    showToast(`Выпало ${pillLabel}. Попробуйте ещё!`);
+                }
+            }, 4100);
+        }
+
+        function pickIceHole(holeIndex) {
+            if (!isWaitingHolePick) return;
+            document.getElementById('iceHolesRow').style.pointerEvents = 'none';
+            triggerHaptic('impact', 'heavy');
+
+            // Определяем рыбу из лунки
+            const catchRand = Math.random();
+            let fish = { name: 'СИНИЙ ОКУНЬ', mult: 8, color: '#0284c7', icon: 'fa-fish' };
+            if (catchRand > 0.85) {
+                fish = { name: 'HUGE RED!', mult: 35, color: '#dc2626', icon: 'fa-dragon' };
+            } else if (catchRand > 0.50) {
+                fish = { name: 'ЗОЛОТОЙ КАРП', mult: 15, color: '#eab308', icon: 'fa-fish-fins' };
+            }
+
+            document.getElementById('fishingPromptText').innerText = `ПОЙМАН: ${fish.name} (x${fish.mult})!`;
+            document.getElementById('iceCatchResult').innerHTML = `
+                <div class="caught-fish-anim">
+                    <i class="fa-solid ${fish.icon}" style="font-size: 46px; color: ${fish.color}; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));"></i>
+                    <div style="font-size: 15px; font-weight: 900; color: #0f172a; margin-top: 4px;">x${fish.mult}</div>
+                </div>
+            `;
+
+            addFishingHistory(`${fish.name} x${fish.mult}`, fish.color);
+
+            if (selectedFishingTarget === 'bonus') {
+                const winSum = Math.floor(currentBetFishing * fish.mult);
+                starsBalance = Number((starsBalance + winSum).toFixed(1));
+                totalStarsWon += winSum;
+                updateBalanceUI();
+                document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
+                playSound('win');
+                triggerHaptic('notification', 'success');
+                showToast(`${fish.name}! Куш +${winSum} ★!`);
+            } else {
+                playSound('error');
+                showToast(`Выпала лунка (${fish.name}), но ваша ставка была не на ЛУНКУ!`);
+            }
+
+            // Возвращаемся к колесу через 2.5 сек
+            setTimeout(() => {
+                isWaitingHolePick = false;
+                document.getElementById('iceLakeStage').classList.remove('active');
+                document.getElementById('iceWheelStage').style.display = 'flex';
+                const btn = document.getElementById('fishingBtn');
+                btn.innerText = 'ЗАБРОС';
+                btn.disabled = false;
+            }, 2500);
+        }
+
+        function addFishingHistory(text, borderColor) {
+            const hist = document.getElementById('fishingHistory');
+            if (!hist) return;
+            const pill = document.createElement('div');
+            pill.className = 'history-pill';
+            pill.style.borderColor = borderColor;
+            pill.innerText = text;
+            hist.prepend(pill);
+            if (hist.children.length > 5) hist.lastChild.remove();
+        }
+        
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
         const liveFeedItems = [
