@@ -1284,9 +1284,9 @@
             margin: 6px 0;
         }
 
-        /* --- ЖИВАЯ ЛАЙВ-СЦЕНА ИГРЫ ICE FISHING (EVOLUTION STYLE) --- */
+        /* --- ОБНОВЛЁННЫЙ ЛАЙВ-ЭКРАН ИГРЫ ICE FISHING --- */
         .fishing-display {
-            height: 265px;
+            height: 270px;
             border-radius: 16px;
             position: relative;
             overflow: hidden;
@@ -1294,9 +1294,28 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(180deg, #0b1938 0%, #1d4ed8 38%, #7dd3fc 62%, #e0f2fe 100%);
-            border: 1px solid rgba(56, 189, 248, 0.5);
-            box-shadow: inset 0 0 32px rgba(2, 6, 23, 0.55);
+            background: linear-gradient(180deg, #061026 0%, #173b8a 40%, #38bdf8 65%, #e0f2fe 100%);
+            border: 1px solid rgba(56, 189, 248, 0.55);
+            box-shadow: inset 0 0 35px rgba(2, 6, 23, 0.65);
+        }
+
+        /* Полярное сияние на фоне ночного неба */
+        .aurora-glow {
+            position: absolute;
+            top: -20px;
+            left: -10%;
+            width: 120%;
+            height: 110px;
+            background: radial-gradient(ellipse at 50% 40%, rgba(52, 211, 153, 0.28) 0%, rgba(56, 189, 248, 0.18) 45%, transparent 75%);
+            filter: blur(12px);
+            animation: auroraShift 6s ease-in-out infinite alternate;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes auroraShift {
+            0% { transform: translateX(-12px) scaleY(0.95); opacity: 0.65; }
+            100% { transform: translateX(14px) scaleY(1.12); opacity: 1; }
         }
 
         .snow-overlay {
@@ -1327,14 +1346,14 @@
             z-index: 3;
         }
 
-        /* Анимация покачивания рыбака и удочки */
+        /* Анимация рыбака и поплавка */
         .fisherman-bob {
             transform-origin: 120px 185px;
             animation: fishermanSway 2.4s ease-in-out infinite;
         }
 
         .fisherman-bob.reeling {
-            animation: fishermanReel 0.35s ease-in-out infinite;
+            animation: fishermanReel 0.32s ease-in-out infinite;
         }
 
         @keyframes fishermanSway {
@@ -1344,13 +1363,22 @@
 
         @keyframes fishermanReel {
             0%, 100% { transform: rotate(-2deg) translateY(0); }
-            50% { transform: rotate(-8deg) translateY(-2px); }
+            50% { transform: rotate(-9deg) translateY(-2px); }
+        }
+
+        .bobber-float {
+            animation: bobberDip 1.6s ease-in-out infinite;
+        }
+
+        @keyframes bobberDip {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(2.5px); }
         }
 
         /* Анимация винта вертолёта */
         .heli-rotor {
-            transform-origin: 245px 38px;
-            animation: rotorSpin 0.14s linear infinite;
+            transform-origin: 40px 9px;
+            animation: rotorSpin 0.13s linear infinite;
         }
 
         @keyframes rotorSpin {
@@ -1361,7 +1389,7 @@
 
         /* Вылет и зависание вертолёта */
         #heliRigGroup {
-            transform: translate(180px, -95px);
+            transform: translate(190px, -105px);
             transition: transform 1.15s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
@@ -1378,14 +1406,10 @@
             50% { transform: translate(0px, -5px); }
         }
 
-        /* Анимация подъёма троса и рыбы из лунки */
-        #cableLine {
-            transition: y2 0.85s ease-in-out;
-        }
-
+        /* Анимация подъёма рыбы из лунки */
         #caughtFishGroup {
             opacity: 0;
-            transform: translateY(72px) scale(0.55);
+            transform: translateY(76px) scale(0.55);
             transition: transform 1.1s cubic-bezier(0.34, 1.45, 0.64, 1), opacity 0.35s ease;
         }
 
@@ -1394,13 +1418,13 @@
             transform: translateY(0px) scale(1);
         }
 
-        /* Плашка статуса сверху сцены */
+        /* Плашка LIVE-статуса сверху экрана */
         .fishing-live-banner {
             position: absolute;
             top: 10px;
             left: 12px;
             z-index: 12;
-            background: rgba(5, 11, 26, 0.85);
+            background: rgba(5, 11, 26, 0.88);
             border: 1px solid rgba(56, 189, 248, 0.55);
             border-radius: 10px;
             padding: 5px 11px;
@@ -1408,6 +1432,7 @@
             align-items: center;
             gap: 7px;
             box-shadow: 0 4px 14px rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(4px);
         }
 
         .fishing-live-badge {
@@ -1418,6 +1443,7 @@
             padding: 2px 5px;
             border-radius: 4px;
             letter-spacing: 0.8px;
+            animation: pulseBlueDot 1.4s infinite;
         }
 
         .fishing-live-text {
@@ -1428,22 +1454,22 @@
             text-transform: uppercase;
         }
 
-        /* Всплывающий баннер крупного выигрыша поверх сцены */
+        /* Всплывающий баннер выигрыша поверх сцены */
         .fishing-win-popup {
             position: absolute;
             bottom: 12px;
             left: 50%;
             transform: translateX(-50%) scale(0.8);
             z-index: 14;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95) 0%, rgba(30, 58, 138, 0.95) 100%);
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.96) 0%, rgba(30, 58, 138, 0.96) 100%);
             border: 1.5px solid #facc15;
             border-radius: 12px;
-            padding: 6px 16px;
+            padding: 7px 18px;
             text-align: center;
             opacity: 0;
             pointer-events: none;
             transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.75);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
             white-space: nowrap;
         }
 
@@ -1451,6 +1477,7 @@
             opacity: 1;
             transform: translateX(-50%) scale(1);
         }
+       
     </style>
 </head>
 <body>
@@ -1696,7 +1723,7 @@
                 </div>
             </div>
 
-            <!-- 6. ICE FISHING -->
+           <!-- 6. ICE FISHING -->
             <div class="game-card-row" onclick="openFishingGame()">
                 <div class="game-visual-left">
                     <svg viewBox="0 0 120 120" fill="none">
@@ -1721,8 +1748,6 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
     <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
@@ -2052,6 +2077,7 @@
         </div>
 
         <div class="fishing-display">
+            <div class="aurora-glow"></div>
             <div class="snow-overlay"></div>
 
             <!-- Плашка LIVE-статуса -->
@@ -2060,8 +2086,8 @@
                 <span class="fishing-live-text" id="fishingStatusBanner">ОЖИДАНИЕ ЗАБРОСА</span>
             </div>
 
-            <!-- Векторная зимняя сцена: поле, домик, лебёдка, лунка, рыбак и вертолёт -->
-            <svg class="ice-scene-svg" viewBox="0 0 380 265" preserveAspectRatio="xMidYMid slice">
+            <!-- Векторная зимняя сцена -->
+            <svg class="ice-scene-svg" viewBox="0 0 380 270" preserveAspectRatio="xMidYMid slice">
                 <defs>
                     <linearGradient id="snowHillBack" x1="0" y1="0" x2="0" y2="1">
                         <stop offset="0%" stop-color="#bae6fd"/>
@@ -2079,28 +2105,32 @@
                     </radialGradient>
                 </defs>
 
-                <!-- Дальние снежные холмы и сосны -->
-                <path d="M0,152 Q95,126 195,146 T380,138 L380,265 L0,265 Z" fill="url(#snowHillBack)"/>
-                <!-- Елочки на горизонте -->
-                <g fill="#0f294a" opacity="0.75">
-                    <polygon points="26,144 34,116 42,144"/>
-                    <polygon points="44,146 50,124 56,146"/>
-                    <polygon points="335,140 344,110 353,140"/>
-                    <polygon points="354,142 361,120 368,142"/>
+                <!-- Звёзды в ночном небе -->
+                <g fill="#ffffff" opacity="0.75">
+                    <circle cx="42" cy="28" r="1.2"/>
+                    <circle cx="96" cy="18" r="1.5"/>
+                    <circle cx="152" cy="34" r="1"/>
+                    <circle cx="290" cy="22" r="1.4"/>
+                    <circle cx="342" cy="40" r="1.2"/>
                 </g>
 
-                <!-- Уютный зимний домик рыбака слева -->
-                <g transform="translate(18, 102)">
-                    <!-- Дымоход и дымок -->
+                <!-- Дальние снежные холмы и сосны -->
+                <path d="M0,154 Q95,128 195,148 T380,140 L380,270 L0,270 Z" fill="url(#snowHillBack)"/>
+                <g fill="#0f294a" opacity="0.78">
+                    <polygon points="26,146 34,118 42,146"/>
+                    <polygon points="44,148 50,126 56,148"/>
+                    <polygon points="335,142 344,112 353,142"/>
+                    <polygon points="354,144 361,122 368,144"/>
+                </g>
+
+                <!-- Зимний домик рыбака слева -->
+                <g transform="translate(18, 104)">
                     <rect x="38" y="4" width="7" height="16" fill="#475569"/>
                     <circle cx="42" cy="-2" r="3" fill="#ffffff" opacity="0.55"/>
                     <circle cx="46" cy="-9" r="4" fill="#ffffff" opacity="0.35"/>
-                    <!-- Стены домика -->
                     <rect x="10" y="24" width="44" height="30" rx="2" fill="#7c2d12" stroke="#431407" stroke-width="1.5"/>
-                    <!-- Заснеженная крыша -->
                     <polygon points="4,26 32,6 60,26" fill="#1e293b"/>
                     <path d="M3,26 L32,5 L61,26" fill="none" stroke="#ffffff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-                    <!-- Тёплые светящиеся окна -->
                     <rect x="17" y="32" width="11" height="11" rx="1.5" fill="#fde047" stroke="#431407" stroke-width="1.2"/>
                     <line x1="22.5" y1="32" x2="22.5" y2="43" stroke="#431407" stroke-width="1"/>
                     <line x1="17" y1="37.5" x2="28" y2="37.5" stroke="#431407" stroke-width="1"/>
@@ -2108,11 +2138,11 @@
                 </g>
 
                 <!-- Переднее ледяное поле -->
-                <path d="M0,162 Q190,148 380,164 L380,265 L0,265 Z" fill="url(#iceFieldGrad)"/>
-                <path d="M0,162 Q190,148 380,164" fill="none" stroke="#ffffff" stroke-width="2.5"/>
+                <path d="M0,164 Q190,150 380,166 L380,270 L0,270 Z" fill="url(#iceFieldGrad)"/>
+                <path d="M0,164 Q190,150 380,166" fill="none" stroke="#ffffff" stroke-width="2.5"/>
 
                 <!-- Промышленный кран-лебёдка справа -->
-                <g transform="translate(295, 118)">
+                <g transform="translate(295, 120)">
                     <rect x="26" y="58" width="38" height="14" rx="3" fill="#334155" stroke="#0f172a" stroke-width="1.5"/>
                     <line x1="45" y1="58" x2="24" y2="10" stroke="#eab308" stroke-width="4" stroke-linecap="round"/>
                     <line x1="45" y1="58" x2="48" y2="16" stroke="#ca8a04" stroke-width="3" stroke-linecap="round"/>
@@ -2121,88 +2151,67 @@
                     <line x1="24" y1="13" x2="24" y2="34" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="2 2"/>
                 </g>
 
-                <!-- ЛУНКА (Прорубь по центру справа) -->
+                <!-- ЛУНКА -->
                 <g id="iceHoleGroup">
-                    <!-- Снежный бруствер вокруг лунки -->
-                    <ellipse cx="222" cy="214" rx="48" ry="18" fill="#ffffff" opacity="0.9"/>
-                    <!-- Ледяная кромка -->
-                    <ellipse cx="222" cy="214" rx="41" ry="14" fill="#38bdf8"/>
-                    <!-- Тёмная вода лунки -->
-                    <ellipse cx="222" cy="215" rx="36" ry="11.5" fill="url(#iceHoleWater)"/>
-                    <!-- Всплеск воды (появляется при подъёме рыбы) -->
+                    <ellipse cx="222" cy="216" rx="50" ry="19" fill="#ffffff" opacity="0.92"/>
+                    <ellipse cx="222" cy="216" rx="42" ry="14.5" fill="#38bdf8"/>
+                    <ellipse cx="222" cy="217" rx="36" ry="11.5" fill="url(#iceHoleWater)"/>
+                    <!-- Всплеск воды при подъёме рыбы -->
                     <g id="waterSplash" opacity="0" style="transition: opacity 0.25s;">
-                        <path d="M192,212 Q184,196 178,204 M252,212 Q260,196 266,204 M210,208 Q206,190 202,198 M234,208 Q238,190 242,198" stroke="#e0f2fe" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+                        <path d="M192,214 Q184,198 178,206 M252,214 Q260,198 266,206 M210,210 Q206,192 202,200 M234,210 Q238,192 242,200" stroke="#e0f2fe" stroke-width="2.5" stroke-linecap="round" fill="none"/>
                     </g>
                 </g>
 
-                <!-- РЫБАК С УДОЧКОЙ ВОЗЛЕ ЛУНКИ -->
+                <!-- РЫБАК С УДОЧКОЙ И ПОПЛАВКОМ -->
                 <g id="fishermanChar" class="fisherman-bob">
-                    <!-- Ящик рыбака -->
-                    <rect x="112" y="184" width="24" height="22" rx="3" fill="#1e3a8a" stroke="#0f172a" stroke-width="1.5"/>
-                    <!-- Ноги в валенках -->
-                    <path d="M132,192 L146,194 L146,208 L138,208" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-                    <!-- Тёплая куртка рыбака -->
-                    <path d="M115,156 C115,148 134,148 136,158 L140,186 L114,186 Z" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
-                    <!-- Голова и шапка-ушанка -->
-                    <circle cx="127" cy="142" r="8.5" fill="#fed7aa"/>
-                    <path d="M118,140 C118,131 136,131 136,140 Z" fill="#0f172a"/>
-                    <rect x="116" y="139" width="22" height="4" rx="2" fill="#38bdf8"/>
-                    <!-- Рука и удочка -->
-                    <line x1="130" y1="164" x2="146" y2="168" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
-                    <path d="M144,169 Q178,154 214,158" fill="none" stroke="#facc15" stroke-width="2.5" stroke-linecap="round"/>
-                    <!-- Леска в лунку -->
-                    <line id="fishingRodLine" x1="214" y1="158" x2="216" y2="214" stroke="#ffffff" stroke-width="1" opacity="0.85"/>
+                    <rect x="112" y="186" width="24" height="22" rx="3" fill="#1e3a8a" stroke="#0f172a" stroke-width="1.5"/>
+                    <path d="M132,194 L146,196 L146,210 L138,210" fill="none" stroke="#0f172a" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M115,158 C115,150 134,150 136,160 L140,188 L114,188 Z" fill="#ef4444" stroke="#7f1d1d" stroke-width="1.5"/>
+                    <circle cx="127" cy="144" r="8.5" fill="#fed7aa"/>
+                    <path d="M118,142 C118,133 136,133 136,142 Z" fill="#0f172a"/>
+                    <rect x="116" y="141" width="22" height="4" rx="2" fill="#38bdf8"/>
+                    <line x1="130" y1="166" x2="146" y2="170" stroke="#dc2626" stroke-width="5" stroke-linecap="round"/>
+                    <path d="M144,171 Q178,156 214,160" fill="none" stroke="#facc15" stroke-width="2.5" stroke-linecap="round"/>
+                    <line id="fishingRodLine" x1="214" y1="160" x2="216" y2="215" stroke="#ffffff" stroke-width="1" opacity="0.85"/>
+                    <!-- Красно-белый поплавок в лунке -->
+                    <g class="bobber-float">
+                        <ellipse cx="216" cy="215" rx="3.2" ry="4.5" fill="#ef4444" stroke="#ffffff" stroke-width="1"/>
+                    </g>
                 </g>
 
-                <!-- ВЕРТОЛЁТ + ТРОС + ПОЙМАННАЯ РЫБА (HUGE RED / ЗОЛОТАЯ / ОКУНЬ) -->
+                <!-- ВЕРТОЛЁТ + ТРОС + ПОЙМАННАЯ РЫБА -->
                 <g id="heliRigGroup">
-                    <!-- Стальной трос от вертолёта вниз -->
                     <line id="cableLine" x1="222" y1="54" x2="222" y2="128" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="3 1"/>
                     
-                    <!-- Пойманная рыба на крюке -->
                     <g id="caughtFishGroup">
-                        <!-- Крюк -->
                         <path d="M222,126 L222,135 C222,140 216,140 216,135" fill="none" stroke="#facc15" stroke-width="2.5" stroke-linecap="round"/>
                         
-                        <!-- Тело рыбы (вертикально висит на тросе) -->
                         <g id="fishBodyVisual">
-                            <!-- Хвостовой плавник снизу -->
                             <polygon id="fishTailPoly" points="222,192 206,210 238,210" fill="#dc2626" stroke="#ffffff" stroke-width="1.5"/>
-                            <!-- Боковые плавники -->
                             <polygon id="fishFinLeft" points="204,162 192,172 205,176" fill="#ef4444"/>
                             <polygon id="fishFinRight" points="240,162 252,172 239,176" fill="#ef4444"/>
-                            <!-- Основной корпус огромной рыбы -->
                             <path id="fishMainPath" d="M222,134 C244,146 246,176 222,195 C198,176 200,146 222,134 Z" fill="#ef4444" stroke="#ffffff" stroke-width="2"/>
-                            <!-- Чешуя / блик -->
                             <path d="M216,148 Q222,154 228,148 M214,162 Q222,169 230,162 M216,176 Q222,182 228,176" fill="none" stroke="rgba(255,255,255,0.45)" stroke-width="1.8" stroke-linecap="round"/>
-                            <!-- Глаз рыбы -->
                             <circle cx="215" cy="145" r="3.5" fill="#ffffff"/>
                             <circle cx="215" cy="145" r="1.8" fill="#020617"/>
                         </g>
 
-                        <!-- Бейдж множителя прямо на рыбе -->
-                        <rect x="196" y="160" width="52" height="19" rx="6" fill="rgba(5, 6, 8, 0.9)" stroke="#facc15" stroke-width="1.5"/>
+                        <!-- Бейдж множителя на рыбе -->
+                        <rect x="196" y="160" width="52" height="19" rx="6" fill="rgba(5, 6, 8, 0.92)" stroke="#facc15" stroke-width="1.5"/>
                         <text id="fishMultiplierTag" x="222" y="173" fill="#facc15" font-size="11" font-weight="900" text-anchor="middle">x35</text>
                     </g>
 
-                    <!-- Корпус спасательного вертолёта сверху -->
+                    <!-- Корпус спасательного вертолёта -->
                     <g transform="translate(182, 16)">
-                        <!-- Хвостовая балка -->
                         <polygon points="58,22 96,17 96,24 58,28" fill="#dc2626" stroke="#ffffff" stroke-width="1"/>
                         <polygon points="92,11 99,11 96,26 91,26" fill="#ffffff"/>
-                        <!-- Хвостовой винт -->
                         <circle cx="96" cy="18" r="6" fill="none" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="3 2"/>
-                        <!-- Полозья (шасси) -->
                         <line x1="24" y1="36" x2="24" y2="43" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="48" y1="36" x2="48" y2="43" stroke="#94a3b8" stroke-width="2"/>
                         <line x1="16" y1="43" x2="56" y2="43" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
-                        <!-- Кабина вертолёта -->
                         <rect x="14" y="14" width="48" height="23" rx="11" fill="#ef4444" stroke="#ffffff" stroke-width="1.5"/>
-                        <!-- Белая полоса -->
                         <rect x="18" y="25" width="42" height="4" rx="2" fill="#ffffff"/>
-                        <!-- Стекло кабины пилота -->
                         <path d="M15,24 C15,17 22,15 30,15 L30,25 L15,25 Z" fill="#38bdf8" opacity="0.9"/>
-                        <!-- Ось и главный несущий винт -->
                         <rect x="38" y="9" width="4" height="6" fill="#cbd5e1"/>
                         <ellipse class="heli-rotor" cx="40" cy="9" rx="44" ry="2.5" fill="#ffffff" opacity="0.9"/>
                     </g>
@@ -3120,13 +3129,13 @@
         let isFlippingCoin = false;
         let currentCoinRotation = 0;
 
-        function updateBalanceUI() {
+       function updateBalanceUI() {
             const formatted = formatStars(starsBalance);
             const ids = [
                 'userStarsLobby', 'userStarsMarket', 'userStarsProfile',
                 'profileWalletBalance', 'userStarsRoulette', 'userStarsRocket',
                 'userStarsMines', 'userStarsPlinko', 'userStarsCoinflip',
-                'userStarsLeaderboard', 'userStarsRefRoulette'
+                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing'
             ];
             ids.forEach(id => {
                 const el = document.getElementById(id);
@@ -3138,7 +3147,7 @@
             document.getElementById('statReferralsCount').innerText = referralsCount;
 
             const sliderMax = Math.max(10, Math.floor(starsBalance));
-            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip'].forEach(game => {
+            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Fishing'].forEach(game => {
                 const slider = document.getElementById('betSlider' + game);
                 const maxLabel = document.getElementById('maxSlider' + game);
                 if (slider && maxLabel) {
@@ -4595,39 +4604,54 @@ const assignedCode = "ОЖИДАНИЕ...";
             }, 4300);
         }
 
-     /* --- 7. ICE FISHING --- */
+     /* --- 7. ICE FISHING (ЛАЙВ-СЦЕНА С ВЕРТОЛЁТОМ) --- */
         let currentBetFishing = 10;
         let selectedFishingTarget = 'x2';
-        let isFishingSpinning = false;
-        let isWaitingHolePick = false;
-        let iceWheelAngle = 0;
+        let isFishingActive = false;
 
         function openFishingGame() {
             switchPage('fishingPage');
             triggerHaptic('impact', 'medium');
+            resetFishingScene();
             updateBalanceUI();
             const el = document.getElementById('userStarsFishing');
             if (el) el.innerText = formatStars(starsBalance);
         }
 
+        function resetFishingScene() {
+            const heli = document.getElementById('heliRigGroup');
+            const fish = document.getElementById('caughtFishGroup');
+            const splash = document.getElementById('waterSplash');
+            const popup = document.getElementById('fishingWinPopup');
+            const fisherman = document.getElementById('fishermanChar');
+            const status = document.getElementById('fishingStatusBanner');
+
+            if (heli) heli.classList.remove('arrived', 'hovering');
+            if (fish) fish.classList.remove('lifted');
+            if (splash) splash.style.opacity = '0';
+            if (popup) popup.classList.remove('show');
+            if (fisherman) fisherman.classList.remove('reeling');
+            if (status) status.innerText = 'ОЖИДАНИЕ ЗАБРОСА';
+        }
+
         function setFishingBetTarget(target, el) {
-            if (isFishingSpinning || isWaitingHolePick) return;
+            if (isFishingActive) return;
             selectedFishingTarget = target;
             document.querySelectorAll('#fishingPage .color-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
             const names = {
-                x2: 'РЫБА (x2)',
+                x2: 'ОКУНЬ (x2)',
                 x5: 'ЗОЛОТАЯ (x5)',
-                bonus: 'ЛУНКА (ДО x50)'
+                bonus: 'HUGE RED (ДО x50)'
             };
             document.getElementById('selectedFishingLabel').innerText = 'ВЫБОР: ' + names[target];
             triggerHaptic('impact', 'light');
         }
 
-        // Подключаем изменение ставок для fishing
+        // Подключаем изменение ставок и слайдер для fishing
         const origChangeBet = changeBet;
         changeBet = function(amount, type) {
-            if (type === 'fishing' && !isFishingSpinning && !isWaitingHolePick) {
+            if (type === 'fishing' && !isFishingActive) {
                 currentBetFishing = Math.max(1, currentBetFishing + amount);
                 syncBetUI('fishing', currentBetFishing);
                 triggerHaptic('impact', 'light');
@@ -4638,7 +4662,7 @@ const assignedCode = "ОЖИДАНИЕ...";
 
         const origSetBet = setBet;
         setBet = function(amount, type) {
-            if (type === 'fishing' && !isFishingSpinning && !isWaitingHolePick) {
+            if (type === 'fishing' && !isFishingActive) {
                 currentBetFishing = amount;
                 syncBetUI('fishing', currentBetFishing);
                 triggerHaptic('impact', 'light');
@@ -4650,7 +4674,7 @@ const assignedCode = "ОЖИДАНИЕ...";
         const origOnSliderBet = onSliderBet;
         onSliderBet = function(value, type) {
             if (type === 'fishing') {
-                if (isFishingSpinning || isWaitingHolePick) {
+                if (isFishingActive) {
                     syncBetUI('fishing', currentBetFishing);
                     return;
                 }
@@ -4661,8 +4685,22 @@ const assignedCode = "ОЖИДАНИЕ...";
             origOnSliderBet(value, type);
         };
 
-        function spinFishingWheel() {
-            if (isFishingSpinning || isWaitingHolePick) return;
+        function paintCaughtFishVisual(mainColor, tailColor, multText) {
+            const mainPath = document.getElementById('fishMainPath');
+            const tailPoly = document.getElementById('fishTailPoly');
+            const finL = document.getElementById('fishFinLeft');
+            const finR = document.getElementById('fishFinRight');
+            const tag = document.getElementById('fishMultiplierTag');
+
+            if (mainPath) mainPath.setAttribute('fill', mainColor);
+            if (tailPoly) tailPoly.setAttribute('fill', tailColor);
+            if (finL) finL.setAttribute('fill', mainColor);
+            if (finR) finR.setAttribute('fill', mainColor);
+            if (tag) tag.textContent = multText;
+        }
+
+        function startIceFishingRound() {
+            if (isFishingActive) return;
             if (starsBalance < currentBetFishing) {
                 showToast('Недостаточно звезд!');
                 return;
@@ -4673,126 +4711,118 @@ const assignedCode = "ОЖИДАНИЕ...";
             updateBalanceUI();
             document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
 
-            isFishingSpinning = true;
+            isFishingActive = true;
+            resetFishingScene();
+
             const btn = document.getElementById('fishingBtn');
-            btn.innerText = 'КРУТИТСЯ...';
+            const status = document.getElementById('fishingStatusBanner');
+            const fisherman = document.getElementById('fishermanChar');
+            const heli = document.getElementById('heliRigGroup');
+            const fish = document.getElementById('caughtFishGroup');
+            const splash = document.getElementById('waterSplash');
+            const popup = document.getElementById('fishingWinPopup');
+
+            btn.innerText = 'КЛЮЁТ...';
             btn.disabled = true;
+            status.innerText = 'ПОКЛЁВКА В ЛУНКЕ...';
+            fisherman.classList.add('reeling');
             triggerHaptic('impact', 'medium');
 
-            // Сектора колеса: x2 (55%), x5 (25%), bonus (20%)
+            // Генерация результата: Окунь x2 (55%), Золотая x5 (25%), Huge Red x15..x50 (20%)
             const rand = Math.random();
-            let outcome = 'x2';
-            let stopAngle = 30;
-            let pillLabel = 'x2';
-            let pillColor = '#38bdf8';
+            let outcomeType = 'x2';
+            let fishName = 'СИНИЙ ОКУНЬ';
+            let mult = 2;
+            let mainColor = '#0284c7';
+            let tailColor = '#0369a1';
+            let pillBorder = '#38bdf8';
 
             if (rand < 0.55) {
-                outcome = 'x2';
-                stopAngle = 30;
-                pillLabel = 'x2';
-                pillColor = '#38bdf8';
+                outcomeType = 'x2';
+                fishName = 'СИНИЙ ОКУНЬ';
+                mult = 2;
+                mainColor = '#0284c7';
+                tailColor = '#0369a1';
+                pillBorder = '#38bdf8';
             } else if (rand < 0.80) {
-                outcome = 'x5';
-                stopAngle = 200;
-                pillLabel = 'x5';
-                pillColor = '#facc15';
+                outcomeType = 'x5';
+                fishName = 'ЗОЛОТАЯ РЫБА';
+                mult = 5;
+                mainColor = '#eab308';
+                tailColor = '#ca8a04';
+                pillBorder = '#facc15';
             } else {
-                outcome = 'bonus';
-                stopAngle = 300;
-                pillLabel = 'ЛУНКА!';
-                pillColor = '#ef4444';
+                outcomeType = 'bonus';
+                const hugeMults = [15, 25, 35, 50];
+                mult = hugeMults[Math.floor(Math.random() * hugeMults.length)];
+                fishName = 'HUGE RED';
+                mainColor = '#ef4444';
+                tailColor = '#b91c1c';
+                pillBorder = '#ef4444';
             }
 
-            const targetAngle = (360 - stopAngle) % 360;
-            iceWheelAngle += (360 * 6) + (targetAngle - (iceWheelAngle % 360));
-            document.getElementById('iceWheelCircle').style.transform = `rotate(${iceWheelAngle}deg)`;
+            paintCaughtFishVisual(mainColor, tailColor, `x${mult}`);
 
+            // Этап 1 (0.9 сек): Вылет вертолёта к лунке
             setTimeout(() => {
-                isFishingSpinning = false;
+                status.innerText = outcomeType === 'bonus' ? 'ТРЕВОГА! ВЫЛЕТ ВЕРТОЛЁТА!' : 'ВЕРТОЛЁТ ПОДЛЕТАЕТ К ЛУНКЕ...';
+                heli.classList.add('arrived');
+                triggerHaptic('impact', 'heavy');
+            }, 900);
 
-                if (outcome === 'bonus') {
-                    // Запускаем этап выбора лунки!
-                    isWaitingHolePick = true;
-                    btn.innerText = 'В ЛУНКЕ...';
-                    document.getElementById('iceWheelStage').style.display = 'none';
-                    document.getElementById('iceLakeStage').classList.add('active');
-                    document.getElementById('fishingPromptText').innerText = 'ВЫБЕРИТЕ ЛУНКУ ДЛЯ ЗАБРОСА!';
-                    document.getElementById('iceCatchResult').innerHTML = '<i class="fa-solid fa-fish-fins" style="font-size: 36px; color: #0f172a; opacity: 0.45;"></i>';
-                    document.getElementById('iceHolesRow').style.pointerEvents = 'auto';
-                    triggerHaptic('notification', 'success');
-                    playSound('win');
-                    return;
-                }
+            // Этап 2 (2.1 сек): Подъём рыбы из проруби и всплеск воды
+            setTimeout(() => {
+                heli.classList.add('hovering');
+                splash.style.opacity = '1';
+                fish.classList.add('lifted');
+                fisherman.classList.remove('reeling');
+                status.innerText = `ПОЙМАН: ${fishName} (x${mult})`;
+                triggerHaptic('impact', 'heavy');
 
-                btn.innerText = 'ЗАБРОС';
-                btn.disabled = false;
-                addFishingHistory(pillLabel, pillColor);
+                setTimeout(() => { splash.style.opacity = '0'; }, 750);
+            }, 2100);
 
-                if (outcome === selectedFishingTarget) {
-                    const mult = outcome === 'x5' ? 5 : 2;
+            // Этап 3 (3.2 сек): Расчёт выигрыша и всплывающий баннер
+            setTimeout(() => {
+                addFishingHistory(`${fishName} x${mult}`, pillBorder);
+
+                const isWin = (outcomeType === selectedFishingTarget);
+                if (isWin) {
                     const winSum = Math.floor(currentBetFishing * mult);
                     starsBalance = Number((starsBalance + winSum).toFixed(1));
                     totalStarsWon += winSum;
                     updateBalanceUI();
                     document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
-                    triggerHaptic('notification', 'success');
+
+                    document.getElementById('fishingPopupTitle').innerText = 'УЛОВ ЗАСЧИТАН!';
+                    document.getElementById('fishingPopupTitle').style.color = '#38bdf8';
+                    document.getElementById('fishingPopupValue').innerText = `${fishName} x${mult} (+${winSum} ★)`;
+                    document.getElementById('fishingPopupValue').style.color = '#facc15';
+                    popup.classList.add('show');
+
                     playSound('win');
-                    showToast(`Улов ${pillLabel}! Выигрыш +${winSum} ★`);
+                    triggerHaptic('notification', 'success');
+                    showToast(`${fishName} x${mult}! Выигрыш +${winSum} ★`);
                 } else {
-                    triggerHaptic('notification', 'error');
+                    document.getElementById('fishingPopupTitle').innerText = 'ВЫТЯНУЛИ НЕ ВАШУ РЫБУ';
+                    document.getElementById('fishingPopupTitle').style.color = '#94a3b8';
+                    document.getElementById('fishingPopupValue').innerText = `${fishName} x${mult}`;
+                    document.getElementById('fishingPopupValue').style.color = '#ffffff';
+                    popup.classList.add('show');
+
                     playSound('error');
-                    showToast(`Выпало ${pillLabel}. Попробуйте ещё!`);
+                    triggerHaptic('notification', 'error');
+                    showToast(`Вытащили ${fishName} (x${mult}). Попробуйте ещё!`);
                 }
-            }, 4100);
-        }
+            }, 3200);
 
-        function pickIceHole(holeIndex) {
-            if (!isWaitingHolePick) return;
-            document.getElementById('iceHolesRow').style.pointerEvents = 'none';
-            triggerHaptic('impact', 'heavy');
-
-            // Определяем рыбу из лунки
-            const catchRand = Math.random();
-            let fish = { name: 'СИНИЙ ОКУНЬ', mult: 8, color: '#0284c7', icon: 'fa-fish' };
-            if (catchRand > 0.85) {
-                fish = { name: 'HUGE RED!', mult: 35, color: '#dc2626', icon: 'fa-dragon' };
-            } else if (catchRand > 0.50) {
-                fish = { name: 'ЗОЛОТОЙ КАРП', mult: 15, color: '#eab308', icon: 'fa-fish-fins' };
-            }
-
-            document.getElementById('fishingPromptText').innerText = `ПОЙМАН: ${fish.name} (x${fish.mult})!`;
-            document.getElementById('iceCatchResult').innerHTML = `
-                <div class="caught-fish-anim">
-                    <i class="fa-solid ${fish.icon}" style="font-size: 46px; color: ${fish.color}; filter: drop-shadow(0 4px 8px rgba(0,0,0,0.4));"></i>
-                    <div style="font-size: 15px; font-weight: 900; color: #0f172a; margin-top: 4px;">x${fish.mult}</div>
-                </div>
-            `;
-
-            addFishingHistory(`${fish.name} x${fish.mult}`, fish.color);
-
-            if (selectedFishingTarget === 'bonus') {
-                const winSum = Math.floor(currentBetFishing * fish.mult);
-                starsBalance = Number((starsBalance + winSum).toFixed(1));
-                totalStarsWon += winSum;
-                updateBalanceUI();
-                document.getElementById('userStarsFishing').innerText = formatStars(starsBalance);
-                playSound('win');
-                triggerHaptic('notification', 'success');
-                showToast(`${fish.name}! Куш +${winSum} ★!`);
-            } else {
-                playSound('error');
-                showToast(`Выпала лунка (${fish.name}), но ваша ставка была не на ЛУНКУ!`);
-            }
-
-            // Возвращаемся к колесу через 2.5 сек
+            // Этап 4 (5.4 сек): Сброс сцены для следующего заброса
             setTimeout(() => {
-                isWaitingHolePick = false;
-                document.getElementById('iceLakeStage').classList.remove('active');
-                document.getElementById('iceWheelStage').style.display = 'flex';
-                const btn = document.getElementById('fishingBtn');
+                isFishingActive = false;
                 btn.innerText = 'ЗАБРОС';
                 btn.disabled = false;
-            }, 2500);
+                resetFishingScene();
+            }, 5400);
         }
 
         function addFishingHistory(text, borderColor) {
