@@ -5310,15 +5310,31 @@ function closeConfirmModal(event) {
         }
 
 
-        function openStarsInvoice(amount = 10) {
-    const botUsername = "xorysbot"; 
-    const invoiceUrl = `https://t.me/${botUsername}?start=pay_stars_${amount}`;
+       function openStarsInvoice(amount = 10) {
+    const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id || 0;
     
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.openTelegramLink(invoiceUrl);
-    } else {
-        window.open(invoiceUrl, '_blank');
-    }
+    fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/create-invoice', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ user_id: userId, amount: amount })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.invoice_link && window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.openInvoice(data.invoice_link, (status) => {
+                if (status === 'paid') {
+                    alert('Оплата прошла успешно!');
+                    location.reload();
+                }
+            });
+        } else {
+            const botUsername = "xorysbot";
+            window.Telegram.WebApp.openTelegramLink(`https://t.me/${botUsername}?start=pay_stars_${amount}`);
+        }
+    })
+    .catch(err => {
+        console.error('Ошибка создания инвойса:', err);
+    });
 }
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
