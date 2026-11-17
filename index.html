@@ -1655,43 +1655,6 @@
             opacity: 0.45;
             cursor: not-allowed;
         }
-
- /* === SKY JET: АВТОРСЬКИЙ ДИЗАЙН (XORYS EDITION) === */
-#skyJetDisplayBox {
-    background: linear-gradient(180deg, #020617 0%, #0f172a 40%, #0369a1 85%, #0284c7 100%);
-    border: 1px solid rgba(56, 189, 248, 0.45);
-    box-shadow: inset 0 0 35px rgba(14, 165, 233, 0.3), 0 10px 25px rgba(0, 0, 0, 0.75);
-    border-radius: 16px;
-    overflow: hidden;
-    position: relative;
-}
-
-.sky-speed-panel {
-    display: flex;
-    gap: 4px;
-    background: rgba(2, 6, 23, 0.85);
-    padding: 3px 6px;
-    border-radius: 20px;
-    border: 1px solid rgba(255, 255, 255, 0.15);
-}
-
-.sky-spd-btn {
-    background: transparent;
-    border: none;
-    color: #94a3b8;
-    font-size: 13px;
-    padding: 2px 7px;
-    cursor: pointer;
-    border-radius: 12px;
-    transition: 0.2s;
-}
-
-.sky-spd-btn.active {
-    background: #facc15;
-    color: #0f172a;
-    font-weight: 800;
-}
-       
        
     </style>
 </head>
@@ -1965,45 +1928,6 @@
             </div>
         </div>
     </div>
-
-<!-- AVIA MASTERS -->
-            <div class="game-card-row" onclick="openAviaGame()">
-                <div class="game-visual-left">
-                    <svg viewBox="0 0 120 120" fill="none">
-                        <defs>
-                            <radialGradient id="aviaBgGrad" cx="50%" cy="25%" r="75%">
-                                <stop offset="0%" stop-color="#0284c7"/>
-                                <stop offset="65%" stop-color="#0f172a"/>
-                                <stop offset="100%" stop-color="#020617"/>
-                            </radialGradient>
-                        </defs>
-                        <circle cx="46" cy="62" r="48" fill="url(#aviaBgGrad)" stroke="#38bdf8" stroke-width="3"/>
-                        <!-- Море -->
-                        <path d="M2 84 Q24 78 46 84 T90 84 L90 108 L2 108 Z" fill="#0369a1"/>
-                        <!-- Самолет -->
-                        <g transform="translate(46, 52) rotate(-14)">
-                            <path d="M-22 2 L16 -4 L24 0 L16 5 L-22 6 Z" fill="#f8fafc"/>
-                            <path d="M-4 1 L6 -14 L12 -14 L5 1 Z" fill="#ef4444"/>
-                            <path d="M-20 2 L-25 -8 L-18 -8 L-14 2 Z" fill="#ef4444"/>
-                            <circle cx="12" cy="0" r="2.5" fill="#38bdf8"/>
-                        </g>
-                        <!-- Множитель x2 и ракета -->
-                        <circle cx="76" cy="30" r="9" fill="#22c55e" fill-opacity="0.25" stroke="#4ade80" stroke-width="1.5"/>
-                        <text x="76" y="33" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="900">x2</text>
-                        <circle cx="24" cy="34" r="7" fill="#ef4444" fill-opacity="0.25" stroke="#f87171" stroke-width="1.5"/>
-                    </svg>
-                </div>
-                <div class="game-info-right">
-                    <span class="game-category-tag"><i class="fa-solid fa-plane-departure"></i> ПОЛЕТ НАД МОРЕМ</span>
-                    <span class="game-name">AVIA MASTERS</span>
-                    <div class="game-bottom-bar">
-                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 489</div>
-                        <button class="card-action-btn">ИГРАТЬ</button>
-                    </div>
-                </div>
-            </div>
-
-    
 <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
@@ -2589,80 +2513,6 @@
           <button class="btn-return" onclick="exitIceFishingLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
       </div>  
 
-  <!-- ЕКРАН АВТОРСЬКОЇ ІГРИ "SKY JET" -->
-    <div id="skyJetGamePage" class="page">
-        <div class="rg-header">
-            <div class="rg-logo">SKY <span>JET</span></div>
-            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsSky">100</span></div>
-        </div>
-
-        <div class="rg-history" id="skyHistory">
-            <div class="history-pill" style="border-color: #facc15; color: #facc15;">x4.00</div>
-            <div class="history-pill" style="border-color: #ef4444; color: #ef4444;">0x</div>
-            <div class="history-pill" style="border-color: #38bdf8; color: #38bdf8;">x7.50</div>
-        </div>
-
-        <div class="fishing-display" id="skyJetDisplayBox" style="height: 255px; position: relative;">
-            <canvas id="skyCanvas" width="360" height="255" style="width: 100%; height: 100%; display: block;"></canvas>
-
-            <!-- Основний множник зверху -->
-            <div id="skyMultBadge" style="position: absolute; top: 10px; left: 12px; background: rgba(2,6,23,0.82); border: 1px solid #facc15; border-radius: 8px; padding: 4px 10px; font-size: 15px; font-weight: 900; color: #facc15;">
-                x1.00
-            </div>
-
-            <!-- Інформаційна панель внизу (Висота, Дистанція, Перемикач швидкості) -->
-            <div style="position: absolute; bottom: 8px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; background: rgba(2, 6, 23, 0.85); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 5px 10px; font-size: 10px; font-weight: 800; color: #cbd5e1;">
-                <div>ВЫСОТА: <span id="skyAltText" style="color:#fff;">30m</span></div>
-                <div>ПУТЬ: <span id="skyDistText" style="color:#fff;">0m</span></div>
-                <div>КУШ: <span id="skyWinText" style="color:#4ade80;">10 ★</span></div>
-                
-                <div class="sky-speed-panel">
-                    <button class="sky-spd-btn" onclick="setSkySpeed(1)">🐢</button>
-                    <button class="sky-spd-btn active" onclick="setSkySpeed(2)">🚶</button>
-                    <button class="sky-spd-btn" onclick="setSkySpeed(3)">🐇</button>
-                    <button class="sky-spd-btn" onclick="setSkySpeed(4)">⚡</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="betting-box">
-            <div class="betting-info">
-                <span>СТАВКА НА РЕЙС</span>
-                <span id="skyStatusLabel">ТАПАЙ ПО ЭКРАНУ ДЛЯ НАБОРОВ ВЫСОТЫ</span>
-            </div>
-
-            <div class="bet-row">
-                <div class="bet-adjuster">
-                    <!-- ИСПРАВЛЕНО: 'sky' заменено на 'avia' -->
-                    <button class="btn-chg" onclick="changeBet(-5, 'avia')">-</button>
-                    <span id="betAmountSky" class="bet-number">10</span>
-                    <button class="btn-chg" onclick="changeBet(5, 'avia')">+</button>
-                </div>
-                <button id="skyMainBtn" class="btn-main-action btn-style-start" onclick="startSkyGame()">
-                    ЗАПУСК
-                </button>
-            </div>
-
-            <div class="slider-container">
-                <span class="slider-label">1</span>
-                <!-- ИСПРАВЛЕНО: 'sky' заменено на 'avia' -->
-                <input type="range" id="betSliderSky" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'avia')">
-                <span class="slider-label" id="maxSliderSky">100</span>
-            </div>
-
-            <div class="quick-chips">
-                <!-- ИСПРАВЛЕНО: везде 'sky' заменено на 'avia' -->
-                <button class="chip" onclick="setBet(10, 'avia')">10</button>
-                <button class="chip" onclick="setBet(25, 'avia')">25</button>
-                <button class="chip" onclick="setBet(50, 'avia')">50</button>
-                <button class="chip" onclick="setBet(100, 'avia')">100</button>
-            </div>
-        </div>
-
-        <button class="btn-return" onclick="exitSkyLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
-    </div>
-
-    
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
         <div class="lobby-header">
@@ -3531,13 +3381,12 @@
 
        function updateBalanceUI() {
             const formatted = formatStars(starsBalance);
-           const ids = [
+            const ids = [
                 'userStarsLobby', 'userStarsMarket', 'userStarsProfile',
                 'profileWalletBalance', 'userStarsRoulette', 'userStarsRocket',
                 'userStarsMines', 'userStarsPlinko', 'userStarsCoinflip',
-                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing', 'userStarsSky'
+                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing'
             ];
-           
             ids.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.innerText = formatted;
@@ -3548,7 +3397,7 @@
             document.getElementById('statReferralsCount').innerText = referralsCount;
 
             const sliderMax = Math.max(10, Math.floor(starsBalance));
-            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Fishing', 'Avia'].forEach(game => {
+            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Fishing'].forEach(game => {
                 const slider = document.getElementById('betSlider' + game);
                 const maxLabel = document.getElementById('maxSlider' + game);
                 if (slider && maxLabel) {
@@ -3602,33 +3451,12 @@ function switchPage(pageId, buttonElement) {
         loadUserHistoryFromServer();
     }
 }
-      function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
+
+        function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
         function openRocketGame() { switchPage('rocketGamePage'); triggerHaptic('impact', 'medium'); updateRocketFreebetUI(); }
         function openMinesGame() { switchPage('minesPage'); triggerHaptic('impact', 'medium'); initMinesGrid(); }
         function openPlinkoGame() { switchPage('plinkoPage'); triggerHaptic('impact', 'medium'); initPlinkoCanvas(); }
         function openCoinflipGame() { switchPage('coinflipPage'); triggerHaptic('impact', 'medium'); }
-        
-        // Добавлено: функция переключения страниц и открытия Sky Jet
-        function switchPage(pageId, navItem) {
-            document.querySelectorAll('.page').forEach(p => {
-                p.style.display = 'none';
-                p.classList.remove('active');
-            });
-            const target = document.getElementById(pageId);
-            if (target) {
-                target.style.display = 'block';
-                target.classList.add('active');
-            }
-            if (navItem) {
-                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-                navItem.classList.add('active');
-            }
-        }
-
-        function openAviaGame() { 
-            switchPage('skyJetGamePage'); 
-            triggerHaptic('impact', 'medium'); 
-        }
 
         function closeSubGame(pageId) {
             switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
@@ -3636,21 +3464,20 @@ function switchPage(pageId, buttonElement) {
         }
 
         function syncBetUI(type, val) {
-            const cap = (type === 'avia') ? 'Sky' : (type.charAt(0).toUpperCase() + type.slice(1));
+            const cap = type.charAt(0).toUpperCase() + type.slice(1);
             const numEl = document.getElementById('betAmount' + cap);
             const sliderEl = document.getElementById('betSlider' + cap);
             if (numEl) numEl.innerText = val;
             if (sliderEl) sliderEl.value = val;
         }
 
-        function onSliderBet(value, type) {
+    function onSliderBet(value, type) {
             const val = Math.max(1, parseInt(value) || 1);
             if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
             if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
             if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
             if (type === 'rocket' && isPlayingRocket) { syncBetUI('rocket', currentBetRocket); return; }
             if (type === 'fishing' && (isHoldingRod || isFishingCooldown)) { syncBetUI('fishing', currentBetFishing); return; }
-            if (type === 'avia' && isPlayingAvia) { syncBetUI('avia', currentBetAvia); return; }
 
             if (type === 'roulette') currentBetRoulette = val;
             else if (type === 'rocket') currentBetRocket = val;
@@ -3658,43 +3485,52 @@ function switchPage(pageId, buttonElement) {
             else if (type === 'plinko') currentBetPlinko = val;
             else if (type === 'coinflip') currentBetCoinflip = val;
             else if (type === 'fishing') currentBetFishing = val;
-            else if (type === 'avia') currentBetAvia = val;
 
             syncBetUI(type, val);
-            if (type === 'avia') {
-                const winPreview = document.getElementById('aviaWinPreview');
-                if (winPreview) winPreview.innerText = val + ' ★';
-            }
         }
 
         function changeBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = Math.max(1, currentBetRocket + amount); syncBetUI('rocket', currentBetRocket); }
-            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
-            else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
-            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
-            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) { currentBetFishing = Math.max(1, currentBetFishing + amount); syncBetUI('fishing', currentBetFishing); }
-            else if (type === 'avia' && !isPlayingAvia) {
-                currentBetAvia = Math.max(1, currentBetAvia + amount);
-                syncBetUI('avia', currentBetAvia);
-                const winPreview = document.getElementById('aviaWinPreview');
-                if (winPreview) winPreview.innerText = currentBetAvia + ' ★';
+            if (type === 'roulette' && !isSpinning) { 
+                currentBetRoulette = Math.max(1, currentBetRoulette + amount); 
+                syncBetUI('roulette', currentBetRoulette); 
+            } else if (type === 'rocket' && !isPlayingRocket) { 
+                currentBetRocket = Math.max(1, currentBetRocket + amount); 
+                syncBetUI('rocket', currentBetRocket); 
+            } else if (type === 'mines' && !isPlayingMines) { 
+                currentBetMines = Math.max(1, currentBetMines + amount); 
+                syncBetUI('mines', currentBetMines); 
+            } else if (type === 'plinko') { 
+                currentBetPlinko = Math.max(1, currentBetPlinko + amount); 
+                syncBetUI('plinko', currentBetPlinko); 
+            } else if (type === 'coinflip' && !isFlippingCoin) { 
+                currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); 
+                syncBetUI('coinflip', currentBetCoinflip); 
+            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
+                currentBetFishing = Math.max(1, currentBetFishing + amount);
+                syncBetUI('fishing', currentBetFishing);
             }
             triggerHaptic('impact', 'light');
         }
 
         function setBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
-            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
-            else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
-            else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
-            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
-            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) { currentBetFishing = amount; syncBetUI('fishing', currentBetFishing); }
-            else if (type === 'avia' && !isPlayingAvia) {
-                currentBetAvia = amount;
-                syncBetUI('avia', currentBetAvia);
-                const winPreview = document.getElementById('aviaWinPreview');
-                if (winPreview) winPreview.innerText = currentBetAvia + ' ★';
+            if (type === 'roulette' && !isSpinning) { 
+                currentBetRoulette = amount; 
+                syncBetUI('roulette', currentBetRoulette); 
+            } else if (type === 'rocket' && !isPlayingRocket) { 
+                currentBetRocket = amount; 
+                syncBetUI('rocket', currentBetRocket); 
+            } else if (type === 'mines' && !isPlayingMines) { 
+                currentBetMines = amount; 
+                syncBetUI('mines', currentBetMines); 
+            } else if (type === 'plinko') { 
+                currentBetPlinko = amount; 
+                syncBetUI('plinko', currentBetPlinko); 
+            } else if (type === 'coinflip' && !isFlippingCoin) { 
+                currentBetCoinflip = amount; 
+                syncBetUI('coinflip', currentBetCoinflip); 
+            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
+                currentBetFishing = amount;
+                syncBetUI('fishing', currentBetFishing);
             }
             triggerHaptic('impact', 'light');
         }
@@ -5453,473 +5289,7 @@ const assignedCode = "ОЖИДАНИЕ...";
             hist.prepend(pill);
             if (hist.children.length > 5) hist.lastChild.remove();
         }
-
-      /* --- SKY JET: АВТОРСЬКИЙ РУШІЙ (XORYS) --- */
-        let currentBetSky = 10;
-        let activeSkyBet = 0;
-        let isPlayingSky = false;
-        let skyAnimId = null;
-
-        let skyJet = { x: 85, y: 130, vy: 0, tilt: 0 };
-        let skyCurrentMult = 1.00;
-        let skyDistance = 0.0;
-        let skyAltitude = 30.0;
-        const skyTotalDistance = 1900.0;
-        let skySpeedMul = 1.5;
-
-        let skyOrbs = [];
-        let skySparks = [];
-        let skyFloatTexts = [];
-        let skyClouds = [
-            { x: 40, y: 65, s: 1.1, spd: 0.8 },
-            { x: 200, y: 45, s: 0.85, spd: 0.6 },
-            { x: 340, y: 85, s: 1.3, spd: 0.95 }
-        ];
-        let skyWaterWave = 0;
-        let skyFanAngle = 0;
-
-        function openSkyGame() {
-            switchPage('skyJetGamePage');
-            triggerHaptic('impact', 'medium');
-            updateBalanceUI();
-            drawSkyStaticScene();
-        }
-
-        function exitSkyLobby() {
-            if (isPlayingSky) {
-                isPlayingSky = false;
-                cancelAnimationFrame(skyAnimId);
-                const btn = document.getElementById('skyMainBtn');
-                btn.disabled = false;
-                btn.innerText = 'ЗАПУСК';
-            }
-            closeSubGame('casino');
-        }
-
-        function setSkySpeed(lvl) {
-            document.querySelectorAll('.sky-spd-btn').forEach((b, idx) => {
-                b.classList.toggle('active', idx + 1 === lvl);
-            });
-            if (lvl === 1) skySpeedMul = 1.0;
-            else if (lvl === 2) skySpeedMul = 1.5;
-            else if (lvl === 3) skySpeedMul = 2.2;
-            else if (lvl === 4) skySpeedMul = 3.2;
-            triggerHaptic('impact', 'light');
-        }
-
-        const skyBoxEl = document.getElementById('skyJetDisplayBox');
-        if (skyBoxEl) {
-            skyBoxEl.onclick = () => {
-                if (!isPlayingSky) return;
-                skyJet.vy = -4.6;
-                triggerHaptic('impact', 'light');
-            };
-        }
-
-        function generateSkyRoute() {
-            const items = [];
-            let dist = 240;
-            while (dist < skyTotalDistance - 170) {
-                const roll = Math.random();
-                const laneY = 40 + Math.random() * 120;
-
-                if (roll < 0.32) {
-                    // Грозова хмара з блискавкою (ділить множник навпіл ÷2)
-                    items.push({ dist, y: laneY, type: 'storm', hit: false });
-                } else if (roll < 0.65) {
-                    // Зелений плюс (+1, +2, +5)
-                    const vals = [1, 2, 3, 5];
-                    const val = vals[Math.floor(Math.random() * vals.length)];
-                    items.push({ dist, y: laneY, type: 'boost', val, hit: false });
-                } else {
-                    // Золоте ядерце множника (x2, x3, x4)
-                    const mults = [2, 3, 4];
-                    const val = mults[Math.floor(Math.random() * mults.length)];
-                    items.push({ dist, y: laneY, type: 'super', val, hit: false });
-                }
-                dist += 105 + Math.random() * 60;
-            }
-            return items;
-        }
-
-        function startSkyGame() {
-            if (isPlayingSky) return;
-            if (starsBalance < currentBetSky) {
-                showToast('Недостаточно звезд!');
-                return;
-            }
-
-            starsBalance = Number((starsBalance - currentBetSky).toFixed(1));
-            activeSkyBet = currentBetSky;
-            totalGamesPlayed += 1;
-            updateBalanceUI();
-
-            isPlayingSky = true;
-            skyCurrentMult = 1.00;
-            skyDistance = 0.0;
-            skyAltitude = 30.0;
-            skyJet = { x: 85, y: 130, vy: 0, tilt: 0 };
-            skyOrbs = generateSkyRoute();
-            skySparks = [];
-            skyFloatTexts = [];
-
-            const btn = document.getElementById('skyMainBtn');
-            btn.disabled = true;
-            btn.innerText = 'В ПОЛЕТЕ...';
-            document.getElementById('skyStatusLabel').innerText = 'РЕЙС В ПУТИ! ТАПАЙ ЧТОБЫ МАНЕВРИРОВАТЬ';
-            updateSkyHud();
-
-            playSound('click');
-            triggerHaptic('impact', 'medium');
-
-            cancelAnimationFrame(skyAnimId);
-            skyAnimId = requestAnimationFrame(updateSkyLoop);
-        }
-
-        function updateSkyHud() {
-            document.getElementById('skyMultBadge').innerText = 'x' + skyCurrentMult.toFixed(2);
-            document.getElementById('skyAltText').innerText = skyAltitude.toFixed(1) + 'm';
-            document.getElementById('skyDistText').innerText = Math.floor(skyDistance) + 'm';
-            document.getElementById('skyWinText').innerText = Math.floor(activeSkyBet * skyCurrentMult) + ' ★';
-        }
-
-        function spawnSkySparks(x, y, color, txt) {
-            for (let i = 0; i < 15; i++) {
-                const angle = Math.random() * Math.PI * 2;
-                const spd = Math.random() * 3.8 + 1;
-                skySparks.push({ x, y, vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd, life: 1, color });
-            }
-            if (txt) {
-                skyFloatTexts.push({ x, y: y - 10, text: txt, color, life: 1 });
-            }
-        }
-
-        function drawSkyLandingPlatform(ctx, cx, seaY, isFinish) {
-            ctx.save();
-            ctx.translate(cx, seaY);
-            // Платформа/корабель внизу
-            ctx.fillStyle = '#0f172a';
-            ctx.strokeStyle = '#38bdf8';
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(-110, 6);
-            ctx.lineTo(-85, -14);
-            ctx.lineTo(95, -14);
-            ctx.lineTo(115, 6);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-
-            ctx.fillStyle = '#1e293b';
-            ctx.fillRect(-100, -17, 200, 3);
-
-            ctx.strokeStyle = isFinish ? '#4ade80' : '#facc15';
-            ctx.setLineDash([7, 5]);
-            ctx.lineWidth = 2;
-            ctx.beginPath();
-            ctx.moveTo(-85, -15);
-            ctx.lineTo(85, -15);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            if (isFinish) {
-                ctx.fillStyle = '#4ade80';
-                ctx.font = '900 10px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText('БАЗА ПОСАДКИ', 0, -22);
-            }
-            ctx.restore();
-        }
-
-        function drawSkyJetPlane(ctx, p) {
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.tilt);
-
-            // Слід
-            ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(-22, 2);
-            ctx.lineTo(-65, 3);
-            ctx.stroke();
-
-            // Корпус стилізованого літака (унікальна геометрія)
-            ctx.fillStyle = '#f59e0b';
-            ctx.strokeStyle = '#b45309';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            ctx.moveTo(-24, 0);
-            ctx.quadraticCurveTo(0, -7, 24, 1);
-            ctx.quadraticCurveTo(4, 5, -24, 3);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-
-            // Крила
-            ctx.fillStyle = '#d97706';
-            ctx.fillRect(-6, -12, 14, 3);
-            ctx.fillRect(-4, 2, 12, 2.5);
-
-            // Кабіна
-            ctx.fillStyle = '#38bdf8';
-            ctx.beginPath();
-            ctx.ellipse(7, -2, 4, 2, 0.1, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Гвинт
-            skyFanAngle += 0.6;
-            ctx.fillStyle = '#0f172a';
-            ctx.save();
-            ctx.translate(24, 1);
-            ctx.rotate(skyFanAngle);
-            ctx.fillRect(-1.5, -9, 3, 18);
-            ctx.restore();
-
-            ctx.restore();
-        }
-
-        function updateSkyLoop() {
-            if (!isPlayingSky) return;
-
-            const canvas = document.getElementById('skyCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width;
-            const h = canvas.height;
-            const seaY = 210;
-            const scrollSpd = 3.2 * skySpeedMul;
-
-            skyDistance += scrollSpd;
-            skyAltitude = Number((30.0 + (seaY - skyJet.y) * 0.3).toFixed(1));
-
-            skyJet.vy += 0.13;
-            skyJet.y += skyJet.vy;
-            skyJet.tilt = Math.max(-0.35, Math.min(0.38, skyJet.vy * 0.07));
-            if (skyJet.y < 25) { skyJet.y = 25; skyJet.vy = 0; }
-
-            ctx.clearRect(0, 0, w, h);
-
-            // Небо
-            const skyGrad = ctx.createLinearGradient(0, 0, 0, seaY);
-            skyGrad.addColorStop(0, '#020617');
-            skyGrad.addColorStop(0.5, '#0f172a');
-            skyGrad.addColorStop(1, '#0284c7');
-            ctx.fillStyle = skyGrad;
-            ctx.fillRect(0, 0, w, seaY);
-
-            // Хмари
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
-            skyClouds.forEach(c => {
-                c.x -= c.spd * skySpeedMul;
-                if (c.x < -70) c.x = w + 70;
-                ctx.beginPath();
-                ctx.arc(c.x, c.y, 20 * c.s, 0, Math.PI * 2);
-                ctx.arc(c.x + 16 * c.s, c.y - 4 * c.s, 24 * c.s, 0, Math.PI * 2);
-                ctx.fill();
-            });
-
-            // Старт і фініш
-            const startX = 60 - skyDistance;
-            if (startX > -130) drawSkyLandingPlatform(ctx, startX, seaY, false);
-
-            const finishX = 90 + (skyTotalDistance - skyDistance);
-            if (finishX < w + 160) drawSkyLandingPlatform(ctx, finishX, seaY, true);
-
-            // Вода внизу
-            skyWaterWave += 0.08 * skySpeedMul;
-            const waterGrad = ctx.createLinearGradient(0, seaY, 0, h);
-            waterGrad.addColorStop(0, '#0369a1');
-            waterGrad.addColorStop(1, '#0f172a');
-            ctx.fillStyle = waterGrad;
-            ctx.beginPath();
-            ctx.moveTo(0, h);
-            for (let x = 0; x <= w; x += 10) {
-                const wy = seaY + Math.sin(x * 0.05 + skyWaterWave) * 3.5;
-                ctx.lineTo(x, wy);
-            }
-            ctx.lineTo(w, h);
-            ctx.closePath();
-            ctx.fill();
-
-            // Об'єкти (грозові хмари та золоті ядра)
-            skyOrbs.forEach(item => {
-                if (item.hit) return;
-                const screenX = skyJet.x + (item.dist - skyDistance);
-                if (screenX < -40 || screenX > w + 40) return;
-
-                ctx.save();
-                ctx.translate(screenX, item.y);
-
-                if (item.type === 'storm') {
-                    // Грозова хмара (замість бомб)
-                    ctx.fillStyle = '#334155';
-                    ctx.strokeStyle = '#ef4444';
-                    ctx.lineWidth = 2;
-                    ctx.shadowColor = '#ef4444';
-                    ctx.shadowBlur = 12;
-                    ctx.beginPath();
-                    ctx.arc(0, 0, 15, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.stroke();
-                    ctx.fillStyle = '#facc15';
-                    ctx.font = '900 11px sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText('⚡', 0, 1);
-                } else {
-                    // Золоте чи яскраве ядерце
-                    const isSup = item.type === 'super';
-                    const col = isSup ? '#facc15' : '#4ade80';
-
-                    ctx.beginPath();
-                    ctx.arc(0, 0, 17, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-                    ctx.shadowColor = col;
-                    ctx.shadowBlur = 18;
-                    ctx.fill();
-                    ctx.lineWidth = 2.5;
-                    ctx.strokeStyle = col;
-                    ctx.stroke();
-
-                    ctx.fillStyle = col;
-                    ctx.font = '900 12px sans-serif';
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.fillText(isSup ? `x${item.val}` : `+${item.val}`, 0, 1);
-                }
-                ctx.restore();
-                ctx.shadowBlur = 0;
-
-                // Перевірка зіткнення
-                if (Math.hypot(skyJet.x - screenX, skyJet.y - item.y) < 22) {
-                    item.hit = true;
-                    if (item.type === 'storm') {
-                        skyCurrentMult = Number(Math.max(0.2, skyCurrentMult / 2).toFixed(2));
-                        spawnSkySparks(screenX, item.y, '#ef4444', '÷2 ⚡');
-                        playSound('error');
-                        triggerHaptic('notification', 'error');
-                    } else if (item.type === 'boost') {
-                        skyCurrentMult = Number((skyCurrentMult + item.val).toFixed(2));
-                        spawnSkySparks(screenX, item.y, '#4ade80', `+${item.val}x`);
-                        playSound('win');
-                        triggerHaptic('impact', 'medium');
-                    } else if (item.type === 'super') {
-                        skyCurrentMult = Number((skyCurrentMult * item.val).toFixed(2));
-                        spawnSkySparks(screenX, item.y, '#facc15', `x${item.val}!`);
-                        playSound('win');
-                        triggerHaptic('impact', 'heavy');
-                    }
-                    updateSkyHud();
-                }
-            });
-
-            // Анімація часток
-            for (let i = skySparks.length - 1; i >= 0; i--) {
-                const sp = skySparks[i];
-                sp.x += sp.vx;
-                sp.y += sp.vy;
-                sp.life -= 0.04;
-                if (sp.life <= 0) { skySparks.splice(i, 1); continue; }
-                ctx.globalAlpha = sp.life;
-                ctx.fillStyle = sp.color;
-                ctx.beginPath();
-                ctx.arc(sp.x, sp.y, 3, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.globalAlpha = 1;
-            }
-
-            for (let i = skyFloatTexts.length - 1; i >= 0; i--) {
-                const ft = skyFloatTexts[i];
-                ft.y -= 0.9;
-                ft.life -= 0.025;
-                if (ft.life <= 0) { skyFloatTexts.splice(i, 1); continue; }
-                ctx.globalAlpha = ft.life;
-                ctx.fillStyle = ft.color;
-                ctx.font = '900 13px sans-serif';
-                ctx.textAlign = 'center';
-                ctx.fillText(ft.text, ft.x, ft.y);
-                ctx.globalAlpha = 1;
-            }
-
-            drawSkyJetPlane(ctx, skyJet);
-            updateSkyHud();
-
-            // Падіння у воду
-            if (skyJet.y >= seaY - 8) {
-                spawnSkySparks(skyJet.x, seaY, '#38bdf8', 'ПАДІННЯ!');
-                finishSkyRound(false);
-                return;
-            }
-
-            // Успішний приліт на базу
-            if (skyDistance >= skyTotalDistance) {
-                skyJet.y = seaY - 21;
-                skyJet.tilt = 0;
-                drawSkyJetPlane(ctx, skyJet);
-                finishSkyRound(true);
-                return;
-            }
-
-            skyAnimId = requestAnimationFrame(updateSkyLoop);
-        }
-
-        function finishSkyRound(success) {
-            isPlayingSky = false;
-            cancelAnimationFrame(skyAnimId);
-
-            const btn = document.getElementById('skyMainBtn');
-            btn.disabled = false;
-            btn.innerText = 'ЗАПУСК';
-
-            const hist = document.getElementById('skyHistory');
-            const pill = document.createElement('div');
-            pill.className = 'history-pill';
-
-            if (success) {
-                const winSum = Math.max(1, Math.floor(activeSkyBet * skyCurrentMult));
-                starsBalance = Number((starsBalance + winSum).toFixed(1));
-                totalStarsWon += winSum;
-                updateBalanceUI();
-
-                pill.style.borderColor = '#4ade80';
-                pill.style.color = '#4ade80';
-                pill.innerText = 'x' + skyCurrentMult.toFixed(2);
-                document.getElementById('skyStatusLabel').innerText = `ПОСАДКА УСПІШНА! +${winSum} ★`;
-                playSound('win');
-                triggerHaptic('notification', 'success');
-                showToast(`Sky Jet: +${winSum} ★!`);
-            } else {
-                pill.style.borderColor = '#ef4444';
-                pill.style.color = '#ef4444';
-                pill.innerText = '0x';
-                document.getElementById('skyStatusLabel').innerText = 'ЛІТАК ВПАВ У МОРЕ!';
-                playSound('error');
-                triggerHaptic('notification', 'error');
-                showToast('Літак розбився!');
-            }
-
-            if (hist) {
-                hist.prepend(pill);
-                if (hist.children.length > 5) hist.lastChild.remove();
-            }
-        }
-
-        function drawSkyStaticScene() {
-            const canvas = document.getElementById('skyCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            skyDistance = 0;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            const skyGrad = ctx.createLinearGradient(0, 0, 0, 210);
-            skyGrad.addColorStop(0, '#020617');
-            skyGrad.addColorStop(1, '#0284c7');
-            ctx.fillStyle = skyGrad;
-            ctx.fillRect(0, 0, canvas.width, 210);
-            drawSkyLandingPlatform(ctx, 70, 210, false);
-            drawSkyJetPlane(ctx, { x: 85, y: 130, tilt: 0 });
-            document.getElementById('skyMultBadge').innerText = 'x1.00';
-        }
+        
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
         const liveFeedItems = [
