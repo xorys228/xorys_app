@@ -2819,8 +2819,7 @@
                 <span class="banner-feature-pill">БОНУСЫ</span>
             </div>
         </div>
-
-        <!-- 1. Карточка пользователя -->
+<!-- 1. Карточка пользователя -->
         <div class="profile-hero-card">
             <div class="profile-top-row">
                 <div class="profile-avatar" id="profileAvatarBox">И</div>
@@ -2841,12 +2840,12 @@
                         <span id="profileWalletBalance">100</span>
                     </div>
                 </div>
-               <button class="btn-deposit-tg" onclick="openStarsInvoice(10)">
+               <button class="btn-deposit-tg" onclick="let amount = prompt('Сколько зірок добавить?', '50'); if(amount && !isNaN(amount) && Number(amount) > 0) openStarsInvoice(Number(amount));">
     <i class="fa-brands fa-telegram" style="margin-right: 6px;"></i>ДОБАВИТЬ ИЗ ТГ
 </button>
             </div>
         </div>
-
+        
         <!-- 2. Статистика игрока -->
         <div class="profile-stats-grid">
             <div class="stat-mini-card">
