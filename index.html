@@ -3731,7 +3731,7 @@ function switchPage(pageId, buttonElement) {
             const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
 
             // Отправляем запрос на наш бэкенд для записи в базу данных
-           fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/buy', {
+           fetch('https://stock-sneer-pastrami.ngrok-free.dev', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -4175,7 +4175,7 @@ const assignedCode = "ОЖИДАНИЕ...";
 
     try {
         // Укажите ваш адрес сервера/бэкенда, где крутится бот
-        const API_URL = 'https://stock-sneer-pastrami.ngrok-free.dev/api/withdraw';
+        const API_URL = ' https://stock-sneer-pastrami.ngrok-free.dev/withdraw';
 
         const response = await fetch(API_URL, {
             method: 'POST',
