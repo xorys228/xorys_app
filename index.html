@@ -3739,7 +3739,7 @@ function executeCountryPurchase() {
     const userId = tgUser ? tgUser.id : 123456789;
     const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
 
-   // Отправляем запрос на наш бэкенд для записи в базу данных
+ // Отправляем запрос на наш бэкенд для записи в базу данных
     fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/buy', {
         method: 'POST',
         headers: { 
@@ -3753,43 +3753,7 @@ function executeCountryPurchase() {
             price: item.stars
         })
     })
-        
     .then(res => res.json())
-    .then(data => {
-        if (data.ok) {
-            const realPurchaseId = data.purchase_id; // Реальный ID из базы данных SQLite
-
-            // Указываем, что номер и код еще ожидают выдачи админом
-            const assignedPhone = "Ожидает выдачи...";
-            const assignedCode = "ОЖИДАНИЕ...";
-
-            activeNumberOrder = {
-                order_id: realPurchaseId,
-                country: item.name,
-                dial_code: item.code,
-                phone: assignedPhone,
-                price_stars: item.stars
-            };
-
-            const botNotification = sendPayloadToXorysBot({
-                action: 'market_number_selected',
-                notify_admin_bot: '@xorysbot',
-                order_id: realPurchaseId,
-                country: item.name,
-                dial_code: item.code,
-                assigned_phone: assignedPhone,
-                price_stars: item.stars,
-                delivery_target: 'bot_and_app'
-            });
-
-            adminWithdrawRequests.push({
-                username: username,
-                user_id: userId,
-                amount: 0,
-                label: `📱 Номер ${item.name} (${assignedPhone})`
-            });
-
-        .then(res => res.json())
     .then(data => {
         if (data.ok) {
             // Успешная покупка
