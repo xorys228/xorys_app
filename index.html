@@ -3602,12 +3602,17 @@ function switchPage(pageId, buttonElement) {
         loadUserHistoryFromServer();
     }
 }
-
         function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
         function openRocketGame() { switchPage('rocketGamePage'); triggerHaptic('impact', 'medium'); updateRocketFreebetUI(); }
         function openMinesGame() { switchPage('minesPage'); triggerHaptic('impact', 'medium'); initMinesGrid(); }
         function openPlinkoGame() { switchPage('plinkoPage'); triggerHaptic('impact', 'medium'); initPlinkoCanvas(); }
         function openCoinflipGame() { switchPage('coinflipPage'); triggerHaptic('impact', 'medium'); }
+        
+        // Добавлено: функция открытия Sky Jet из лобби
+        function openAviaGame() { 
+            switchPage('skyJetGamePage'); 
+            triggerHaptic('impact', 'medium'); 
+        }
 
         function closeSubGame(pageId) {
             switchPage(pageId, document.querySelectorAll('.nav-item')[0]);
@@ -3615,14 +3620,15 @@ function switchPage(pageId, buttonElement) {
         }
 
         function syncBetUI(type, val) {
-            const cap = type.charAt(0).toUpperCase() + type.slice(1);
+            // Исправлено: для type === 'avia' ищем элементы с суффиксом 'Sky'
+            const cap = (type === 'avia') ? 'Sky' : (type.charAt(0).toUpperCase() + type.slice(1));
             const numEl = document.getElementById('betAmount' + cap);
             const sliderEl = document.getElementById('betSlider' + cap);
             if (numEl) numEl.innerText = val;
             if (sliderEl) sliderEl.value = val;
         }
 
-  function onSliderBet(value, type) {
+        function onSliderBet(value, type) {
             const val = Math.max(1, parseInt(value) || 1);
             if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
             if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
@@ -3640,7 +3646,10 @@ function switchPage(pageId, buttonElement) {
             else if (type === 'avia') currentBetAvia = val;
 
             syncBetUI(type, val);
-            if (type === 'avia') document.getElementById('aviaWinPreview').innerText = val + ' ★';
+            if (type === 'avia') {
+                const winPreview = document.getElementById('aviaWinPreview');
+                if (winPreview) winPreview.innerText = val + ' ★';
+            }
         }
 
         function changeBet(amount, type) {
@@ -3653,7 +3662,8 @@ function switchPage(pageId, buttonElement) {
             else if (type === 'avia' && !isPlayingAvia) {
                 currentBetAvia = Math.max(1, currentBetAvia + amount);
                 syncBetUI('avia', currentBetAvia);
-                document.getElementById('aviaWinPreview').innerText = currentBetAvia + ' ★';
+                const winPreview = document.getElementById('aviaWinPreview');
+                if (winPreview) winPreview.innerText = currentBetAvia + ' ★';
             }
             triggerHaptic('impact', 'light');
         }
@@ -3668,7 +3678,8 @@ function switchPage(pageId, buttonElement) {
             else if (type === 'avia' && !isPlayingAvia) {
                 currentBetAvia = amount;
                 syncBetUI('avia', currentBetAvia);
-                document.getElementById('aviaWinPreview').innerText = currentBetAvia + ' ★';
+                const winPreview = document.getElementById('aviaWinPreview');
+                if (winPreview) winPreview.innerText = currentBetAvia + ' ★';
             }
             triggerHaptic('impact', 'light');
         }
