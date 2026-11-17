@@ -2722,41 +2722,27 @@
         </div>
     </div>
 
-   <!-- Модальное окно ПОЛУЧЕНИЯ НОМЕРА И SMS-КОДА (С ОТПРАВКОЙ В @xorysbot) -->
-    <div id="numberOrderModal" class="market-modal-backdrop" onclick="closeNumberOrderModal(event)">
+  <!-- Модальное окно: Подтверждение покупки номера -->
+    <div id="numberConfirmModal" class="market-modal-backdrop" onclick="closeConfirmModal(event)">
         <div class="market-modal-card" onclick="event.stopPropagation()">
             <div class="modal-top-row">
                 <div class="modal-title-group">
-                    <span>ЗАКАЗ ОТПРАВЛЕН В @XORYSBOT</span>
-                    <h2 id="orderNumberCountryTitle">НОМЕР ТЕЛЕГРАМ</h2>
+                    <span>ПОДТВЕРЖДЕНИЕ ЗАКАЗА</span>
+                    <h2 id="confirmOrderCountryTitle">ИНДИЯ (+91)</h2>
                 </div>
-                <button class="modal-close-btn" onclick="closeNumberOrderModal()">
+                <button class="modal-close-btn" onclick="closeConfirmModal()">
                     <i class="fa-solid fa-xmark"></i>
                 </button>
             </div>
 
-            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 12px; margin-bottom: 10px;">
-                <div style="font-size: 10px; color: rgba(255,255,255,0.5); font-weight: 800;">ВЫДАННЫЙ НОМЕР:</div>
-                <div style="display: flex; align-items: center; justify-content: space-between; margin-top: 4px;">
-                    <span id="issuedPhoneNumber" style="font-size: 16px; font-weight: 900; font-family: monospace; color: #ffffff;">+7 999 000-00-00</span>
-                    <button class="btn-copy-ref" onclick="copyIssuedNumber()">КОПИРОВАТЬ</button>
-                </div>
+            <div style="background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.14); border-radius: 10px; padding: 14px; margin-bottom: 14px; text-align: center;">
+                <div style="font-size: 11px; color: rgba(255,255,255,0.5); font-weight: 800;">СТОИМОСТЬ НОМЕРА:</div>
+                <div id="confirmOrderPriceText" style="font-size: 20px; font-weight: 900; color: #facc15; margin-top: 4px;">120 ★</div>
             </div>
 
-            <div class="sms-code-box">
-                <div style="font-size: 10px; color: rgba(255,255,255,0.55); font-weight: 800; letter-spacing: 1px;">КОД ПОДТВЕРЖДЕНИЯ TELEGRAM:</div>
-                <div class="sms-code-digits" id="smsVerificationCode">ОЖИДАНИЕ...</div>
-                <div id="smsStatusHint" style="font-size: 11px; color: rgba(255,255,255,0.6);">Уведомление передано в @xorysbot. Введите номер в Telegram и запросите код.</div>
-            </div>
-
-            <div style="display: flex; gap: 8px;">
-                <button class="modal-buy-btn" style="flex: 1;" onclick="requestNumberCodeRefresh()">
-                    <i class="fa-solid fa-rotate" style="margin-right: 5px;"></i> ПОЛУЧИТЬ КОД
-                </button>
-                <button class="btn-copy-ref" style="padding: 0 14px; font-size: 11px;" onclick="openBotForCode()">
-                    В @XORYSBOT
-                </button>
-            </div>
+            <button class="modal-buy-btn" onclick="executeCountryPurchase()">
+                ПОДТВЕРДИТЬ ПОКУПКУ
+            </button>
         </div>
     </div>
 
