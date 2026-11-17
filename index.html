@@ -2722,7 +2722,7 @@
         </div>
     </div>
 
-    <!-- Модальное окно ПОЛУЧЕНИЯ НОМЕРА И SMS-КОДА (С ОТПРАВКОЙ В @xorysbot) -->
+   <!-- Модальное окно ПОЛУЧЕНИЯ НОМЕРА И SMS-КОДА (С ОТПРАВКОЙ В @xorysbot) -->
     <div id="numberOrderModal" class="market-modal-backdrop" onclick="closeNumberOrderModal(event)">
         <div class="market-modal-card" onclick="event.stopPropagation()">
             <div class="modal-top-row">
@@ -3711,97 +3711,125 @@ function switchPage(pageId, buttonElement) {
             });
         }
 
-        function buyCountryItem(item) {
-            if (starsBalance < item.stars) {
-                showToast(`Недостаточно звезд! Нужно ${item.stars} ★`);
-                triggerHaptic('notification', 'error');
-                return;
-            }
+     let pendingCountryItem = null;
 
-            starsBalance = Number((starsBalance - item.stars).toFixed(1));
-            updateBalanceUI();
-            addProfileActivity(`Номер ${item.name} (${item.code})`, `-${item.stars} ★`, 'fa-sim-card');
+// Крок 1: Користувач клікнув на країну — відкриваємо вікно підтвердження
+function buyCountryItem(item) {
+    pendingCountryItem = item;
+    
+    // Заповнюємо дані у вікні підтвердження
+    document.getElementById('confirmOrderCountryTitle').innerText = `${item.name.toUpperCase()} (${item.code})`;
+    document.getElementById('confirmOrderPriceText').innerText = `${item.stars} ★ (${item.usd})`;
+    
+    // Відкриваємо модальне вікно підтвердження
+    document.getElementById('numberConfirmModal').classList.add('open');
+    
+    triggerHaptic('impact', 'medium');
+}
 
-            // Безопасно получаем данные пользователя из Telegram WebApp
-            const tgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) 
-                ? window.Telegram.WebApp.initDataUnsafe.user 
-                : null;
+// Крок 2: Користувач натиснув "Підтвердити покупку" в модальному вікні
+function executeCountryPurchase() {
+    if (!pendingCountryItem) return;
+    const item = pendingCountryItem;
 
-            const userId = tgUser ? tgUser.id : 123456789;
-            const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
+    if (starsBalance < item.stars) {
+        showToast(`Недостаточно звезд! Нужно ${item.stars} ★`);
+        triggerHaptic('notification', 'error');
+        return;
+    }
 
-            // Отправляем запрос на наш бэкенд для записи в базу данных
-           fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/buy', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    user_id: userId,
-                    username: username,
-                    item_name: `Номер ${item.name} (${item.code})`,
-                    price: item.stars
-                })
-            })
-            .then(res => res.json())
-            .then(data => {
-                if (data.ok) {
-                    const realPurchaseId = data.purchase_id; // Реальный ID из базы данных SQLite
+    starsBalance = Number((starsBalance - item.stars).toFixed(1));
+    updateBalanceUI();
+    addProfileActivity(`Номер ${item.name} (${item.code})`, `-${item.stars} ★`, 'fa-sim-card');
 
-                   // Указываем, что номер и код еще ожидают выдачи админом
-const assignedPhone = "Ожидает выдачи...";
-const assignedCode = "ОЖИДАНИЕ...";
+    // Закриваємо вікно підтвердження
+    document.getElementById('numberConfirmModal').classList.remove('open');
 
-                    activeNumberOrder = {
-                        order_id: realPurchaseId,
-                        country: item.name,
-                        dial_code: item.code,
-                        phone: assignedPhone,
-                        price_stars: item.stars
-                    };
+    // Безопасно получаем данные пользователя из Telegram WebApp
+    const tgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe) 
+        ? window.Telegram.WebApp.initDataUnsafe.user 
+        : null;
 
-                    const botNotification = sendPayloadToXorysBot({
-                        action: 'market_number_selected',
-                        notify_admin_bot: '@xorysbot',
-                        order_id: realPurchaseId,
-                        country: item.name,
-                        dial_code: item.code,
-                        assigned_phone: assignedPhone,
-                        price_stars: item.stars,
-                        delivery_target: 'bot_and_app'
-                    });
+    const userId = tgUser ? tgUser.id : 123456789;
+    const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
 
-                    adminWithdrawRequests.push({
-                        username: username,
-                        user_id: userId,
-                        amount: 0,
-                        label: `📱 Номер ${item.name} (${assignedPhone})`
-                    });
+    // Отправляем запрос на наш бэкенд для записи в базу данных
+    fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/buy', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            user_id: userId,
+            username: username,
+            item_name: `Номер ${item.name} (${item.code})`,
+            price: item.stars
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
+            const realPurchaseId = data.purchase_id; // Реальный ID из базы данных SQLite
 
-                    // Открываем модальное окно получения SMS-кода в приложении
-                    document.getElementById('orderNumberCountryTitle').innerText = `${item.name.toUpperCase()} (${item.code})`;
-                    document.getElementById('issuedPhoneNumber').innerText = assignedPhone;
-                    document.getElementById('smsVerificationCode').innerText = 'ОЖИДАНИЕ...';
-                    document.getElementById('smsStatusHint').innerText = `Заказ #${realPurchaseId} отправлен в @xorysbot. Нажмите «ПОЛУЧИТЬ КОД» после запроса SMS в Telegram.`;
-                    document.getElementById('numberOrderModal').classList.add('open');
+            // Указываем, что номер и код еще ожидают выдачи админом
+            const assignedPhone = "Ожидает выдачи...";
+            const assignedCode = "ОЖИДАНИЕ...";
 
-                    showToast(`Заказ #${realPurchaseId} отправлен в @xorysbot!`);
-                    triggerHaptic('notification', 'success');
-                    playSound('win');
-                } else {
-                    // Возвращаем баланс при ошибке бэкенда
-                    starsBalance = Number((starsBalance + item.stars).toFixed(1));
-                    updateBalanceUI();
-                    showToast("Ошибка: " + (data.error || "Не удалось купить"));
-                    triggerHaptic('notification', 'error');
-                }
-            })
-            .catch(err => {
-                console.error("Ошибка сети:", err);
-                starsBalance = Number((starsBalance + item.stars).toFixed(1));
-                updateBalanceUI();
-                showToast("Ошибка соединения с сервером");
-                triggerHaptic('notification', 'error');
+            activeNumberOrder = {
+                order_id: realPurchaseId,
+                country: item.name,
+                dial_code: item.code,
+                phone: assignedPhone,
+                price_stars: item.stars
+            };
+
+            const botNotification = sendPayloadToXorysBot({
+                action: 'market_number_selected',
+                notify_admin_bot: '@xorysbot',
+                order_id: realPurchaseId,
+                country: item.name,
+                dial_code: item.code,
+                assigned_phone: assignedPhone,
+                price_stars: item.stars,
+                delivery_target: 'bot_and_app'
             });
+
+            adminWithdrawRequests.push({
+                username: username,
+                user_id: userId,
+                amount: 0,
+                label: `📱 Номер ${item.name} (${assignedPhone})`
+            });
+
+            // Открываем модальное окно получения SMS-кода в приложении
+            document.getElementById('orderNumberCountryTitle').innerText = `${item.name.toUpperCase()} (${item.code})`;
+            document.getElementById('issuedPhoneNumber').innerText = assignedPhone;
+            document.getElementById('smsVerificationCode').innerText = 'ОЖИДАНИЕ...';
+            document.getElementById('smsStatusHint').innerText = `Заказ #${realPurchaseId} отправлен в @xorysbot. Нажмите «ПОЛУЧИТЬ КОД» после запроса SMS в Telegram.`;
+            document.getElementById('numberOrderModal').classList.add('open');
+
+            showToast(`Заказ #${realPurchaseId} отправлен в @xorysbot!`);
+            triggerHaptic('notification', 'success');
+            playSound('win');
+        } else {
+            // Возвращаем баланс при ошибке бэкенда
+            starsBalance = Number((starsBalance + item.stars).toFixed(1));
+            updateBalanceUI();
+            showToast("Ошибка: " + (data.error || "Не удалось купить"));
+            triggerHaptic('notification', 'error');
         }
+    })
+    .catch(err => {
+        console.error("Ошибка сети:", err);
+        starsBalance = Number((starsBalance + item.stars).toFixed(1));
+        updateBalanceUI();
+        showToast("Ошибка соединения с сервером");
+        triggerHaptic('notification', 'error');
+    });
+}
+
+function closeConfirmModal(event) {
+    if (event && event.target !== document.getElementById('numberConfirmModal')) return;
+    document.getElementById('numberConfirmModal').classList.remove('open');
+}
 
      function requestNumberCodeRefresh() {
             if (!activeNumberOrder) return;
