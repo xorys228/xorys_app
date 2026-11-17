@@ -2841,9 +2841,9 @@
                         <span id="profileWalletBalance">100</span>
                     </div>
                 </div>
-                <button class="btn-deposit-tg" onclick="openTgImportModal()">
-                    <i class="fa-brands fa-telegram"></i> ДОБАВИТЬ ИЗ TG
-                </button>
+               <button class="btn-deposit-tg" onclick="openStarsInvoice(10)">
+    <i class="fa-brands fa-telegram" style="margin-right: 6px;"></i>ДОБАВИТЬ ИЗ ТГ
+</button>
             </div>
         </div>
 
@@ -5308,7 +5308,18 @@ function closeConfirmModal(event) {
             hist.prepend(pill);
             if (hist.children.length > 5) hist.lastChild.remove();
         }
-        
+
+
+        function openStarsInvoice(amount = 10) {
+    const botUsername = "xorysbot"; 
+    const invoiceUrl = `https://t.me/${botUsername}?start=pay_stars_${amount}`;
+    
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.openTelegramLink(invoiceUrl);
+    } else {
+        window.open(invoiceUrl, '_blank');
+    }
+}
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
         const liveFeedItems = [
