@@ -3739,10 +3739,13 @@ function executeCountryPurchase() {
     const userId = tgUser ? tgUser.id : 123456789;
     const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
 
-    // Отправляем запрос на наш бэкенд для записи в базу данных
+   // Отправляем запрос на наш бэкенд для записи в базу данных
     fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/buy', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true' 
+        },
         body: JSON.stringify({
             user_id: userId,
             username: username,
@@ -3750,6 +3753,7 @@ function executeCountryPurchase() {
             price: item.stars
         })
     })
+        
     .then(res => res.json())
     .then(data => {
         if (data.ok) {
@@ -3832,10 +3836,14 @@ function closeConfirmModal(event) {
             const userId = tgUser ? tgUser.id : 123456789;
 
            fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/user_purchases', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ user_id: userId })
-            })
+    method: 'POST',
+    headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' 
+    },
+    body: JSON.stringify({ user_id: userId })
+})
+               
             .then(res => res.json())
             .then(data => {
                 if (data.ok && data.purchases) {
@@ -4030,15 +4038,18 @@ function closeConfirmModal(event) {
                 // СЮДА ВСТАВЬТЕ ВАШ URL API БОТА (например, ваш сервер или вебхук)
                 const API_URL = 'https://stock-sneer-pastrami.ngrok-free.dev/api/pay_stars';
 
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        user_id: userId,
-                        username: username,
-                        amount: amount
-                    })
-                });
+               const response = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true' 
+        },
+        body: JSON.stringify({
+            user_id: userId,
+            username: username,
+            amount: amount
+        })
+    });
                 const data = await response.json();
 
                 payBtn.disabled = false;
@@ -4192,14 +4203,17 @@ function closeConfirmModal(event) {
         const API_URL = ' https://stock-sneer-pastrami.ngrok-free.dev/withdraw';
 
         const response = await fetch(API_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: userId,
-                username: username,
-                amount: amount
-            })
-        });
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true' 
+        },
+        body: JSON.stringify({
+            user_id: userId,
+            username: username,
+            amount: amount
+        })
+    });
 
         const data = await response.json();
 
@@ -5338,11 +5352,15 @@ function closeConfirmModal(event) {
         : null;
     const userId = tgUser ? tgUser.id : 123456789;
 
-   fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/user_purchases', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: userId })
-    })
+       
+fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/user_purchases', {
+    method: 'POST',
+    headers: { 
+        'Content-Type': 'application/json',
+        'ngrok-skip-browser-warning': 'true' 
+    },
+    body: JSON.stringify({ user_id: userId })
+})
     .then(res => res.json())
     .then(data => {
         if (data.ok && data.purchases) {
