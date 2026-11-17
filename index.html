@@ -3602,13 +3602,29 @@ function switchPage(pageId, buttonElement) {
         loadUserHistoryFromServer();
     }
 }
-        function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
+      function openRouletteGame() { switchPage('roulettePage'); triggerHaptic('impact', 'medium'); }
         function openRocketGame() { switchPage('rocketGamePage'); triggerHaptic('impact', 'medium'); updateRocketFreebetUI(); }
         function openMinesGame() { switchPage('minesPage'); triggerHaptic('impact', 'medium'); initMinesGrid(); }
         function openPlinkoGame() { switchPage('plinkoPage'); triggerHaptic('impact', 'medium'); initPlinkoCanvas(); }
         function openCoinflipGame() { switchPage('coinflipPage'); triggerHaptic('impact', 'medium'); }
         
-        // Добавлено: функция открытия Sky Jet из лобби
+        // Добавлено: функция переключения страниц и открытия Sky Jet
+        function switchPage(pageId, navItem) {
+            document.querySelectorAll('.page').forEach(p => {
+                p.style.display = 'none';
+                p.classList.remove('active');
+            });
+            const target = document.getElementById(pageId);
+            if (target) {
+                target.style.display = 'block';
+                target.classList.add('active');
+            }
+            if (navItem) {
+                document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+                navItem.classList.add('active');
+            }
+        }
+
         function openAviaGame() { 
             switchPage('skyJetGamePage'); 
             triggerHaptic('impact', 'medium'); 
@@ -3620,7 +3636,6 @@ function switchPage(pageId, buttonElement) {
         }
 
         function syncBetUI(type, val) {
-            // Исправлено: для type === 'avia' ищем элементы с суффиксом 'Sky'
             const cap = (type === 'avia') ? 'Sky' : (type.charAt(0).toUpperCase() + type.slice(1));
             const numEl = document.getElementById('betAmount' + cap);
             const sliderEl = document.getElementById('betSlider' + cap);
