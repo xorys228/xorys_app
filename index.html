@@ -1655,6 +1655,62 @@
             opacity: 0.45;
             cursor: not-allowed;
         }
+
+   /* === АРКТИЧЕСКИЙ СПУСК: ПРЕМИУМ СТИЛИ === */
+#arcticDisplayBox {
+    background: radial-gradient(circle at 50% 0%, #0c4a6e 0%, #082f49 45%, #020617 100%);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    box-shadow: inset 0 0 35px rgba(14, 165, 233, 0.25), 0 10px 30px rgba(0, 0, 0, 0.75);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.arctic-aurora {
+    position: absolute;
+    top: -30%;
+    left: -20%;
+    width: 140%;
+    height: 75%;
+    background: linear-gradient(90deg, rgba(16, 185, 129, 0.18), rgba(56, 189, 248, 0.28), rgba(139, 92, 246, 0.18));
+    filter: blur(26px);
+    transform: rotate(-6deg);
+    animation: auroraWave 7s ease-in-out infinite alternate;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes auroraWave {
+    0% { transform: rotate(-6deg) translateX(-4%) scaleY(0.95); opacity: 0.75; }
+    100% { transform: rotate(-3deg) translateX(4%) scaleY(1.1); opacity: 1; }
+}
+
+.arctic-hud-pill {
+    position: absolute;
+    top: 12px;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(2, 6, 23, 0.75);
+    border-radius: 10px;
+    padding: 5px 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.btn-style-cashout {
+    background: linear-gradient(135deg, #f59e0b 0%, #ea580c 100%) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(253, 224, 71, 0.5) !important;
+    box-shadow: 0 4px 20px rgba(245, 158, 11, 0.55);
+    animation: pulseCashout 1.4s infinite;
+}
+
+@keyframes pulseCashout {
+    0% { transform: scale(1); box-shadow: 0 0 14px rgba(245, 158, 11, 0.45); }
+    50% { transform: scale(1.025); box-shadow: 0 0 24px rgba(245, 158, 11, 0.85); }
+    100% { transform: scale(1); box-shadow: 0 0 14px rgba(245, 158, 11, 0.45); }
+}
+       
        
     </style>
 </head>
@@ -1928,6 +1984,46 @@
             </div>
         </div>
     </div>
+
+  <!-- АРКТИЧЕСКИЙ СПУСК -->
+            <div class="game-card-row" onclick="openArcticGame()">
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <defs>
+                            <radialGradient id="arcticCardBg" cx="50%" cy="30%" r="70%">
+                                <stop offset="0%" stop-color="#0284c7"/>
+                                <stop offset="100%" stop-color="#020617"/>
+                            </radialGradient>
+                            <linearGradient id="iceSlopeGrad" x1="0" y1="0" x2="1" y2="1">
+                                <stop offset="0%" stop-color="#e0f2fe"/>
+                                <stop offset="100%" stop-color="#38bdf8"/>
+                            </linearGradient>
+                        </defs>
+                        <circle cx="46" cy="62" r="48" fill="url(#arcticCardBg)" stroke="#38bdf8" stroke-width="3"/>
+                        <!-- Снежный склон -->
+                        <path d="M6 80 L90 36 L96 62 L12 104 Z" fill="url(#iceSlopeGrad)"/>
+                        <path d="M6 80 L90 36" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+                        <!-- Пингвин -->
+                        <ellipse cx="48" cy="48" rx="11" ry="15" transform="rotate(-26 48 48)" fill="#0f172a" stroke="#ffffff" stroke-width="1.8"/>
+                        <ellipse cx="50" cy="49" rx="6" ry="10" transform="rotate(-26 50 49)" fill="#ffffff"/>
+                        <circle cx="43" cy="41" r="2" fill="#ffffff"/>
+                        <polygon points="34,42 25,43 33,48" fill="#f97316"/>
+                        <!-- Золотая звезда -->
+                        <circle cx="74" cy="26" r="7" fill="#facc15"/>
+                        <circle cx="74" cy="26" r="11" stroke="#facc15" stroke-opacity="0.4" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-snowflake"></i> АРКАДА НА РЕАКЦИЮ</span>
+                    <span class="game-name">АРКТИЧЕСКИЙ СПУСК</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 342</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
+                    </div>
+                </div>
+            </div>
+
+    
 <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
@@ -2512,6 +2608,67 @@
 
           <button class="btn-return" onclick="exitIceFishingLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
       </div>  
+
+  <!-- ЭКРАН ИГРЫ "АРКТИЧЕСКИЙ СПУСК" -->
+    <div id="arcticGamePage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">АРКТИЧЕСКИЙ <span>СПУСК</span></div>
+            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsArctic">100</span></div>
+        </div>
+
+        <div class="rg-history" id="arcticHistory">
+            <div class="history-pill" style="border-color: #38bdf8; color: #38bdf8;">x2.45</div>
+            <div class="history-pill">x1.40</div>
+            <div class="history-pill" style="border-color: #facc15; color: #facc15;">x6.10</div>
+        </div>
+
+        <div class="fishing-display" id="arcticDisplayBox" style="height: 250px; cursor: pointer; user-select: none; -webkit-user-select: none;" onmousedown="jumpArcticPenguin()" ontouchstart="event.preventDefault(); jumpArcticPenguin();">
+            <div class="arctic-aurora"></div>
+            <canvas id="arcticCanvas" width="360" height="250" style="width: 100%; height: 100%; display: block; position: relative; z-index: 5;"></canvas>
+            
+            <div id="arcticMultBadge" class="arctic-hud-pill" style="left: 12px; border: 1px solid rgba(56, 189, 248, 0.6); font-size: 17px; font-weight: 900; color: #facc15; text-shadow: 0 0 10px rgba(250, 204, 21, 0.5);">
+                x1.00
+            </div>
+            
+            <div class="arctic-hud-pill" style="right: 12px; border: 1px solid rgba(255, 255, 255, 0.2); font-size: 10px; font-weight: 800; color: #e0f2fe; letter-spacing: 0.4px;">
+                <i class="fa-solid fa-hand-pointer" style="color: #38bdf8;"></i> ТАП = ПРЫЖОК
+            </div>
+        </div>
+
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА НА СПУСК</span>
+                <span id="arcticStatusLabel">ПРЫГАЙ ЧЕРЕЗ ЛЬДИНЫ И СОБИРАЙ ★</span>
+            </div>
+
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'arctic')">-</button>
+                    <span id="betAmountArctic" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'arctic')">+</button>
+                </div>
+                <button id="arcticMainBtn" class="btn-main-action btn-style-start" onclick="handleArcticBtnClick()">
+                    СТАРТ
+                </button>
+            </div>
+
+            <div class="slider-container">
+                <span class="slider-label">1</span>
+                <input type="range" id="betSliderArctic" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'arctic')">
+                <span class="slider-label" id="maxSliderArctic">100</span>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'arctic')">10</button>
+                <button class="chip" onclick="setBet(25, 'arctic')">25</button>
+                <button class="chip" onclick="setBet(50, 'arctic')">50</button>
+                <button class="chip" onclick="setBet(100, 'arctic')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="exitArcticLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
+    </div>
+    
 
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
@@ -3381,11 +3538,11 @@
 
        function updateBalanceUI() {
             const formatted = formatStars(starsBalance);
-            const ids = [
+           const ids = [
                 'userStarsLobby', 'userStarsMarket', 'userStarsProfile',
                 'profileWalletBalance', 'userStarsRoulette', 'userStarsRocket',
                 'userStarsMines', 'userStarsPlinko', 'userStarsCoinflip',
-                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing'
+                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing', 'userStarsArctic'
             ];
             ids.forEach(id => {
                 const el = document.getElementById(id);
@@ -3397,7 +3554,7 @@
             document.getElementById('statReferralsCount').innerText = referralsCount;
 
             const sliderMax = Math.max(10, Math.floor(starsBalance));
-            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Fishing'].forEach(game => {
+            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Fishing', 'Arctic'].forEach(game => {
                 const slider = document.getElementById('betSlider' + game);
                 const maxLabel = document.getElementById('maxSlider' + game);
                 if (slider && maxLabel) {
@@ -3471,13 +3628,14 @@ function switchPage(pageId, buttonElement) {
             if (sliderEl) sliderEl.value = val;
         }
 
-    function onSliderBet(value, type) {
+   function onSliderBet(value, type) {
             const val = Math.max(1, parseInt(value) || 1);
             if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
             if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
             if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
             if (type === 'rocket' && isPlayingRocket) { syncBetUI('rocket', currentBetRocket); return; }
             if (type === 'fishing' && (isHoldingRod || isFishingCooldown)) { syncBetUI('fishing', currentBetFishing); return; }
+            if (type === 'arctic' && isPlayingArctic) { syncBetUI('arctic', currentBetArctic); return; }
 
             if (type === 'roulette') currentBetRoulette = val;
             else if (type === 'rocket') currentBetRocket = val;
@@ -3485,53 +3643,30 @@ function switchPage(pageId, buttonElement) {
             else if (type === 'plinko') currentBetPlinko = val;
             else if (type === 'coinflip') currentBetCoinflip = val;
             else if (type === 'fishing') currentBetFishing = val;
+            else if (type === 'arctic') currentBetArctic = val;
 
             syncBetUI(type, val);
         }
 
         function changeBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { 
-                currentBetRoulette = Math.max(1, currentBetRoulette + amount); 
-                syncBetUI('roulette', currentBetRoulette); 
-            } else if (type === 'rocket' && !isPlayingRocket) { 
-                currentBetRocket = Math.max(1, currentBetRocket + amount); 
-                syncBetUI('rocket', currentBetRocket); 
-            } else if (type === 'mines' && !isPlayingMines) { 
-                currentBetMines = Math.max(1, currentBetMines + amount); 
-                syncBetUI('mines', currentBetMines); 
-            } else if (type === 'plinko') { 
-                currentBetPlinko = Math.max(1, currentBetPlinko + amount); 
-                syncBetUI('plinko', currentBetPlinko); 
-            } else if (type === 'coinflip' && !isFlippingCoin) { 
-                currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); 
-                syncBetUI('coinflip', currentBetCoinflip); 
-            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
-                currentBetFishing = Math.max(1, currentBetFishing + amount);
-                syncBetUI('fishing', currentBetFishing);
-            }
+            if (type === 'roulette' && !isSpinning) { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
+            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = Math.max(1, currentBetRocket + amount); syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
+            else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
+            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) { currentBetFishing = Math.max(1, currentBetFishing + amount); syncBetUI('fishing', currentBetFishing); }
+            else if (type === 'arctic' && !isPlayingArctic) { currentBetArctic = Math.max(1, currentBetArctic + amount); syncBetUI('arctic', currentBetArctic); }
             triggerHaptic('impact', 'light');
         }
 
         function setBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { 
-                currentBetRoulette = amount; 
-                syncBetUI('roulette', currentBetRoulette); 
-            } else if (type === 'rocket' && !isPlayingRocket) { 
-                currentBetRocket = amount; 
-                syncBetUI('rocket', currentBetRocket); 
-            } else if (type === 'mines' && !isPlayingMines) { 
-                currentBetMines = amount; 
-                syncBetUI('mines', currentBetMines); 
-            } else if (type === 'plinko') { 
-                currentBetPlinko = amount; 
-                syncBetUI('plinko', currentBetPlinko); 
-            } else if (type === 'coinflip' && !isFlippingCoin) { 
-                currentBetCoinflip = amount; 
-                syncBetUI('coinflip', currentBetCoinflip); 
-            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
-                currentBetFishing = amount;
-                syncBetUI('fishing', currentBetFishing);
-            }
+            if (type === 'roulette' && !isSpinning) { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
+            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
+            else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
+            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) { currentBetFishing = amount; syncBetUI('fishing', currentBetFishing); }
+            else if (type === 'arctic' && !isPlayingArctic) { currentBetArctic = amount; syncBetUI('arctic', currentBetArctic); }
             triggerHaptic('impact', 'light');
         }
 
@@ -5289,6 +5424,418 @@ const assignedCode = "ОЖИДАНИЕ...";
             hist.prepend(pill);
             if (hist.children.length > 5) hist.lastChild.remove();
         }
+
+  /* --- АРКТИЧЕСКИЙ СПУСК: ГРАФИЧЕСКИЙ ДВИЖОК --- */
+        let currentBetArctic = 10;
+        let activeArcticBet = 0;
+        let isPlayingArctic = false;
+        let arcticAnimId = null;
+        let arcticMult = 1.00;
+        let arcticSpeed = 4.2;
+
+        let penguin = { x: 68, y: 185, vy: 0, radius: 14, grounded: true, tilt: 0 };
+        let arcticObstacles = [];
+        let arcticStars = [];
+        let arcticParticles = [];
+        let arcticTrail = [];
+        let arcticMountainOffset = 0;
+        let arcticSnowflakes = Array.from({ length: 40 }, () => ({
+            x: Math.random() * 360,
+            y: Math.random() * 250,
+            r: Math.random() * 2.2 + 0.6,
+            vx: -(Math.random() * 1.4 + 0.5),
+            vy: Math.random() * 0.8 + 0.3
+        }));
+        let arcticFrameCount = 0;
+
+        function openArcticGame() {
+            switchPage('arcticGamePage');
+            triggerHaptic('impact', 'medium');
+            updateBalanceUI();
+            drawArcticStaticScene();
+        }
+
+        function exitArcticLobby() {
+            if (isPlayingArctic) stopArcticGame(false, true);
+            closeSubGame('casino');
+        }
+
+        function handleArcticBtnClick() {
+            if (!isPlayingArctic) {
+                startArcticGame();
+            } else {
+                stopArcticGame(true, false);
+            }
+        }
+
+        function spawnArcticParticles(x, y, color, count) {
+            for (let i = 0; i < count; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const spd = Math.random() * 3.5 + 1;
+                arcticParticles.push({
+                    x, y,
+                    vx: Math.cos(angle) * spd,
+                    vy: Math.sin(angle) * spd - 1,
+                    life: 1.0,
+                    color,
+                    size: Math.random() * 3 + 1.5
+                });
+            }
+        }
+
+        function startArcticGame() {
+            if (starsBalance < currentBetArctic) {
+                showToast('Недостаточно звезд!');
+                return;
+            }
+
+            starsBalance = Number((starsBalance - currentBetArctic).toFixed(1));
+            activeArcticBet = currentBetArctic;
+            totalGamesPlayed += 1;
+            updateBalanceUI();
+
+            isPlayingArctic = true;
+            arcticMult = 1.00;
+            arcticSpeed = 4.2;
+            arcticFrameCount = 0;
+            penguin = { x: 68, y: 185, vy: 0, radius: 14, grounded: true, tilt: 0 };
+            arcticObstacles = [];
+            arcticStars = [];
+            arcticParticles = [];
+            arcticTrail = [];
+
+            const btn = document.getElementById('arcticMainBtn');
+            btn.innerText = `ЗАБРАТЬ (${activeArcticBet})`;
+            btn.className = 'btn-main-action btn-style-cashout';
+            document.getElementById('arcticStatusLabel').innerText = 'ТАПАЙ ПО ЭКРАНУ ДЛЯ ПРЫЖКА!';
+            triggerHaptic('impact', 'medium');
+
+            cancelAnimationFrame(arcticAnimId);
+            arcticAnimId = requestAnimationFrame(updateArcticLoop);
+        }
+
+        function jumpArcticPenguin() {
+            if (!isPlayingArctic) return;
+            if (penguin.grounded) {
+                penguin.vy = -11.2;
+                penguin.grounded = false;
+                penguin.tilt = -0.4;
+                spawnArcticParticles(penguin.x, penguin.y + penguin.radius, '#e0f2fe', 8);
+                playSound('click');
+                triggerHaptic('impact', 'light');
+            }
+        }
+
+        function drawArcticBackground(ctx, w, h, groundY, speedFactor) {
+            // Дальние ледяные пики (параллакс)
+            arcticMountainOffset = (arcticMountainOffset + speedFactor * 0.35) % 360;
+            ctx.fillStyle = 'rgba(14, 116, 144, 0.25)';
+            ctx.beginPath();
+            ctx.moveTo(0, groundY);
+            for (let mx = -arcticMountainOffset; mx <= w + 180; mx += 180) {
+                ctx.lineTo(mx + 45, groundY - 68);
+                ctx.lineTo(mx + 95, groundY - 28);
+                ctx.lineTo(mx + 140, groundY - 82);
+                ctx.lineTo(mx + 180, groundY);
+            }
+            ctx.closePath();
+            ctx.fill();
+
+            // Снегопад
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+            arcticSnowflakes.forEach(sf => {
+                sf.x += sf.vx * (speedFactor * 0.4 + 0.6);
+                sf.y += sf.vy;
+                if (sf.x < 0) sf.x = w;
+                if (sf.y > groundY) sf.y = 0;
+                ctx.beginPath();
+                ctx.arc(sf.x, sf.y, sf.r, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Ледяной склон
+            const slopeGrad = ctx.createLinearGradient(0, groundY, 0, h);
+            slopeGrad.addColorStop(0, '#38bdf8');
+            slopeGrad.addColorStop(0.35, '#0284c7');
+            slopeGrad.addColorStop(1, '#082f49');
+            ctx.fillStyle = slopeGrad;
+            ctx.fillRect(0, groundY, w, h - groundY);
+
+            // Неоновая кромка льда
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 3;
+            ctx.shadowColor = '#38bdf8';
+            ctx.shadowBlur = 14;
+            ctx.beginPath();
+            ctx.moveTo(0, groundY);
+            ctx.lineTo(w, groundY);
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+        }
+
+        function drawPenguinCharacter(ctx, p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+
+            // Тень на льду
+            const shadowScale = Math.max(0.3, 1 - (185 - p.y) / 110);
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.45)';
+            ctx.beginPath();
+            ctx.ellipse(0, (199 - p.y), 13 * shadowScale, 3.5 * shadowScale, 0, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.rotate(p.tilt);
+
+            // Корпус пингвина
+            ctx.beginPath();
+            ctx.arc(0, 0, p.radius, 0, Math.PI * 2);
+            ctx.fillStyle = '#0f172a';
+            ctx.shadowColor = '#38bdf8';
+            ctx.shadowBlur = 10;
+            ctx.fill();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = '#e0f2fe';
+            ctx.stroke();
+            ctx.shadowBlur = 0;
+
+            // Белое брюшко
+            ctx.beginPath();
+            ctx.arc(3.5, 2, p.radius * 0.64, 0, Math.PI * 2);
+            ctx.fillStyle = '#ffffff';
+            ctx.fill();
+
+            // Шарфик (неоново-голубой)
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(-6, 3);
+            ctx.quadraticCurveTo(2, 6, 9, 2);
+            ctx.stroke();
+
+            // Глаз
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(4.5, -4.5, 3.5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.fillStyle = '#020617';
+            ctx.beginPath();
+            ctx.arc(5.5, -4.5, 1.6, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Клюв
+            ctx.fillStyle = '#f97316';
+            ctx.beginPath();
+            ctx.moveTo(p.radius - 2, -2.5);
+            ctx.lineTo(p.radius + 7, 0.5);
+            ctx.lineTo(p.radius - 2, 3.5);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function updateArcticLoop() {
+            if (!isPlayingArctic) return;
+
+            const canvas = document.getElementById('arcticCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const groundY = 199;
+
+            arcticFrameCount++;
+            arcticSpeed = Math.min(9.2, 4.2 + arcticFrameCount * 0.002);
+            arcticMult = Number((arcticMult + 0.005).toFixed(2));
+
+            // Физика прыжка
+            penguin.vy += 0.58;
+            penguin.y += penguin.vy;
+            if (penguin.y >= groundY - penguin.radius) {
+                penguin.y = groundY - penguin.radius;
+                penguin.vy = 0;
+                penguin.grounded = true;
+                penguin.tilt = 0;
+            } else {
+                penguin.tilt = Math.min(0.35, penguin.tilt + 0.022);
+            }
+
+            // След скольжения
+            if (penguin.grounded && arcticFrameCount % 2 === 0) {
+                arcticTrail.push({ x: penguin.x - 10, y: groundY - 2, life: 1.0 });
+            }
+
+            // Спавн ледяных кристаллов
+            if (arcticFrameCount % Math.max(44, Math.floor(82 - arcticSpeed * 4)) === 0) {
+                const height = 24 + Math.random() * 17;
+                arcticObstacles.push({ x: w + 20, y: groundY - height, w: 22, h: height });
+            }
+
+            // Спавн бонусных звезд (+0.25x)
+            if (arcticFrameCount % 68 === 30) {
+                arcticStars.push({ x: w + 20, y: groundY - 56 - Math.random() * 42, r: 10, pulse: 0 });
+            }
+
+            ctx.clearRect(0, 0, w, h);
+            drawArcticBackground(ctx, w, h, groundY, arcticSpeed * 0.25);
+
+            // Отрисовка ледяного шлейфа
+            for (let i = arcticTrail.length - 1; i >= 0; i--) {
+                const tr = arcticTrail[i];
+                tr.x -= arcticSpeed;
+                tr.life -= 0.06;
+                if (tr.life <= 0) { arcticTrail.splice(i, 1); continue; }
+                ctx.fillStyle = `rgba(224, 242, 254, ${tr.life * 0.7})`;
+                ctx.beginPath();
+                ctx.arc(tr.x, tr.y, 3 * tr.life, 0, Math.PI * 2);
+                ctx.fill();
+            }
+
+            // Звезды
+            for (let i = arcticStars.length - 1; i >= 0; i--) {
+                const st = arcticStars[i];
+                st.x -= arcticSpeed;
+                st.pulse += 0.12;
+                const glowR = st.r + Math.sin(st.pulse) * 2;
+
+                ctx.save();
+                ctx.beginPath();
+                ctx.arc(st.x, st.y, glowR, 0, Math.PI * 2);
+                ctx.fillStyle = '#facc15';
+                ctx.shadowColor = '#facc15';
+                ctx.shadowBlur = 16;
+                ctx.fill();
+                ctx.strokeStyle = '#fef08a';
+                ctx.lineWidth = 1.5;
+                ctx.stroke();
+                ctx.restore();
+
+                if (Math.hypot(penguin.x - st.x, penguin.y - st.y) < penguin.radius + st.r) {
+                    arcticMult = Number((arcticMult + 0.25).toFixed(2));
+                    spawnArcticParticles(st.x, st.y, '#facc15', 12);
+                    playSound('win');
+                    triggerHaptic('impact', 'medium');
+                    arcticStars.splice(i, 1);
+                    continue;
+                }
+                if (st.x < -20) arcticStars.splice(i, 1);
+            }
+
+            // Граненые ледяные кристаллы
+            for (let i = arcticObstacles.length - 1; i >= 0; i--) {
+                const ob = arcticObstacles[i];
+                ob.x -= arcticSpeed;
+
+                const iceGrad = ctx.createLinearGradient(ob.x, ob.y, ob.x + ob.w, ob.y + ob.h);
+                iceGrad.addColorStop(0, '#bae6fd');
+                iceGrad.addColorStop(0.5, '#0284c7');
+                iceGrad.addColorStop(1, '#0369a1');
+
+                ctx.fillStyle = iceGrad;
+                ctx.strokeStyle = '#ffffff';
+                ctx.lineWidth = 1.6;
+                ctx.shadowColor = '#38bdf8';
+                ctx.shadowBlur = 10;
+
+                ctx.beginPath();
+                ctx.moveTo(ob.x, ob.y + ob.h);
+                ctx.lineTo(ob.x + ob.w * 0.45, ob.y);
+                ctx.lineTo(ob.x + ob.w, ob.y + ob.h);
+                ctx.closePath();
+                ctx.fill();
+                ctx.stroke();
+                ctx.shadowBlur = 0;
+
+                // Столкновение
+                if (
+                    penguin.x + penguin.radius - 5 > ob.x &&
+                    penguin.x - penguin.radius + 5 < ob.x + ob.w &&
+                    penguin.y + penguin.radius - 4 > ob.y
+                ) {
+                    spawnArcticParticles(penguin.x, penguin.y, '#ef4444', 18);
+                    stopArcticGame(false, false);
+                    return;
+                }
+                if (ob.x < -30) arcticObstacles.splice(i, 1);
+            }
+
+            // Частицы эффектов
+            for (let i = arcticParticles.length - 1; i >= 0; i--) {
+                const pt = arcticParticles[i];
+                pt.x += pt.vx;
+                pt.y += pt.vy;
+                pt.vy += 0.15;
+                pt.life -= 0.045;
+                if (pt.life <= 0) { arcticParticles.splice(i, 1); continue; }
+                ctx.fillStyle = pt.color;
+                ctx.globalAlpha = pt.life;
+                ctx.beginPath();
+                ctx.arc(pt.x, pt.y, pt.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+
+            drawPenguinCharacter(ctx, penguin);
+
+            const currentWin = Math.floor(activeArcticBet * arcticMult);
+            document.getElementById('arcticMultBadge').innerText = 'x' + arcticMult.toFixed(2);
+            document.getElementById('arcticMainBtn').innerText = `ЗАБРАТЬ (${currentWin})`;
+
+            arcticAnimId = requestAnimationFrame(updateArcticLoop);
+        }
+
+        function stopArcticGame(isWin, silentExit) {
+            isPlayingArctic = false;
+            cancelAnimationFrame(arcticAnimId);
+
+            const btn = document.getElementById('arcticMainBtn');
+            btn.innerText = 'СТАРТ';
+            btn.className = 'btn-main-action btn-style-start';
+
+            if (silentExit) return;
+
+            const hist = document.getElementById('arcticHistory');
+            const pill = document.createElement('div');
+            pill.className = 'history-pill';
+
+            if (isWin) {
+                const winSum = Math.floor(activeArcticBet * arcticMult);
+                starsBalance = Number((starsBalance + winSum).toFixed(1));
+                totalStarsWon += winSum;
+                updateBalanceUI();
+                pill.style.borderColor = '#facc15';
+                pill.style.color = '#facc15';
+                pill.innerText = 'x' + arcticMult.toFixed(2);
+                document.getElementById('arcticStatusLabel').innerText = `ВЫИГРЫШ: +${winSum} ★`;
+                playSound('win');
+                triggerHaptic('notification', 'success');
+                showToast(`Арктический спуск: +${winSum} ★!`);
+            } else {
+                pill.style.borderColor = '#ef4444';
+                pill.style.color = '#ef4444';
+                pill.innerText = '0x';
+                document.getElementById('arcticStatusLabel').innerText = 'СТОЛКНОВЕНИЕ СО ЛЬДИНОЙ!';
+                playSound('error');
+                triggerHaptic('notification', 'error');
+                showToast('Пингвин врезался в льдину!');
+            }
+
+            if (hist) {
+                hist.prepend(pill);
+                if (hist.children.length > 5) hist.lastChild.remove();
+            }
+        }
+
+        function drawArcticStaticScene() {
+            const canvas = document.getElementById('arcticCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawArcticBackground(ctx, canvas.width, canvas.height, 199, 0);
+            drawPenguinCharacter(ctx, { x: 68, y: 185, radius: 14, tilt: 0 });
+            document.getElementById('arcticMultBadge').innerText = 'x1.00';
+        }
+        
         
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
