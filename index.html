@@ -1655,6 +1655,29 @@
             opacity: 0.45;
             cursor: not-allowed;
         }
+
+  /* === AVIA MASTERS: ПРЕМИУМ СТИЛИ === */
+#aviaDisplayBox {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 45%, #0369a1 82%, #0284c7 100%);
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    box-shadow: inset 0 0 30px rgba(14, 165, 233, 0.25), 0 10px 28px rgba(0, 0, 0, 0.75);
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+}
+
+.avia-hud-badge {
+    position: absolute;
+    top: 12px;
+    z-index: 10;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    background: rgba(2, 6, 23, 0.78);
+    border-radius: 10px;
+    padding: 5px 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+}
+       
        
     </style>
 </head>
@@ -1928,6 +1951,45 @@
             </div>
         </div>
     </div>
+
+ <!-- AVIA MASTERS -->
+            <div class="game-card-row" onclick="openAviaGame()">
+                <div class="game-visual-left">
+                    <svg viewBox="0 0 120 120" fill="none">
+                        <defs>
+                            <radialGradient id="aviaBgGrad" cx="50%" cy="25%" r="75%">
+                                <stop offset="0%" stop-color="#0284c7"/>
+                                <stop offset="65%" stop-color="#0f172a"/>
+                                <stop offset="100%" stop-color="#020617"/>
+                            </radialGradient>
+                        </defs>
+                        <circle cx="46" cy="62" r="48" fill="url(#aviaBgGrad)" stroke="#38bdf8" stroke-width="3"/>
+                        <!-- Море -->
+                        <path d="M2 84 Q24 78 46 84 T90 84 L90 108 L2 108 Z" fill="#0369a1"/>
+                        <!-- Самолет -->
+                        <g transform="translate(46, 52) rotate(-14)">
+                            <path d="M-22 2 L16 -4 L24 0 L16 5 L-22 6 Z" fill="#f8fafc"/>
+                            <path d="M-4 1 L6 -14 L12 -14 L5 1 Z" fill="#ef4444"/>
+                            <path d="M-20 2 L-25 -8 L-18 -8 L-14 2 Z" fill="#ef4444"/>
+                            <circle cx="12" cy="0" r="2.5" fill="#38bdf8"/>
+                        </g>
+                        <!-- Множитель x2 и ракета -->
+                        <circle cx="76" cy="30" r="9" fill="#22c55e" fill-opacity="0.25" stroke="#4ade80" stroke-width="1.5"/>
+                        <text x="76" y="33" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="900">x2</text>
+                        <circle cx="24" cy="34" r="7" fill="#ef4444" fill-opacity="0.25" stroke="#f87171" stroke-width="1.5"/>
+                    </svg>
+                </div>
+                <div class="game-info-right">
+                    <span class="game-category-tag"><i class="fa-solid fa-plane-departure"></i> ПОЛЕТ НАД МОРЕМ</span>
+                    <span class="game-name">AVIA MASTERS</span>
+                    <div class="game-bottom-bar">
+                        <div class="game-stats-badge"><i class="fa-solid fa-users"></i> 489</div>
+                        <button class="card-action-btn">ИГРАТЬ</button>
+                    </div>
+                </div>
+            </div>
+
+    
 <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
@@ -2513,6 +2575,66 @@
           <button class="btn-return" onclick="exitIceFishingLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
       </div>  
 
+  <!-- ЭКРАН ИГРЫ "AVIA MASTERS" -->
+    <div id="aviaGamePage" class="page">
+        <div class="rg-header">
+            <div class="rg-logo">AVIA <span>MASTERS</span></div>
+            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsAvia">100</span></div>
+        </div>
+
+        <div class="rg-history" id="aviaHistory">
+            <div class="history-pill" style="border-color: #4ade80; color: #4ade80;">x3.50</div>
+            <div class="history-pill" style="border-color: #ef4444; color: #ef4444;">0x</div>
+            <div class="history-pill" style="border-color: #facc15; color: #facc15;">x8.00</div>
+        </div>
+
+        <div class="fishing-display" id="aviaDisplayBox" style="height: 250px;">
+            <canvas id="aviaCanvas" width="360" height="250" style="width: 100%; height: 100%; display: block;"></canvas>
+
+            <div id="aviaMultBadge" class="avia-hud-badge" style="left: 12px; border: 1px solid rgba(74, 222, 128, 0.55); font-size: 16px; font-weight: 900; color: #4ade80;">
+                x1.00
+            </div>
+
+            <div id="aviaWinPreview" class="avia-hud-badge" style="right: 12px; border: 1px solid rgba(250, 204, 21, 0.5); font-size: 13px; font-weight: 900; color: #facc15;">
+                10 ★
+            </div>
+        </div>
+
+        <div class="betting-box">
+            <div class="betting-info">
+                <span>СТАВКА НА ВЫЛЕТ</span>
+                <span id="aviaStatusLabel">ДОЛЕТИ ДО АВИАНОСЦА</span>
+            </div>
+
+            <div class="bet-row">
+                <div class="bet-adjuster">
+                    <button class="btn-chg" onclick="changeBet(-5, 'avia')">-</button>
+                    <span id="betAmountAvia" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'avia')">+</button>
+                </div>
+                <button id="aviaMainBtn" class="btn-main-action btn-style-start" onclick="startAviaGame()">
+                    ВЗЛЕТ
+                </button>
+            </div>
+
+            <div class="slider-container">
+                <span class="slider-label">1</span>
+                <input type="range" id="betSliderAvia" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'avia')">
+                <span class="slider-label" id="maxSliderAvia">100</span>
+            </div>
+
+            <div class="quick-chips">
+                <button class="chip" onclick="setBet(10, 'avia')">10</button>
+                <button class="chip" onclick="setBet(25, 'avia')">25</button>
+                <button class="chip" onclick="setBet(50, 'avia')">50</button>
+                <button class="chip" onclick="setBet(100, 'avia')">100</button>
+            </div>
+        </div>
+
+        <button class="btn-return" onclick="exitAviaLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
+    </div>
+
+    
     <!-- Вкладка МАРКЕТ -->
     <div id="market" class="page">
         <div class="lobby-header">
@@ -3381,12 +3503,13 @@
 
        function updateBalanceUI() {
             const formatted = formatStars(starsBalance);
-            const ids = [
+           const ids = [
                 'userStarsLobby', 'userStarsMarket', 'userStarsProfile',
                 'profileWalletBalance', 'userStarsRoulette', 'userStarsRocket',
                 'userStarsMines', 'userStarsPlinko', 'userStarsCoinflip',
-                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing'
+                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing', 'userStarsAvia'
             ];
+           
             ids.forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.innerText = formatted;
@@ -3397,7 +3520,7 @@
             document.getElementById('statReferralsCount').innerText = referralsCount;
 
             const sliderMax = Math.max(10, Math.floor(starsBalance));
-            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Fishing'].forEach(game => {
+            ['Rocket', 'Roulette', 'Mines', 'Plinko', 'Coinflip', 'Fishing', 'Avia'].forEach(game => {
                 const slider = document.getElementById('betSlider' + game);
                 const maxLabel = document.getElementById('maxSlider' + game);
                 if (slider && maxLabel) {
@@ -3471,13 +3594,14 @@ function switchPage(pageId, buttonElement) {
             if (sliderEl) sliderEl.value = val;
         }
 
-    function onSliderBet(value, type) {
+  function onSliderBet(value, type) {
             const val = Math.max(1, parseInt(value) || 1);
             if (type === 'mines' && isPlayingMines) { syncBetUI('mines', currentBetMines); return; }
             if (type === 'coinflip' && isFlippingCoin) { syncBetUI('coinflip', currentBetCoinflip); return; }
             if (type === 'roulette' && isSpinning) { syncBetUI('roulette', currentBetRoulette); return; }
             if (type === 'rocket' && isPlayingRocket) { syncBetUI('rocket', currentBetRocket); return; }
             if (type === 'fishing' && (isHoldingRod || isFishingCooldown)) { syncBetUI('fishing', currentBetFishing); return; }
+            if (type === 'avia' && isPlayingAvia) { syncBetUI('avia', currentBetAvia); return; }
 
             if (type === 'roulette') currentBetRoulette = val;
             else if (type === 'rocket') currentBetRocket = val;
@@ -3485,52 +3609,38 @@ function switchPage(pageId, buttonElement) {
             else if (type === 'plinko') currentBetPlinko = val;
             else if (type === 'coinflip') currentBetCoinflip = val;
             else if (type === 'fishing') currentBetFishing = val;
+            else if (type === 'avia') currentBetAvia = val;
 
             syncBetUI(type, val);
+            if (type === 'avia') document.getElementById('aviaWinPreview').innerText = val + ' ★';
         }
 
         function changeBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { 
-                currentBetRoulette = Math.max(1, currentBetRoulette + amount); 
-                syncBetUI('roulette', currentBetRoulette); 
-            } else if (type === 'rocket' && !isPlayingRocket) { 
-                currentBetRocket = Math.max(1, currentBetRocket + amount); 
-                syncBetUI('rocket', currentBetRocket); 
-            } else if (type === 'mines' && !isPlayingMines) { 
-                currentBetMines = Math.max(1, currentBetMines + amount); 
-                syncBetUI('mines', currentBetMines); 
-            } else if (type === 'plinko') { 
-                currentBetPlinko = Math.max(1, currentBetPlinko + amount); 
-                syncBetUI('plinko', currentBetPlinko); 
-            } else if (type === 'coinflip' && !isFlippingCoin) { 
-                currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); 
-                syncBetUI('coinflip', currentBetCoinflip); 
-            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
-                currentBetFishing = Math.max(1, currentBetFishing + amount);
-                syncBetUI('fishing', currentBetFishing);
+            if (type === 'roulette' && !isSpinning) { currentBetRoulette = Math.max(1, currentBetRoulette + amount); syncBetUI('roulette', currentBetRoulette); }
+            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = Math.max(1, currentBetRocket + amount); syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = Math.max(1, currentBetMines + amount); syncBetUI('mines', currentBetMines); }
+            else if (type === 'plinko') { currentBetPlinko = Math.max(1, currentBetPlinko + amount); syncBetUI('plinko', currentBetPlinko); }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = Math.max(1, currentBetCoinflip + amount); syncBetUI('coinflip', currentBetCoinflip); }
+            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) { currentBetFishing = Math.max(1, currentBetFishing + amount); syncBetUI('fishing', currentBetFishing); }
+            else if (type === 'avia' && !isPlayingAvia) {
+                currentBetAvia = Math.max(1, currentBetAvia + amount);
+                syncBetUI('avia', currentBetAvia);
+                document.getElementById('aviaWinPreview').innerText = currentBetAvia + ' ★';
             }
             triggerHaptic('impact', 'light');
         }
 
         function setBet(amount, type) {
-            if (type === 'roulette' && !isSpinning) { 
-                currentBetRoulette = amount; 
-                syncBetUI('roulette', currentBetRoulette); 
-            } else if (type === 'rocket' && !isPlayingRocket) { 
-                currentBetRocket = amount; 
-                syncBetUI('rocket', currentBetRocket); 
-            } else if (type === 'mines' && !isPlayingMines) { 
-                currentBetMines = amount; 
-                syncBetUI('mines', currentBetMines); 
-            } else if (type === 'plinko') { 
-                currentBetPlinko = amount; 
-                syncBetUI('plinko', currentBetPlinko); 
-            } else if (type === 'coinflip' && !isFlippingCoin) { 
-                currentBetCoinflip = amount; 
-                syncBetUI('coinflip', currentBetCoinflip); 
-            } else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) {
-                currentBetFishing = amount;
-                syncBetUI('fishing', currentBetFishing);
+            if (type === 'roulette' && !isSpinning) { currentBetRoulette = amount; syncBetUI('roulette', currentBetRoulette); }
+            else if (type === 'rocket' && !isPlayingRocket) { currentBetRocket = amount; syncBetUI('rocket', currentBetRocket); }
+            else if (type === 'mines' && !isPlayingMines) { currentBetMines = amount; syncBetUI('mines', currentBetMines); }
+            else if (type === 'plinko') { currentBetPlinko = amount; syncBetUI('plinko', currentBetPlinko); }
+            else if (type === 'coinflip' && !isFlippingCoin) { currentBetCoinflip = amount; syncBetUI('coinflip', currentBetCoinflip); }
+            else if (type === 'fishing' && !isHoldingRod && !isFishingCooldown) { currentBetFishing = amount; syncBetUI('fishing', currentBetFishing); }
+            else if (type === 'avia' && !isPlayingAvia) {
+                currentBetAvia = amount;
+                syncBetUI('avia', currentBetAvia);
+                document.getElementById('aviaWinPreview').innerText = currentBetAvia + ' ★';
             }
             triggerHaptic('impact', 'light');
         }
@@ -5289,6 +5399,461 @@ const assignedCode = "ОЖИДАНИЕ...";
             hist.prepend(pill);
             if (hist.children.length > 5) hist.lastChild.remove();
         }
+
+       /* --- AVIA MASTERS (BGAMING STYLE ENGINE) --- */
+        let currentBetAvia = 10;
+        let activeAviaBet = 0;
+        let isPlayingAvia = false;
+        let aviaAnimId = null;
+
+        let aviaPlane = { x: 64, y: 155, vy: 0, angle: 0 };
+        let aviaCurrentMult = 1.00;
+        let aviaDistance = 0;
+        const aviaTotalDistance = 1150; // Длина маршрута до авианосца
+        let aviaItems = [];
+        let aviaExplosions = [];
+        let aviaPopups = [];
+        let aviaClouds = [
+            { x: 60, y: 45, s: 1.0 },
+            { x: 210, y: 32, s: 0.8 },
+            { x: 330, y: 60, s: 1.15 }
+        ];
+        let aviaWavePhase = 0;
+
+        function openAviaGame() {
+            switchPage('aviaGamePage');
+            triggerHaptic('impact', 'medium');
+            updateBalanceUI();
+            document.getElementById('aviaWinPreview').innerText = currentBetAvia + ' ★';
+            drawAviaStaticScene();
+        }
+
+        function exitAviaLobby() {
+            if (isPlayingAvia) {
+                isPlayingAvia = false;
+                cancelAnimationFrame(aviaAnimId);
+                const btn = document.getElementById('aviaMainBtn');
+                btn.disabled = false;
+                btn.innerText = 'ВЗЛЕТ';
+            }
+            closeSubGame('casino');
+        }
+
+        function generateAviaRoute() {
+            const items = [];
+            // Сбалансированная генерация: дает азартные заносы, но сохраняет ~6.5% House Edge
+            const step = 115;
+            for (let dist = 170; dist < aviaTotalDistance - 120; dist += step) {
+                const roll = Math.random();
+                const laneY = 52 + Math.random() * 105;
+
+                if (roll < 0.44) {
+                    // Ракета (делит множитель на 2 и сбивает высоту вниз)
+                    items.push({ dist, y: laneY, type: 'rocket', hit: false });
+                } else if (roll < 0.78) {
+                    // Плюс к множителю (+1x, +2x, +3x)
+                    const addVals = [1, 1, 2, 2, 3];
+                    const val = addVals[Math.floor(Math.random() * addVals.length)];
+                    items.push({ dist, y: laneY, type: 'add', val, hit: false });
+                } else {
+                    // Умножитель x2 (редкий и азартный)
+                    items.push({ dist, y: laneY, type: 'mult', val: 2, hit: false });
+                }
+            }
+            return items;
+        }
+
+        function startAviaGame() {
+            if (isPlayingAvia) return;
+            if (starsBalance < currentBetAvia) {
+                showToast('Недостаточно звезд!');
+                return;
+            }
+
+            starsBalance = Number((starsBalance - currentBetAvia).toFixed(1));
+            activeAviaBet = currentBetAvia;
+            totalGamesPlayed += 1;
+            updateBalanceUI();
+
+            isPlayingAvia = true;
+            aviaCurrentMult = 1.00;
+            aviaDistance = 0;
+            aviaPlane = { x: 65, y: 170, vy: -3.2, angle: -0.25 };
+            aviaItems = generateAviaRoute();
+            aviaExplosions = [];
+            aviaPopups = [];
+
+            const btn = document.getElementById('aviaMainBtn');
+            btn.disabled = true;
+            btn.innerText = 'В ПОЛЕТЕ...';
+            document.getElementById('aviaStatusLabel').innerText = 'ЛОВИ МНОЖИТЕЛИ, ИЗБЕГАЙ РАКЕТ!';
+            updateAviaHud();
+
+            playSound('click');
+            triggerHaptic('impact', 'medium');
+
+            cancelAnimationFrame(aviaAnimId);
+            aviaAnimId = requestAnimationFrame(updateAviaLoop);
+        }
+
+        function updateAviaHud() {
+            const multEl = document.getElementById('aviaMultBadge');
+            const winEl = document.getElementById('aviaWinPreview');
+            multEl.innerText = 'x' + aviaCurrentMult.toFixed(2);
+            multEl.style.color = aviaCurrentMult >= 1 ? '#4ade80' : '#f87171';
+            multEl.style.borderColor = aviaCurrentMult >= 1 ? 'rgba(74, 222, 128, 0.55)' : 'rgba(248, 113, 113, 0.55)';
+            winEl.innerText = Math.floor(activeAviaBet * aviaCurrentMult) + ' ★';
+        }
+
+        function spawnAviaBurst(x, y, color, text) {
+            for (let i = 0; i < 14; i++) {
+                const a = Math.random() * Math.PI * 2;
+                const sp = Math.random() * 3.5 + 1;
+                aviaExplosions.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, color });
+            }
+            if (text) {
+                aviaPopups.push({ x, y: y - 10, text, color, life: 1 });
+            }
+        }
+
+        function drawAviaEnvironment(ctx, w, h, seaY, speed) {
+            // Облака
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+            aviaClouds.forEach(c => {
+                c.x -= speed * 0.25;
+                if (c.x < -60) c.x = w + 60;
+                ctx.beginPath();
+                ctx.arc(c.x, c.y, 18 * c.s, 0, Math.PI * 2);
+                ctx.arc(c.x + 16 * c.s, c.y - 4 * c.s, 22 * c.s, 0, Math.PI * 2);
+                ctx.arc(c.x + 34 * c.s, c.y, 16 * c.s, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            // Стартовый корабль (слева, уходит за экран)
+            const startShipX = 48 - aviaDistance;
+            if (startShipX > -120) {
+                drawCarrierShip(ctx, startShipX, seaY, false);
+            }
+
+            // Финишный авианосец (появляется в конце маршрута)
+            const finishShipX = 65 + (aviaTotalDistance - aviaDistance);
+            if (finishShipX < w + 150) {
+                drawCarrierShip(ctx, finishShipX, seaY, true);
+            }
+
+            // Волны моря
+            aviaWavePhase += 0.07;
+            const seaGrad = ctx.createLinearGradient(0, seaY, 0, h);
+            seaGrad.addColorStop(0, '#0284c7');
+            seaGrad.addColorStop(1, '#082f49');
+            ctx.fillStyle = seaGrad;
+
+            ctx.beginPath();
+            ctx.moveTo(0, h);
+            for (let x = 0; x <= w; x += 12) {
+                const wy = seaY + Math.sin(x * 0.04 + aviaWavePhase) * 3.5;
+                ctx.lineTo(x, wy);
+            }
+            ctx.lineTo(w, h);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.strokeStyle = 'rgba(186, 230, 253, 0.65)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+        }
+
+        function drawCarrierShip(ctx, cx, seaY, isFinish) {
+            ctx.save();
+            ctx.translate(cx, seaY);
+            // Корпус авианосца
+            ctx.fillStyle = '#334155';
+            ctx.beginPath();
+            ctx.moveTo(-55, 4);
+            ctx.lineTo(-42, -12);
+            ctx.lineTo(48, -12);
+            ctx.lineTo(58, 4);
+            ctx.closePath();
+            ctx.fill();
+
+            // Палуба
+            ctx.fillStyle = '#0f172a';
+            ctx.fillRect(-46, -15, 96, 4);
+
+            // Разметка палубы
+            ctx.strokeStyle = isFinish ? '#4ade80' : '#facc15';
+            ctx.setLineDash([6, 5]);
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(-38, -13);
+            ctx.lineTo(42, -13);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            // Надстройка (рубка)
+            ctx.fillStyle = '#475569';
+            ctx.fillRect(10, -27, 16, 12);
+            if (isFinish) {
+                ctx.fillStyle = '#4ade80';
+                ctx.font = 'bold 9px sans-serif';
+                ctx.fillText('ФИНИШ', -26, -20);
+            }
+            ctx.restore();
+        }
+
+        function drawAviaPlane(ctx, p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.angle);
+
+            // Свечение двигателя
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.45)';
+            ctx.beginPath();
+            ctx.arc(-22, 1, 6 + Math.random() * 3, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Фюзеляж
+            ctx.fillStyle = '#f8fafc';
+            ctx.strokeStyle = '#0f172a';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(-20, 0);
+            ctx.quadraticCurveTo(0, -7, 22, 0);
+            ctx.quadraticCurveTo(4, 6, -20, 3);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Красное крыло и хвост
+            ctx.fillStyle = '#ef4444';
+            ctx.beginPath();
+            ctx.moveTo(-4, 0);
+            ctx.lineTo(5, -13);
+            ctx.lineTo(10, -13);
+            ctx.lineTo(4, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            ctx.beginPath();
+            ctx.moveTo(-19, 0);
+            ctx.lineTo(-24, -9);
+            ctx.lineTo(-17, -9);
+            ctx.lineTo(-13, 0);
+            ctx.closePath();
+            ctx.fill();
+
+            // Кабина пилота
+            ctx.fillStyle = '#38bdf8';
+            ctx.beginPath();
+            ctx.ellipse(9, -2, 5, 2.5, 0.1, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.restore();
+        }
+
+        function updateAviaLoop() {
+            if (!isPlayingAvia) return;
+
+            const canvas = document.getElementById('aviaCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const seaY = 205;
+            const speed = 4.6;
+
+            aviaDistance += speed;
+
+            // Физика полета (плавная тяга вверх и гравитация)
+            aviaPlane.vy += 0.085;
+            if (aviaPlane.y > 145 && aviaDistance < aviaTotalDistance - 90) {
+                aviaPlane.vy -= 0.14; // Автоподъем над водой
+            }
+            aviaPlane.y += aviaPlane.vy;
+            if (aviaPlane.y < 32) {
+                aviaPlane.y = 32;
+                aviaPlane.vy = 0.5;
+            }
+            aviaPlane.angle = Math.max(-0.4, Math.min(0.45, aviaPlane.vy * 0.09));
+
+            ctx.clearRect(0, 0, w, h);
+            drawAviaEnvironment(ctx, w, h, seaY, speed);
+
+            // Отрисовка и проверка столкновений с бонусами и ракетами
+            aviaItems.forEach(item => {
+                if (item.hit) return;
+                const screenX = aviaPlane.x + (item.dist - aviaDistance);
+                if (screenX < -30 || screenX > w + 30) return;
+
+                if (item.type === 'rocket') {
+                    // Вражеская ракета
+                    ctx.save();
+                    ctx.translate(screenX, item.y);
+                    ctx.fillStyle = '#ef4444';
+                    ctx.shadowColor = '#ef4444';
+                    ctx.shadowBlur = 12;
+                    ctx.beginPath();
+                    ctx.moveTo(-14, 0);
+                    ctx.lineTo(8, -5);
+                    ctx.lineTo(12, 0);
+                    ctx.lineTo(8, 5);
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.fillStyle = '#facc15';
+                    ctx.beginPath();
+                    ctx.arc(14, 0, 3.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+                } else {
+                    // Бонус множителя (+1, +2, x2)
+                    const isMult = item.type === 'mult';
+                    const mainCol = isMult ? '#facc15' : '#4ade80';
+                    ctx.save();
+                    ctx.translate(screenX, item.y);
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 15, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
+                    ctx.shadowColor = mainCol;
+                    ctx.shadowBlur = 14;
+                    ctx.fill();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = mainCol;
+                    ctx.stroke();
+
+                    ctx.fillStyle = mainCol;
+                    ctx.font = '900 11px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(isMult ? `x${item.val}` : `+${item.val}`, 0, 1);
+                    ctx.restore();
+                }
+
+                // Проверка попадания самолета в объект
+                if (Math.hypot(aviaPlane.x - screenX, aviaPlane.y - item.y) < 23) {
+                    item.hit = true;
+                    if (item.type === 'rocket') {
+                        aviaCurrentMult = Number(Math.max(0.25, aviaCurrentMult / 2).toFixed(2));
+                        aviaPlane.vy = 4.2; // Резко сбивает вниз
+                        spawnAviaBurst(screenX, item.y, '#ef4444', '÷2 💥');
+                        playSound('error');
+                        triggerHaptic('notification', 'error');
+                    } else if (item.type === 'add') {
+                        aviaCurrentMult = Number((aviaCurrentMult + item.val).toFixed(2));
+                        aviaPlane.vy = -3.4; // Подбрасывает вверх
+                        spawnAviaBurst(screenX, item.y, '#4ade80', `+${item.val}x`);
+                        playSound('win');
+                        triggerHaptic('impact', 'medium');
+                    } else if (item.type === 'mult') {
+                        aviaCurrentMult = Number((aviaCurrentMult * item.val).toFixed(2));
+                        aviaPlane.vy = -3.8;
+                        spawnAviaBurst(screenX, item.y, '#facc15', `x${item.val}!`);
+                        playSound('win');
+                        triggerHaptic('impact', 'heavy');
+                    }
+                    updateAviaHud();
+                }
+            });
+
+            // Частицы взрывов и всплывающие цифры
+            for (let i = aviaExplosions.length - 1; i >= 0; i--) {
+                const ex = aviaExplosions[i];
+                ex.x += ex.vx;
+                ex.y += ex.vy;
+                ex.life -= 0.04;
+                if (ex.life <= 0) { aviaExplosions.splice(i, 1); continue; }
+                ctx.globalAlpha = ex.life;
+                ctx.fillStyle = ex.color;
+                ctx.beginPath();
+                ctx.arc(ex.x, ex.y, 3, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.globalAlpha = 1;
+            }
+
+            for (let i = aviaPopups.length - 1; i >= 0; i--) {
+                const pop = aviaPopups[i];
+                pop.y -= 0.9;
+                pop.life -= 0.025;
+                if (pop.life <= 0) { aviaPopups.splice(i, 1); continue; }
+                ctx.globalAlpha = pop.life;
+                ctx.fillStyle = pop.color;
+                ctx.font = '900 14px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText(pop.text, pop.x, pop.y);
+                ctx.globalAlpha = 1;
+            }
+
+            drawAviaPlane(ctx, aviaPlane);
+
+            // Проверка падения в море (Проигрыш)
+            if (aviaPlane.y >= seaY - 6) {
+                spawnAviaBurst(aviaPlane.x, seaY, '#38bdf8', 'В ВОДУ!');
+                finishAviaRound(false);
+                return;
+            }
+
+            // Проверка посадки на авианосец (Победа!)
+            if (aviaDistance >= aviaTotalDistance) {
+                aviaPlane.y = seaY - 21;
+                aviaPlane.angle = 0;
+                drawAviaPlane(ctx, aviaPlane);
+                finishAviaRound(true);
+                return;
+            }
+
+            aviaAnimId = requestAnimationFrame(updateAviaLoop);
+        }
+
+        function finishAviaRound(landedSuccess) {
+            isPlayingAvia = false;
+            cancelAnimationFrame(aviaAnimId);
+
+            const btn = document.getElementById('aviaMainBtn');
+            btn.disabled = false;
+            btn.innerText = 'ВЗЛЕТ';
+
+            const hist = document.getElementById('aviaHistory');
+            const pill = document.createElement('div');
+            pill.className = 'history-pill';
+
+            if (landedSuccess) {
+                const winSum = Math.max(1, Math.floor(activeAviaBet * aviaCurrentMult));
+                starsBalance = Number((starsBalance + winSum).toFixed(1));
+                totalStarsWon += winSum;
+                updateBalanceUI();
+
+                pill.style.borderColor = '#4ade80';
+                pill.style.color = '#4ade80';
+                pill.innerText = 'x' + aviaCurrentMult.toFixed(2);
+                document.getElementById('aviaStatusLabel').innerText = `ПОСАДКА! ВЫИГРЫШ: +${winSum} ★`;
+                playSound('win');
+                triggerHaptic('notification', 'success');
+                showToast(`Avia Masters: +${winSum} ★ (x${aviaCurrentMult.toFixed(2)})!`);
+            } else {
+                pill.style.borderColor = '#ef4444';
+                pill.style.color = '#ef4444';
+                pill.innerText = '0x';
+                document.getElementById('aviaStatusLabel').innerText = 'САМОЛЕТ УПАЛ В МОРЕ!';
+                playSound('error');
+                triggerHaptic('notification', 'error');
+                showToast('Самолет сбит и упал в море!');
+            }
+
+            if (hist) {
+                hist.prepend(pill);
+                if (hist.children.length > 5) hist.lastChild.remove();
+            }
+        }
+
+        function drawAviaStaticScene() {
+            const canvas = document.getElementById('aviaCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            aviaDistance = 0;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawAviaEnvironment(ctx, canvas.width, canvas.height, 205, 0);
+            drawAviaPlane(ctx, { x: 65, y: 184, angle: 0 });
+            document.getElementById('aviaMultBadge').innerText = 'x1.00';
+        }  
         
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
