@@ -4016,10 +4016,10 @@ function closeConfirmModal(event) {
         async function confirmTgStarsImport() {
             const input = document.getElementById('tgImportInput');
             const amount = parseInt(input.value);
-            if (isNaN(amount) || amount < 1) {
-                showToast('Введите корректное количество звёзд');
-                return;
-            }
+           if (isNaN(amount) || amount < 1 || amount > 250) {
+    alert("Введите корректное количество звёзд");
+    return;
+}
 
             const payBtn = document.getElementById('tgPayStarsBtn');
             payBtn.disabled = true;
