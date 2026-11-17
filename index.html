@@ -2633,9 +2633,10 @@
 
             <div class="bet-row">
                 <div class="bet-adjuster">
-                    <button class="btn-chg" onclick="changeBet(-5, 'sky')">-</button>
+                    <!-- ИСПРАВЛЕНО: 'sky' заменено на 'avia' -->
+                    <button class="btn-chg" onclick="changeBet(-5, 'avia')">-</button>
                     <span id="betAmountSky" class="bet-number">10</span>
-                    <button class="btn-chg" onclick="changeBet(5, 'sky')">+</button>
+                    <button class="btn-chg" onclick="changeBet(5, 'avia')">+</button>
                 </div>
                 <button id="skyMainBtn" class="btn-main-action btn-style-start" onclick="startSkyGame()">
                     ЗАПУСК
@@ -2644,15 +2645,17 @@
 
             <div class="slider-container">
                 <span class="slider-label">1</span>
-                <input type="range" id="betSliderSky" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'sky')">
+                <!-- ИСПРАВЛЕНО: 'sky' заменено на 'avia' -->
+                <input type="range" id="betSliderSky" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'avia')">
                 <span class="slider-label" id="maxSliderSky">100</span>
             </div>
 
             <div class="quick-chips">
-                <button class="chip" onclick="setBet(10, 'sky')">10</button>
-                <button class="chip" onclick="setBet(25, 'sky')">25</button>
-                <button class="chip" onclick="setBet(50, 'sky')">50</button>
-                <button class="chip" onclick="setBet(100, 'sky')">100</button>
+                <!-- ИСПРАВЛЕНО: везде 'sky' заменено на 'avia' -->
+                <button class="chip" onclick="setBet(10, 'avia')">10</button>
+                <button class="chip" onclick="setBet(25, 'avia')">25</button>
+                <button class="chip" onclick="setBet(50, 'avia')">50</button>
+                <button class="chip" onclick="setBet(100, 'avia')">100</button>
             </div>
         </div>
 
