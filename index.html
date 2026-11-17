@@ -1656,26 +1656,40 @@
             cursor: not-allowed;
         }
 
-  /* === AVIA MASTERS: ПРЕМИУМ СТИЛИ === */
-#aviaDisplayBox {
-    background: linear-gradient(180deg, #020617 0%, #0f172a 45%, #0369a1 82%, #0284c7 100%);
+ /* === SKY JET: АВТОРСЬКИЙ ДИЗАЙН (XORYS EDITION) === */
+#skyJetDisplayBox {
+    background: linear-gradient(180deg, #020617 0%, #0f172a 40%, #0369a1 85%, #0284c7 100%);
     border: 1px solid rgba(56, 189, 248, 0.45);
-    box-shadow: inset 0 0 30px rgba(14, 165, 233, 0.25), 0 10px 28px rgba(0, 0, 0, 0.75);
+    box-shadow: inset 0 0 35px rgba(14, 165, 233, 0.3), 0 10px 25px rgba(0, 0, 0, 0.75);
     border-radius: 16px;
     overflow: hidden;
     position: relative;
 }
 
-.avia-hud-badge {
-    position: absolute;
-    top: 12px;
-    z-index: 10;
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    background: rgba(2, 6, 23, 0.78);
-    border-radius: 10px;
-    padding: 5px 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
+.sky-speed-panel {
+    display: flex;
+    gap: 4px;
+    background: rgba(2, 6, 23, 0.85);
+    padding: 3px 6px;
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.sky-spd-btn {
+    background: transparent;
+    border: none;
+    color: #94a3b8;
+    font-size: 13px;
+    padding: 2px 7px;
+    cursor: pointer;
+    border-radius: 12px;
+    transition: 0.2s;
+}
+
+.sky-spd-btn.active {
+    background: #facc15;
+    color: #0f172a;
+    font-weight: 800;
 }
        
        
@@ -2575,63 +2589,74 @@
           <button class="btn-return" onclick="exitIceFishingLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
       </div>  
 
-  <!-- ЭКРАН ИГРЫ "AVIA MASTERS" -->
-    <div id="aviaGamePage" class="page">
+  <!-- ЕКРАН АВТОРСЬКОЇ ІГРИ "SKY JET" -->
+    <div id="skyJetGamePage" class="page">
         <div class="rg-header">
-            <div class="rg-logo">AVIA <span>MASTERS</span></div>
-            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsAvia">100</span></div>
+            <div class="rg-logo">SKY <span>JET</span></div>
+            <div class="rg-balance"><i class="fa-solid fa-star"></i> <span id="userStarsSky">100</span></div>
         </div>
 
-        <div class="rg-history" id="aviaHistory">
-            <div class="history-pill" style="border-color: #4ade80; color: #4ade80;">x3.50</div>
+        <div class="rg-history" id="skyHistory">
+            <div class="history-pill" style="border-color: #facc15; color: #facc15;">x4.00</div>
             <div class="history-pill" style="border-color: #ef4444; color: #ef4444;">0x</div>
-            <div class="history-pill" style="border-color: #facc15; color: #facc15;">x8.00</div>
+            <div class="history-pill" style="border-color: #38bdf8; color: #38bdf8;">x7.50</div>
         </div>
 
-        <div class="fishing-display" id="aviaDisplayBox" style="height: 250px;">
-            <canvas id="aviaCanvas" width="360" height="250" style="width: 100%; height: 100%; display: block;"></canvas>
+        <div class="fishing-display" id="skyJetDisplayBox" style="height: 255px; position: relative;">
+            <canvas id="skyCanvas" width="360" height="255" style="width: 100%; height: 100%; display: block;"></canvas>
 
-            <div id="aviaMultBadge" class="avia-hud-badge" style="left: 12px; border: 1px solid rgba(74, 222, 128, 0.55); font-size: 16px; font-weight: 900; color: #4ade80;">
+            <!-- Основний множник зверху -->
+            <div id="skyMultBadge" style="position: absolute; top: 10px; left: 12px; background: rgba(2,6,23,0.82); border: 1px solid #facc15; border-radius: 8px; padding: 4px 10px; font-size: 15px; font-weight: 900; color: #facc15;">
                 x1.00
             </div>
 
-            <div id="aviaWinPreview" class="avia-hud-badge" style="right: 12px; border: 1px solid rgba(250, 204, 21, 0.5); font-size: 13px; font-weight: 900; color: #facc15;">
-                10 ★
+            <!-- Інформаційна панель внизу (Висота, Дистанція, Перемикач швидкості) -->
+            <div style="position: absolute; bottom: 8px; left: 10px; right: 10px; display: flex; justify-content: space-between; align-items: center; background: rgba(2, 6, 23, 0.85); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 5px 10px; font-size: 10px; font-weight: 800; color: #cbd5e1;">
+                <div>ВЫСОТА: <span id="skyAltText" style="color:#fff;">30m</span></div>
+                <div>ПУТЬ: <span id="skyDistText" style="color:#fff;">0m</span></div>
+                <div>КУШ: <span id="skyWinText" style="color:#4ade80;">10 ★</span></div>
+                
+                <div class="sky-speed-panel">
+                    <button class="sky-spd-btn" onclick="setSkySpeed(1)">🐢</button>
+                    <button class="sky-spd-btn active" onclick="setSkySpeed(2)">🚶</button>
+                    <button class="sky-spd-btn" onclick="setSkySpeed(3)">🐇</button>
+                    <button class="sky-spd-btn" onclick="setSkySpeed(4)">⚡</button>
+                </div>
             </div>
         </div>
 
         <div class="betting-box">
             <div class="betting-info">
-                <span>СТАВКА НА ВЫЛЕТ</span>
-                <span id="aviaStatusLabel">ДОЛЕТИ ДО АВИАНОСЦА</span>
+                <span>СТАВКА НА РЕЙС</span>
+                <span id="skyStatusLabel">ТАПАЙ ПО ЭКРАНУ ДЛЯ НАБОРОВ ВЫСОТЫ</span>
             </div>
 
             <div class="bet-row">
                 <div class="bet-adjuster">
-                    <button class="btn-chg" onclick="changeBet(-5, 'avia')">-</button>
-                    <span id="betAmountAvia" class="bet-number">10</span>
-                    <button class="btn-chg" onclick="changeBet(5, 'avia')">+</button>
+                    <button class="btn-chg" onclick="changeBet(-5, 'sky')">-</button>
+                    <span id="betAmountSky" class="bet-number">10</span>
+                    <button class="btn-chg" onclick="changeBet(5, 'sky')">+</button>
                 </div>
-                <button id="aviaMainBtn" class="btn-main-action btn-style-start" onclick="startAviaGame()">
-                    ВЗЛЕТ
+                <button id="skyMainBtn" class="btn-main-action btn-style-start" onclick="startSkyGame()">
+                    ЗАПУСК
                 </button>
             </div>
 
             <div class="slider-container">
                 <span class="slider-label">1</span>
-                <input type="range" id="betSliderAvia" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'avia')">
-                <span class="slider-label" id="maxSliderAvia">100</span>
+                <input type="range" id="betSliderSky" class="bet-slider" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'sky')">
+                <span class="slider-label" id="maxSliderSky">100</span>
             </div>
 
             <div class="quick-chips">
-                <button class="chip" onclick="setBet(10, 'avia')">10</button>
-                <button class="chip" onclick="setBet(25, 'avia')">25</button>
-                <button class="chip" onclick="setBet(50, 'avia')">50</button>
-                <button class="chip" onclick="setBet(100, 'avia')">100</button>
+                <button class="chip" onclick="setBet(10, 'sky')">10</button>
+                <button class="chip" onclick="setBet(25, 'sky')">25</button>
+                <button class="chip" onclick="setBet(50, 'sky')">50</button>
+                <button class="chip" onclick="setBet(100, 'sky')">100</button>
             </div>
         </div>
 
-        <button class="btn-return" onclick="exitAviaLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
+        <button class="btn-return" onclick="exitSkyLobby()"><i class="fa-solid fa-arrow-left"></i> НАЗАД В ЛОББИ</button>
     </div>
 
     
@@ -3507,7 +3532,7 @@
                 'userStarsLobby', 'userStarsMarket', 'userStarsProfile',
                 'profileWalletBalance', 'userStarsRoulette', 'userStarsRocket',
                 'userStarsMines', 'userStarsPlinko', 'userStarsCoinflip',
-                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing', 'userStarsAvia'
+                'userStarsLeaderboard', 'userStarsRefRoulette', 'userStarsFishing', 'userStarsSky'
             ];
            
             ids.forEach(id => {
@@ -5400,442 +5425,449 @@ const assignedCode = "ОЖИДАНИЕ...";
             if (hist.children.length > 5) hist.lastChild.remove();
         }
 
-       /* --- AVIA MASTERS (BGAMING STYLE ENGINE) --- */
-        let currentBetAvia = 10;
-        let activeAviaBet = 0;
-        let isPlayingAvia = false;
-        let aviaAnimId = null;
+      /* --- SKY JET: АВТОРСЬКИЙ РУШІЙ (XORYS) --- */
+        let currentBetSky = 10;
+        let activeSkyBet = 0;
+        let isPlayingSky = false;
+        let skyAnimId = null;
 
-        let aviaPlane = { x: 64, y: 155, vy: 0, angle: 0 };
-        let aviaCurrentMult = 1.00;
-        let aviaDistance = 0;
-        const aviaTotalDistance = 1150; // Длина маршрута до авианосца
-        let aviaItems = [];
-        let aviaExplosions = [];
-        let aviaPopups = [];
-        let aviaClouds = [
-            { x: 60, y: 45, s: 1.0 },
-            { x: 210, y: 32, s: 0.8 },
-            { x: 330, y: 60, s: 1.15 }
+        let skyJet = { x: 85, y: 130, vy: 0, tilt: 0 };
+        let skyCurrentMult = 1.00;
+        let skyDistance = 0.0;
+        let skyAltitude = 30.0;
+        const skyTotalDistance = 1900.0;
+        let skySpeedMul = 1.5;
+
+        let skyOrbs = [];
+        let skySparks = [];
+        let skyFloatTexts = [];
+        let skyClouds = [
+            { x: 40, y: 65, s: 1.1, spd: 0.8 },
+            { x: 200, y: 45, s: 0.85, spd: 0.6 },
+            { x: 340, y: 85, s: 1.3, spd: 0.95 }
         ];
-        let aviaWavePhase = 0;
+        let skyWaterWave = 0;
+        let skyFanAngle = 0;
 
-        function openAviaGame() {
-            switchPage('aviaGamePage');
+        function openSkyGame() {
+            switchPage('skyJetGamePage');
             triggerHaptic('impact', 'medium');
             updateBalanceUI();
-            document.getElementById('aviaWinPreview').innerText = currentBetAvia + ' ★';
-            drawAviaStaticScene();
+            drawSkyStaticScene();
         }
 
-        function exitAviaLobby() {
-            if (isPlayingAvia) {
-                isPlayingAvia = false;
-                cancelAnimationFrame(aviaAnimId);
-                const btn = document.getElementById('aviaMainBtn');
+        function exitSkyLobby() {
+            if (isPlayingSky) {
+                isPlayingSky = false;
+                cancelAnimationFrame(skyAnimId);
+                const btn = document.getElementById('skyMainBtn');
                 btn.disabled = false;
-                btn.innerText = 'ВЗЛЕТ';
+                btn.innerText = 'ЗАПУСК';
             }
             closeSubGame('casino');
         }
 
-        function generateAviaRoute() {
-            const items = [];
-            // Сбалансированная генерация: дает азартные заносы, но сохраняет ~6.5% House Edge
-            const step = 115;
-            for (let dist = 170; dist < aviaTotalDistance - 120; dist += step) {
-                const roll = Math.random();
-                const laneY = 52 + Math.random() * 105;
+        function setSkySpeed(lvl) {
+            document.querySelectorAll('.sky-spd-btn').forEach((b, idx) => {
+                b.classList.toggle('active', idx + 1 === lvl);
+            });
+            if (lvl === 1) skySpeedMul = 1.0;
+            else if (lvl === 2) skySpeedMul = 1.5;
+            else if (lvl === 3) skySpeedMul = 2.2;
+            else if (lvl === 4) skySpeedMul = 3.2;
+            triggerHaptic('impact', 'light');
+        }
 
-                if (roll < 0.44) {
-                    // Ракета (делит множитель на 2 и сбивает высоту вниз)
-                    items.push({ dist, y: laneY, type: 'rocket', hit: false });
-                } else if (roll < 0.78) {
-                    // Плюс к множителю (+1x, +2x, +3x)
-                    const addVals = [1, 1, 2, 2, 3];
-                    const val = addVals[Math.floor(Math.random() * addVals.length)];
-                    items.push({ dist, y: laneY, type: 'add', val, hit: false });
+        const skyBoxEl = document.getElementById('skyJetDisplayBox');
+        if (skyBoxEl) {
+            skyBoxEl.onclick = () => {
+                if (!isPlayingSky) return;
+                skyJet.vy = -4.6;
+                triggerHaptic('impact', 'light');
+            };
+        }
+
+        function generateSkyRoute() {
+            const items = [];
+            let dist = 240;
+            while (dist < skyTotalDistance - 170) {
+                const roll = Math.random();
+                const laneY = 40 + Math.random() * 120;
+
+                if (roll < 0.32) {
+                    // Грозова хмара з блискавкою (ділить множник навпіл ÷2)
+                    items.push({ dist, y: laneY, type: 'storm', hit: false });
+                } else if (roll < 0.65) {
+                    // Зелений плюс (+1, +2, +5)
+                    const vals = [1, 2, 3, 5];
+                    const val = vals[Math.floor(Math.random() * vals.length)];
+                    items.push({ dist, y: laneY, type: 'boost', val, hit: false });
                 } else {
-                    // Умножитель x2 (редкий и азартный)
-                    items.push({ dist, y: laneY, type: 'mult', val: 2, hit: false });
+                    // Золоте ядерце множника (x2, x3, x4)
+                    const mults = [2, 3, 4];
+                    const val = mults[Math.floor(Math.random() * mults.length)];
+                    items.push({ dist, y: laneY, type: 'super', val, hit: false });
                 }
+                dist += 105 + Math.random() * 60;
             }
             return items;
         }
 
-        function startAviaGame() {
-            if (isPlayingAvia) return;
-            if (starsBalance < currentBetAvia) {
+        function startSkyGame() {
+            if (isPlayingSky) return;
+            if (starsBalance < currentBetSky) {
                 showToast('Недостаточно звезд!');
                 return;
             }
 
-            starsBalance = Number((starsBalance - currentBetAvia).toFixed(1));
-            activeAviaBet = currentBetAvia;
+            starsBalance = Number((starsBalance - currentBetSky).toFixed(1));
+            activeSkyBet = currentBetSky;
             totalGamesPlayed += 1;
             updateBalanceUI();
 
-            isPlayingAvia = true;
-            aviaCurrentMult = 1.00;
-            aviaDistance = 0;
-            aviaPlane = { x: 65, y: 170, vy: -3.2, angle: -0.25 };
-            aviaItems = generateAviaRoute();
-            aviaExplosions = [];
-            aviaPopups = [];
+            isPlayingSky = true;
+            skyCurrentMult = 1.00;
+            skyDistance = 0.0;
+            skyAltitude = 30.0;
+            skyJet = { x: 85, y: 130, vy: 0, tilt: 0 };
+            skyOrbs = generateSkyRoute();
+            skySparks = [];
+            skyFloatTexts = [];
 
-            const btn = document.getElementById('aviaMainBtn');
+            const btn = document.getElementById('skyMainBtn');
             btn.disabled = true;
             btn.innerText = 'В ПОЛЕТЕ...';
-            document.getElementById('aviaStatusLabel').innerText = 'ЛОВИ МНОЖИТЕЛИ, ИЗБЕГАЙ РАКЕТ!';
-            updateAviaHud();
+            document.getElementById('skyStatusLabel').innerText = 'РЕЙС В ПУТИ! ТАПАЙ ЧТОБЫ МАНЕВРИРОВАТЬ';
+            updateSkyHud();
 
             playSound('click');
             triggerHaptic('impact', 'medium');
 
-            cancelAnimationFrame(aviaAnimId);
-            aviaAnimId = requestAnimationFrame(updateAviaLoop);
+            cancelAnimationFrame(skyAnimId);
+            skyAnimId = requestAnimationFrame(updateSkyLoop);
         }
 
-        function updateAviaHud() {
-            const multEl = document.getElementById('aviaMultBadge');
-            const winEl = document.getElementById('aviaWinPreview');
-            multEl.innerText = 'x' + aviaCurrentMult.toFixed(2);
-            multEl.style.color = aviaCurrentMult >= 1 ? '#4ade80' : '#f87171';
-            multEl.style.borderColor = aviaCurrentMult >= 1 ? 'rgba(74, 222, 128, 0.55)' : 'rgba(248, 113, 113, 0.55)';
-            winEl.innerText = Math.floor(activeAviaBet * aviaCurrentMult) + ' ★';
+        function updateSkyHud() {
+            document.getElementById('skyMultBadge').innerText = 'x' + skyCurrentMult.toFixed(2);
+            document.getElementById('skyAltText').innerText = skyAltitude.toFixed(1) + 'm';
+            document.getElementById('skyDistText').innerText = Math.floor(skyDistance) + 'm';
+            document.getElementById('skyWinText').innerText = Math.floor(activeSkyBet * skyCurrentMult) + ' ★';
         }
 
-        function spawnAviaBurst(x, y, color, text) {
-            for (let i = 0; i < 14; i++) {
-                const a = Math.random() * Math.PI * 2;
-                const sp = Math.random() * 3.5 + 1;
-                aviaExplosions.push({ x, y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp, life: 1, color });
+        function spawnSkySparks(x, y, color, txt) {
+            for (let i = 0; i < 15; i++) {
+                const angle = Math.random() * Math.PI * 2;
+                const spd = Math.random() * 3.8 + 1;
+                skySparks.push({ x, y, vx: Math.cos(angle) * spd, vy: Math.sin(angle) * spd, life: 1, color });
             }
-            if (text) {
-                aviaPopups.push({ x, y: y - 10, text, color, life: 1 });
+            if (txt) {
+                skyFloatTexts.push({ x, y: y - 10, text: txt, color, life: 1 });
             }
         }
 
-        function drawAviaEnvironment(ctx, w, h, seaY, speed) {
-            // Облака
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
-            aviaClouds.forEach(c => {
-                c.x -= speed * 0.25;
-                if (c.x < -60) c.x = w + 60;
+        function drawSkyLandingPlatform(ctx, cx, seaY, isFinish) {
+            ctx.save();
+            ctx.translate(cx, seaY);
+            // Платформа/корабель внизу
+            ctx.fillStyle = '#0f172a';
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-110, 6);
+            ctx.lineTo(-85, -14);
+            ctx.lineTo(95, -14);
+            ctx.lineTo(115, 6);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#1e293b';
+            ctx.fillRect(-100, -17, 200, 3);
+
+            ctx.strokeStyle = isFinish ? '#4ade80' : '#facc15';
+            ctx.setLineDash([7, 5]);
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(-85, -15);
+            ctx.lineTo(85, -15);
+            ctx.stroke();
+            ctx.setLineDash([]);
+
+            if (isFinish) {
+                ctx.fillStyle = '#4ade80';
+                ctx.font = '900 10px sans-serif';
+                ctx.textAlign = 'center';
+                ctx.fillText('БАЗА ПОСАДКИ', 0, -22);
+            }
+            ctx.restore();
+        }
+
+        function drawSkyJetPlane(ctx, p) {
+            ctx.save();
+            ctx.translate(p.x, p.y);
+            ctx.rotate(p.tilt);
+
+            // Слід
+            ctx.strokeStyle = 'rgba(56, 189, 248, 0.45)';
+            ctx.lineWidth = 3;
+            ctx.beginPath();
+            ctx.moveTo(-22, 2);
+            ctx.lineTo(-65, 3);
+            ctx.stroke();
+
+            // Корпус стилізованого літака (унікальна геометрія)
+            ctx.fillStyle = '#f59e0b';
+            ctx.strokeStyle = '#b45309';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.moveTo(-24, 0);
+            ctx.quadraticCurveTo(0, -7, 24, 1);
+            ctx.quadraticCurveTo(4, 5, -24, 3);
+            ctx.closePath();
+            ctx.fill();
+            ctx.stroke();
+
+            // Крила
+            ctx.fillStyle = '#d97706';
+            ctx.fillRect(-6, -12, 14, 3);
+            ctx.fillRect(-4, 2, 12, 2.5);
+
+            // Кабіна
+            ctx.fillStyle = '#38bdf8';
+            ctx.beginPath();
+            ctx.ellipse(7, -2, 4, 2, 0.1, 0, Math.PI * 2);
+            ctx.fill();
+
+            // Гвинт
+            skyFanAngle += 0.6;
+            ctx.fillStyle = '#0f172a';
+            ctx.save();
+            ctx.translate(24, 1);
+            ctx.rotate(skyFanAngle);
+            ctx.fillRect(-1.5, -9, 3, 18);
+            ctx.restore();
+
+            ctx.restore();
+        }
+
+        function updateSkyLoop() {
+            if (!isPlayingSky) return;
+
+            const canvas = document.getElementById('skyCanvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            const seaY = 210;
+            const scrollSpd = 3.2 * skySpeedMul;
+
+            skyDistance += scrollSpd;
+            skyAltitude = Number((30.0 + (seaY - skyJet.y) * 0.3).toFixed(1));
+
+            skyJet.vy += 0.13;
+            skyJet.y += skyJet.vy;
+            skyJet.tilt = Math.max(-0.35, Math.min(0.38, skyJet.vy * 0.07));
+            if (skyJet.y < 25) { skyJet.y = 25; skyJet.vy = 0; }
+
+            ctx.clearRect(0, 0, w, h);
+
+            // Небо
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, seaY);
+            skyGrad.addColorStop(0, '#020617');
+            skyGrad.addColorStop(0.5, '#0f172a');
+            skyGrad.addColorStop(1, '#0284c7');
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, w, seaY);
+
+            // Хмари
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.1)';
+            skyClouds.forEach(c => {
+                c.x -= c.spd * skySpeedMul;
+                if (c.x < -70) c.x = w + 70;
                 ctx.beginPath();
-                ctx.arc(c.x, c.y, 18 * c.s, 0, Math.PI * 2);
-                ctx.arc(c.x + 16 * c.s, c.y - 4 * c.s, 22 * c.s, 0, Math.PI * 2);
-                ctx.arc(c.x + 34 * c.s, c.y, 16 * c.s, 0, Math.PI * 2);
+                ctx.arc(c.x, c.y, 20 * c.s, 0, Math.PI * 2);
+                ctx.arc(c.x + 16 * c.s, c.y - 4 * c.s, 24 * c.s, 0, Math.PI * 2);
                 ctx.fill();
             });
 
-            // Стартовый корабль (слева, уходит за экран)
-            const startShipX = 48 - aviaDistance;
-            if (startShipX > -120) {
-                drawCarrierShip(ctx, startShipX, seaY, false);
-            }
+            // Старт і фініш
+            const startX = 60 - skyDistance;
+            if (startX > -130) drawSkyLandingPlatform(ctx, startX, seaY, false);
 
-            // Финишный авианосец (появляется в конце маршрута)
-            const finishShipX = 65 + (aviaTotalDistance - aviaDistance);
-            if (finishShipX < w + 150) {
-                drawCarrierShip(ctx, finishShipX, seaY, true);
-            }
+            const finishX = 90 + (skyTotalDistance - skyDistance);
+            if (finishX < w + 160) drawSkyLandingPlatform(ctx, finishX, seaY, true);
 
-            // Волны моря
-            aviaWavePhase += 0.07;
-            const seaGrad = ctx.createLinearGradient(0, seaY, 0, h);
-            seaGrad.addColorStop(0, '#0284c7');
-            seaGrad.addColorStop(1, '#082f49');
-            ctx.fillStyle = seaGrad;
-
+            // Вода внизу
+            skyWaterWave += 0.08 * skySpeedMul;
+            const waterGrad = ctx.createLinearGradient(0, seaY, 0, h);
+            waterGrad.addColorStop(0, '#0369a1');
+            waterGrad.addColorStop(1, '#0f172a');
+            ctx.fillStyle = waterGrad;
             ctx.beginPath();
             ctx.moveTo(0, h);
-            for (let x = 0; x <= w; x += 12) {
-                const wy = seaY + Math.sin(x * 0.04 + aviaWavePhase) * 3.5;
+            for (let x = 0; x <= w; x += 10) {
+                const wy = seaY + Math.sin(x * 0.05 + skyWaterWave) * 3.5;
                 ctx.lineTo(x, wy);
             }
             ctx.lineTo(w, h);
             ctx.closePath();
             ctx.fill();
 
-            ctx.strokeStyle = 'rgba(186, 230, 253, 0.65)';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-        }
-
-        function drawCarrierShip(ctx, cx, seaY, isFinish) {
-            ctx.save();
-            ctx.translate(cx, seaY);
-            // Корпус авианосца
-            ctx.fillStyle = '#334155';
-            ctx.beginPath();
-            ctx.moveTo(-55, 4);
-            ctx.lineTo(-42, -12);
-            ctx.lineTo(48, -12);
-            ctx.lineTo(58, 4);
-            ctx.closePath();
-            ctx.fill();
-
-            // Палуба
-            ctx.fillStyle = '#0f172a';
-            ctx.fillRect(-46, -15, 96, 4);
-
-            // Разметка палубы
-            ctx.strokeStyle = isFinish ? '#4ade80' : '#facc15';
-            ctx.setLineDash([6, 5]);
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            ctx.moveTo(-38, -13);
-            ctx.lineTo(42, -13);
-            ctx.stroke();
-            ctx.setLineDash([]);
-
-            // Надстройка (рубка)
-            ctx.fillStyle = '#475569';
-            ctx.fillRect(10, -27, 16, 12);
-            if (isFinish) {
-                ctx.fillStyle = '#4ade80';
-                ctx.font = 'bold 9px sans-serif';
-                ctx.fillText('ФИНИШ', -26, -20);
-            }
-            ctx.restore();
-        }
-
-        function drawAviaPlane(ctx, p) {
-            ctx.save();
-            ctx.translate(p.x, p.y);
-            ctx.rotate(p.angle);
-
-            // Свечение двигателя
-            ctx.fillStyle = 'rgba(56, 189, 248, 0.45)';
-            ctx.beginPath();
-            ctx.arc(-22, 1, 6 + Math.random() * 3, 0, Math.PI * 2);
-            ctx.fill();
-
-            // Фюзеляж
-            ctx.fillStyle = '#f8fafc';
-            ctx.strokeStyle = '#0f172a';
-            ctx.lineWidth = 1.5;
-            ctx.beginPath();
-            ctx.moveTo(-20, 0);
-            ctx.quadraticCurveTo(0, -7, 22, 0);
-            ctx.quadraticCurveTo(4, 6, -20, 3);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-
-            // Красное крыло и хвост
-            ctx.fillStyle = '#ef4444';
-            ctx.beginPath();
-            ctx.moveTo(-4, 0);
-            ctx.lineTo(5, -13);
-            ctx.lineTo(10, -13);
-            ctx.lineTo(4, 0);
-            ctx.closePath();
-            ctx.fill();
-
-            ctx.beginPath();
-            ctx.moveTo(-19, 0);
-            ctx.lineTo(-24, -9);
-            ctx.lineTo(-17, -9);
-            ctx.lineTo(-13, 0);
-            ctx.closePath();
-            ctx.fill();
-
-            // Кабина пилота
-            ctx.fillStyle = '#38bdf8';
-            ctx.beginPath();
-            ctx.ellipse(9, -2, 5, 2.5, 0.1, 0, Math.PI * 2);
-            ctx.fill();
-
-            ctx.restore();
-        }
-
-        function updateAviaLoop() {
-            if (!isPlayingAvia) return;
-
-            const canvas = document.getElementById('aviaCanvas');
-            if (!canvas) return;
-            const ctx = canvas.getContext('2d');
-            const w = canvas.width;
-            const h = canvas.height;
-            const seaY = 205;
-            const speed = 4.6;
-
-            aviaDistance += speed;
-
-            // Физика полета (плавная тяга вверх и гравитация)
-            aviaPlane.vy += 0.085;
-            if (aviaPlane.y > 145 && aviaDistance < aviaTotalDistance - 90) {
-                aviaPlane.vy -= 0.14; // Автоподъем над водой
-            }
-            aviaPlane.y += aviaPlane.vy;
-            if (aviaPlane.y < 32) {
-                aviaPlane.y = 32;
-                aviaPlane.vy = 0.5;
-            }
-            aviaPlane.angle = Math.max(-0.4, Math.min(0.45, aviaPlane.vy * 0.09));
-
-            ctx.clearRect(0, 0, w, h);
-            drawAviaEnvironment(ctx, w, h, seaY, speed);
-
-            // Отрисовка и проверка столкновений с бонусами и ракетами
-            aviaItems.forEach(item => {
+            // Об'єкти (грозові хмари та золоті ядра)
+            skyOrbs.forEach(item => {
                 if (item.hit) return;
-                const screenX = aviaPlane.x + (item.dist - aviaDistance);
-                if (screenX < -30 || screenX > w + 30) return;
+                const screenX = skyJet.x + (item.dist - skyDistance);
+                if (screenX < -40 || screenX > w + 40) return;
 
-                if (item.type === 'rocket') {
-                    // Вражеская ракета
-                    ctx.save();
-                    ctx.translate(screenX, item.y);
-                    ctx.fillStyle = '#ef4444';
+                ctx.save();
+                ctx.translate(screenX, item.y);
+
+                if (item.type === 'storm') {
+                    // Грозова хмара (замість бомб)
+                    ctx.fillStyle = '#334155';
+                    ctx.strokeStyle = '#ef4444';
+                    ctx.lineWidth = 2;
                     ctx.shadowColor = '#ef4444';
                     ctx.shadowBlur = 12;
                     ctx.beginPath();
-                    ctx.moveTo(-14, 0);
-                    ctx.lineTo(8, -5);
-                    ctx.lineTo(12, 0);
-                    ctx.lineTo(8, 5);
-                    ctx.closePath();
-                    ctx.fill();
-                    ctx.fillStyle = '#facc15';
-                    ctx.beginPath();
-                    ctx.arc(14, 0, 3.5, 0, Math.PI * 2);
-                    ctx.fill();
-                    ctx.restore();
-                } else {
-                    // Бонус множителя (+1, +2, x2)
-                    const isMult = item.type === 'mult';
-                    const mainCol = isMult ? '#facc15' : '#4ade80';
-                    ctx.save();
-                    ctx.translate(screenX, item.y);
-                    ctx.beginPath();
                     ctx.arc(0, 0, 15, 0, Math.PI * 2);
-                    ctx.fillStyle = 'rgba(2, 6, 23, 0.85)';
-                    ctx.shadowColor = mainCol;
-                    ctx.shadowBlur = 14;
                     ctx.fill();
-                    ctx.lineWidth = 2;
-                    ctx.strokeStyle = mainCol;
                     ctx.stroke();
-
-                    ctx.fillStyle = mainCol;
+                    ctx.fillStyle = '#facc15';
                     ctx.font = '900 11px sans-serif';
                     ctx.textAlign = 'center';
                     ctx.textBaseline = 'middle';
-                    ctx.fillText(isMult ? `x${item.val}` : `+${item.val}`, 0, 1);
-                    ctx.restore();
-                }
+                    ctx.fillText('⚡', 0, 1);
+                } else {
+                    // Золоте чи яскраве ядерце
+                    const isSup = item.type === 'super';
+                    const col = isSup ? '#facc15' : '#4ade80';
 
-                // Проверка попадания самолета в объект
-                if (Math.hypot(aviaPlane.x - screenX, aviaPlane.y - item.y) < 23) {
+                    ctx.beginPath();
+                    ctx.arc(0, 0, 17, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+                    ctx.shadowColor = col;
+                    ctx.shadowBlur = 18;
+                    ctx.fill();
+                    ctx.lineWidth = 2.5;
+                    ctx.strokeStyle = col;
+                    ctx.stroke();
+
+                    ctx.fillStyle = col;
+                    ctx.font = '900 12px sans-serif';
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.fillText(isSup ? `x${item.val}` : `+${item.val}`, 0, 1);
+                }
+                ctx.restore();
+                ctx.shadowBlur = 0;
+
+                // Перевірка зіткнення
+                if (Math.hypot(skyJet.x - screenX, skyJet.y - item.y) < 22) {
                     item.hit = true;
-                    if (item.type === 'rocket') {
-                        aviaCurrentMult = Number(Math.max(0.25, aviaCurrentMult / 2).toFixed(2));
-                        aviaPlane.vy = 4.2; // Резко сбивает вниз
-                        spawnAviaBurst(screenX, item.y, '#ef4444', '÷2 💥');
+                    if (item.type === 'storm') {
+                        skyCurrentMult = Number(Math.max(0.2, skyCurrentMult / 2).toFixed(2));
+                        spawnSkySparks(screenX, item.y, '#ef4444', '÷2 ⚡');
                         playSound('error');
                         triggerHaptic('notification', 'error');
-                    } else if (item.type === 'add') {
-                        aviaCurrentMult = Number((aviaCurrentMult + item.val).toFixed(2));
-                        aviaPlane.vy = -3.4; // Подбрасывает вверх
-                        spawnAviaBurst(screenX, item.y, '#4ade80', `+${item.val}x`);
+                    } else if (item.type === 'boost') {
+                        skyCurrentMult = Number((skyCurrentMult + item.val).toFixed(2));
+                        spawnSkySparks(screenX, item.y, '#4ade80', `+${item.val}x`);
                         playSound('win');
                         triggerHaptic('impact', 'medium');
-                    } else if (item.type === 'mult') {
-                        aviaCurrentMult = Number((aviaCurrentMult * item.val).toFixed(2));
-                        aviaPlane.vy = -3.8;
-                        spawnAviaBurst(screenX, item.y, '#facc15', `x${item.val}!`);
+                    } else if (item.type === 'super') {
+                        skyCurrentMult = Number((skyCurrentMult * item.val).toFixed(2));
+                        spawnSkySparks(screenX, item.y, '#facc15', `x${item.val}!`);
                         playSound('win');
                         triggerHaptic('impact', 'heavy');
                     }
-                    updateAviaHud();
+                    updateSkyHud();
                 }
             });
 
-            // Частицы взрывов и всплывающие цифры
-            for (let i = aviaExplosions.length - 1; i >= 0; i--) {
-                const ex = aviaExplosions[i];
-                ex.x += ex.vx;
-                ex.y += ex.vy;
-                ex.life -= 0.04;
-                if (ex.life <= 0) { aviaExplosions.splice(i, 1); continue; }
-                ctx.globalAlpha = ex.life;
-                ctx.fillStyle = ex.color;
+            // Анімація часток
+            for (let i = skySparks.length - 1; i >= 0; i--) {
+                const sp = skySparks[i];
+                sp.x += sp.vx;
+                sp.y += sp.vy;
+                sp.life -= 0.04;
+                if (sp.life <= 0) { skySparks.splice(i, 1); continue; }
+                ctx.globalAlpha = sp.life;
+                ctx.fillStyle = sp.color;
                 ctx.beginPath();
-                ctx.arc(ex.x, ex.y, 3, 0, Math.PI * 2);
+                ctx.arc(sp.x, sp.y, 3, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.globalAlpha = 1;
             }
 
-            for (let i = aviaPopups.length - 1; i >= 0; i--) {
-                const pop = aviaPopups[i];
-                pop.y -= 0.9;
-                pop.life -= 0.025;
-                if (pop.life <= 0) { aviaPopups.splice(i, 1); continue; }
-                ctx.globalAlpha = pop.life;
-                ctx.fillStyle = pop.color;
-                ctx.font = '900 14px sans-serif';
+            for (let i = skyFloatTexts.length - 1; i >= 0; i--) {
+                const ft = skyFloatTexts[i];
+                ft.y -= 0.9;
+                ft.life -= 0.025;
+                if (ft.life <= 0) { skyFloatTexts.splice(i, 1); continue; }
+                ctx.globalAlpha = ft.life;
+                ctx.fillStyle = ft.color;
+                ctx.font = '900 13px sans-serif';
                 ctx.textAlign = 'center';
-                ctx.fillText(pop.text, pop.x, pop.y);
+                ctx.fillText(ft.text, ft.x, ft.y);
                 ctx.globalAlpha = 1;
             }
 
-            drawAviaPlane(ctx, aviaPlane);
+            drawSkyJetPlane(ctx, skyJet);
+            updateSkyHud();
 
-            // Проверка падения в море (Проигрыш)
-            if (aviaPlane.y >= seaY - 6) {
-                spawnAviaBurst(aviaPlane.x, seaY, '#38bdf8', 'В ВОДУ!');
-                finishAviaRound(false);
+            // Падіння у воду
+            if (skyJet.y >= seaY - 8) {
+                spawnSkySparks(skyJet.x, seaY, '#38bdf8', 'ПАДІННЯ!');
+                finishSkyRound(false);
                 return;
             }
 
-            // Проверка посадки на авианосец (Победа!)
-            if (aviaDistance >= aviaTotalDistance) {
-                aviaPlane.y = seaY - 21;
-                aviaPlane.angle = 0;
-                drawAviaPlane(ctx, aviaPlane);
-                finishAviaRound(true);
+            // Успішний приліт на базу
+            if (skyDistance >= skyTotalDistance) {
+                skyJet.y = seaY - 21;
+                skyJet.tilt = 0;
+                drawSkyJetPlane(ctx, skyJet);
+                finishSkyRound(true);
                 return;
             }
 
-            aviaAnimId = requestAnimationFrame(updateAviaLoop);
+            skyAnimId = requestAnimationFrame(updateSkyLoop);
         }
 
-        function finishAviaRound(landedSuccess) {
-            isPlayingAvia = false;
-            cancelAnimationFrame(aviaAnimId);
+        function finishSkyRound(success) {
+            isPlayingSky = false;
+            cancelAnimationFrame(skyAnimId);
 
-            const btn = document.getElementById('aviaMainBtn');
+            const btn = document.getElementById('skyMainBtn');
             btn.disabled = false;
-            btn.innerText = 'ВЗЛЕТ';
+            btn.innerText = 'ЗАПУСК';
 
-            const hist = document.getElementById('aviaHistory');
+            const hist = document.getElementById('skyHistory');
             const pill = document.createElement('div');
             pill.className = 'history-pill';
 
-            if (landedSuccess) {
-                const winSum = Math.max(1, Math.floor(activeAviaBet * aviaCurrentMult));
+            if (success) {
+                const winSum = Math.max(1, Math.floor(activeSkyBet * skyCurrentMult));
                 starsBalance = Number((starsBalance + winSum).toFixed(1));
                 totalStarsWon += winSum;
                 updateBalanceUI();
 
                 pill.style.borderColor = '#4ade80';
                 pill.style.color = '#4ade80';
-                pill.innerText = 'x' + aviaCurrentMult.toFixed(2);
-                document.getElementById('aviaStatusLabel').innerText = `ПОСАДКА! ВЫИГРЫШ: +${winSum} ★`;
+                pill.innerText = 'x' + skyCurrentMult.toFixed(2);
+                document.getElementById('skyStatusLabel').innerText = `ПОСАДКА УСПІШНА! +${winSum} ★`;
                 playSound('win');
                 triggerHaptic('notification', 'success');
-                showToast(`Avia Masters: +${winSum} ★ (x${aviaCurrentMult.toFixed(2)})!`);
+                showToast(`Sky Jet: +${winSum} ★!`);
             } else {
                 pill.style.borderColor = '#ef4444';
                 pill.style.color = '#ef4444';
                 pill.innerText = '0x';
-                document.getElementById('aviaStatusLabel').innerText = 'САМОЛЕТ УПАЛ В МОРЕ!';
+                document.getElementById('skyStatusLabel').innerText = 'ЛІТАК ВПАВ У МОРЕ!';
                 playSound('error');
                 triggerHaptic('notification', 'error');
-                showToast('Самолет сбит и упал в море!');
+                showToast('Літак розбився!');
             }
 
             if (hist) {
@@ -5844,17 +5876,21 @@ const assignedCode = "ОЖИДАНИЕ...";
             }
         }
 
-        function drawAviaStaticScene() {
-            const canvas = document.getElementById('aviaCanvas');
+        function drawSkyStaticScene() {
+            const canvas = document.getElementById('skyCanvas');
             if (!canvas) return;
             const ctx = canvas.getContext('2d');
-            aviaDistance = 0;
+            skyDistance = 0;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            drawAviaEnvironment(ctx, canvas.width, canvas.height, 205, 0);
-            drawAviaPlane(ctx, { x: 65, y: 184, angle: 0 });
-            document.getElementById('aviaMultBadge').innerText = 'x1.00';
-        }  
-        
+            const skyGrad = ctx.createLinearGradient(0, 0, 0, 210);
+            skyGrad.addColorStop(0, '#020617');
+            skyGrad.addColorStop(1, '#0284c7');
+            ctx.fillStyle = skyGrad;
+            ctx.fillRect(0, 0, canvas.width, 210);
+            drawSkyLandingPlatform(ctx, 70, 210, false);
+            drawSkyJetPlane(ctx, { x: 85, y: 130, tilt: 0 });
+            document.getElementById('skyMultBadge').innerText = 'x1.00';
+        }
 
         /* --- ЖИВАЯ СТРОКА ВЫИГРЫШЕЙ --- */
         const liveFeedItems = [
