@@ -3789,13 +3789,8 @@ function executeCountryPurchase() {
                 label: `📱 Номер ${item.name} (${assignedPhone})`
             });
 
-            // Открываем модальное окно получения SMS-кода в приложении
-            document.getElementById('orderNumberCountryTitle').innerText = `${item.name.toUpperCase()} (${item.code})`;
-            document.getElementById('issuedPhoneNumber').innerText = assignedPhone;
-            document.getElementById('smsVerificationCode').innerText = 'ОЖИДАНИЕ...';
-            document.getElementById('smsStatusHint').innerText = `Заказ #${realPurchaseId} отправлен в @xorysbot. Нажмите «ПОЛУЧИТЬ КОД» после запроса SMS в Telegram.`;
-            document.getElementById('numberOrderModal').classList.add('open');
-
+          if (data.ok) {
+            // Успешная покупка
             showToast(`Заказ #${realPurchaseId} отправлен в @xorysbot!`);
             triggerHaptic('notification', 'success');
             playSound('win');
@@ -3814,7 +3809,6 @@ function executeCountryPurchase() {
         showToast("Ошибка соединения с сервером");
         triggerHaptic('notification', 'error');
     });
-}
 
 function closeConfirmModal(event) {
     if (event && event.target !== document.getElementById('numberConfirmModal')) return;
