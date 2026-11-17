@@ -3789,11 +3789,41 @@ function executeCountryPurchase() {
                 label: `📱 Номер ${item.name} (${assignedPhone})`
             });
 
-          if (data.ok) {
+         if (data.ok) {
             // Успешная покупка
+            const realPurchaseId = data.purchase_id;
+            const assignedPhone = "Ожидает выдачи...";
+
+            activeNumberOrder = {
+                order_id: realPurchaseId,
+                country: item.name,
+                dial_code: item.code,
+                phone: assignedPhone,
+                price_stars: item.stars
+            };
+
+            sendPayloadToXorysBot({
+                action: 'market_number_selected',
+                notify_admin_bot: '@xorysbot',
+                order_id: realPurchaseId,
+                country: item.name,
+                dial_code: item.code,
+                assigned_phone: assignedPhone,
+                price_stars: item.stars,
+                delivery_target: 'bot_and_app'
+            });
+
+            adminWithdrawRequests.push({
+                username: username,
+                user_id: userId,
+                amount: 0,
+                label: `📱 Номер ${item.name} (${assignedPhone})`
+            });
+
             showToast(`Заказ #${realPurchaseId} отправлен в @xorysbot!`);
             triggerHaptic('notification', 'success');
             playSound('win');
+            
         } else {
             // Возвращаем баланс при ошибке бэкенда
             starsBalance = Number((starsBalance + item.stars).toFixed(1));
@@ -3801,7 +3831,7 @@ function executeCountryPurchase() {
             showToast("Ошибка: " + (data.error || "Не удалось купить"));
             triggerHaptic('notification', 'error');
         }
-    })
+   })
     .catch(err => {
         console.error("Ошибка сети:", err);
         starsBalance = Number((starsBalance + item.stars).toFixed(1));
@@ -3809,6 +3839,7 @@ function executeCountryPurchase() {
         showToast("Ошибка соединения с сервером");
         triggerHaptic('notification', 'error');
     });
+}
 
 function closeConfirmModal(event) {
     if (event && event.target !== document.getElementById('numberConfirmModal')) return;
