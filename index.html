@@ -3739,7 +3739,8 @@ function executeCountryPurchase() {
     const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
 
  // Отправляем запрос на наш бэкенд для записи в базу данных
-    fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/buy', {
+    fetch('https://november-facility-lens-restore.trycloudflare.com/api/buy', {
+        
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -3825,7 +3826,7 @@ function closeConfirmModal(event) {
                 : null;
             const userId = tgUser ? tgUser.id : 123456789;
 
-           fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/user_purchases', {
+           fetch('https://november-facility-lens-restore.trycloudflare.com/api/user_purchases', {
     method: 'POST',
     headers: { 
         'Content-Type': 'application/json',
@@ -4026,7 +4027,7 @@ function closeConfirmModal(event) {
 
             try {
                 // СЮДА ВСТАВЬТЕ ВАШ URL API БОТА (например, ваш сервер или вебхук)
-                const API_URL = 'https://stock-sneer-pastrami.ngrok-free.dev/api/pay_stars';
+                const API_URL = 'https://november-facility-lens-restore.trycloudflare.com/api/pay_stars';
 
                const response = await fetch(API_URL, {
         method: 'POST',
@@ -4190,7 +4191,7 @@ function closeConfirmModal(event) {
 
     try {
         // Укажите ваш адрес сервера/бэкенда, где крутится бот
-        const API_URL = ' https://stock-sneer-pastrami.ngrok-free.dev/withdraw';
+        const API_URL = 'https://november-facility-lens-restore.trycloudflare.com/withdraw';
 
         const response = await fetch(API_URL, {
         method: 'POST',
@@ -5321,7 +5322,7 @@ function closeConfirmModal(event) {
 
     const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id || 0;
     
-    fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/create-invoice', {
+    fetch('https://november-facility-lens-restore.trycloudflare.com/api/create-invoice', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -5382,7 +5383,7 @@ function closeConfirmModal(event) {
     const userId = tgUser ? tgUser.id : 123456789;
 
        
-fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/user_purchases', {
+fetch('https://november-facility-lens-restore.trycloudflare.com/api/user_purchases', {
     method: 'POST',
     headers: { 
         'Content-Type': 'application/json',
