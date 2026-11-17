@@ -3789,7 +3789,9 @@ function executeCountryPurchase() {
                 label: `📱 Номер ${item.name} (${assignedPhone})`
             });
 
-         if (data.ok) {
+        .then(res => res.json())
+    .then(data => {
+        if (data.ok) {
             // Успешная покупка
             const realPurchaseId = data.purchase_id;
             const assignedPhone = "Ожидает выдачи...";
@@ -3831,7 +3833,7 @@ function executeCountryPurchase() {
             showToast("Ошибка: " + (data.error || "Не удалось купить"));
             triggerHaptic('notification', 'error');
         }
-   })
+    })
     .catch(err => {
         console.error("Ошибка сети:", err);
         starsBalance = Number((starsBalance + item.stars).toFixed(1));
