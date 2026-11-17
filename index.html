@@ -5309,13 +5309,25 @@ function closeConfirmModal(event) {
         }
 
 
-       function openStarsInvoice(amount = 10) {
+      function openStarsInvoice(amount) {
+    // Якщо суму не передали, беремо її з інпуту поповнення або запитуємо через prompt
+    const inputEl = document.getElementById('tgImportInput');
+    const finalAmount = parseInt(amount) || (inputEl ? parseInt(inputEl.value) : null) || parseInt(prompt('Сколько звёзд хотите добавить?', '50')) || 10;
+
+    if (finalAmount < 1) {
+        alert('Введите корректное количество звёзд!');
+        return;
+    }
+
     const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id || 0;
     
     fetch('https://stock-sneer-pastrami.ngrok-free.dev/api/create-invoice', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ user_id: userId, amount: amount })
+        headers: { 
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true' 
+        },
+        body: JSON.stringify({ user_id: userId, amount: finalAmount })
     })
     .then(res => res.json())
     .then(data => {
@@ -5328,7 +5340,7 @@ function closeConfirmModal(event) {
             });
         } else {
             const botUsername = "xorysbot";
-            window.Telegram.WebApp.openTelegramLink(`https://t.me/${botUsername}?start=pay_stars_${amount}`);
+            window.Telegram.WebApp.openTelegramLink(`https://t.me/${botUsername}?start=pay_stars_${finalAmount}`);
         }
     })
     .catch(err => {
