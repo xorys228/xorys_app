@@ -1928,6 +1928,56 @@
             </div>
         </div>
     </div>
+
+<!-- СЛОТ 777 -->
+<div id="slot777Page" class="page" style="display: none;">
+    <div class="sub-game-header">
+        <button class="back-btn" onclick="closeSubGame('homePage')"><i class="fa-solid fa-arrow-left"></i></button>
+        <span class="game-title">SLOT 777</span>
+        <div class="user-stars-badge"><span id="headerStarsSlot">70</span> ★</div>
+    </div>
+
+    <div class="slot-container" style="text-align: center; padding: 15px;">
+        <!-- Таблица коэффициентов -->
+        <div class="slot-paytable">
+            <div class="pay-row"><span>7️⃣ 7️⃣ 7️⃣</span> <span class="multiplier gold">x20 (ДЖЕКПОТ)</span></div>
+            <div class="pay-row"><span>💎 💎 💎</span> <span class="multiplier">x10</span></div>
+            <div class="pay-row"><span>🔔 🔔 🔔</span> <span class="multiplier">x7</span></div>
+            <div class="pay-row"><span>🍋 🍋 🍋</span> <span class="multiplier">x5</span></div>
+            <div class="pay-row"><span>🍒 🍒 🍒</span> <span class="multiplier">x3</span></div>
+            <div class="pay-row"><span>Любые 2 совпадения</span> <span class="multiplier">x1.5</span></div>
+        </div>
+
+        <!-- Барабаны -->
+        <div class="slot-machine-frame">
+            <div class="slot-reel" id="reel1">🍒</div>
+            <div class="slot-reel" id="reel2">🍋</div>
+            <div class="slot-reel" id="reel3">7️⃣</div>
+        </div>
+        <div id="slotResultText" class="slot-result-msg">Крути барабаны!</div>
+    </div>
+
+    <!-- Управление ставкой -->
+    <div class="bet-control-panel">
+        <div class="bet-row">
+            <span class="bet-label">СТАВКА</span>
+            <div class="bet-adjuster">
+                <button onclick="changeBet(-5, 'slot')">-</button>
+                <span id="betAmountSlot">10</span>
+                <button onclick="changeBet(5, 'slot')">+</button>
+            </div>
+        </div>
+        <input type="range" id="betSliderSlot" min="1" max="100" value="10" oninput="onSliderBet(this.value, 'slot')">
+        <div class="quick-bets">
+            <button onclick="setBet(10, 'slot')">10</button>
+            <button onclick="setBet(25, 'slot')">25</button>
+            <button onclick="setBet(50, 'slot')">50</button>
+            <button onclick="setBet(100, 'slot')">100</button>
+        </div>
+        <button id="slotSpinBtn" class="btn-main-action btn-style-start" onclick="spinSlot()">КРУТИТЬ</button>
+    </div>
+</div>
+    
 <!-- ЭКРАН ИГРЫ "РАКЕТА" -->
     <div id="rocketGamePage" class="page">
         <div class="rg-header">
