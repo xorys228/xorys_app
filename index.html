@@ -4125,7 +4125,7 @@ function closeConfirmModal(event) {
             } catch (e) {}
         }
 
-        function claimDailyLoginBonus() {
+       function claimDailyLoginBonus() {
             const btn = document.getElementById('claimDailyBtn');
             if (btn.classList.contains('claimed')) {
                 showToast('Вы уже забрали ежедневную звезду сегодня!');
@@ -4141,6 +4141,7 @@ function closeConfirmModal(event) {
             } catch (e) {}
 
             updateBalanceUI();
+            saveBalanceToServer();
             initDailyBonusState();
             addProfileActivity('Ежедневный бонус за вход', '+1 ★', 'fa-calendar-check');
             showToast('Начислена +1 ★ за ежедневный вход!');
@@ -5449,6 +5450,25 @@ async function syncBalanceFromServer() {
                     }
                 } catch (e) {}
             }
+        }
+
+        async function saveBalanceToServer() {
+            const activeTgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe)
+                ? window.Telegram.WebApp.initDataUnsafe.user
+                : null;
+            const currentId = activeTgUser ? activeTgUser.id : userId;
+            const cleanBalance = Number(starsBalance.toFixed(1));
+
+            try {
+                await fetch('https://quote-external-peas-brick.trycloudflare.com/api/save_balance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_id: currentId,
+                        stars_balance: cleanBalance
+                    })
+                });
+            } catch (e) {}
         }
 
         const _origUpdateBalanceUI = updateBalanceUI;
