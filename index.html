@@ -4055,6 +4055,14 @@ function closeConfirmModal(event) {
                             triggerHaptic('notification', 'success');
                             playSound('win');
                             document.getElementById('tgImportModal').classList.remove('open');
+                            setTimeout(() => {
+                                if (typeof syncBalanceFromServer === 'function') {
+                                    syncBalanceFromServer();
+                                }
+                                if (typeof loadUserHistoryFromServer === 'function') {
+                                    loadUserHistoryFromServer();
+                                }
+                            }, 800);
                         } else {
                             showToast('Оплата отменена или не завершена');
                         }
@@ -5410,6 +5418,50 @@ fetch('https://quote-external-peas-brick.trycloudflare.com/api/user_purchases', 
         console.error('Не удалось загрузить историю:', err);
     });
 }
+
+
+async function syncBalanceFromServer() {
+            const activeTgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe)
+                ? window.Telegram.WebApp.initDataUnsafe.user
+                : null;
+            const currentId = activeTgUser ? activeTgUser.id : userId;
+
+            try {
+                const res = await fetch('https://quote-external-peas-brick.trycloudflare.com/api/balance', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ user_id: currentId })
+                });
+                const data = await res.json();
+                if (data && data.ok && typeof data.stars_balance === 'number') {
+                    starsBalance = Number(data.stars_balance.toFixed(1));
+                    try {
+                        localStorage.setItem('xorys_saved_stars_' + currentId, starsBalance.toString());
+                    } catch (e) {}
+                    updateBalanceUI();
+                }
+            } catch (err) {
+                try {
+                    const cached = localStorage.getItem('xorys_saved_stars_' + currentId);
+                    if (cached !== null && !isNaN(parseFloat(cached))) {
+                        starsBalance = parseFloat(cached);
+                        updateBalanceUI();
+                    }
+                } catch (e) {}
+            }
+        }
+
+        const _origUpdateBalanceUI = updateBalanceUI;
+        updateBalanceUI = function() {
+            _origUpdateBalanceUI();
+            try {
+                const activeTgUser = (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.initDataUnsafe)
+                    ? window.Telegram.WebApp.initDataUnsafe.user
+                    : null;
+                const currentId = activeTgUser ? activeTgUser.id : userId;
+                localStorage.setItem('xorys_saved_stars_' + currentId, starsBalance.toString());
+            } catch (e) {}
+        };
         
 
         /* --- ИНИЦИАЛИЗАЦИЯ --- */
@@ -5420,6 +5472,7 @@ fetch('https://quote-external-peas-brick.trycloudflare.com/api/user_purchases', 
         initRefRouletteState();
         updateRocketFreebetUI();
         startLiveFeedTicker();
+        syncBalanceFromServer();
     </script>
 </body>
 </html>
