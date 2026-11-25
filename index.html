@@ -5470,6 +5470,15 @@ async function syncBalanceFromServer() {
                 });
             } catch (e) {}
         }
+let _saveBalanceTimer = null;
+        function scheduleSaveBalance() {
+            clearTimeout(_saveBalanceTimer);
+            _saveBalanceTimer = setTimeout(() => {
+                if (typeof saveBalanceToServer === 'function') {
+                    saveBalanceToServer();
+                }
+            }, 250);
+        }
 
         const _origUpdateBalanceUI = updateBalanceUI;
         updateBalanceUI = function() {
@@ -5481,7 +5490,9 @@ async function syncBalanceFromServer() {
                 const currentId = activeTgUser ? activeTgUser.id : userId;
                 localStorage.setItem('xorys_saved_stars_' + currentId, starsBalance.toString());
             } catch (e) {}
+            scheduleSaveBalance();
         };
+
         
 
         /* --- ИНИЦИАЛИЗАЦИЯ --- */
