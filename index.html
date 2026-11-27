@@ -2033,7 +2033,7 @@
         </div>
 
         <div class="rg-history" id="rouletteHistory">
-            <div class="history-pill" style="border-color: #ffffff;">БЕЛЫЙ</div>
+            <div class="history-pill" style="border-color: #ffffff;">КРАСНЫЙ</div>
             <div class="history-pill" style="border-color: #52525b;">ЧЕРНЫЙ</div>
         </div>
 
@@ -2047,15 +2047,15 @@
         </div>
 
         <div class="color-picker-grid">
-            <button class="color-btn active" onclick="setRouletteColor('red', this)">БЕЛЫЙ (x2)</button>
+            <button class="color-btn active" onclick="setRouletteColor('red', this)">КРАСНЫЙ (x2)</button>
             <button class="color-btn" onclick="setRouletteColor('black', this)">ЧЕРНЫЙ (x2)</button>
-            <button class="color-btn" onclick="setRouletteColor('green', this)">СЕРЫЙ (x14)</button>
+            <button class="color-btn" onclick="setRouletteColor('green', this)">ЗЕЛЕНЫЙ (x14)</button>
         </div>
 
         <div class="betting-box">
             <div class="betting-info">
                 <span>СТАВКА (ЗВЕЗДЫ)</span>
-                <span id="selectedColorLabel">ВЫБОР: БЕЛЫЙ</span>
+                <span id="selectedColorLabel">ВЫБОР: КРАСНЫЙ</span>
             </div>
             
             <div class="bet-row">
@@ -4428,7 +4428,7 @@ function closeConfirmModal(event) {
             selectedRouletteColor = color;
             document.querySelectorAll('#roulettePage .color-btn').forEach(b => b.classList.remove('active'));
             el.classList.add('active');
-            const names = { red: 'БЕЛЫЙ', black: 'ЧЕРНЫЙ', green: 'СЕРЫЙ' };
+            const names = { red: 'КРАСНЫЙ', black: 'ЧЕРНЫЙ', green: 'ЗЕЛЕНЫЙ' };
             document.getElementById('selectedColorLabel').innerText = 'ВЫБОР: ' + names[color];
             triggerHaptic('impact', 'light');
         }
@@ -4451,14 +4451,14 @@ function closeConfirmModal(event) {
             btn.disabled = true;
             triggerHaptic('impact', 'medium');
 
-            // Шансы: ~46% БЕЛЫЙ, ~48% ЧЕРНЫЙ, ~6% СЕРЫЙ
+            // Шансы: ~46% КРАСНЫЙ, ~48% ЧЕРНЫЙ, ~6% ЗЕЛЕНЫЙ
             const outcomeRand = Math.random();
-            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ', pillBorder = '#ffffff', payoutMult = 2;
+            let winningIndex = 15, winningColor = 'red', labelText = 'КРАСНЫЙ', pillBorder = '#ffffff', payoutMult = 2;
 
             if (outcomeRand < 0.46) {
                 winningIndex = 15;
                 winningColor = 'red';
-                labelText = 'БЕЛЫЙ';
+                labelText = 'КРАСНЫЙ';
                 pillBorder = '#ffffff';
                 payoutMult = 2;
             } else if (outcomeRand < 0.94) {
@@ -4470,7 +4470,7 @@ function closeConfirmModal(event) {
             } else {
                 winningIndex = 355;
                 winningColor = 'green';
-                labelText = 'СЕРЫЙ';
+                labelText = 'ЗЕЛЕНЫЙ';
                 pillBorder = '#a1a1aa';
                 payoutMult = 12;
             }
