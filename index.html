@@ -3739,7 +3739,7 @@ function executeCountryPurchase() {
     const username = tgUser ? (tgUser.username || tgUser.first_name || "NoUsername") : "TestUser";
 
  // Отправляем запрос на наш бэкенд для записи в базу данных
-    fetch('https://quote-external-peas-brick.trycloudflare.com/api/buy', {
+    fetch('https://standings-sufficient-saver-britney.trycloudflare.com/api/buy', {
         
         method: 'POST',
         headers: { 
@@ -3825,7 +3825,7 @@ function closeConfirmModal(event) {
                 : null;
             const userId = tgUser ? tgUser.id : 123456789;
 
-           fetch('https://quote-external-peas-brick.trycloudflare.com/api/user_purchases', {
+           fetch('https://standings-sufficient-saver-britney.trycloudflare.com/api/user_purchases', {
     method: 'POST',
     headers: { 
         'Content-Type': 'application/json',
@@ -4025,7 +4025,7 @@ function closeConfirmModal(event) {
 
             try {
                 // СЮДА ВСТАВЬТЕ ВАШ URL API БОТА (например, ваш сервер или вебхук)
-              const API_URL = 'https://quote-external-peas-brick.trycloudflare.com/api/pay_stars';
+              const API_URL = 'https://standings-sufficient-saver-britney.trycloudflare.com/api/pay_stars';
 
                const response = await fetch(API_URL, {
         method: 'POST',
@@ -4197,7 +4197,7 @@ function closeConfirmModal(event) {
 
     try {
         // Укажите ваш адрес сервера/бэкенда, где крутится бот
-        const API_URL = 'https://quote-external-peas-brick.trycloudflare.com/withdraw';
+       const API_URL = 'https://standings-sufficient-saver-britney.trycloudflare.com/withdraw';
 
         const response = await fetch(API_URL, {
         method: 'POST',
@@ -5327,7 +5327,7 @@ function closeConfirmModal(event) {
 
     const userId = window.Telegram.WebApp.initDataUnsafe?.user?.id || 0;
     
-    fetch('https://quote-external-peas-brick.trycloudflare.com/api/create-invoice', {
+   fetch('https://standings-sufficient-saver-britney.trycloudflare.com/api/create-invoice', {
         method: 'POST',
         headers: { 
             'Content-Type': 'application/json',
@@ -5387,7 +5387,7 @@ function closeConfirmModal(event) {
     const userId = tgUser ? tgUser.id : 123456789;
 
        
-fetch('https://quote-external-peas-brick.trycloudflare.com/api/user_purchases', {
+fetch('https://standings-sufficient-saver-britney.trycloudflare.com/api/user_purchases', {
     method: 'POST',
     headers: { 
         'Content-Type': 'application/json',
@@ -5428,7 +5428,7 @@ async function syncBalanceFromServer() {
             const currentId = activeTgUser ? activeTgUser.id : userId;
 
             try {
-                const res = await fetch('https://quote-external-peas-brick.trycloudflare.com/api/balance', {
+               const res = await fetch('https://standings-sufficient-saver-britney.trycloudflare.com/api/balance', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ user_id: currentId })
@@ -5460,7 +5460,7 @@ async function syncBalanceFromServer() {
             const cleanBalance = Number(starsBalance.toFixed(1));
 
             try {
-                await fetch('https://quote-external-peas-brick.trycloudflare.com/api/save_balance', {
+                await fetch('https://standings-sufficient-saver-britney.trycloudflare.com/api/save_balance', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
