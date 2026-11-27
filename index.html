@@ -4231,8 +4231,10 @@ function closeConfirmModal(event) {
         triggerHaptic('notification', 'error');
     }
 }
+/* --- 1. РАКЕТА (БЕЗОПАСНЫЙ БАЛАНС) --- */
+        const ROCKET_MAX_MULTIPLIER = 8.00; // Максимальный множитель за раунд
+        const ROCKET_MAX_WIN = 500;         // Максимальный выигрыш за один раунд в ★
 
-        /* --- 1. РАКЕТА --- */
         function updateRocketFreebetUI() {
             const countEl = document.getElementById('rocketFreebetCount');
             const barEl = document.getElementById('rocketFreebetBar');
@@ -4261,6 +4263,29 @@ function closeConfirmModal(event) {
             updateRocketFreebetUI();
         }
 
+        function generateRocketCrashPoint() {
+            const roll = Math.random();
+
+            // 35% мгновенный или почти мгновенный слив (1.00x - 1.15x)
+            if (roll < 0.35) {
+                return Number((1.00 + Math.random() * 0.15).toFixed(2));
+            }
+
+            // 45% низкие/средние иксы (1.16x - 2.20x)
+            if (roll < 0.80) {
+                return Number((1.16 + Math.random() * 1.04).toFixed(2));
+            }
+
+            // 15% средние иксы (2.21x - 4.50x)
+            if (roll < 0.95) {
+                return Number((2.21 + Math.random() * 2.29).toFixed(2));
+            }
+
+            // 5% редкие высокие иксы (4.51x - ROCKET_MAX_MULTIPLIER)
+            const highMult = 4.51 + Math.random() * (ROCKET_MAX_MULTIPLIER - 4.51);
+            return Number(Math.min(ROCKET_MAX_MULTIPLIER, highMult).toFixed(2));
+        }
+
         function handleRocketClick() {
             const btn = document.getElementById('gameBtn');
             const rocket = document.getElementById('rocketObj');
@@ -4270,6 +4295,8 @@ function closeConfirmModal(event) {
             triggerHaptic('impact', 'light');
 
             if (!isPlayingRocket) {
+                const betToUse = Math.max(1, Number(currentBetRocket) || 1);
+
                 if (rocketFreebetAvailable) {
                     activeRocketIsFree = true;
                     activeRocketBet = 10;
@@ -4278,35 +4305,29 @@ function closeConfirmModal(event) {
                     updateRocketFreebetUI();
                     showToast('Запущена бесплатная игра на 10 ★!');
                 } else {
-                    if (starsBalance < currentBetRocket) { 
-                        showToast('Недостаточно звезд!'); 
-                        return; 
+                    if (starsBalance < betToUse) {
+                        showToast('Недостаточно звезд!');
+                        return;
                     }
-                    starsBalance = Number((starsBalance - currentBetRocket).toFixed(1));
+                    starsBalance = Number((starsBalance - betToUse).toFixed(1));
                     activeRocketIsFree = false;
-                    activeRocketBet = currentBetRocket;
+                    activeRocketBet = betToUse;
                 }
 
                 totalGamesPlayed += 1;
                 updateBalanceUI();
-                
+
                 if (!activeRocketIsFree) {
                     registerRocketGamePlayed();
                 }
 
                 isPlayingRocket = true;
                 currentMultiplier = 1.00;
-                crashPoint = (function() {
-                    if (Math.random() < 0.10) return 1.00;
-                    let r = Math.random();
-                    let cp = 0.99 / (1.0 - r);
-                    if (cp > 50.0) cp = 50.0;
-                    return Math.max(1.01, parseFloat(cp.toFixed(2)));
-                })();
+                crashPoint = generateRocketCrashPoint();
 
                 multText.classList.remove('crashed');
                 multText.innerText = 'x1.00';
-                btn.innerText = `ЗАБРАТЬ (${activeRocketBet})`;
+                btn.innerText = `ЗАБРАТЬ (${Math.min(ROCKET_MAX_WIN, Math.floor(activeRocketBet))})`;
                 btn.className = 'btn-main-action btn-style-cashout';
 
                 rocket.style.opacity = '1';
@@ -4316,17 +4337,20 @@ function closeConfirmModal(event) {
                 starsBg.classList.add('flying');
                 mountains.classList.add('departed');
 
+                clearInterval(gameInterval);
                 gameInterval = setInterval(() => {
-                    currentMultiplier += 0.03;
+                    currentMultiplier = Number(Math.min(ROCKET_MAX_MULTIPLIER, currentMultiplier + 0.03).toFixed(2));
+                    const potentialWin = Math.min(ROCKET_MAX_WIN, Math.floor(activeRocketBet * currentMultiplier));
+
                     multText.innerText = 'x' + currentMultiplier.toFixed(2);
-                    btn.innerText = `ЗАБРАТЬ (${Math.floor(activeRocketBet * currentMultiplier)})`;
+                    btn.innerText = `ЗАБРАТЬ (${potentialWin})`;
 
                     let b = parseFloat(rocket.style.bottom) || 32;
                     let l = parseFloat(rocket.style.left) || 26;
                     if (b < 130) rocket.style.bottom = (b + 1.15) + 'px';
                     if (l < 235) rocket.style.left = (l + 2.2) + 'px';
 
-                    if (currentMultiplier >= crashPoint) {
+                    if (currentMultiplier >= crashPoint || currentMultiplier >= ROCKET_MAX_MULTIPLIER) {
                         endRocketGame(false);
                     }
                 }, 100);
@@ -4337,7 +4361,9 @@ function closeConfirmModal(event) {
 
         function endRocketGame(isWin) {
             clearInterval(gameInterval);
+            if (!isPlayingRocket) return;
             isPlayingRocket = false;
+
             const btn = document.getElementById('gameBtn');
             const rocket = document.getElementById('rocketObj');
             const multText = document.getElementById('multiplierText');
@@ -4351,15 +4377,19 @@ function closeConfirmModal(event) {
             pill.className = 'history-pill';
 
             if (isWin) {
-                const winSum = Math.floor(activeRocketBet * currentMultiplier);
+                const safeMultiplier = Math.min(currentMultiplier, crashPoint, ROCKET_MAX_MULTIPLIER);
+                const rawWin = Math.floor(activeRocketBet * safeMultiplier);
+                const winSum = Math.max(0, Math.min(ROCKET_MAX_WIN, rawWin));
+
                 starsBalance = Number((starsBalance + winSum).toFixed(1));
                 totalStarsWon += winSum;
                 updateBalanceUI();
+
                 pill.style.borderColor = '#ffffff';
-                pill.innerText = 'x' + currentMultiplier.toFixed(2);
+                pill.innerText = 'x' + safeMultiplier.toFixed(2);
                 triggerHaptic('notification', 'success');
                 playSound('win');
-                showToast(`Выиграно ${winSum} ★ (${currentMultiplier.toFixed(2)}x)!`);
+                showToast(`Выиграно ${winSum} ★ (${safeMultiplier.toFixed(2)}x)!`);
             } else {
                 triggerHaptic('notification', 'error');
                 playSound('error');
@@ -4389,7 +4419,10 @@ function closeConfirmModal(event) {
             }, 900);
         }
 
-        /* --- 2. РУЛЕТКА --- */
+        
+        /* --- 2. РУЛЕТКА (БАЛАНС КАССЫ) --- */
+        const ROULETTE_MAX_WIN = 300; // Максимум выигрыша за один спин в ★
+
         function setRouletteColor(color, el) {
             if (isSpinning) return;
             selectedRouletteColor = color;
@@ -4402,9 +4435,13 @@ function closeConfirmModal(event) {
 
         function spinRouletteWheel() {
             if (isSpinning) return;
-            if (starsBalance < currentBetRoulette) { showToast('Недостаточно звезд!'); return; }
-            
-            starsBalance = Number((starsBalance - currentBetRoulette).toFixed(1));
+            const betForSpin = Math.max(1, Number(currentBetRoulette) || 1);
+            if (starsBalance < betForSpin) {
+                showToast('Недостаточно звезд!');
+                return;
+            }
+
+            starsBalance = Number((starsBalance - betForSpin).toFixed(1));
             totalGamesPlayed += 1;
             updateBalanceUI();
             isSpinning = true;
@@ -4414,15 +4451,28 @@ function closeConfirmModal(event) {
             btn.disabled = true;
             triggerHaptic('impact', 'medium');
 
+            // Шансы: ~46% БЕЛЫЙ, ~48% ЧЕРНЫЙ, ~6% СЕРЫЙ
             const outcomeRand = Math.random();
-            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ', pillBorder = '#ffffff';
-            
-            if (outcomeRand < 0.48) { 
-                winningIndex = 15; winningColor = 'red'; labelText = 'БЕЛЫЙ'; pillBorder = '#ffffff';
-            } else if (outcomeRand < 0.93) { 
-                winningIndex = 45; winningColor = 'black'; labelText = 'ЧЕРНЫЙ'; pillBorder = '#52525b';
-            } else { 
-                winningIndex = 355; winningColor = 'green'; labelText = 'СЕРЫЙ'; pillBorder = '#a1a1aa';
+            let winningIndex = 15, winningColor = 'red', labelText = 'БЕЛЫЙ', pillBorder = '#ffffff', payoutMult = 2;
+
+            if (outcomeRand < 0.46) {
+                winningIndex = 15;
+                winningColor = 'red';
+                labelText = 'БЕЛЫЙ';
+                pillBorder = '#ffffff';
+                payoutMult = 2;
+            } else if (outcomeRand < 0.94) {
+                winningIndex = 45;
+                winningColor = 'black';
+                labelText = 'ЧЕРНЫЙ';
+                pillBorder = '#52525b';
+                payoutMult = 2;
+            } else {
+                winningIndex = 355;
+                winningColor = 'green';
+                labelText = 'СЕРЫЙ';
+                pillBorder = '#a1a1aa';
+                payoutMult = 12;
             }
 
             const targetAngle = (360 - winningIndex) % 360;
@@ -4445,7 +4495,8 @@ function closeConfirmModal(event) {
                 }
 
                 if (winningColor === selectedRouletteColor) {
-                    const winSum = Math.floor(currentBetRoulette * (winningColor === 'green' ? 14 : 2));
+                    const rawWin = Math.floor(betForSpin * payoutMult);
+                    const winSum = Math.max(0, Math.min(ROULETTE_MAX_WIN, rawWin));
                     starsBalance = Number((starsBalance + winSum).toFixed(1));
                     totalStarsWon += winSum;
                     updateBalanceUI();
@@ -4459,8 +4510,12 @@ function closeConfirmModal(event) {
                 }
             }, 4100);
         }
+        
 
-        /* --- 3. МИНЫ --- */
+        /* --- 3. МИНЫ (БАЛАНС КАССЫ) --- */
+        const MINES_MAX_WIN = 400; // Максимум выигрыша за один раунд в ★
+        let activeMinesBet = 0;
+
         function setMinesCount(count, el) {
             if (isPlayingMines) return;
             minesCount = count;
@@ -4484,8 +4539,14 @@ function closeConfirmModal(event) {
         function handleMinesBtnClick() {
             const btn = document.getElementById('minesBtn');
             if (!isPlayingMines) {
-                if (starsBalance < currentBetMines) { showToast('Недостаточно звезд!'); return; }
-                starsBalance = Number((starsBalance - currentBetMines).toFixed(1));
+                const betToUse = Math.max(1, Number(currentBetMines) || 1);
+                if (starsBalance < betToUse) {
+                    showToast('Недостаточно звезд!');
+                    return;
+                }
+
+                starsBalance = Number((starsBalance - betToUse).toFixed(1));
+                activeMinesBet = betToUse;
                 totalGamesPlayed += 1;
                 updateBalanceUI();
                 isPlayingMines = true;
@@ -4508,7 +4569,8 @@ function closeConfirmModal(event) {
                     showToast('Откройте хотя бы одну клетку!');
                     return;
                 }
-                const winSum = Math.floor(currentBetMines * currentMinesMult);
+                const rawWin = Math.floor(activeMinesBet * currentMinesMult);
+                const winSum = Math.max(0, Math.min(MINES_MAX_WIN, rawWin));
                 starsBalance = Number((starsBalance + winSum).toFixed(1));
                 totalStarsWon += winSum;
                 updateBalanceUI();
@@ -4522,27 +4584,30 @@ function closeConfirmModal(event) {
             if (!isPlayingMines) return;
             const tiles = document.querySelectorAll('.mine-tile');
             const tile = tiles[index];
-            if (tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
+            if (!tile || tile.classList.contains('revealed-star') || tile.classList.contains('revealed-bomb')) return;
 
             if (mineLocations.includes(index)) {
-                tile.classList.add('revealed-bomb'); 
+                tile.classList.add('revealed-bomb');
                 tile.innerHTML = '<i class="fa-solid fa-bomb"></i>';
                 triggerHaptic('notification', 'error');
                 playSound('error');
-                tiles.forEach((t, idx) => { 
-                    if (mineLocations.includes(idx)) { 
-                        t.classList.add('revealed-bomb'); 
-                        t.innerHTML = '<i class="fa-solid fa-bomb"></i>'; 
-                    } 
+                tiles.forEach((t, idx) => {
+                    if (mineLocations.includes(idx)) {
+                        t.classList.add('revealed-bomb');
+                        t.innerHTML = '<i class="fa-solid fa-bomb"></i>';
+                    }
                 });
                 endMinesGame(false);
             } else {
                 tile.classList.add('revealed-star');
                 tile.innerHTML = '<i class="fa-solid fa-star"></i>';
                 openedCount++;
-                const stepMult = minesCount === 3 ? 1.15 : (minesCount === 5 ? 1.25 : 1.55);
+
+                // Более умеренный рост множителя для плюса кассы
+                const stepMult = minesCount === 3 ? 1.08 : (minesCount === 5 ? 1.15 : 1.32);
                 currentMinesMult = Number((currentMinesMult * stepMult).toFixed(2));
-                const potentialWin = Math.floor(currentBetMines * currentMinesMult);
+                const potentialWin = Math.min(MINES_MAX_WIN, Math.floor(activeMinesBet * currentMinesMult));
+
                 document.getElementById('minesMultLabel').innerText = 'МНОЖИТЕЛЬ: x' + currentMinesMult.toFixed(2);
                 document.getElementById('minesBtn').innerText = `ЗАБРАТЬ (${potentialWin})`;
                 triggerHaptic('impact', 'light');
@@ -4551,15 +4616,21 @@ function closeConfirmModal(event) {
 
         function endMinesGame(isWin) {
             isPlayingMines = false;
+            activeMinesBet = 0;
             const btn = document.getElementById('minesBtn');
             btn.innerText = 'ИГРАТЬ';
             btn.className = 'btn-main-action btn-style-start';
             if (isWin) triggerHaptic('notification', 'success');
             else document.getElementById('minesMultLabel').innerText = 'ВЗРЫВ!';
         }
+        
 
-        /* --- 4. ПЛИНКО x15 --- */
-        const plinkoMultipliers = [15, 3, 1.5, 0.5, 0.5, 1.5, 3, 15];
+       /* --- 4. ПЛИНКО (БАЛАНС КАССЫ) --- */
+        const plinkoMultipliers = [5, 2, 1, 0.4, 0.4, 1, 2, 5];
+        const plinkoSlotWeights = [1, 4, 14, 31, 31, 14, 4, 1]; // Веса слотов (сумма = 100)
+        const PLINKO_MAX_WIN = 200; // Максимум выигрыша с одного шара в ★
+        const PLINKO_MAX_ACTIVE_BALLS = 5;
+
         let activePlinkoBalls = [];
         let plinkoAnimId = null;
 
@@ -4585,6 +4656,62 @@ function closeConfirmModal(event) {
                 }
             }
             return { rows, pegs, startY, endY, rowGap, colGap };
+        }
+
+        function pickWeightedPlinkoSlot() {
+            const totalWeight = plinkoSlotWeights.reduce((acc, val) => acc + val, 0);
+            let roll = Math.random() * totalWeight;
+            for (let i = 0; i < plinkoSlotWeights.length; i++) {
+                roll -= plinkoSlotWeights[i];
+                if (roll <= 0) return i;
+            }
+            return Math.floor(plinkoMultipliers.length / 2);
+        }
+
+        function buildPlinkoPathToSlot(targetSlotIndex, w, h) {
+            const { rows, startY, rowGap, colGap } = getPlinkoLayout(w, h);
+            const maxRightTurns = rows;
+            const safeTargetSlot = Math.max(0, Math.min(maxRightTurns, targetSlotIndex));
+
+            // Собираем шаги вправо (1) и влево (0), чтобы попасть ровно в safeTargetSlot
+            const steps = [];
+            let rightsLeft = safeTargetSlot;
+            let leftsLeft = maxRightTurns - safeTargetSlot;
+
+            for (let i = 0; i < maxRightTurns; i++) {
+                if (rightsLeft > 0 && leftsLeft > 0) {
+                    const dir = Math.random() < 0.5 ? 1 : 0;
+                    steps.push(dir);
+                    if (dir === 1) rightsLeft--;
+                    else leftsLeft--;
+                } else if (rightsLeft > 0) {
+                    steps.push(1);
+                    rightsLeft--;
+                } else {
+                    steps.push(0);
+                    leftsLeft--;
+                }
+            }
+
+            let rightTurns = 0;
+            const path = [{ x: w / 2, y: 12 }];
+
+            for (let r = 0; r < rows; r++) {
+                rightTurns += steps[r];
+                const countInNext = r + 3;
+                const rowWidth = (countInNext - 1) * colGap;
+                const rowStartX = (w - rowWidth) / 2;
+                const px = rowStartX + rightTurns * colGap;
+                const py = startY + r * rowGap - 5;
+                path.push({ x: px, y: py });
+            }
+
+            const slotCount = plinkoMultipliers.length;
+            const totalSlotsWidth = slotCount * colGap;
+            const slotsStartX = (w - totalSlotsWidth) / 2 + colGap / 2;
+            path.push({ x: slotsStartX + rightTurns * colGap, y: h - 22 });
+
+            return path;
         }
 
         function initPlinkoCanvas() {
@@ -4621,12 +4748,12 @@ function closeConfirmModal(event) {
 
             plinkoMultipliers.forEach((mult, idx) => {
                 const sx = slotsStartX + idx * colGap;
-                ctx.fillStyle = mult >= 15 ? '#ffffff' : (mult >= 3 ? '#52525b' : 'rgba(255,255,255,0.12)');
+                ctx.fillStyle = mult >= 5 ? '#ffffff' : (mult >= 2 ? '#52525b' : 'rgba(255,255,255,0.12)');
                 ctx.beginPath();
                 ctx.roundRect(sx, slotY, slotWidth, 20, 4);
                 ctx.fill();
 
-                ctx.fillStyle = mult >= 15 ? '#020203' : '#ffffff';
+                ctx.fillStyle = mult >= 5 ? '#020203' : '#ffffff';
                 ctx.font = '900 9px system-ui, sans-serif';
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
@@ -4638,7 +4765,7 @@ function closeConfirmModal(event) {
                 ball.progress += 0.045;
 
                 const totalSteps = ball.path.length - 1;
-                const exactStep = ball.progress * totalSteps;
+                const exactStep = Math.min(1, ball.progress) * totalSteps;
                 const stepIdx = Math.min(Math.floor(exactStep), totalSteps - 1);
                 const t = exactStep - stepIdx;
 
@@ -4659,7 +4786,9 @@ function closeConfirmModal(event) {
 
                 if (ball.progress >= 1) {
                     const mult = plinkoMultipliers[ball.slotIndex];
-                    const winSum = Number((ball.bet * mult).toFixed(1));
+                    const rawWin = Number((ball.bet * mult).toFixed(1));
+                    const winSum = Math.max(0, Math.min(PLINKO_MAX_WIN, rawWin));
+
                     if (winSum > 0) {
                         starsBalance = Number((starsBalance + winSum).toFixed(1));
                         if (mult >= 1) totalStarsWon += winSum;
@@ -4670,13 +4799,13 @@ function closeConfirmModal(event) {
                     if (historyContainer) {
                         const pill = document.createElement('div');
                         pill.className = 'history-pill';
-                        pill.style.borderColor = mult >= 3 ? '#ffffff' : 'rgba(255,255,255,0.2)';
+                        pill.style.borderColor = mult >= 2 ? '#ffffff' : 'rgba(255,255,255,0.2)';
                         pill.innerText = 'x' + mult;
                         historyContainer.prepend(pill);
                         if (historyContainer.children.length > 5) historyContainer.lastChild.remove();
                     }
 
-                    if (mult >= 1.5) {
+                    if (mult >= 1.5 || mult >= 2) {
                         playSound('win');
                         triggerHaptic('notification', 'success');
                         showToast(`Плинко x${mult}! Выигрыш +${winSum} ★`);
@@ -4690,12 +4819,18 @@ function closeConfirmModal(event) {
         }
 
         function dropPlinkoBall() {
-            if (starsBalance < currentBetPlinko) {
+            if (activePlinkoBalls.length >= PLINKO_MAX_ACTIVE_BALLS) {
+                showToast('Дождитесь падения шаров!');
+                return;
+            }
+
+            const betToUse = Math.max(1, Number(currentBetPlinko) || 1);
+            if (starsBalance < betToUse) {
                 showToast('Недостаточно звезд!');
                 return;
             }
 
-            starsBalance = Number((starsBalance - currentBetPlinko).toFixed(1));
+            starsBalance = Number((starsBalance - betToUse).toFixed(1));
             totalGamesPlayed += 1;
             updateBalanceUI();
             triggerHaptic('impact', 'light');
@@ -4703,34 +4838,17 @@ function closeConfirmModal(event) {
             const canvas = document.getElementById('plinkoCanvas');
             const w = canvas.width;
             const h = canvas.height;
-            const { rows, startY, rowGap, colGap } = getPlinkoLayout(w, h);
-
-            let rightTurns = 0;
-            const path = [{ x: w / 2, y: 12 }];
-
-            for (let r = 0; r < rows; r++) {
-                const dir = Math.random() < 0.5 ? 0 : 1;
-                rightTurns += dir;
-                const countInNext = r + 3;
-                const rowWidth = (countInNext - 1) * colGap;
-                const rowStartX = (w - rowWidth) / 2;
-                const px = rowStartX + rightTurns * colGap;
-                const py = startY + r * rowGap - 5;
-                path.push({ x: px, y: py });
-            }
-
-            const slotCount = plinkoMultipliers.length;
-            const totalSlotsWidth = slotCount * colGap;
-            const slotsStartX = (w - totalSlotsWidth) / 2 + colGap / 2;
-            path.push({ x: slotsStartX + rightTurns * colGap, y: h - 22 });
+            const slotIndex = pickWeightedPlinkoSlot();
+            const path = buildPlinkoPathToSlot(slotIndex, w, h);
 
             activePlinkoBalls.push({
-                bet: currentBetPlinko,
+                bet: betToUse,
                 path,
-                slotIndex: rightTurns,
+                slotIndex,
                 progress: 0
             });
         }
+        
 
         /* --- 5. 3D ОРЕЛ И РЕШКА --- */
         function setCoinChoice(side, el) {
